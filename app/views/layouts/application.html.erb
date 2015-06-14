@@ -9,9 +9,7 @@
 	</head>
 	<body>
 		<%= render "partials/header" %>
-		<div class="contenedor">
-			<%= yield %>
-		</div>
+		<%= yield %>
 		<%= render "partials/footer" %>
 		<%= javascript_include_tag 'application', 'data-turbolinks-track' => true %>
 		<%= yield :javascript_personalizado %>
