@@ -1,0 +1,340 @@
+ 
+<div class = "contenedor">
+ <h4 class= "centrado">Nuestros Postres</h4>
+
+<div class="fixed-action-btn chatbutton">
+
+ <a class="btn-floating btn-large waves-effect waves-light pink accent-3 right absolute" ><i class="mdi-communication-chat"></i></a>
+ </div>
+        
+<div class = "row">
+    <div class = "col s2 ">
+        <div >
+           <a class="iconosize waves-effect waves-light btn z-depth-1 espacio indigo"><i class="tiny mdi-action-thumb-up left"></i>Like     </a>
+           </div>
+        <div>
+           <a class="iconosize waves-effect waves-light btn z-depth-1 espacio blue"><i class="fa fa-twitter fa-lg left"></i>tweet     </a>
+           </div>
+        <div>
+           <a class="iconosize waves-effect waves-light btn z-depth-1 espacio red"><i class="fa fa-pinterest fa-lg left"></i>pint it     </a>
+           </div>
+          
+        <ul class="collapsible filtro" data-collapsible="expandable">
+        <li>
+          <div class="collapsible-header active  grey lighten-4"><i class="fa fa-usd fa-2x deep-purple-text text-darken-1"></i><span class="deep-purple-text text-darken-1">Precio</span></div>
+          <div class="collapsible-body white">
+            <div style = " display: table;
+                            width : 100%;">
+              <div class="input-field col s6">
+                <input id="Desde" type="text" class="validate">
+                <label for="Desde" class = "morado">Desde</label>
+
+              </div>
+              <div class="input-field col s6">
+                <input id="Hasta" type="text" class="validate">
+                <label for="Hasta" class = "morado">Hasta</label>
+              </div>
+
+            </div>
+            <a class="waves-effect waves-light btn z-depth-1 espacio pink accent-3" style = " margin-left: 27px;">Buscar     </a>
+          </div>
+        </li>
+        <li>
+          <div class="collapsible-header active  grey lighten-4"><i class="small mdi-social-cake deep-purple-text text-darken-1"></i>Postre</div>
+          <div class="collapsible-body white" style="display: inline-block;">
+
+                        <div class="input-field col s12 left">
+                          <input type="checkbox" id="tartas" >
+                          <label for="tartas">Tartas</label>
+                          </input>
+                        </div>
+                        <div class="input-field col s12 left">
+                          <input type="checkbox" id="Pies" />
+                          <label for="Pies">Pies</label>
+
+                        </div>
+                        <div class="input-field col s12 left">
+                          <input type="checkbox" id="Waffles" />
+                          <label for="Waffles">Waffles</label>
+
+                        </div>
+                        <div class="input-field col s12 left">
+                          <input type="checkbox" id="Pudines" />
+                          <label for="Pudines">Pudines</label>
+
+                        </div>
+                        <div class="input-field col s12 left">
+                          <input type="checkbox" id ="Helados" />
+                          <label for="Helados">Helados</label>
+
+                        </div>
+                        <div class="input-field col s12 left">
+                          <input type="checkbox" id="Mousse" />
+                          <label for="Mousse">Mousse</label>
+
+                        </div>
+                        <div class="input-field col s12 left">
+                          <input type="checkbox" id="Tortas" />
+                          <label for="Tortas">Tortas</label>
+
+                        </div>
+                        <div class="input-field col s12 left">
+                          <input type="checkbox" id="Dulces" />
+                          <label for="Dulces">Dulces</label>
+
+                        </div>
+                        <div class="input-field col s12 left">
+                          <input type="checkbox" id="Cafes" />
+                          <label for="Cafes">Cafes</label>
+
+                        </div>
+                        <div class="input-field col s12 left">
+                          <input type="checkbox" id="Cannolis" />
+                          <label for="Cannolis">Cannolis</label>
+
+                        </div>
+                      </div>
+        </li>
+        
+        </ul> 
+        
+        
+    </div>
+      
+    <div class = "col s10">
+      <div class="row">
+        <div class="input-field col m4 s12">
+          <input id="BuscarNombre" type="text" class="validate">
+          <label for="BuscarNombre" class = "morado">Buscar</label>
+        </div>
+      </div> 
+      <div class="row">
+        <div class = "col s3 fat">
+            <div class="card ">
+                    <div class="card-image">
+                      <img src="<%= asset_path '1.jpg' %>">
+                      
+                    </div>
+                    <div class="card-content accordion">
+                      
+                      <h6>Tarta de Lim&oacute;n</h6>
+                    </div>
+                    <div class="card-action ">
+                      <div class="stars">
+
+                          <form action="">
+                          <input class="star star-5" id="star-5" type="radio" name="star"/>
+                          <label class="star star-5" for="star-5"></label>
+                          <input class="star star-4" id="star-4" type="radio" name="star"/>
+                          <label class="star star-4" for="star-4"></label>
+                          <input class="star star-3" id="star-3" type="radio" name="star"/>
+                          <label class="star star-3" for="star-3"></label>
+                          <input class="star star-2" id="star-2" type="radio" name="star"/>
+                          <label class="star star-2" for="star-2"></label>
+                          <input class="star star-1" id="star-1" type="radio" name="star"/>
+                          <label class="star star-1" for="star-1"></label>
+                        </form>
+                      </div>
+
+                        <p class = "purple-text right"> $24.99</p>
+
+                    </div>
+                  </div>
+    
+        </div>
+         <div class = "col s3 fat">
+            <div class="card">
+                    <div class="card-image">
+                      <img src="<%= asset_path '3.jpg' %>">
+                      
+                    </div>
+                    <div class="card-content">
+                      
+                      <h6>Mousse de Caramelo</h6>
+                    </div>
+                    <div class="card-action">
+                      <div class="rating orange-text left">
+                        
+                        <span>☆</span><span>☆</span><span>☆</span><span>☆</span><span>☆</span>
+                        
+                        </div>
+                        <p class = "purple-text right"> $7.99</p>
+
+                    </div>
+                  </div>
+    
+        </div>
+         <div class = "col s3 fat">
+            <div class="card">
+                    <div class="card-image">
+                      <img src="<%= asset_path '4.jpg' %>">
+                      
+                    </div>
+                    <div class="card-content">
+                      
+                      <h6>Torta de Chocolate y Cerezas</h6>
+                    </div>
+                    <div class="card-action">
+                     <div class="rating orange-text left">
+                        
+                        <span>☆</span><span>☆</span><span>☆</span><span>☆</span><span>☆</span>
+                        
+                        </div>
+                        <p class = "purple-text right"> $6.99</p>
+                    </div>
+                  </div>
+    
+        </div>
+         <div class = "col s3 fat">
+            <div class="card">
+                    <div class="card-image">
+                      <img src="<%= asset_path '9.jpg' %>">
+                      
+                    </div>
+                    <div class="card-content">
+                      
+                      <h6>Waffles de Ar&aacute;ndano</h6>
+                    </div>
+                    <div class="card-action">
+                      <div class="rating orange-text left">
+                        
+                        <span>☆</span><span>☆</span><span>☆</span><span>☆</span><span>☆</span>
+                        
+                        </div>
+                        <p class = "purple-text right"> $9.99</p>
+
+                    </div>
+                  </div>
+    
+        </div>
+         <div class = "col s3 fat">
+            <div class="card">
+                    <div class="card-image ">
+                      <img src="<%= asset_path '2.jpg' %>">
+                      
+                    </div>
+                    <div class="card-content">
+                      
+                      <h6>Pie de Cereza</h6>
+                    </div>
+                    <div class="card-action">
+                      <div class="rating orange-text left">
+                        
+                        <span>☆</span><span>☆</span><span>☆</span><span>☆</span><span>☆</span>
+                        
+                        </div>
+                        <p class = "purple-text right"> $4.99</p>
+
+                    </div>
+                  </div>
+    
+        </div>
+         <div class = "col s3 fat">
+            <div class="card">
+                    <div class="card-image">
+                      <img src="<%= asset_path '10.jpg' %>">
+                      
+                    </div>
+                    <div class="card-content">
+                      
+                      <h6>Moccacino con Canela</h6>
+                    </div>
+                    <div class="card-action">
+                      <div class="rating orange-text left">
+                        
+                        <span>☆</span><span>☆</span><span>☆</span><span>☆</span><span>☆</span>
+                        
+                        </div>
+                        <p class = "purple-text right"> $8.99</p>
+
+                    </div>
+                  </div>
+    
+        </div>
+         <div class = "col s3 fat">
+            <div class="card">
+                    <div class="card-image">
+                      <img src="<%= asset_path '15.jpg' %>">
+                      
+                    </div>
+                    <div class="card-content">
+                      
+                      <h6>Pud&iacute;n de Ar&aacute;ndano</h6>
+                    </div>
+                    <div class="card-action">
+                     <div class="rating orange-text left">
+                        
+                        <span>☆</span><span>☆</span><span>☆</span><span>☆</span><span>☆</span>
+                        
+                        </div>
+                        <p class = "purple-text right"> $4.99</p>
+
+                    </div>
+                  </div>
+    
+        </div>
+         <div class = "col s3 fat">
+            <div class="card">
+                    <div class="card-image">
+                      <img src="<%= asset_path '8.jpg' %>">
+                      
+                    </div>
+                    <div class="card-content">
+                      
+                      <h6>Helado de Fresa y Ar&aacute;ndanos</h6>
+                    </div>
+                    <div class="card-action">
+                      <div class="rating orange-text left">
+                        
+                        <span>☆</span><span>☆</span><span>☆</span><span>☆</span><span>☆</span>
+                        
+                        </div>
+                        <p class = "purple-text right"> $2.99</p>
+
+                    </div>
+                  </div>
+    
+        </div>
+         <div class = "col s3 fat">
+            <div class="card">
+                    <div class="card-image">
+                      <img src="<%= asset_path '14.jpg' %>">
+                      
+                    </div>
+                    <div class="card-content">
+                      
+                      <h6>Pud&iacute;n de Chocolate y Canela</h6>
+                    </div>
+                    <div class="card-action">
+                      <div class="rating orange-text left">
+                        
+                        <span>☆</span><span>☆</span><span>☆</span><span>☆</span><span>☆</span>
+                        
+                        </div>
+                        <p class = "purple-text right"> $4.99</p>
+
+                    </div>
+                  </div>
+    
+          </div>
+         
+        
+
+        <div class = "col s10 ">
+          <ul class="pagination pcentrado">
+            <li class="disabled"><a href="#!"><i class="mdi-navigation-chevron-left"></i></a></li>
+            <li class="active purple"><a href="#!">1</a></li>
+            <li class="waves-effect"><a href="#!">2</a></li>
+            <li class="waves-effect"><a href="#!">3</a></li>
+            <li class="waves-effect"><a href="#!">4</a></li>
+            <li class="waves-effect"><a href="#!">5</a></li>
+            <li class="waves-effect"><a href="#!"><i class="mdi-navigation-chevron-right"></i></a></li>
+          </ul>
+
+        </div>
+      </div>
+        
+        
+    </div>
+</div>
+</div>

@@ -4,4 +4,7 @@ class PaginasController < ApplicationController
 
 	def perfil
 	end
+
+	def catalogo
+	end
 end
