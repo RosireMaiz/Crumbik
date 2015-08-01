@@ -3,6 +3,7 @@
 	<head>
 	  <title>Crumbik</title>
 	  <%= stylesheet_link_tag    'application', media: 'all', 'data-turbolinks-track' => true %>
+	  <%= javascript_include_tag 'application', 'data-turbolinks-track' => true %>
 	  <%= yield :css_personalizado %>
 	  
 	  <%= csrf_meta_tags %>
@@ -10,10 +11,23 @@
 
 
 	<body>
-		<%= render "partials/header" %>
+		<header>
+			<%= render "partials/header" %>
+		</header>
+
 		<%= yield %>
-		<%= render "partials/footer" %>
-		<%= javascript_include_tag 'application', 'data-turbolinks-track' => true %>
+
+		<div class="fixed-action-btn chatbutton">
+ 			<a class="btn-floating btn-large waves-effect waves-light pink accent-3 right absolute" >
+ 				<i class="mdi-communication-chat" style="line-height: 49.5px;"></i>
+ 			</a>
+ 		</div>
+
+		<footer>
+			<%= render "partials/footer" %>
+		</footer>
+
+		
 		<%= yield :javascript_personalizado %>
 	</body>
 </html>

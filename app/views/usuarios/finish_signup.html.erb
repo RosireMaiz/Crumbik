@@ -1,0 +1,52 @@
+
+<div id="add-email" class="container">
+  <h1>Confirmar Informaci&oacute;n </h1>
+  <%= form_for(current_usuario, :as => 'usuario', :url => finish_signup_path(current_usuario), :html => { role: 'form'}) do |f| %>
+    <% if @show_errors && current_usuario.errors.any? %>
+      <div id="error_explanation">
+        <% current_usuario.errors.full_messages.each do |msg| %>
+          <%= msg %><br>
+        <% end %>
+      </div>
+    <% end %>
+    <div class="form-group">
+      <%= f.label :email %>
+      <div class="controls">
+        <% if current_usuario.email_verified? %>
+            <%= f.text_field :email, :autofocus => true, class: 'form-control input-lg', placeholder: 'Example: email@me.com' %>
+        <% else %>
+            <%= f.text_field :email, :autofocus => true, :value => '', class: 'form-control input-lg', placeholder: 'Example: email@me.com' %>
+        <% end %>
+        <p class="help-block">Por favor, confirma tu dirección de correo electrónico. </p>
+      </div>
+    </div>
+
+    <div class="field">
+      <%= f.label :username %><br />
+      <div class="controls">
+        <%= f.text_field :username, class: 'form-control input-lg', :required=>true, autocomplete: "off" %>
+      </div>  
+    </div>
+
+    <div class="form-group">
+      <%= f.label :password %>
+      <div class="controls">
+        <%= f.password_field :password, :maxlength=>30, :minlength=>8, class: 'form-control input-lg', :required=>true, autocomplete: "off" %>
+        <p class="help-block">Por favor, establece tu contraseña de Ingreso Alternativo. </p>
+      </div>  
+    </div>
+
+
+
+    <div class="form-group">
+      <%= f.label :password_confirmation %>
+      <div class="controls">
+        <%= f.password_field :password_confirmation, :maxlength=>30, :minlength=>8, class: 'form-control input-lg', :required=>true, autocomplete: "off" %>
+      </div>
+    </div>
+
+    <div class="actions">
+      <%= f.submit 'Continuar', :class => 'btn btn-primary' %>
+    </div>
+  <% end %>
+</div>

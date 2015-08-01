@@ -1,0 +1,50 @@
+
+
+<div id ="login-form" class="panel panel-info modal col s6">
+  <!-- <div class="panel-heading text-center">
+    <h3 class="panel-title">Inicia sesi&oacute;n</h3>
+  </div> -->
+  <div class="panel-body">
+    <%= form_for(resource, as: resource_name, url: session_path(resource_name), :html => {:class => "row"} ) do |f| %>
+      
+        <strong><legend class="text-center">Inicia sesi&oacute;n</legend></strong>
+        <div class="col s12 text-center">
+              <div class="input-field ">
+                <%= f.email_field :email, :autofocus => true %>
+                <%= f.label :email,"Email" %>
+              
+            </div>
+        </div>
+        <div class="col s12">
+          
+            <div class="input-field">
+              <%= f.password_field :password, {"id"=>"password"} %>
+              <%= f.label :password, "Contraseña" %>
+            </div>
+          
+        </div>
+        <% if devise_mapping.rememberable? -%>
+          <span class="pull-right "><%= f.check_box :remember_me %> <%= f.label :remember_me, "No cerrar sesión" %></span>
+        <% end -%>
+        <%- if devise_mapping.recoverable? && controller_name != 'passwords' && controller_name != 'registrations' %>
+          <%= link_to "Olvide mi contraseña", new_password_path(resource_name), html_options = { :class => "link-pink"} %>
+          <br/>
+        <% end -%>
+
+          <input type="submit" value="Entrar" class= "btn "></input>
+
+        <div class=" col s12 text-center redes-login">
+          <strong>O inicia sesi&oacute;n con </strong>
+          <a href="<%= omniauth_authorize_path(resource_name, :facebook) %>" class="fb"><i class="fa fa-facebook "></i></a>
+          <a href="<%= omniauth_authorize_path(resource_name, :twitter) %>" class="tw" ><i class="fa fa-twitter "></i></a>
+          <a href="<%= omniauth_authorize_path(resource_name, :google_oauth2) %>" class="gp" ><i class="fa fa-google-plus"></i></a>
+          <a href="<%= omniauth_authorize_path(resource_name, :linkedin) %>" class="lk" ><i class="fa fa-linkedin"></i></a>
+          <a href="<%= omniauth_authorize_path(resource_name, :github) %>" class="gh" ><i class="fa fa-github"></i></a>
+        </div>
+      
+    <% end %>
+  </div>
+  <div class="panel-footer text-center">
+     <%= link_to "Crea una cuenta", new_registration_path(resource_name) %>
+  </div>
+</div>

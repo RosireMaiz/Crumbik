@@ -1,0 +1,45 @@
+<div class="pad15"></div>
+<div id="form-registro-container" class="pad15 pad15-h center-block panel">
+  <div id="titulo">
+    <h3>Reg&iacute;strate</h3>
+  </div>
+  <div id="secciones" style="display:inline-block;width:100%;">
+    <div class="pull-left seccion s6">
+      <%= form_for(resource, :as => resource_name, :url => registration_path(resource_name)) do |f| %>
+        <%= devise_error_messages! %>
+        <div class="input-field">
+          <%= f.email_field :email,  :required=>true %>
+          <%= f.label :email, "Email" %>
+        </div>
+        <div class="input-field">
+          <%= f.label :password, "Contraseña" %>
+          <%= f.password_field :password, :maxlength=>30, :required=>true %>
+        </div>
+        <div class="input-field">
+          <%= f.label :password_confirmation, "Confirmar contraseña" %>
+          <%= f.password_field :password_confirmation, :maxlength=>30, :required=>true %>
+        </div>
+        <div><%= check_box_tag(:terminos) %>
+           <%= label_tag(:terminos, "Acepto los términos de uso") %></div>
+        <div><%= f.submit "Enviar", class: "btn btn-danger" %>
+             <br/> O reg&iacute;strate con 
+           <a href="<%= omniauth_authorize_path(resource_name, :facebook) %>" class="fb"><i class="fa fa-facebook "></i></a>
+          <a href="<%= omniauth_authorize_path(resource_name, :twitter) %>" class="tw" ><i class="fa fa-twitter "></i></a>
+          <a href="<%= omniauth_authorize_path(resource_name, :google_oauth2) %>" class="gp" ><i class="fa fa-google-plus"></i></a>
+          <a href="<%= omniauth_authorize_path(resource_name, :linkedin) %>" class="lk" ><i class="fa fa-linkedin"></i></a>
+          <a href="<%= omniauth_authorize_path(resource_name, :github) %>" class="gh" ><i class="fa fa-github"></i></a>
+        </div>
+
+      <% end %>
+    </div>
+    <div class="pull-left seccion text-center s6">
+      <div class="pad45">
+        <i class="mdi-action-perm-contact-cal"></i><br>
+        Si ya tienes una cuenta <a href="#login-form" class="modal-trigger">inicia sesi&oacute;n</a>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="pad30"></div>
+
