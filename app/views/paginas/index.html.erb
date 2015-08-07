@@ -1,83 +1,211 @@
-<div id="slide">
-	<div id="Contenido-Slide" class="white-text">
-		<h1>Venda de manera inteligente</h1>
-		<h4>Descubre el plan que m&aacute;s te convenga o comienza tu prueba grauita ya</h4>
-		<a href="" class="waves-effect waves-light btn">C&oacute;mo funciona</a>
+<!-- ****************** -->
+<!-- *IMAGEN PRINCIPAL* -->
+<!-- ****************** -->
+<div id="index-principal">
+	<div id="index-principal-contenido" class="white-text">
+		<h1>Venda de manera inteligente</h1><br />
+		<h5>Descubre el plan que m&aacute;s te convenga o comienza tu prueba grauita ya</h5>
+		<a href="#index-marco" class="waves-effect btn">&iquest;C&oacute;mo funciona?</a>
 	</div>
-	<div id="clientes">
-		<div id="slider-clientes">
-			<div> <img src="<%= asset_path 'cliente1.png' %>"></div>
-			<div> <img src="<%= asset_path 'cliente2.png' %>"></div>
-			<div> <img src="<%= asset_path 'cliente3.png' %>"></div>
-			<div> <img src="<%= asset_path 'logo.png' %>"></div>
-			<div> <img src="<%= asset_path 'logo.png' %>"></div>
+	<!-- **************** -->
+	<!-- *SLIDE CLIENTES* -->
+	<!-- **************** -->
+	<div id="index-clientes">
+		<div id="index-clientes-slider">
+			<div> <img src="<%= asset_path 'index-slide-cliente1.png' %>"></div>
+			<div> <img src="<%= asset_path 'index-slide-cliente2.png' %>"></div>
+			<div> <img src="<%= asset_path 'index-slide-cliente3.png' %>"></div>
+			<div> <img src="<%= asset_path 'index-slide-cliente4.png' %>"></div>
+			<div> <img src="<%= asset_path 'index-slide-cliente5.png' %>"></div>
 		</div>
 	</div>
 </div>
-<div id="marco" class="text-center">
-	<h4>Custom Relationship Management &iquest;C&oacute;mo funciona?</h4>
-	<p>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.</p>
+<br />
+<!-- *************** -->
+<!-- *COMO FUNCIONA* -->
+<!-- *************** -->
+<h4 class="text-center">Custom Relationship Management &iquest;C&oacute;mo funciona?</h4>
+<div id="index-marco">
+	<p>El CRM funciona mediante la recolección de información de los clientes, donde se establecen las preferencias particulares de cada uno, para gestionar la relaciones en base al conocimiento adquirido.  Toda la información, documentos y demás datos compartidos con los clientes son almacenados en una base de datos que puede ser utilizada en el momento que sea necesario, con lo cual se puede obtener un mejor servicio al cliente. &iexclOfrece tu producto a los cliente adecuados y asegura las ventas!</p>
+	<ul class="index-vinnetas">
+		<li>Te ayudamos en la Ejecución de campañas publicitarias para generar prospectos.</li>
+		<li>Facilitamos el detectar las preferencias de los prospectos y clientes</li>
+		<li>Ofrecemos Atencion personalizada</li>
+		<li>Tenemos soporte específico y particular para cada cliente</li>
+	</ul>
 </div>
-<hr/>
+<!-- SEPARADOR -->
+<img id="planes" class="index-separador" src="<%= asset_path'general-separador.png' %>">
+<br />
+<!-- ***************** -->
+<!-- *NUESTROS PLANES* -->
+<!-- ***************** -->
 <h4 class="text-center">Nuestros Planes</h4>
 <div class="row">
-	<div class="col s4">
-			  				 
-		          <div class="card">
-		            <div class="card-image">
-		              <img src="<%= asset_path 'plan1.jpg' %>">
-		              <span class="card-title">Plan B&aacute;sico: $65</span>
-		            </div>
-		            <div class="card-content">
-		              <h5 id="cards-subtitle">Para empresas emprendedoras</h5>
-		              <p>I am a very simple card. I am good at containing small bits of information.
-		              I am convenient because I require little markup to use effectively.
-		          </p>
-		            </div>
-		          </div>
+	<div class="col s4"> 
+		<div class="card">
+			<div class="card-image">
+				<img src="<%= asset_path 'index-plan1.jpg' %>">
+		        <span class="card-title">Plan B&aacute;sico: $40</span>
+		    </div>
+		<div class="card-content">
+			<h5 id="cards-subtitle">Para Empresas Emprendedoras</h5>
+			<br />
+			<ul class="index-vinnetas">
+				<li>Límite de Usuarios: 10 </li>
+				<li>Límite de Almacenamiento: 10GB</li>
+				<li>Reportes Estadísticos</li>
+				<li>Herramientas de Trabajo</li>
+				<li>CRUMBIK en el Mobile</li>
+			</ul>
+		</div>
+	</div>
 		        
 	</div>
-	<div class="col s4">
-			  				 
-		          <div class="card">
-		            <div class="card-image">
-		              <img src="<%= asset_path 'plan2.jpg' %>">
-		              <span class="card-title">Plan Profesional: $125</span>
-		            </div>
-		            <div class="card-content">
-		              <h5 id="cards-subtitle">Suplimos todas tus necesidades</h5>
-		              <p>I am a very simple card. I am good at containing small bits of information.
-		              I am convenient because I require little markup to use effectively.</p>
-		            </div>
-		            <div class="card-action">
-		              <a href="#">+ Plan B&aacute;sico</a>
-		            </div>
-		          </div>
-		        
+	<div class="col s4"> 				 
+		<div class="card">
+		    <div class="card-image">
+		        <img src="<%= asset_path 'index-plan2.jpg' %>">
+		        <span class="card-title">Plan Profesional: $125</span>
+		    </div>
+			<div class="card-content">
+		    	<h5 id="cards-subtitle">Suplimos todas tus Necesidades</h5>
+		        <br />
+		        <ul class="index-vinnetas">
+					<li>Límite de Usuarios: Ilimitado </li>
+					<li>Límite de Almacenamiento: 50GB</li>
+				</ul>
+		    </div>
+		    <div class="card-action">
+		        <a class="pink-text accent-4" href="#">+ Plan B&aacute;sico</a>
+	        </div>
+	    </div>       
 	</div>
 	<div class="col s4">			 
 	      <div class="card">
 	        <div class="card-image">
-	          <img src="<%= asset_path 'plan3.jpg' %>">
+	          <img src="<%= asset_path 'index-plan3.jpg' %>">
 	          <span class="card-title">Plan Ilimitado: $250</span>
 	        </div>
 	        <div class="card-content">
-	          <h5 id="cards-subtitle">Manejamos tu negocio por ti</h5>
-	          <p>I am a very simple card. I am good at containing small bits of information.
-	          I am convenient because I require little markup to use effectively.</p>
+	          	<h5 id="cards-subtitle">Manejamos tu Negocio por Ti</h5>
+	         	<br />
+	         	<ul class="index-vinnetas">
+					<li>Límite de Usuarios: Ilimitado </li>
+					<li>Límite de Almacenamiento: Ilimitado</li>
+				</ul>
 	        </div>
 	        <div class="card-action">
-	          <a href="#">+ Plan Profesional</a>
+	          <a class="pink-text accent-4" href="#">+ Plan B&aacute;sico</a>
 	        </div>
-	      </div>
-		        
+	      </div>      
+	</div>
+</div>
+<!-- SEPARADOR -->
+<img id="servicios" class="index-separador" src="<%= asset_path'general-separador.png' %>">
+<br />
+<!-- ******************** -->
+<!-- *NUESTROS SERVICIOS* -->
+<!-- ******************** -->
+<h4 class="text-center">Nuestros Servicios</h4>
+<div id="index-servicio-fondo">
+	<br />
+	<div class="row">
+		<div class="col s5">
+		<br />
+			<img class="card" id="index-servicio-img" src="<%= asset_path'index-servicio-imagen' %>">
+		</div>
+		<div class="col s7">
+			<div class="responsive-table">
+				<table>
+	        		<tbody>
+	          			<tr>
+	            			<td class= "index-servicio-awesome">
+	            				<i class="fa fa-weixin fa-3x"></i></td>
+	            			<td class="index-servicio-texto">
+	            				<p class="index-servicio-titulos">Chat en Vivo</p>
+	            				Si quieres mejorar la satisfacción del cliente, entonces el uso del chat en vivo es la mejor manera de conseguirlo. Si los clientes están atrapados en un lugar específico de tu sitio y no tienes opción de chat online disponible, entonces lo más probable es que no vuelvan a tu tienda en línea en el futuro.¡Vuelve tu sitio web interactivo!.
+	            			</td>
+	          			</tr>
+	          			<tr>
+	            			<td class= "index-servicio-awesome">
+	            				<i class="fa fa-sitemap fa-3x"></i></td>
+	            			<td class="index-servicio-texto">
+	            				<p class="index-servicio-titulos">Variables Psicograficas</p>
+	            				Conocer a cada segmento de mercado, ofrecer un producto o servicio adaptado a ciertos gustos, necesidades y expectativas, y utilizar la estrategia de marketing adecuada, te facilitará un mejor posicionamiento, un lugar relevante entre tus competidores. Cuanto mejor sea tu posicionamiento mayores serán las probabilidades de crecimiento de tu empresa.
+	            			</td>
+	          			</tr>
+	          			<tr>
+	            			<td class= "index-servicio-awesome">
+	            				<i class="fa fa-phone-square fa-3x"></i></td>
+	            			<td class="index-servicio-texto">
+	            				<p class="index-servicio-titulos">Llamadas IP</p>
+	            				No gastes dinero de más, con este sistema puedes realizar una llamada desde cualquier lado que exista conectividad a internet mediante telefonía voip mucho más barata que su equivalente en telefonía convencional.
+	            			</td>
+	          			</tr>
+	          		</tbody>
+        		</table>
+			</div>
+		</div>
+	</div>	
+</div>
+<!-- SEPARADOR -->
+<img id="contactanos" class="index-separador" src="<%= asset_path'general-separador.png' %>">
+<br />
+<!-- ***************** -->
+<!-- ** CONTACTANOS ** -->
+<!-- ***************** -->
+<h4 class="text-center">Contáctanos </h4>
+<br />
+<div class="container">
+	<div class="row">
+		<div class="index-mapa col s6">
+			<br />
+			<iframe id="index-mapa" class="z-depth-3" src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3928.3800400512027!2d-69.3648571!3d10.0679135!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x8e876692191c0979%3A0x3aee8b883b8bfcd0!2sDecanato+de+Ciencias+y+Tecnolog%C3%ADa+de+la+UCLA!5e0!3m2!1ses!2sve!4v1438458760658" width="400" height="300" frameborder="0" allowfullscreen></iframe>
+		</div>
+		<div class="col s6">
+			<form class="col s12">
+				<div class="row">
+        			<div class="input-field col s12">
+          				<input id="nombre" type="text" class="validate">
+          				<label for="nombre">Nombre</label>
+        			</div>
+        		</div>
+        		<div class="row">
+        			<div class="input-field col s12">
+          				<input id="email" type="email" class="validate">
+          				<label for="email">e-Mail</label>
+        			</div>
+        		</div>
+        		<div class="row">
+        			<div class="input-field col s12">
+          				<input id="asunto" type="text" class="validate">
+          				<label for="asunto">Asunto</label>
+        			</div>
+        		</div>
+        		<div class="row">
+        			<div class="input-field col s12">
+          				<input id="mensaje" type="text" class="validate">
+          				<label for="mensaje">Mensaje</label>
+        			</div>
+        		</div>
+        	</form>
+        	<div class="text-center">
+          		<button class="btn waves-effect pink accent-4 lighten-2" type="submit" name="action">ENVIAR 
+   					<i class="fa fa-paper-plane"></i>
+  				</button>
+        	</div>
+   		</div>
 	</div>
 </div>
 
+<!-- ****************** -->
+<!-- ******* JS ******* -->
+<!-- ****************** -->
 <% content_for :javascript_personalizado do %>
   	<script type="text/javascript">
 		$(document).ready(function() {
-  			$("#slider-clientes").owlCarousel({
+  			$("#index-clientes-slider").owlCarousel({
   				items: 3,
   				pagination: false,
   				autoPlay: 3000,

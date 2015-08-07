@@ -53,8 +53,53 @@ nav ul#nav-sesion li:first-child:after{
 	top: 0;
 	right: 0;
 }
-
 nav ul#nav-sesion li a{
 	display: inline;
 }
 
+@media only screen and (min-width: 601px){
+
+  	footer img.logo{
+  		padding-top: 4px;
+  		padding-left: 40px;
+  		top: -2px;
+  		left: 0;
+  		width: 100%;
+  		position: relative;
+  	}
+}
+.footer div#contenedor-letras{
+	max-width: 120px;
+	margin: 0 auto;
+	position: absolute;
+}
+footer div#redes{
+	background-color: #000000;
+	background: rgba(0,0,0,0.5);
+	text-align: center;
+}
+footer #fondo{
+	background-image: url(<%= asset_path'footer-fondo.png' %>);
+    flex-direction: column;
+    flex: 1 0 auto;
+}
+footer h6#color-blue{
+	color: #7fc6f4;
+}
+footer h6#color-pink{
+	color: #c34978;
+}
+footer h6#color-purple{
+	color: #713ce2;
+}
+footer i.estilo{
+	padding-right:50px;
+}
+footer span.numero{
+	color: #ffffff;
+	font-size: 36px;
+}
+footer span#numero-rosa{
+	color: #c34978;
+	font-size: 36px;
+}
