@@ -1,0 +1,273 @@
+/****************************************************************/
+/*                     Panel_Usuario                            */
+/****************************************************************/
+.text_usuario {
+  display: block;
+  text-align: center;
+}
+.row-padding{
+  width: auto;
+  padding-top: 20px;
+}
+
+.tab-simple{
+  position:relative;
+  padding:5px 5px 5px;
+  margin:5px 5px 5px;
+  border-color:#e5e5e5 #eee #eee;
+  border-style:solid;
+  border-width:1px 0;
+  -webkit-box-shadow:
+  inset 0 3px 6px rgba(0,0,0,.05);
+  box-shadow:inset 0 3px 6px rgba(0.1,0,0,.05)
+}
+
+.social_usuario{
+  padding-left: 40px;
+  font-size: 20px;
+   line-height: 2;
+}
+
+.btn-rounded {
+  border-radius: 25px;
+}
+
+
+
+
+/****************************************************************/
+/*                         Panel_cursos                         */
+/****************************************************************/
+
+.panel-cursos{
+  color: white;
+  display: inline-block;
+}
+
+.curso-cuadro {
+width: 250px;
+height: 200px;
+padding: 3px;
+border-radius: 5%;
+
+
+text­align: justify;
+word-wrap: break-word
+}
+
+.curso-cuadro-header{
+  width: 250px;
+  height: 130px;
+}
+
+.curso-cuadro-content{
+  width: 150px;
+  height: 70px;
+}
+
+
+
+.scroll-curso {
+    overflow-x: scroll;
+    overflow-y: hidden;
+    height: 240px;
+    width: 100%;
+    white-space:nowrap
+}
+
+.img-cuadro-curso{
+  padding-top: 6px;
+  padding-left: 4px;
+  width: 120px;
+  height: 120px;
+  border-radius: 25%;
+
+}
+
+#avance-porcentaje{
+  position: relative;
+  display: inline-block;
+  float: right;
+  width: 60px;
+  height: 60px;
+  border: black;
+}
+
+
+#avance-porcentaje i, #avance-porcentaje span{
+  position: absolute;  
+}
+#avance-porcentaje span{
+
+  font-size: 17px;
+  top: 10px;
+  left: 10px;
+}
+#avance-porcentaje i{
+  -ms-transform: rotate(180deg);
+  -webkit-transform: rotate(180deg);
+  transform: rotate(180deg);
+  font-size: 50px;
+}
+
+.img-instructor{
+
+  padding-top: 6px;
+  padding-left: 4px;
+  width: 50px;
+  height: 50px;
+  border-radius: 25%;
+
+}
+
+
+.subrayado-min {
+  border-bottom:solid; 
+  border-width: 2px; 
+  width:1cm;
+}
+
+
+/****************************************************************/
+/*                         ACERCA DE MI                         */
+/****************************************************************/
+
+
+.border {
+   border-bottom: 1px solid #2196F3; 
+}
+
+.margen {
+  margin-left: 0.5cm;
+ 
+}
+
+.font21px {
+  font-size: 21px;
+}
+
+
+
+/****************************************************************/
+/*                       input file                             */
+/****************************************************************/
+
+#lista-redes-sociales.vacia:first-child{
+  display: inline;
+}
+
+#lista-redes-sociales.llena:first-child{
+  display: inline;
+}
+
+/****************************************************************/
+/*                       Bootstrap Wizard                       */
+/****************************************************************/
+#form_wizard_1{
+  width: 80%;
+  min-width: 600px; 
+}
+
+.form-wizard .progress {
+  background-color: rgba(249, 6, 88, 0.37);
+  height: 6px;
+}
+
+.form-wizard .progress > div.progress-bar-success {
+   background-color: #F52D78;
+}
+
+.form-wizard .progress-bar-seguridad {
+   background-color: rgb(114, 114, 114);
+}
+
+.form-wizard .progress-bar-seguridad-success {
+   background-color: #6f3ce1;
+}
+
+
+
+.form-wizard .steps {
+  padding: 10px 0;
+  background-color: transparent;
+  background-image: none;
+  filter: none;
+  border: 0px;
+  box-shadow: none;
+}
+.form-wizard .steps > li > a.step {
+  background-color: transparent; !important;
+  background-image: none;
+  filter: none;
+  border: 0px;
+  box-shadow: none;
+   color: #828282;
+}
+.form-wizard .steps > li > a.step:hover,
+  .form-wizard .steps > li > a.step:active {
+  background: rgb(213, 212, 218) !important;
+  color: rgb(144,144,144);
+}
+
+
+.form-wizard .steps > li > a.step > .number {
+  background-color: #C7C7CC;
+  display: inline-block;
+  text-align: center !important;
+  font-size: 16px;
+  font-weight: 700;
+  padding: 11px 15px 13px 15px;
+  margin-right: 10px;
+  height: 45px;
+  width: 45px;
+  -webkit-border-radius: 50% !important;
+  -moz-border-radius: 50% !important;
+  border-radius: 50% !important;
+  color: #828282;
+}
+
+
+.form-wizard .steps > li > a.step > .desc {
+  display: inline-block;
+  font-size: 16px;
+  font-weight: 300;
+}
+.form-wizard .steps > li > a.step > .desc > i {
+  display: none;
+}
+.form-wizard .steps > li.active > a.step .number {
+  background-color: #4AB6F7;
+  color: #fff;
+}
+.form-wizard .steps > li.active > a.step .desc {
+  color: #333;
+}
+.form-wizard .steps > li.done > a.step .number {
+  background-color: #753EE0;
+  color: #fff;
+}
+.form-wizard .steps > li.done > a.step .desc {
+  color: #333;
+}
+.form-wizard .steps > li.done > a.step .desc i {
+  font-size: 12px;
+  font-weight: normal;
+  color: #999;
+  display: inline-block;
+}
+#campos-paypal, #form_wizard_1 .feedback{
+  display: none;
+}
+@media (min-width: 768px) and (max-width: 1200px) {
+  /* 768px & 1200px */
+  .form-wizard .step .desc {
+    margin-top: 10px;
+    display: block;
+  }
+}
+@media (max-width: 768px) {
+  /* 768px */
+  .form-wizard .steps > li > a {
+    text-align: left;
+  }
+}

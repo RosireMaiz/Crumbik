@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20150713135524) do
+ActiveRecord::Schema.define(version: 20150802214442) do
 
   create_table "autenticacions", force: :cascade do |t|
     t.integer  "usuario_id", limit: 4
@@ -22,6 +22,41 @@ ActiveRecord::Schema.define(version: 20150713135524) do
   end
 
   add_index "autenticacions", ["usuario_id"], name: "index_autenticacions_on_usuario_id", using: :btree
+
+  create_table "organizacions", force: :cascade do |t|
+    t.string   "nombre",      limit: 255
+    t.string   "subdominio",  limit: 255
+    t.string   "direccion",   limit: 255
+    t.string   "descripcion", limit: 255
+    t.string   "slogan",      limit: 255
+    t.string   "telefono1",   limit: 255
+    t.string   "telefono2",   limit: 255
+    t.string   "email1",      limit: 255
+    t.string   "email2",      limit: 255
+    t.string   "estatus",     limit: 1,   default: "A"
+    t.integer  "pais_id",     limit: 4
+    t.integer  "usuario_id",  limit: 4
+    t.datetime "created_at",                            null: false
+    t.datetime "updated_at",                            null: false
+  end
+
+  add_index "organizacions", ["pais_id"], name: "index_organizacions_on_pais_id", using: :btree
+
+  create_table "pais", force: :cascade do |t|
+    t.string   "nombre",     limit: 255
+    t.datetime "created_at",             null: false
+    t.datetime "updated_at",             null: false
+  end
+
+  create_table "perfils", force: :cascade do |t|
+    t.string   "nombres",    limit: 255
+    t.string   "apellidos",  limit: 255
+    t.string   "sexo",       limit: 255
+    t.string   "ocupacion",  limit: 255
+    t.integer  "usuario_id", limit: 4
+    t.datetime "created_at",             null: false
+    t.datetime "updated_at",             null: false
+  end
 
   create_table "usuarios", force: :cascade do |t|
     t.string   "email",                  limit: 255, default: "",    null: false

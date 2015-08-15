@@ -47,9 +47,11 @@ gem 'tzinfo-data', platforms: [:mingw, :mswin, :x64_mingw, :jruby]
 
 
 gem 'mysql2'
-gem 'devise'
+
 gem 'materialize-sass'
 gem 'font-awesome-sass'
+
+gem 'devise'
 gem 'omniauth'
 gem 'omniauth-oauth2'
 gem 'omniauth-facebook'
@@ -57,3 +59,9 @@ gem 'omniauth-twitter'
 gem 'omniauth-github'
 gem 'omniauth-google-oauth2'
 gem 'omniauth-linkedin-oauth2'
+
+gem 'apartment'
+
+gem 'kaminari'
+gem 'bootstrap-kaminari-views'
+gem 'kaminari-bootstrap'

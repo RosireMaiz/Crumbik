@@ -7,6 +7,14 @@ class Usuario < ActiveRecord::Base
 
   has_many :autenticacions, dependent: :delete_all
 
+  has_one :pais
+  has_one :perfil
+  has_one :organizacion, :inverse_of=>:usuario
+
+  accepts_nested_attributes_for :organizacion
+  accepts_nested_attributes_for :perfil
+  accepts_nested_attributes_for :pais
+
   def self.find_for_oauth(auth, signed_in_resource = nil)
     autenticacion = Autenticacion.find_for_oauth(auth)
     usuario = signed_in_resource ? signed_in_resource : autenticacion.usuario

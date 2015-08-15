@@ -1,0 +1,284 @@
+/****************************************************************/
+/*                             HEADER                           */
+/****************************************************************/
+
+#header-curso .media-body{
+  width: 430px;
+  vertical-align: middle;
+}
+
+#header-curso .media-body div{
+  text-transform: uppercase;
+}
+
+#avance-porcentaje{
+  position: relative;
+  display: inline-block;
+  float: right;
+  width: 60px;
+  height: 60px;
+}
+
+#avance-porcentaje input, #avance-porcentaje input:focus{
+  border: none;
+}
+
+/****************************************************************/
+/*                          INSTRUCTOR                          */
+/****************************************************************/
+
+.img-instructor{
+  width: 100px; 
+  height: 100px; 
+  border: 5px solid #ffffff; 
+}
+
+#info-instructor .card-image{
+  background: linear-gradient(rgb(27, 117, 181), rgb(71, 181, 218));
+  height: 150px;
+  overflow: visible;
+}
+
+#info-instructor .card-image img{  
+  display: block;
+  border-radius: 100%;      
+  width: 180px;
+  margin: 20px auto;
+  position: absolute;
+  z-index: 1;
+}
+
+#info-instructor .card-content{
+  margin-top: 30px;
+}
+
+.tab-simple{
+  position:relative;
+  padding:5px 5px 5px;
+  margin:5px 5px 5px;
+  border-color:#e5e5e5 #eee #eee;
+  border-style:solid;
+  border-width:1px 0;
+  -webkit-box-shadow:
+  inset 0 3px 6px rgba(0,0,0,.05);
+  box-shadow:inset 0 3px 6px rgba(0.1,0,0,.05)
+}
+
+#sidebar-recordatorios ul li{
+   /*border-top: 1px solid #eeeeee;*/
+   display: block;
+}
+
+#sidebar-recordatorios ul:first{
+   border-top: none;
+}
+.text-tab-simple {
+  margin-left: 0.5cm;
+  font-size: 11px;
+  border-bottom: 1px solid #eeeeee;
+}
+
+.border {
+   border-bottom: 1px solid #eeeeee; 
+}
+
+.font12px{
+  font-size: 12px;
+}
+.font8px{
+  font-size: 8px;
+}
+
+.img-header-clases{
+ width: 130px;
+ height: 130px;
+}
+
+
+
+
+.panel-der {
+  margin-left: 0.5cm;
+  font-size: 12px;
+}
+
+.panel-der::first{
+  border: 0px;
+}
+
+.subrayado-min {
+  border-top:solid; 
+  border-width: 2px; 
+  width:1cm;
+}
+
+
+.margin-l2cm {
+  margin-left: 2cm;
+}
+
+.margin-l1cm {
+  margin-left: 1cm;
+}
+
+
+/****************************************************************/
+/*                         LECCIONES                            */
+/****************************************************************/
+
+a.titulo-leccion{
+  color: white;
+  display: block;
+}
+.titulo-leccion h4{
+  display: inline-block;
+  font-size: 16px;
+  font-weight: 300;
+  margin: 0px
+}
+
+.leccion .panel-body{
+  padding: 0;
+  font-weight: 400;
+}
+
+.leccion table.bordered tr{
+  border-top: 1px solid #e0e0e0;
+  border-bottom: none;
+}
+
+.leccion table.bordered tr.header{
+  padding-left: 30px;
+  background: #f2f2f2;
+}
+
+.leccion table.bordered td, .leccion table.bordered th {
+  padding: 10px 5px;
+}
+
+span.porcentaje-completado{
+  float: right;
+  text-transform: uppercase;
+  font-size: 12px;
+  padding-top: 10px;
+}
+
+table.contenido i, table.contenido a, table.contenido a:hover{
+  color: #7a7a7a;
+}
+
+table.contenido tr:first, table.contenido tr:nth-child(4){
+  width: 5%;
+}
+
+/*table.contenido tr th, table.contenido tr td{
+  padding: 0px;
+}*/
+
+/****************************************************************/
+/*                        NOTIFICACIONES                        */
+/****************************************************************/
+
+.notificacion-fecha{ 
+  padding: 5px;
+  text-align: center;
+  font-size: 15px;
+  text-transform: uppercase;
+  height: 55px;
+  width: 80px;
+}
+
+.notificacion-fecha .anio{
+  font-size: 18px;
+}
+
+
+/****************************************************************/
+/*                        Bitacora                              */
+/****************************************************************/
+
+.scroll-bitacora {
+  height: 700px; 
+  overflow: auto;
+}
+
+
+
+
+/****************************************************************/
+/*                       input file                             */
+/****************************************************************/
+
+.clearfix{*zoom:1;}.clearfix:before,.clearfix:after{display:table;content:"";line-height:0;}
+.clearfix:after{clear:both;}
+.hide-text{font:0/0 a;color:transparent;text-shadow:none;background-color:transparent;border:0;}
+.input-block-level{display:block;width:100%;min-height:30px;-webkit-box-sizing:border-box;-moz-box-sizing:border-box;box-sizing:border-box;}
+.btn-file{overflow:hidden;position:relative;vertical-align:middle;}.btn-file>input{position:absolute;top:0;right:0;margin:0;opacity:0;filter:alpha(opacity=0);transform:translate(-300px, 0) scale(4);font-size:23px;direction:ltr;cursor:pointer;}
+.fileupload{margin-bottom:9px;}.fileupload .uneditable-input{display:inline-block;margin-bottom:0px;vertical-align:middle;cursor:text;}
+.fileupload .thumbnail{overflow:hidden;display:inline-block;margin-bottom:5px;vertical-align:middle;text-align:center;}.fileupload .thumbnail>img{display:inline-block;vertical-align:middle;max-height:100%;}
+.fileupload .btn{vertical-align:middle;}
+.fileupload-exists .fileupload-new,.fileupload-new .fileupload-exists{display:none;}
+.fileupload-inline .fileupload-controls{display:inline;}
+.fileupload-new .input-append .btn-file{-webkit-border-radius:0 3px 3px 0;-moz-border-radius:0 3px 3px 0;border-radius:0 3px 3px 0;}
+.thumbnail-borderless .thumbnail{border:none;padding:0;-webkit-border-radius:0;-moz-border-radius:0;border-radius:0;-webkit-box-shadow:none;-moz-box-shadow:none;box-shadow:none;}
+.fileupload-new.thumbnail-borderless .thumbnail{border:1px solid #ddd;}
+.control-group.warning .fileupload .uneditable-input{color:#a47e3c;border-color:#a47e3c;}
+.control-group.warning .fileupload .fileupload-preview{color:#a47e3c;}
+.control-group.warning .fileupload .thumbnail{border-color:#a47e3c;}
+.control-group.error .fileupload .uneditable-input{color:#b94a48;border-color:#b94a48;}
+.control-group.error .fileupload .fileupload-preview{color:#b94a48;}
+.control-group.error .fileupload .thumbnail{border-color:#b94a48;}
+.control-group.success .fileupload .uneditable-input{color:#468847;border-color:#468847;}
+.control-group.success .fileupload .fileupload-preview{color:#468847;}
+.control-group.success .fileupload .thumbnail{border-color:#468847;}
+
+
+/*******************************************************************/
+/*                           VISUALIZADOR                          */
+/*******************************************************************/
+
+#visualizador.modal{
+  max-width: 95%;
+  max-height: 90%;
+}
+
+#visualizador.modal .controles{
+  background-color: rgba(109, 172, 231, 0.5);
+  padding: 15px;
+  border-top-left-radius: 100%;
+  border-top-right-radius: 100%;
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  z-index: 1200;
+  margin: 0 auto;
+  display: block;
+  text-align: center;
+}
+
+#visualizador.modal img{
+  position: relative;
+  left: 0;
+  right: 0;
+  display: block;
+  margin: 0 auto;
+}
+#visualizador.modal .modal-close{
+  position: absolute;
+  top: 10px;
+  right: 10px;
+  z-index: 1001;
+}
+#visualizador.modal .controles a{
+  margin: 0px 25px;
+}
+
+#visualizador.modal .controles i{
+  color: white;
+  font-size: 25px;
+}
+
+.tabs.mod-evaluaciones{
+  border-bottom: none;
+}
