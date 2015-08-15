@@ -65,4 +65,4 @@ gem 'apartment'
 gem 'kaminari'
 gem 'bootstrap-kaminari-views'
 gem 'kaminari-bootstrap'
-gem 'therubyracer'
+gem 'therubyracer', :platform => :ruby
