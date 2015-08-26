@@ -66,3 +66,8 @@ gem 'kaminari'
 gem 'bootstrap-kaminari-views'
 gem 'kaminari-bootstrap'
 gem 'therubyracer', :platform => :ruby
+
+gem 'react-rails', github: 'reactjs/react-rails', branch: 'master'
+gem 'showdown-rails'
+gem 'closure_tree'
+gem 'seed_dump'

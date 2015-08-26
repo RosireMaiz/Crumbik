@@ -6,15 +6,13 @@ class CreateOrganizacions < ActiveRecord::Migration
       t.string :direccion
       t.string :descripcion
       t.string :slogan
-      t.string :telefono1
-      t.string :telefono2
-      t.string :email1
-      t.string :email2
+      t.string :telefono
+      t.string :email
       t.string :estatus, default: "A", :limit => 1
       t.references :pais, index: true
-      t.references :usuario
-      
-      t.timestamps null: false
+      t.references :usuario, index: true
+      t.references :tipo_organizacion, index: true
+
     end
   end
 end

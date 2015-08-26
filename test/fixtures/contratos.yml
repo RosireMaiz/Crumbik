@@ -1,0 +1,13 @@
+# Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+
+one:
+  fecha_creacion: 2015-08-19 20:10:51
+  fecha_vencimiento: 2015-08-19 20:10:51
+  estatus: MyString
+  observacion: MyString
+
+two:
+  fecha_creacion: 2015-08-19 20:10:51
+  fecha_vencimiento: 2015-08-19 20:10:51
+  estatus: MyString
+  observacion: MyString

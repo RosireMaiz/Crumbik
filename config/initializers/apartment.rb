@@ -16,7 +16,8 @@ Apartment.configure do |config|
   #
   # config.excluded_models = %w{ Tenant }
 
-  config.excluded_models = %w{ Organizacion }
+  config.excluded_models = %w{ Organizacion Rol OpcionMenu Menu ModoPago 
+                               RedSocial  FrecuenciaPago Plan Contrato }
 
   # In order to migrate all of your Tenants you need to provide a list of Tenant names to Apartment.
   # You can make this dynamic by providing a Proc object to be called on migrations.
@@ -24,6 +25,8 @@ Apartment.configure do |config|
   #
   # config.tenant_names = lambda{ Customer.pluck(:tenant_name) }
   # config.tenant_names = ['tenant1', 'tenant2']
+
+
   #
   config.tenant_names = lambda { Organizacion.pluck :subdominio }
 

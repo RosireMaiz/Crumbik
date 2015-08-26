@@ -1,26 +1,80 @@
 <div class="navbar-fixed">
-	<nav>
+	<nav id="menu-header">
 	    <div class="nav-wrapper white">
 	    	<div class="contenedor">
 	    		<a  class="brand-logo">
 	    			<img src="<%= asset_path 'header-logo.png' %>"><span id="logo-text">CR&Uuml;MBIK</span>
 	    		</a>
-			      <ul id="nav-mobile" class="right hide-on-med-and-down">
-			        <li><a href="http://lvh.me:3000/">Inicio</a></li>
-			        <li><a href="http://lvh.me:3000/#servicios">Servicios</a></li>
-			        <li><a href="http://lvh.me:3000/#planes">Planes</a></li>
-			        <li><a href="http://lvh.me:3000/#contactanos">Cont&aacute;ctanos</a></li>
-			      </ul>
-			      <ul id="nav-sesion" class="hide-on-med-and-down">
-			      <% if !usuario_signed_in? %>
-			        <li><a href="#login-form" class="modal-trigger">Iniciar sesi&oacute;n</a></li>
+				<ul id="nav-mobile" class="right hide-on-med-and-down">
+				   	<li><a href="http://lvh.me:3000/">Inicio</a></li>
+				   	<li><a href="http://lvh.me:3000/#servicios">Servicios</a></li>
+				  	<li><a href="http://lvh.me:3000/#planes">Planes</a></li>
+				   	<li><a href="http://lvh.me:3000/#contactanos">Cont&aacute;ctanos</a></li>
+				</ul>
+			    <ul id="nav-sesion" class=" hide-on-med-and-down">
+					<% if !usuario_signed_in? %>
+				    	<li>
+				    		<a href="#login-form" class="modal-trigger">Iniciar sesi&oacute;n</a>
+				    	</li>
 
-			       <li> <%= link_to "Registrarse", new_usuario_registration_path %></li>
+				       	<li>
+				       	 	<%= link_to "Registrarse", new_usuario_registration_path %>
+				       	</li>
 
-  					<% else %>  
-			        <li><%= link_to 'Edit profile', edit_usuario_registration_path %> </li>
-   					<li> <%= link_to "Logout", destroy_usuario_session_path, method: :delete %></li>
-			      <% end %>
+	  				<% else %>  
+					        <li>
+					          <a href="javascript:void(0)">
+					            <span class="badge light-blue">2</span><i class="mdi-social-notifications-none"></i>
+					          </a>
+					        </li>
+					        <li>
+					          <a href="javascript:void(0)">
+					            <span class="badge light-blue">2</span><i class="fa fa-envelope-o"></i>
+					          </a>
+					        </li>
+					        <li class="dropdown  valign-wrapper ">
+					        	<a href="/" class="dropdown-toggle" data-toggle="dropdown" aria-expanded="true">
+					        		<div class="media logged-in-usuario  valign-wrapper ">
+					        			<div class="media-body">
+						    				<h6 class="media-heading"><%= current_usuario.username%></h6>
+    										<span class="rol"><%= current_usuario.rol_actual.nombre %></span>
+						    			</div>
+						    			
+						    			<div class="media-right ">
+							
+											<%  if  ! current_usuario.perfil.nil? %>
+						     
+												<% if ! current_usuario.perfil.foto.nil? and current_usuario.perfil.foto != "" %>
+					    			   				<img src="<%= @foto %>" class="img-circle" alt=""/>
+					    						<% else %>
+					                        		<img src="/assets/avatar/sinfoto.jpg" />
+					                 			<% end %>
+					          
+											<% else %>
+					  							<img src="/assets/avatar/sinfoto.jpg" />
+
+											<% end %>
+					              		</div>
+					              		<div class="media-body pull-right">
+					              			<i class="fa fa-chevron-down "></i>
+					              		</div>
+									</div>
+					        	</a>
+					        	<ul class="dropdown-menu" role="menu" aria-labelledby="dropdownMenu1">
+						            <li role="presentation">
+						              <a id="cambiar-rol" role="menuitem" tabindex="-1" href="javascript:void(0)">Cambiar rol</a>
+						            </li>
+						             <li class="divider center"></li>
+						             <li>
+				        				<%= link_to 'Ver Perfil', edit_usuario_registration_path %> 
+				        			</li>
+				        			<li class="divider center"></li>
+						  			<li role="presentation"><%= link_to "Salir", destroy_usuario_session_url,method: :delete %></li>						  			
+								</ul>
+					        </li>
+      					
+
+				    <% end %>
 			    </ul>
 	    	</div>
 	    </div>

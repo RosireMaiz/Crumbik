@@ -5,9 +5,9 @@ class CreatePerfils < ActiveRecord::Migration
       t.string :apellidos
       t.string :sexo
       t.string :ocupacion
-t.references :usuario
-
-      t.timestamps null: false
+	    t.references :usuario, index: true
+	    t.longblob :foto
+      t.string :formato_foto
     end
   end
 end

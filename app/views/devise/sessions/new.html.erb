@@ -6,7 +6,7 @@
   </div>
   <div id="secciones" style="display:inline-block;width:100%;">
     <div class="pull-left seccion">
-      <%=  form_for(resource, as: resource_name, url: session_path(resource_name)) do |f| %>
+      <%=  form_for(resource, as: resource_name, url: session_path(resource_name), :html => {:id => "form-iniciar-sesion"}) do |f| %>
         <div><%= f.label :email,"Email" %><br />
         <%= f.email_field :email, :autofocus => true %></div>
 

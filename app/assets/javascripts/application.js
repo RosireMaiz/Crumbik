@@ -10,9 +10,21 @@
 //
 // Read Sprockets README (https://github.com/sstephenson/sprockets#sprockets-directives) for details
 // about supported directives.
-//
+
+//= require jquery
+//= require jquery_ujs
+//= require showdown
+//= require react
+//= require react_ujs
 //= require jquery
 //= require jquery_ujs
 //= require turbolinks
+//= require bootstrap.min
+//= require fluxxor
+// require fluxxor.js.map
+//= require jquery.validate.min
+//= require additional-methods.min
+//= require plugins/sweet-alert.min.js
+//= require validaciones
 //= require materialize-sprockets
 //= require_tree .

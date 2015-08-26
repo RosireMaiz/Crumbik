@@ -11,52 +11,163 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20150802214442) do
+ActiveRecord::Schema.define(version: 20150820014138) do
 
   create_table "autenticacions", force: :cascade do |t|
-    t.integer  "usuario_id", limit: 4
-    t.string   "provider",   limit: 255
-    t.string   "uid",        limit: 255
-    t.datetime "created_at",             null: false
-    t.datetime "updated_at",             null: false
+    t.integer "usuario_id", limit: 4
+    t.string  "provider",   limit: 255
+    t.string  "uid",        limit: 255
   end
 
   add_index "autenticacions", ["usuario_id"], name: "index_autenticacions_on_usuario_id", using: :btree
 
+  create_table "contratos", force: :cascade do |t|
+    t.datetime "fecha_creacion"
+    t.datetime "fecha_vencimiento"
+    t.string   "estatus",            limit: 255
+    t.string   "observacion",        limit: 255
+    t.integer  "organizacion_id",    limit: 4
+    t.integer  "plan_id",            limit: 4
+    t.integer  "frecuencia_pago_id", limit: 4
+  end
+
+  add_index "contratos", ["frecuencia_pago_id"], name: "index_contratos_on_frecuencia_pago_id", using: :btree
+  add_index "contratos", ["organizacion_id"], name: "index_contratos_on_organizacion_id", using: :btree
+  add_index "contratos", ["plan_id"], name: "index_contratos_on_plan_id", using: :btree
+
+  create_table "frecuencia_pagos", force: :cascade do |t|
+    t.string  "nombre", limit: 255
+    t.integer "meses",  limit: 4
+  end
+
+  create_table "menus", force: :cascade do |t|
+    t.integer  "rol_id",         limit: 4
+    t.integer  "opcion_menu_id", limit: 4
+    t.datetime "created_at",               null: false
+    t.datetime "updated_at",               null: false
+  end
+
+  add_index "menus", ["opcion_menu_id"], name: "index_menus_on_opcion_menu_id", using: :btree
+  add_index "menus", ["rol_id"], name: "index_menus_on_rol_id", using: :btree
+
+  create_table "modo_pagos", force: :cascade do |t|
+    t.string "nombre",  limit: 255
+    t.string "estatus", limit: 1,   default: "A"
+  end
+
+  create_table "monedas", force: :cascade do |t|
+    t.string "nombre", limit: 255
+  end
+
+  create_table "opcion_menus", force: :cascade do |t|
+    t.string  "nombre",   limit: 255
+    t.boolean "raiz",     limit: 1
+    t.string  "url",      limit: 255
+    t.integer "padre_id", limit: 4
+    t.integer "menu_id",  limit: 4
+    t.string  "icono",    limit: 255
+    t.integer "orden",    limit: 4
+  end
+
+  add_index "opcion_menus", ["menu_id"], name: "index_opcion_menus_on_menu_id", using: :btree
+  add_index "opcion_menus", ["padre_id"], name: "index_opcion_menus_on_padre_id", using: :btree
+
+  create_table "organizacio_red_socials", force: :cascade do |t|
+    t.string  "url",             limit: 255
+    t.integer "red_social_id",   limit: 4
+    t.integer "organizacion_id", limit: 4
+  end
+
+  add_index "organizacio_red_socials", ["organizacion_id"], name: "index_organizacio_red_socials_on_organizacion_id", using: :btree
+  add_index "organizacio_red_socials", ["red_social_id"], name: "index_organizacio_red_socials_on_red_social_id", using: :btree
+
   create_table "organizacions", force: :cascade do |t|
-    t.string   "nombre",      limit: 255
-    t.string   "subdominio",  limit: 255
-    t.string   "direccion",   limit: 255
-    t.string   "descripcion", limit: 255
-    t.string   "slogan",      limit: 255
-    t.string   "telefono1",   limit: 255
-    t.string   "telefono2",   limit: 255
-    t.string   "email1",      limit: 255
-    t.string   "email2",      limit: 255
-    t.string   "estatus",     limit: 1,   default: "A"
-    t.integer  "pais_id",     limit: 4
-    t.integer  "usuario_id",  limit: 4
-    t.datetime "created_at",                            null: false
-    t.datetime "updated_at",                            null: false
+    t.string  "nombre",               limit: 255
+    t.string  "subdominio",           limit: 255
+    t.string  "direccion",            limit: 255
+    t.string  "descripcion",          limit: 255
+    t.string  "slogan",               limit: 255
+    t.string  "telefono",             limit: 255
+    t.string  "email",                limit: 255
+    t.string  "estatus",              limit: 1,   default: "A"
+    t.integer "pais_id",              limit: 4
+    t.integer "usuario_id",           limit: 4
+    t.integer "tipo_organizacion_id", limit: 4
   end
 
   add_index "organizacions", ["pais_id"], name: "index_organizacions_on_pais_id", using: :btree
+  add_index "organizacions", ["tipo_organizacion_id"], name: "index_organizacions_on_tipo_organizacion_id", using: :btree
+  add_index "organizacions", ["usuario_id"], name: "index_organizacions_on_usuario_id", using: :btree
+
+  create_table "pago_contratos", force: :cascade do |t|
+    t.float    "monto",        limit: 24
+    t.datetime "fecha"
+    t.integer  "usuario_id",   limit: 4
+    t.integer  "contrato_id",  limit: 4
+    t.integer  "modo_pago_id", limit: 4
+    t.integer  "moneda_id",    limit: 4
+  end
+
+  add_index "pago_contratos", ["contrato_id"], name: "index_pago_contratos_on_contrato_id", using: :btree
+  add_index "pago_contratos", ["modo_pago_id"], name: "index_pago_contratos_on_modo_pago_id", using: :btree
+  add_index "pago_contratos", ["moneda_id"], name: "index_pago_contratos_on_moneda_id", using: :btree
+  add_index "pago_contratos", ["usuario_id"], name: "index_pago_contratos_on_usuario_id", using: :btree
 
   create_table "pais", force: :cascade do |t|
-    t.string   "nombre",     limit: 255
-    t.datetime "created_at",             null: false
-    t.datetime "updated_at",             null: false
+    t.string "nombre", limit: 255
   end
 
   create_table "perfils", force: :cascade do |t|
-    t.string   "nombres",    limit: 255
-    t.string   "apellidos",  limit: 255
-    t.string   "sexo",       limit: 255
-    t.string   "ocupacion",  limit: 255
-    t.integer  "usuario_id", limit: 4
-    t.datetime "created_at",             null: false
-    t.datetime "updated_at",             null: false
+    t.string  "nombres",      limit: 255
+    t.string  "apellidos",    limit: 255
+    t.string  "sexo",         limit: 255
+    t.string  "ocupacion",    limit: 255
+    t.integer "usuario_id",   limit: 4
+    t.longblob  "foto",       limit: 255
+    t.string  "formato_foto", limit: 255
   end
+
+  add_index "perfils", ["usuario_id"], name: "index_perfils_on_usuario_id", using: :btree
+
+  create_table "plan_monedas", force: :cascade do |t|
+    t.float   "monto",     limit: 24
+    t.integer "moneda_id", limit: 4
+    t.integer "plan_id",   limit: 4
+  end
+
+  add_index "plan_monedas", ["moneda_id"], name: "index_plan_monedas_on_moneda_id", using: :btree
+  add_index "plan_monedas", ["plan_id"], name: "index_plan_monedas_on_plan_id", using: :btree
+
+  create_table "plans", force: :cascade do |t|
+    t.string "nombre",      limit: 255
+    t.string "descripcion", limit: 255
+    t.string "estatus",     limit: 1,   default: "A"
+  end
+
+  create_table "red_socials", force: :cascade do |t|
+    t.string "icono",   limit: 255
+    t.string "nombre",  limit: 255
+    t.string "estatus", limit: 1,   default: "A"
+  end
+
+  create_table "rols", force: :cascade do |t|
+    t.string "nombre",  limit: 255
+    t.string "estatus", limit: 1,   default: "A"
+  end
+
+  create_table "tipo_organizacions", force: :cascade do |t|
+    t.string "nombre",      limit: 255
+    t.string "descripcion", limit: 255
+    t.string "estatus",     limit: 1,   default: "A"
+  end
+
+  create_table "usuario_rols", force: :cascade do |t|
+    t.integer "usuario_id", limit: 4
+    t.integer "rol_id",     limit: 4
+  end
+
+  add_index "usuario_rols", ["rol_id"], name: "index_usuario_rols_on_rol_id", using: :btree
+  add_index "usuario_rols", ["usuario_id"], name: "index_usuario_rols_on_usuario_id", using: :btree
 
   create_table "usuarios", force: :cascade do |t|
     t.string   "email",                  limit: 255, default: "",    null: false

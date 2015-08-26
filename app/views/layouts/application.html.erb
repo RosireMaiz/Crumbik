@@ -3,7 +3,7 @@
 	<head>
 	  <title>Crumbik</title>
 	  <%= stylesheet_link_tag    'application', media: 'all', 'data-turbolinks-track' => true %>
-	  <%= javascript_include_tag 'application', 'data-turbolinks-track' => true %>
+	  
 	  <%= yield :css_personalizado %>
 	  
 	  <%= csrf_meta_tags %>
@@ -11,23 +11,39 @@
 
 
 	<body>
-		<header>
-			<%= render "partials/header" %>
-		</header>
-
-		<%= yield %>
-
-		<!--<div class="fixed-action-btn chatbutton">
- 			<a class="btn-floating btn-large waves-effect waves-light pink accent-3 right absolute" >
- 				<i class="mdi-communication-chat" style="line-height: 49.5px;"></i>
- 			</a>
- 		</div>-->
-
-		<footer>
-			<%= render "partials/footer" %>
-		</footer>
-
+		<main>
 		
+	      <% if usuario_signed_in? %>
+	        <%= render "partials/menu" %>
+	       <div id ="contenedor" class="container-fluid no-padding logged-in">
+	          <div class="col s12">
+	          	<header>
+					<%= render "partials/header" %>
+				</header>
+
+	            <%= yield %>
+	           <footer >
+		        	<%= render "partials/footer" %>
+		        </footer>
+	          </div>
+	        </div>	         
+	      <% else %>
+		      <header>
+				<%= render "partials/header" %>
+			</header>
+	        <%= yield %>
+	        <footer >
+	        	<%= render "partials/footer" %>
+	        </footer>
+	        
+	      <% end %>
+	      
+	      <div class="scroll-to-top">
+	        <a href="javascript:void(0)"><i class="fa fa-arrow-circle-o-up"></i></a>
+	      </div>
+	   
+	</main>
+	<%= javascript_include_tag 'application', 'data-turbolinks-track' => true %>
 		<%= yield :javascript_personalizado %>
 	</body>
 </html>

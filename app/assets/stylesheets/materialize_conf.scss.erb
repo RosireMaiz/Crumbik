@@ -19,7 +19,13 @@ $link-color: color("light-blue", "darken-1") !default;
   		padding-left: 40px;
   		top: -2px;
   		left: 0;
+  		height: 85px;
   	}
+  	.navbar-fixed {
+	    position: relative;
+	    height: 85px;
+	    z-index: 998;
+	}
 }
 
 nav span#logo-text, nav ul a{
@@ -52,9 +58,6 @@ nav ul#nav-sesion li:first-child:after{
 	position: absolute;
 	top: 0;
 	right: 0;
-}
-nav ul#nav-sesion li a{
-	display: inline;
 }
 
 @media only screen and (min-width: 601px){

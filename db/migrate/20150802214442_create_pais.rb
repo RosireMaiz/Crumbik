@@ -3,7 +3,6 @@ class CreatePais < ActiveRecord::Migration
     create_table :pais do |t|
       t.string :nombre
 
-      t.timestamps null: false
     end
   end
 end

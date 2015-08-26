@@ -28,7 +28,7 @@ Rails.application.routes.draw do
 
 	get '/perfil', to: 'paginas#perfil'
 	get '/catalogo', to: 'paginas#catalogo'
-	
+	match "/inicio" => "paginas#index", via: :get
 
 	constraints(SubdomainPresent) do
 	end

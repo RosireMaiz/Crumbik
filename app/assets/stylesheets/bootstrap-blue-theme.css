@@ -134,7 +134,7 @@ div.timer{
 }
 
 main{
-  margin-top: 64px;
+  margin-top: 0px;
 }
 
 /*****************************************************/
@@ -286,12 +286,28 @@ main{
 /*****************************************************/
 
 ul.dropdown-menu:before {
-  content: '';
-  display: inline-block;
-  position: absolute;
-  border-width: 0px 5px 5px;
-  border-color: transparent transparent blue;
+ position: absolute;
+   top: -7px;
+   left: 84%;
+   display: inline-block;
+   border-right: 7px solid transparent;
+   border-bottom: 7px solid #CCC;
+   border-left: 7px solid transparent;
+   border-bottom-color: rgba(0, 0, 0, 0.2);
+   content: '';
 }
+
+ ul.dropdown-menu::after {
+    position: absolute;
+    top: -6px;
+    left: 85%;
+    display: inline-block;
+    border-right: 6px solid transparent;
+    border-bottom: 6px solid white;
+    border-left: 6px solid transparent;
+    content: '';
+  }
+
 
 header{
   position: relative;
@@ -346,13 +362,7 @@ header{
   border-bottom: none !important;
   outline: 0 !important;
 }
-#menu-header{
-  position: fixed;
-  top:0;
-  left: 0;
-  z-index: 500;
-  width: 100%;
-}
+
 .nav, .nav-wrapper{
   color:#4A4A4A;
 }
@@ -360,10 +370,6 @@ header{
 .nav-wrapper{
   background-color: white;
   padding: 0px 0px 0px 20px;
-}
-
-.nav-wrapper.inverse{
-  background-color: rgb(67, 71, 75);
 }
 
 .nav-wrapper .brand-logo{
@@ -374,9 +380,6 @@ header{
   color:#8BD6DF;
 }
 
-nav div.inverse > ul > li > a{
-  color: #CACFD0 !important;
-}
 nav ul a .badge{
   color: white;
   border-radius: 100%;
@@ -388,7 +391,7 @@ nav ul a .badge{
   line-height: 20px;
   float: none;
   position: absolute;
-  top: 10px;
+  top: 22px;
   left: 50%;
   font-size: 75%;
 }
@@ -418,12 +421,13 @@ ul.dropdown-menu li{
 
 .logged-in-usuario .media-body{
   line-height: 12px;
-  padding-top: 15px;
+
 }
 
 .logged-in-usuario img{
   width: 45px;
   height: 45px;
+  border-radius: 25px;
 }
 
 .logged-in-usuario .media-body h6{
@@ -434,22 +438,28 @@ ul.dropdown-menu li{
   font-style: italic;
 }
 nav#menu-header ul i{
+	color: #878787 !important;
   font-size: 20px !important;
 }
-nav#menu-header  ul > li:hover, nav#menu-header  ul > li:active{
-  background-color: #e3f2fd;
-  color: #42a5f5;
-}
 
-nav#menu-header .inverse ul > li:hover, nav#menu-header .inverse  ul > li:active{
-  background-color: #53575B
-}
 nav#menu-header >div>  ul > li{
-
   box-sizing:background-color;
   -moz-transition: background-color 0.5s ease-out;
   -webkit-transition: background-color 0.5s ease-out;
   transition: background-color 0.5s ease-out;
+}
+
+nav .nav-wrapper i{
+  display: inline !important; 
+}
+
+nav#menu-header  div.media .media-body .pull-right ul i{
+	
+    font-size: 12px !important;
+}
+
+.media-body{
+	color: #E05996;
 }
 
 /*****************************************************/
@@ -464,6 +474,11 @@ footer .footer-copyright{
   background-color: #1565c0;
 }
 
+div.navbar-fixed> nav{
+ box-shadow: 5px 2px 5px 0 rgba(0, 0, 0, 0.16), 5px 2px 10px 0 rgba(0, 0, 0, 0.12);
+
+}
+
 /*****************************************************/
 /*                     SIDEBAR                       */
 /*****************************************************/
@@ -476,25 +491,62 @@ main #sidebar-menu {
   display: inline-block;
   margin: 0px auto;
   position: fixed;
-  top: 64px;
+  top: 0px;
   bottom: 0;
   z-index: 99;
-  background-color: #43474B;
+  background-color: #FFFFFF;
   overflow: hidden;
   transition: width 0.5s;
+  box-shadow: 5px 2px 5px 0 rgba(0, 0, 0, 0.16), 5px 2px 10px 0 rgba(0, 0, 0, 0.12);
+  color:#BB5A78;
 }
 
 main.cerrado #sidebar-menu{
   width: 45px;
 }
 
+main.cerrado .banner-sidebar{
+    opacity:0;
+    height: 0;
+    padding: 0 8px;
+    overflow: hidden;
+    transition: all .3s ease .15s;
+}
+.banner-sidebar{
+    opacity:1;  
+     transition: opacity height .03s ease .15s;
+}
+.div-foto-sidebar{
+  padding-top: 70px;
+
+}
+
+.div-foto-sidebar > img{
+  border-radius: 100px;
+    max-width: 90px;
+}
+
+.banner-sidebar> div.contenedor>span {
+    font-weight: bold;
+    font-size: 18px;
+    color: #767676;
+}
+
 
 main.cerrado #sidebar-menu span{
   display: none;
 }
+.contenedor {
+  max-width: 1140px;
+  margin: 0 0;
+  position: relative;
+  transition: width 0.5s;
+}
 
-#sidebar-menu.inverse{
-  background-color: rgb(67, 71, 75); 
+main.cerrado .contenedor {
+    max-width: 1200px;
+    margin: 0 0;
+    position: relative;
 }
 
 #sidebar-menu div.collapsible{
@@ -520,8 +572,21 @@ main.cerrado #sidebar-menu span{
   border-top: none;
 }
 
+#sidebar-menu ul{
+    overflow-x: hidden;
+    overflow-y: hidden;
+    max-height: 380px;
+}
+
+#sidebar-menu ul:hover{
+    overflow-x: hidden;
+    overflow-y: auto;
+}
+
 #sidebar-menu i{
   font-size: 25px;
+  color: #713ce2;
+  vertical-align: bottom;
 }
 
 #sidebar-menu i.fa{
@@ -529,10 +594,10 @@ main.cerrado #sidebar-menu span{
 }
 
 .toggler-wrapper{
-  background: #039be5;
+  background: #FFFFFF;
 }
 .toggler-wrapper a{
-  color: white;
+  color: #c34978;;
   text-transform: uppercase;
   font-size: 13px;
   line-height: 2rem;
@@ -540,7 +605,7 @@ main.cerrado #sidebar-menu span{
   padding: 10px 6px;
   width: 228px;
 }
-.toggler-wrapper a i{ color: white;}
+.toggler-wrapper a i{ color: #c34978;}
 /*#sidebar-menu ul.collapsible .collapsible-header{
   background: transparent;
   border: none;
@@ -554,6 +619,7 @@ main.cerrado #sidebar-menu span{
   text-transform: uppercase;
   font-size: 13px; 
   font-weight: 300;
+  color: #c34978;
 }
 
 .submenu a{
@@ -576,14 +642,20 @@ main.cerrado #sidebar-menu span{
   text-align: left;
   display: inline;
   margin-right: 0;
-  vertical-align: bottom;
+  vertical-align: middle;
 }
 
 #sidebar-menu > ul li:hover a:hover, #sidebar-menu ul li.active > a,
   #sidebar-menu ul a.menu-open{
-  background-color: rgb(43, 48, 52) !important;
-  color:#fff;
+  background-color: #EBECE8 !important;
+  color:#BB5A78;
 }
+
+.media-right {
+    padding-left: 10px;
+    padding-top: 15px;
+    height: 85px;
+  }
 
 
 
@@ -839,7 +911,7 @@ div.seccion-principal span:after, div.seccion-principal span::after{
 
 .scroll-to-top i{
   display: inline-block;
-  color:rgb(104, 121, 145);
+  color: rgb(147, 147, 148);
   font-size: 30px;
   opacity: 0.6;
 }

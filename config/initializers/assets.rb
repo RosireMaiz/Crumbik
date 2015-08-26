@@ -15,3 +15,7 @@ Rails.application.config.assets.precompile += %w( plugins/jquery.bootstrap.wizar
 Rails.application.config.assets.precompile += %w( organizacion.css )
 Rails.application.config.assets.precompile += %w( plugins/pwstrength-bootstrap-1.2.4.min.js )
 Rails.application.config.assets.precompile += %w( usuarios.js )
+Rails.application.config.assets.precompile += %w( bootstrap-blue.css )
+Rails.application.config.assets.precompile += %w( bootstrap-blue-theme.css )
+Rails.application.config.assets.precompile += %w( plugins/sweet-alert.css)
+
