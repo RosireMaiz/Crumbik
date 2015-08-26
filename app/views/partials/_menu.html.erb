@@ -1,10 +1,10 @@
 <aside id="sidebar-menu" >
 	<div class="banner banner-sidebar  center" >
 		<div class="col s3 div-foto-sidebar">
-          	<img src="<%= asset_path 'avatar/sinfoto.jpg' %>" >
+          	<img src="<%= @foto %>" >
    		</div>
 	    <div class="contenedor">
-	        <span>	 James McAvoy</span>
+	        <span><%= current_usuario.username%></span>
 	    </div>
 	</div>
 	<div class="toggler-wrapper">
