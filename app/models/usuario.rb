@@ -23,14 +23,10 @@ class Usuario < ActiveRecord::Base
 
   
   after_create do
-    foto_perfil = "";
-    formato = "data:image/jpg;base64,"
-    foto_perfil = Base64.encode64(File.open($ADMIN_ICON, "rb").read)
-    self.create_perfil(:foto => foto_perfil, :formato_foto => formato )
- 
-    @nuevo_rol = self.usuario_rols.build(:rol => Rol.first) 
-    @nuevo_rol.save
-
+    #foto_perfil = "";
+    #formato = "data:image/jpg;base64,"
+    #foto_perfil = Base64.encode64(File.open($ADMIN_ICON, "rb").read)
+    #self.create_perfil(:foto => foto_perfil, :formato_foto => formato )
   end
 
   attr_accessor :rol_actual

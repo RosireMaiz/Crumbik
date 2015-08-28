@@ -26,13 +26,6 @@ SET time_zone = "+00:00";
 -- Estructura de tabla para la tabla `autenticacions`
 --
 
-CREATE TABLE IF NOT EXISTS `autenticacions` (
-`id` int(11) NOT NULL,
-  `usuario_id` int(11) DEFAULT NULL,
-  `provider` varchar(255) COLLATE utf8_unicode_ci DEFAULT NULL,
-  `uid` varchar(255) COLLATE utf8_unicode_ci DEFAULT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
-
 -- --------------------------------------------------------
 
 --
@@ -80,13 +73,13 @@ CREATE TABLE IF NOT EXISTS `menus` (
 -- Volcado de datos para la tabla `menus`
 --
 
-INSERT INTO `menus` (`id`, `rol_id`, `opcion_menu_id`, `created_at`, `updated_at`) VALUES
-(1, 1, NULL, '0000-00-00 00:00:00', '0000-00-00 00:00:00'),
-(2, 2, NULL, '0000-00-00 00:00:00', '0000-00-00 00:00:00'),
-(3, 3, NULL, '0000-00-00 00:00:00', '0000-00-00 00:00:00'),
-(4, 4, NULL, '0000-00-00 00:00:00', '0000-00-00 00:00:00'),
-(5, 5, NULL, '0000-00-00 00:00:00', '0000-00-00 00:00:00'),
-(6, 6, NULL, '0000-00-00 00:00:00', '0000-00-00 00:00:00');
+INSERT INTO `menus` (`id`, `rol_id`,  `created_at`, `updated_at`) VALUES
+(1, 1,  '0000-00-00 00:00:00', '0000-00-00 00:00:00'),
+(2, 2,  '0000-00-00 00:00:00', '0000-00-00 00:00:00'),
+(3, 3, '0000-00-00 00:00:00', '0000-00-00 00:00:00'),
+(4, 4, '0000-00-00 00:00:00', '0000-00-00 00:00:00'),
+(5, 5, '0000-00-00 00:00:00', '0000-00-00 00:00:00'),
+(6, 6, '0000-00-00 00:00:00', '0000-00-00 00:00:00');
 
 -- --------------------------------------------------------
 
@@ -317,26 +310,6 @@ CREATE TABLE IF NOT EXISTS `schema_migrations` (
 -- Volcado de datos para la tabla `schema_migrations`
 --
 
-INSERT INTO `schema_migrations` (`version`) VALUES
-('20150707232053'),
-('20150713135524'),
-('20150802173944'),
-('20150802214115'),
-('20150802214442'),
-('20150820002042'),
-('20150820004051'),
-('20150820004837'),
-('20150820005752'),
-('20150820005922'),
-('20150820010135'),
-('20150820010614'),
-('20150820010722'),
-('20150820012048'),
-('20150820012344'),
-('20150820012611'),
-('20150820012849'),
-('20150820013448'),
-('20150820014138');
 
 -- --------------------------------------------------------
 
@@ -420,8 +393,6 @@ INSERT INTO `usuario_rols` (`id`, `usuario_id`, `rol_id`) VALUES
 --
 -- Indices de la tabla `autenticacions`
 --
-ALTER TABLE `autenticacions`
- ADD PRIMARY KEY (`id`), ADD KEY `index_autenticacions_on_usuario_id` (`usuario_id`);
 
 --
 -- Indices de la tabla `contratos`
@@ -543,9 +514,7 @@ ALTER TABLE `usuario_rols`
 
 --
 -- AUTO_INCREMENT de la tabla `autenticacions`
---
-ALTER TABLE `autenticacions`
-MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
+
 --
 -- AUTO_INCREMENT de la tabla `contratos`
 --
@@ -643,8 +612,7 @@ MODIFY `id` int(11) NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=13;
 --
 -- Filtros para la tabla `autenticacions`
 --
-ALTER TABLE `autenticacions`
-ADD CONSTRAINT `fk_rails_4d05f6d536` FOREIGN KEY (`usuario_id`) REFERENCES `usuarios` (`id`);
+
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
 /*!40101 SET CHARACTER_SET_RESULTS=@OLD_CHARACTER_SET_RESULTS */;

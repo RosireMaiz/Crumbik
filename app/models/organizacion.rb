@@ -2,23 +2,8 @@ class Organizacion < ActiveRecord::Base
 
 	after_create do
 		Apartment::Tenant.create(self.subdominio)
-		#@u = self.usuario.clone
-		#Apartment::Tenant.switch(self.subdominio)
-		#@u.save
-		#@nuevo_rol = @u.usuario_rols.build(:rol => Rol.first) 
-		#@nuevo_rol.save
-
-			#dir = "public/systems/"+ self.subdominio + "/avatar"
-		    #FileUtils.mkdir_p(dir) unless File.directory?(dir)
-
-		 	#dir = "public/systems/"+ self.subdominio + "/portafolio"
-			 #FileUtils.mkdir_p(dir) unless File.directory?(dir)
-
-			 #dir = "public/systems/"+ self.subdominio + "/cursos"
-			 #FileUtils.mkdir_p(dir) unless File.directory?(dir)
-			 
-		Apartment::Tenant.switch()
 	end
+	
 	RESTRICTED_SUBDOMAINS = %w{www}
 
 	validates :subdominio, presence: true,
