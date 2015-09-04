@@ -12,7 +12,7 @@ $link-color: color("light-blue", "darken-1") !default;
 
 @import "materialize";
 
-@media only screen and (min-width: 601px){
+@media only screen and (min-width: 301px){
 
   	nav a.brand-logo{
   		padding-top: 4px;
@@ -25,7 +25,8 @@ $link-color: color("light-blue", "darken-1") !default;
 	    position: relative;
 	    height: 85px;
 	    z-index: 998;
-	}
+	} 
+	
 }
 
 nav span#logo-text, nav ul a{
@@ -51,7 +52,7 @@ nav ul#nav-sesion li{
 nav ul#nav-sesion li:hover{
 	background: transparent;
 }
-nav ul#nav-sesion li:first-child:after{
+nav ul#nav-sesion > li:first-child:after{
 	content: "|";
 	display: inline-block;
 	color: #646464;

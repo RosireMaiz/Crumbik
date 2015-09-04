@@ -20,10 +20,18 @@ Rails.application.routes.draw do
 	get '/catalogo', to: 'paginas#catalogo'
 	match "/inicio" => "paginas#index", via: :get
 
+	match '/menu/ajax' => "menu#ajax", via: :post
+	match '/menu/ajax' => "menu#ajax", via: :get
+
+	match "/usuarios/editar" => "usuarios#edit", via: :get
+    match "/usuarios/editar" => "usuarios#save", via: :post
+    match "/usuarios/perfil" => "usuarios#show", via: :get
+    match "/usuario/guardar_foto" => "usuarios#save_foto", via: :post
+    match "/usuario/guardar_foto" => "usuarios#save_foto", via: :get
+
 	devise_scope :usuario do
 	    post "/entrar" => "devise/sessions#create"
 	    get "/entrar" => "devise/sessions#new"
-	    #get "/registro" => "devise/registrations#new"
 	end
 
 	devise_for :usuarios,  controllers: { omniauth_callbacks: 'omniauth_callbacks' }, via: :post

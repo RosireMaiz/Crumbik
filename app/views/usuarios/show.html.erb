@@ -1,0 +1,105 @@
+<!-- usuario/perfil -->
+
+<div class="row titulo-seccion">
+  <div class="banner banner-perfil">
+    <div class="contenedor">
+      <div class="col s6">
+        <h5 class="text-uppercase ">
+          Perfil Usuario <%= @usuario.perfil.nombres%> <%=
+          @usuario.perfil.apellidos%>
+        </h5>
+      </div>
+      <div class="col s6 text-right ">
+        <ol class="breadcrumb">
+          <li>
+            <a href="/">Inicio</a>
+          </li>
+          <li class="active">Perfil</li>
+        </ol>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="contenedor">
+  <div class="row espacio-perfil">
+    <div class="col s3">
+      <img id="foto"
+        src="<%= @usuario.perfil.formato_foto%><%= @usuario.perfil.foto%>">
+    </div>
+
+    <div class="col s4">
+      <ul id="asidefoto">
+        <li>
+          <i class="small mdi-action-account-circle"></i>
+          <span id="negrita">
+            <%= @usuario.perfil.nombres%> <%=
+            @usuario.perfil.apellidos%>
+          </span>
+        </li>
+        <li>
+          <i class="small mdi-action-event"></i>
+          <span class="grey-text darken-2">Sexo</span>
+          <span id="negrita"><%= @usuario.perfil.sexo%></span>
+        </li>
+        <li>
+          <i class="small mdi-action-wallet-travel"></i>
+          <span class="grey-text darken-2">Ocupacion</span>
+          <span id="negrita">
+            <%= @usuario.perfil.ocupacion%>
+          </span>
+        </li>
+        <li>
+          <i class="small mdi-social-school"></i>
+          <span class="grey-text darken-2">Estudio En</span>
+          <span id="negrita"></span>
+        </li>
+        <li>
+          <i class="small mdi-action-home"></i>
+          <span class="grey-text darken-2">
+            Pa&iacute;s
+          </span>
+          <span id="negrita">Venezuela</span>
+        </li>
+        <li>
+          <i class="small mdi-action-perm-identity"></i>
+          <span class="grey-text darken-2">
+            Compa&ntilde;ias
+          </span>
+          <span id="company">Taylor Treats, Vulcana</span>
+        </li>
+        <li>
+          <i class="small mdi-action-stars"></i>
+          <span class="grey-text darken-2">Intereses</span>
+          <span id="negrita">Something</span>
+        </li>
+      </ul>
+    </div>
+    <div class="col s4">
+      <ul id="asidefoto2" style="margin-left: auto">
+        <li>
+          <i class="fa fa-linkedin fa-2x"></i>
+          <span id="negrita">Linked In</span>
+        </li>
+        <li>
+          <i class="fa fa-twitter fa-2x"></i>
+          <span id="negrita">Twitter</span>
+        </li>
+        <li>
+          <i class="fa fa-behance fa-2x "></i>
+          <span id="negrita">Behance</span>
+        </li>
+        <li>
+          <i class="small mdi-communication-phone"></i>
+          <span id="negrita">+58 4262584349</span>
+        </li>
+        <li>
+          <i class="small mdi-communication-email"></i>
+          <span id="negrita"><%= @usuario.email%></span>
+        </li>
+      </ul>
+
+    </div>
+  </div>
+</div>
+

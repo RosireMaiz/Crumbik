@@ -35,7 +35,7 @@ i{vertical-align: middle;}
 }
 
 #contenedor.logged-in{
-  margin-left: 200px;
+  margin-left: 220px;
   -webkit-transition: margin-left 0.5s;
   transition: margin-left 0.5s;
 }
@@ -369,7 +369,7 @@ header{
 
 .nav-wrapper{
   background-color: white;
-  padding: 0px 0px 0px 20px;
+  padding: 0px 0px 0px 0px;
 }
 
 .nav-wrapper .brand-logo{
@@ -536,8 +536,8 @@ main.cerrado .banner-sidebar{
 main.cerrado #sidebar-menu span{
   display: none;
 }
-.contenedor {
-  max-width: 1140px;
+main.sesion .contenedor {
+  max-width: 1130px;
   margin: 0 0;
   position: relative;
   transition: width 0.5s;

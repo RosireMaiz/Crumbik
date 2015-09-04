@@ -1,14 +1,26 @@
-<aside id="sidebar-menu" >
-	<div class="banner banner-sidebar  center" >
-		<div class="col s3 div-foto-sidebar">
-          	<img src="<%= @foto %>" >
-   		</div>
-	    <div class="contenedor">
-	        <span><%= current_usuario.username%></span>
-	    </div>
-	</div>
-	<div class="toggler-wrapper">
-		<a href="javascript:void(0)"><i class="mdi-navigation-menu small"></i><span>Esconder menu</span></a>
-	</div>
-	<%= construir @menu %>
-</aside>
+
+<html>
+	<head>
+		 <script type="text/javascript" src="http://lvh.me:3000/ext/build/ext-all.js"></script>
+  	<!-- Incluya hojas de estilos de: Extjs 5.1 -->
+  	<link rel="stylesheet" type="text/css" href="http://lvh.me:3000/ext/packages/ext-theme-crisp/build/resources/ext-theme-crisp-all.css">
+    <!-- Incluya los javascripts propios -->
+    <script type="text/javascript" src="http://lvh.me:3000/js/menu.js"></script>
+</head><body>
+    <div class="side-nav fixed right" id="nav-mobile" >
+      <div id="bannerdiv" align="center" style="height: 220px;">
+		    <div class="banner banner-sidebar  center" >
+				<div class="col s3 pad15 div-foto-sidebar">
+		          	<img src="<%= @foto %>" >
+		   		</div>
+			    <div class=" pad10 contenedor">
+			        <span><%= current_usuario.username%></span>
+			    </div>
+			   
+			</div>
+			
+ 		</div>
+      <div id="tree_el" class="no-padding bold " ></div> 
+    </div>
+  </body>
+</html>

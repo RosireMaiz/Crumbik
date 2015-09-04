@@ -11,9 +11,10 @@
 
 
 	<body>
-		<main>
+		
 		
 	      <% if usuario_signed_in? %>
+	      <main class="sesion">
 	        <%= render "partials/menu" %>
 	       <div id ="contenedor" class="container-fluid no-padding logged-in">
 	          <div class="col s12">
@@ -26,8 +27,10 @@
 		        	<%= render "partials/footer" %>
 		        </footer>
 	          </div>
-	        </div>	         
+	        </div>	
+	       </main>         
 	      <% else %>
+	      <main>
 		      <header>
 				<%= render "partials/header" %>
 			</header>
@@ -35,7 +38,7 @@
 	        <footer >
 	        	<%= render "partials/footer" %>
 	        </footer>
-	        
+	       </main>
 	      <% end %>
 	      
 	      <div class="scroll-to-top">

@@ -2,7 +2,7 @@
 	<div  class="banner banner-perfil">
 		
 		<div class="contenedor">
-				<h2 class="titulo-banner"> James McAvoy</h2>
+				<h2 class="titulo-banner"> Perfil Usuario <%= @usuario.perfil.nombres%> <%= @usuario.perfil.apellidos%> </h2>
 		</div>
 		
 	</div>
@@ -15,9 +15,9 @@
 	      <div class="col s4">
 	      	<ul id="asidefoto" >
 	  			<li><i class="small mdi-action-account-circle"></i> <span id="negrita">McAtreats</span></li>
-				<li><i class="small mdi-action-event"></i><span class="grey-text darken-2">Naci&oacute;</span> <span id="negrita">7 de Junio de 1991</span></li>
-				<li><i class="small mdi-action-wallet-travel"></i><span class="grey-text darken-2">Trabaja en </span> <span id="negrita">Taylor Treats</span></li>
-				<li><i class="small mdi-social-school"></i><span class="grey-text darken-2">Estudi&oacute; en </span> <span id="negrita">Taylor Treats</span></li>
+				<li><i class="small mdi-action-event"></i><span class="grey-text darken-2">Sexo</span> <span id="negrita"> <%= @usuario.perfil.sexo%> </span></li>
+				<li><i class="small mdi-action-wallet-travel"></i><span class="grey-text darken-2">Ocupacion </span> <span id="negrita"><%= @usuario.perfil.ocupacion%> </span></li>
+				<li><i class="small mdi-social-school"></i><span class="grey-text darken-2">Email: </span> <span id="negrita"><%= @usuario.email%> </span></li>
 				<li><i class="small mdi-action-home"></i><span class="grey-text darken-2">Pa&iacute;s de Origen</span> <span id="negrita">Venezuela</span></li>
 				<li><i class="small mdi-action-perm-identity"></i><span class="grey-text darken-2">Compa&ntilde;ias</span> <span id="company">Taylor Treats, Vulcana</span></li>
 				<li><i class="small mdi-action-stars"></i><span class="grey-text darken-2">Intereses</span> <span id="negrita">Something</span></li>
