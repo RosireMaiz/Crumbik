@@ -68,7 +68,7 @@ class OpcionMenu < ActiveRecord::Base
   		end
   	end
   	else
-  		@tira= @tira+"{ { text: 'No hay datos', id: '" + total.to_s + "', href: '', leaf: true } } ]"
+  		@tira= @tira+"{ { text: 'No hay datos', id: '" + totaldeRegistros.to_s + "', href: '', leaf: true } } ]"
   	end
   	return @tira
   end

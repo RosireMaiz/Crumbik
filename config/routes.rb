@@ -7,7 +7,7 @@ end
 
 Rails.application.routes.draw do
 
-	root 'paginas#index'
+	root 'portal#index'
 
 	match "/validar_email" => "usuarios#validar_email", via: :post
 	match "/validar_subdominio" => "organizacions#validar_subdominio", via: :post
@@ -16,9 +16,8 @@ Rails.application.routes.draw do
   	match '/usuarios/:id/confirmar_registro' => 'usuarios#finish_signup', via: [:get, :patch], as: :finish_signup
 	match "/registro" => "usuarios#new", via: :get
 
-	get '/perfil', to: 'paginas#perfil'
 	get '/catalogo', to: 'paginas#catalogo'
-	match "/inicio" => "paginas#index", via: :get
+	match "/inicio" => "portal#index", via: :get
 
 	match '/menu/ajax' => "menu#ajax", via: :post
 	match '/menu/ajax' => "menu#ajax", via: :get
