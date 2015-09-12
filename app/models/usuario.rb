@@ -22,23 +22,11 @@ class Usuario < ActiveRecord::Base
   accepts_nested_attributes_for :pais
 
   
-  after_create do
-    #foto_perfil = "";
-    #formato = "data:image/jpg;base64,"
-    #foto_perfil = Base64.encode64(File.open($ADMIN_ICON, "rb").read)
-    #self.create_perfil(:foto => foto_perfil, :formato_foto => formato )
-  end
 
   attr_accessor :rol_actual
   @rol_actual
 
   after_initialize :set_rol_actual
-
-  private
-    def set_rol_actual
-      self.rol_actual = self.rols[0]
-    end
-
 
   def self.find_for_oauth(auth, signed_in_resource = nil)
     autenticacion = Autenticacion.find_for_oauth(auth)
@@ -59,7 +47,17 @@ class Usuario < ActiveRecord::Base
           username: auth.info.name
         )
 
+
+        formato = "data:image/jpg;base64,"
+        foto_perfil = Base64.encode64(File.open($ADMIN_ICON, "rb").read)
+        @rol = Rol.where("nombre = ?", "Cliente").first 
+        usuario.build_perfil
+        
+        usuario.perfil.attributes  = {:foto => foto_perfil, :formato_foto => formato}
+        
         usuario.save!
+        @nuevo = usuario.usuario_rols.build(:rol => @rol)
+        @nuevo.save  
       end    
       
     end
@@ -83,4 +81,12 @@ class Usuario < ActiveRecord::Base
       return false
     end
   end
+
+  private
+    def set_rol_actual
+      self.rol_actual = self.rols[0]
+    end
+
+
+  
 end

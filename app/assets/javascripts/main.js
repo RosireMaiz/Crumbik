@@ -24,6 +24,8 @@ $(document).ready(function(){
 	      //hover: false // Activate on click
 	    }
 	);
+
+
 	$(function () {
 	  $('[data-toggle="popover"]').popover()
 	})
@@ -34,11 +36,12 @@ $(document).ready(function(){
 		$("#top-search-bar").css("display","none");
 	});
 	$(".toggler-wrapper a").click(function(){
-		$("main").toggleClass("cerrado");
+		$("main").toggleClass("cerrado sesion");		
 	});
+
     //$('.collapsible').collapsible();
-    $('[data-toggle="tooltip"]').tooltip();
-    
+//    $('[data-toggle="tooltip"]').tooltip();
+     $('.tooltipped').tooltip({delay: 50});
     $('.submenu-trigger').click(function () {
   		if($(this).hasClass("menu-open"))
   			$(this).removeClass("menu-open").addClass("menu-close");

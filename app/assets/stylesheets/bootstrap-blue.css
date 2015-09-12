@@ -5579,7 +5579,7 @@ button.close {
     width: 900px;
   }
 }
-.tooltip {
+/*.tooltip {
   position: absolute;
   z-index: 1070;
   display: block;
@@ -5609,7 +5609,7 @@ button.close {
   margin-left: -3px;
   padding: 0 5px;
 }
-.tooltip-inner {
+/*.tooltip-inner {
   max-width: 200px;
   padding: 3px 8px;
   color: #ffffff;
@@ -5676,7 +5676,7 @@ button.close {
   right: 5px;
   border-width: 0 5px 5px;
   border-bottom-color: #777777;
-}
+}*/
 .popover {
   position: absolute;
   top: 0;

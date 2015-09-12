@@ -33,7 +33,8 @@ Rails.application.routes.draw do
 	    get "/entrar" => "devise/sessions#new"
 	end
 
-	devise_for :usuarios,  controllers: { omniauth_callbacks: 'omniauth_callbacks' }, via: :post
+	devise_for :usuarios,  controllers: { :omniauth_callbacks => 'omniauth_callbacks',
+             :registrations => 'registrations'}, via: :post
 
 
 
