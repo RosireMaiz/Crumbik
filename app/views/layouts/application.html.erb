@@ -11,42 +11,59 @@
 
 
 	<body>
-		
-		
-	      <% if usuario_signed_in? %>
-	      <main class="sesion">
-	        <%= render "partials/menu" %>
-	       <div id ="contenedor" class="container-fluid no-padding logged-in">
-	          <div class="col s12">
-	          	<header>
-					<%= render "partials/header" %>
-				</header>
+		<main class="sesion">
+			<% if usuario_signed_in? %>
+	        	<%= render "partials/menu" %>
+	       		<div id ="contenedor" class="container-fluid no-padding logged-in">
+	          		<div class="col s12">
+	          			<% if request.subdomain.present? %>
+	          				<header>
+								<%= render "partials/header_organizacion" %>
+							</header>
+						<% else %>
+							<header>
+								<%= render "partials/header" %>
+							</header>
+						<% end %>
+						
+						<%= yield %>
 
-	            <%= yield %>
-	           <footer >
-		        	<%= render "partials/footer" %>
-		        </footer>
-	          </div>
-	        </div>	
-	       </main>         
-	      <% else %>
-	      <main>
-		      <header>
-				<%= render "partials/header" %>
-			</header>
-	        <%= yield %>
-	        <footer >
-	        	<%= render "partials/footer" %>
-	        </footer>
-	       </main>
-	      <% end %>
+	           			<footer >
+		        			<%= render "partials/footer" %>
+		        		</footer>
+	          		</div>
+	        	</div>	
+	       </main> 
+
+	    	<% else %>
 	      
-	      <div class="scroll-to-top">
-	        <a href="javascript:void(0)"><i class="fa fa-arrow-circle-o-up"></i></a>
-	      </div>
-	   
-	</main>
-	<%= javascript_include_tag 'application', 'data-turbolinks-track' => true %>
+	      	<main>
+		      	<% if request.subdomain.present? %>
+	          		<header>
+						<%= render "partials/header_organizacion" %>
+					</header>
+				<% else %>
+					<header>
+						<%= render "partials/header" %>
+					</header>
+				<% end %>
+
+	        	<%= yield %>
+
+	        	<footer >
+	        		<%= render "partials/footer" %>
+	       		</footer>
+	       	</main>
+	    	<% end %>
+	      
+	   		<div class="scroll-to-top">
+	    		<a href="javascript:void(0)"><i class="fa fa-arrow-circle-o-up"></i></a>
+	    	</div>
+		</main>
+			
+		<%= javascript_include_tag 'application', 'data-turbolinks-track' => true %>
 		<%= yield :javascript_personalizado %>
+	
 	</body>
+
 </html>

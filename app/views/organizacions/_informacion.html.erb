@@ -1,0 +1,41 @@
+<!-- *************** -->
+<!-- ** ACERCA DE ** -->
+<!-- *************** -->
+<p class="org-sub">Acerca de 
+<span class="org-sub-nombre"> <%= @organizacion.nombre %> </span></p>
+  <% if ! @organizacion.slogan.nil? and @organizacion.slogan != "" %>
+    <h6 class="org-sub-bold">{<%= @organizacion.slogan %>}</h6>
+  <%else%>
+    <br />
+  <%end%>
+<br />
+<!-- ************ -->
+<!-- ** MISION ** -->
+<!-- ************ -->
+<div class="row">
+  <div class="col s6">
+    <p class="org-sub-bold"> Misi&oacute;n</p>
+    <% if ! @organizacion.mision.nil? and @organizacion.mision != "" %>
+      <div class="text-justity">
+       	<span><%= @organizacion.mision %></span>
+      </div>
+    <%else%>
+      </br>
+      <p>*** Esta secci&oacute;n est&aacute; en construcci&oacute;n ***</p>
+    <%end%>
+  </div>
+  <!-- ************ -->
+  <!-- ** VISION ** -->
+  <!-- ************ -->
+  <div class="col s6">
+    <p class="org-sub-bold"> Visi&oacute;n</p>
+    <% if ! @organizacion.vision.nil? and @organizacion.vision != "" %>
+    	<div class="text-justity">
+        	<span><%= @organizacion.vision %></span>
+      </div>
+    <%else%>
+      </br>
+      <p>*** Esta secci&oacute;n est&aacute; en construcci&oacute;n ***</p>
+    <%end%>
+  </div>
+</div>

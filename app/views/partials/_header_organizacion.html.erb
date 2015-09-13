@@ -1,0 +1,59 @@
+<div id="prganizacion-header" class="navbar-fixed">
+	<nav>
+	    <div class="nav-wrapper white">
+	    	<div class="contenedor">
+	    	<!-- ************************ -->
+	    	<!-- ***** LOGO Y NOMBRE **** -->
+	    	<!-- ************************ -->
+	    		<% @organizacion = Organizacion.find_by(subdominio: request.subdomain) %>
+				<a href"http://<%= @organizacion.subdominio %>.lvh.me:3000/" class="brand-logo">
+					
+					<img src = "<%= @organizacion.formato_logo%><%= @organizacion.logo%>" />
+					<span class="logo-text">
+						<%= @organizacion.nombre %>
+					</span>
+				</a>
+			<!-- *************************** -->
+	    	<!-- ********* OPCIONES ******** -->
+	    	<!-- *************************** -->
+			   	<ul id="nav-mobile" class="right hide-on-med-and-down">
+			        <li><a href="">Inicio</a></li>
+			        <li><a href="">Nosotros</a></li>
+			        <% if ! @organizacion.tipo_organizacion_id == "1" %>
+			        	<li><a href="">Servicios</a></li>
+			        <% else %>
+			        	<li><a href="">Productos</a></li>
+			        <% end %>
+			        <li><a href="">Cont&aacute;ctanos</a></li>
+			    </ul>
+			<!-- ************************* -->
+	    	<!-- ********* SESION ******** -->
+	    	<!-- ************************* -->
+			    <ul id="nav-sesion" class="hide-on-med-and-down">
+			       	<% if !usuario_signed_in? %>
+			        	<li><a href="#login-form" class="modal-trigger">Iniciar sesi&oacute;n</a></li>
+			       		<li><%= link_to "Registrarse", new_usuario_registration_path %></li>
+  					<% else %>  
+			        	<li>
+			        		<%= link_to 'Edit profile', edit_usuario_registration_path %>
+			        	</li>
+   						<li><%= link_to "Logout", destroy_usuario_session_path, method: :delete%></li>
+			      	<% end %>
+			    </ul>
+	    	</div>
+	    </div>
+	</nav>
+</div>
+<!-- ****************** -->
+<!-- ******* JS ******* -->
+<!-- ****************** -->
+<% if !usuario_signed_in? %>
+	<%= render "devise/sessions/new" %>
+<% end %>
+
+<script type="text/javascript">
+	$(document).ready(function(){
+    // the "href" attribute of .modal-trigger must specify the modal ID that wants to be triggered
+    $('.modal-trigger').leanModal();
+  });
+ </script>
