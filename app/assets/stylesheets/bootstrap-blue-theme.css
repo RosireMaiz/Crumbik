@@ -494,6 +494,7 @@ main #sidebar-menu {
 
 main.cerrado .side-nav{
   width: 0;
+  transition: width 0.30s;
 }
 
 .side-nav{
@@ -542,13 +543,13 @@ main.sesion .contenedor {
   max-width: 1130px;
   margin: 0 0;
   position: relative;
-  transition: width 1s;
+  transition: max-width 1s;
 }
 
 main.cerrado .contenedor {
-    max-width: 1200px;
     margin: 0 0;
     position: relative;
+    transition: max-width 1s;
 }
 
 main.cerrado .brand-logo{
