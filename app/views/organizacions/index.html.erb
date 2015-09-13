@@ -1,0 +1,15 @@
+<% @organizacion = Organizacion.find_by(subdominio: request.subdomain) %>
+<div class="text-center container">
+	
+	<%= render "organizacions/slider" %>
+	<br/>
+
+	<img class="index-separador" src="<%= asset_path'general-separador.png' %>">
+	<br />
+	<%= render "organizacions/informacion" %>
+
+	<img class="index-separador" src="<%= asset_path'general-separador.png' %>">
+	<br />
+	<%= render "organizacions/contacto" %>
+
+</div>
