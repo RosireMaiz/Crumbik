@@ -1,15 +1,30 @@
 <% @organizacion = Organizacion.find_by(subdominio: request.subdomain) %>
-<div class="text-center container">
+
+<div>
+	<div>
+
+			<div class="org-contenedor-banner">
+				<%= render "organizacions/banner" %>
+			</div>
+
+			<div class="text-center container org-contenedor-contenido">
+
+				<%= render "organizacions/producto" %>
+				<br/>
 	
-	<%= render "organizacions/slider" %>
-	<br/>
+				<%= render "organizacions/slider" %>
+				<br/>
+				<img class="index-separador" src="<%= asset_path'general-separador.png' %>">
+				<br />
 
-	<img class="index-separador" src="<%= asset_path'general-separador.png' %>">
-	<br />
-	<%= render "organizacions/informacion" %>
 
-	<img class="index-separador" src="<%= asset_path'general-separador.png' %>">
-	<br />
-	<%= render "organizacions/contacto" %>
+				<%= render "organizacions/informacion" %>
+				<img class="index-separador" src="<%= asset_path'general-separador.png' %>">
+				<br />
 
+				<%= render "organizacions/contacto" %>
+
+			</div>
+	</div>
 </div>
+

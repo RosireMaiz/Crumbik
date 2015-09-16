@@ -1,0 +1,27 @@
+<div>
+	<div id="organizacion">
+		<div id="organizacion-slider">
+			<div> <img src="<%= asset_path 'org-slide-construccion.png' %>"></div>
+			<div> <img src="<%= asset_path 'org-slide-construccion.png' %>"></div>
+			<div> <img src="/system/<%= request.subdomain %>/portafolio/Slider1.jpg" /></div>
+		</div>
+	</div>
+</div>
+<br />
+
+<!-- ****************** -->
+<!-- ******* JS ******* -->
+<!-- ****************** -->
+<% content_for :javascript_personalizado do %>
+  	<script type="text/javascript">
+		$(document).ready(function() {
+  			$("#organizacion-slider").owlCarousel({
+  				items: 1,
+  				pagination: false,
+  				autoPlay: 3000,
+  				navigation: true,
+  				navigationText: ["<i class='mdi-hardware-keyboard-arrow-left'></i>","<i class='mdi-hardware-keyboard-arrow-right'></i>"] 
+  			});
+		});
+	</script>
+<% end %>
