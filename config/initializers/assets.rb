@@ -28,3 +28,9 @@ Rails.application.config.assets.precompile += %w( jquery.countdown360.js )
 Rails.application.config.assets.precompile += %w( jquery.knob.min.js )
 Rails.application.config.assets.precompile += %w( jquery.js)
 
+Rails.application.config.assets.precompile += %w( fullcalendar.css )
+Rails.application.config.assets.precompile += %w( fullcalendar.min.js )
+Rails.application.config.assets.precompile += %w( portal.css )
+
+
+

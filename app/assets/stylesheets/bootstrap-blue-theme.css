@@ -52,12 +52,12 @@ i{vertical-align: middle;}
 
 .titulo-seccion h5, .titulo-seccion .breadcrumb{
 
-  margin-top: 100px
+  margin-top: 110px
 }
 
 .titulo-seccion .breadcrumb{
 
-  margin-top: 100px;
+  margin-top: 110px;
   font-size: 15px;
 }
 
@@ -497,14 +497,6 @@ main.cerrado .side-nav{
   transition: width 0.30s;
 }
 
-.side-nav{
-  overflow: hidden !important;
-}
-
-.side-nav:hover{
-  overflow-y: auto !important;
-}
-
 .bannerdiv{
   height: 245px;
 }
@@ -536,9 +528,6 @@ main.cerrado .banner-sidebar{
 }
 
 
-main.cerrado #sidebar-menu span{
-  display: none;
-}
 main.sesion .contenedor {
   max-width: 1130px;
   margin: 0 0;
@@ -566,58 +555,15 @@ main.cerrado .toggler-header{
     z-index: 100;
     padding-right: 19px;
     padding-left: 25px;
-    opacity:1;  
-    transition:  height .50s
+    visibility: inherit; 
+    transition:  visibility .30s;
 }
 
 .toggler-header{
-    opacity:0;  
-    transition:  height .50s
+    display: none; 
+    transition:  display .30s;
 }
 
-#sidebar-menu div.collapsible{
-  border: 0;
-  box-shadow: none;
-  overflow: visible !important;
-  margin: 0;
-}
-#sidebar-menu li{
-  width: 200px;
-  display: block;
-  position: relative;
-}
-#sidebar-menu > ul > li{
-  border-top: 1px solid #D7D7D7;
-  margin-top: 0px; 
-  
-}
-#sidebar-menu.inverse > ul > li{
-  border-top: 1px solid rgb(94, 94, 94);
-}
-#sidebar-menu ul > li:first{
-  border-top: none;
-}
-
-#sidebar-menu ul{
-    overflow-x: hidden;
-    overflow-y: hidden;
-    max-height: 380px;
-}
-
-#sidebar-menu ul:hover{
-    overflow-x: hidden;
-    overflow-y: auto;
-}
-
-#sidebar-menu i{
-  font-size: 25px;
-  color: #713ce2;
-  vertical-align: bottom;
-}
-
-#sidebar-menu i.fa{
-  font-size: 20px;
-}
 
 .toggler-wrapper{
   background: transparent;
@@ -630,50 +576,13 @@ main.cerrado .toggler-header{
 .toggler-wrapper a i{
  color: #c34978;
 }
-/*#sidebar-menu ul.collapsible .collapsible-header{
-  background: transparent;
-  border: none;
-  padding-top: 0px;
-}*/
 
-#sidebar-menu > ul > li a{
-  -moz-transition: background-color 1s;
-  -webkit-transition: background-color 1s;
-  transition: background-color 1s;
-  text-transform: uppercase;
-  font-size: 13px; 
-  font-weight: 300;
-  color: #c34978;
-}
 
 .submenu a{
   display: block;
   padding: 8px 15px;
 }
 
-#sidebar-menu > ul > li > a{
-  height: 42px;
-  width: 200px;
-  position: relative;
-  display: block;
-  padding: 10px 6px;
-}
-#sidebar-menu.inverse a{
-  color: #fff;
-}
-#sidebar-menu > ul > li > a i{
-  float: none;
-  text-align: left;
-  display: inline;
-  margin-right: 0;
-  vertical-align: middle;
-}
-
-#sidebar-menu > ul li:hover a:hover, #sidebar-menu ul li.active > a,
-  #sidebar-menu ul a.menu-open{
-  background-color: #EBECE8 !important;
-  color:#BB5A78;
-}
 
 .media-right {
     padding-left: 10px;

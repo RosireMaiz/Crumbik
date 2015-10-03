@@ -3190,14 +3190,11 @@ tbody.collapse.in {
   transition-timing-function: ease;
 }
 .caret {
-  display: inline-block;
-  width: 0;
-  height: 0;
-  margin-left: 2px;
-  vertical-align: middle;
-  border-top: 4px solid;
-  border-right: 4px solid transparent;
-  border-left: 4px solid transparent;
+    display: inline-block;
+    width: 10px;
+    height: 10px;
+    margin-left: 0px;
+    vertical-align: middle;
 }
 .dropdown {
   position: relative;
@@ -5326,7 +5323,7 @@ a.list-group-item-danger.active:focus {
 .panel-success {
  }
 .panel-success > .panel-heading {
-  color: #3c763d;
+  color: #fff;
   background-color: #50edcb;
 }
 .panel-success > .panel-heading + .panel-collapse > .panel-body {

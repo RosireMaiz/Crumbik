@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20150820014138) do
+ActiveRecord::Schema.define(version: 20150913190755) do
 
   create_table "autenticacions", force: :cascade do |t|
     t.integer "usuario_id", limit: 4
@@ -41,9 +41,7 @@ ActiveRecord::Schema.define(version: 20150820014138) do
   end
 
   create_table "menus", force: :cascade do |t|
-    t.integer  "rol_id",     limit: 4
-    t.datetime "created_at",           null: false
-    t.datetime "updated_at",           null: false
+    t.integer "rol_id", limit: 4
   end
 
   add_index "menus", ["rol_id"], name: "index_menus_on_rol_id", using: :btree
@@ -85,10 +83,14 @@ ActiveRecord::Schema.define(version: 20150820014138) do
     t.string  "direccion",            limit: 255
     t.string  "descripcion",          limit: 255
     t.string  "slogan",               limit: 255
+    t.text    "mision",               limit: 65535
+    t.text    "vision",               limit: 65535
     t.string  "telefono",             limit: 255
     t.string  "email",                limit: 255
     t.binary  "logo",                 limit: 65535
     t.string  "formato_logo",         limit: 255
+    t.binary  "banner",               limit: 65535
+    t.string  "formato_banner",       limit: 255
     t.string  "estatus",              limit: 1,     default: "A"
     t.integer "pais_id",              limit: 4
     t.integer "usuario_id",           limit: 4
@@ -143,6 +145,27 @@ ActiveRecord::Schema.define(version: 20150820014138) do
     t.string "descripcion", limit: 255
     t.string "estatus",     limit: 1,   default: "A"
   end
+
+  create_table "productos", force: :cascade do |t|
+    t.string "nombre",         limit: 255
+    t.text   "descripcion",    limit: 65535
+    t.float  "precio",         limit: 24
+    t.binary "imagen",         limit: 65535
+    t.string "formato_imagen", limit: 255
+    t.string "estatus",        limit: 1,     default: "A"
+  end
+
+  create_table "publicidads", force: :cascade do |t|
+    t.text    "descripcion",       limit: 65535
+    t.date    "fecha_inicio"
+    t.date    "fecha_vencimiento"
+    t.string  "estatus",           limit: 1,     default: "A"
+    t.binary  "imagen",            limit: 65535
+    t.string  "formato_imagen",    limit: 255
+    t.integer "producto_id",       limit: 4
+  end
+
+  add_index "publicidads", ["producto_id"], name: "index_publicidads_on_producto_id", using: :btree
 
   create_table "red_socials", force: :cascade do |t|
     t.string "icono",   limit: 255

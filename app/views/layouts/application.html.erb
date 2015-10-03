@@ -11,8 +11,9 @@
 
 
 	<body>
-		<main class="sesion">
-			<% if usuario_signed_in? %>
+		
+		<% if usuario_signed_in? %>
+			<main class="sesion" >
 	        	<%= render "partials/menu" %>
 	       		<div id ="contenedor" class="container-fluid no-padding logged-in">
 	          		<div class="col s12">
@@ -35,7 +36,7 @@
 	        	</div>	
 	       </main> 
 
-	    	<% else %>
+	    <% else %>
 	      
 	      	<main>
 		      	<% if request.subdomain.present? %>
@@ -54,14 +55,14 @@
 	        		<%= render "partials/footer" %>
 	       		</footer>
 	       	</main>
-	    	<% end %>
+	    <% end %>
 	      
 	   		<div class="scroll-to-top">
 	    		<a href="javascript:void(0)"><i class="fa fa-arrow-circle-o-up"></i></a>
 	    	</div>
 		</main>
 			
-		<%= javascript_include_tag 'application', 'data-turbolinks-track' => true %>
+		<%= javascript_include_tag 'application' %>
 		<%= yield :javascript_personalizado %>
 	
 	</body>

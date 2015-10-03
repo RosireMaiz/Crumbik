@@ -1,0 +1,17 @@
+# Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+
+one:
+  descripcion: MyText
+  fecha_inicio: 2015-09-13
+  fecha_vencimiento: 2015-09-13
+  estatus: MyString
+  imagen: 
+  formato_imagen: MyString
+
+two:
+  descripcion: MyText
+  fecha_inicio: 2015-09-13
+  fecha_vencimiento: 2015-09-13
+  estatus: MyString
+  imagen: 
+  formato_imagen: MyString

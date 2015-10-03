@@ -1,5 +1,6 @@
 $(document).ready(function(){
-	$("#cambiar-rol").click(function(){
+
+$("#cambiar-rol").click(function(){
 		$("<div id='dialogos'></div>").appendTo('body');
 		React.render(
 		  React.createElement(DialogoRoles, null),
@@ -9,6 +10,15 @@ $(document).ready(function(){
 	});
 	$('ul.tabs').tabs();
 	$('select').not('.disabled').material_select();
+
+	$('.modal-trigger').leanModal();
+    $(".dropdown-toggle").dropdown();
+    $('.dropdown-button').dropdown({
+	      //constrain_width: false, // Does not change width of dropdown to that of the activator
+	      //hover: false // Activate on click
+	    }
+	);
+	 $('.tooltipped').tooltip({delay: 50});
 	$('.datepicker').pickadate({
     		selectMonths: true, // Creates a dropdown to control month
     		selectYears: true, // Creates a dropdown of 15 years to control year
@@ -17,18 +27,11 @@ $(document).ready(function(){
     	 	closeOnClear: false,
 
     	});
-	$('.modal-trigger').leanModal();
-    $(".dropdown-toggle").dropdown();
-    $('.dropdown-button').dropdown({
-	      //constrain_width: false, // Does not change width of dropdown to that of the activator
-	      //hover: false // Activate on click
-	    }
-	);
-
-
 	$(function () {
 	  $('[data-toggle="popover"]').popover()
 	})
+
+
 	$("#busqueda-trigger").click(function(){
 		$("#top-search-bar").css("display","table");
 	});
@@ -36,12 +39,11 @@ $(document).ready(function(){
 		$("#top-search-bar").css("display","none");
 	});
 	$(".toggler-wrapper a").click(function(){
-		$("main").toggleClass("cerrado sesion");		
+		$("main").toggleClass("cerrado");
 	});
-
     //$('.collapsible').collapsible();
-//    $('[data-toggle="tooltip"]').tooltip();
-     $('.tooltipped').tooltip({delay: 50});
+   // $('[data-toggle="tooltip"]').tooltip();
+    
     $('.submenu-trigger').click(function () {
   		if($(this).hasClass("menu-open"))
   			$(this).removeClass("menu-open").addClass("menu-close");

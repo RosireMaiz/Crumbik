@@ -22,6 +22,14 @@ Rails.application.routes.draw do
 	match '/menu/ajax' => "menu#ajax", via: :post
 	match '/menu/ajax' => "menu#ajax", via: :get
 
+	match '/estructurajerarquica' => "menu#estructura_jerarquica", via: :post
+	match '/estructurajerarquica' => "menu#estructura_jerarquica", via: :get
+
+	match '/menu/cargar_estructura' => "menu#cargar_estructura", via: :get
+
+	match '/menu/consultar' => "menu#consultar", via: :post
+	match '/menu/consultar' => "menu#consultar", via: :get
+
 	match "/usuarios/editar" => "usuarios#edit", via: :get
     match "/usuarios/editar" => "usuarios#save", via: :post
     match "/usuarios/perfil" => "usuarios#show", via: :get

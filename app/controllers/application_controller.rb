@@ -51,7 +51,6 @@ class ApplicationController < ActionController::Base
 
     def load_menu
       if usuario_signed_in?
-        @menu = Menu.includes(:opcionmenu).where(opcion_menus: {raiz: true}).where(rol_id: current_usuario.rol_actual.id).first
         @foto = current_usuario.perfil.formato_foto + current_usuario.perfil.foto;
         @menuprueba = Menu.where(rol_id: current_usuario.rol_actual.id).first
       end

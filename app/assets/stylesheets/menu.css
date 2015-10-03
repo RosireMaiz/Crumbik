@@ -51,13 +51,13 @@
 }
 
 .x-grid-item-over{
-background-color: #EBECE8 !important;
+  background-color: #EBECE8 !important;
   color:#BB5A78;
 }
 
 .x-grid-item-focused{
 	outline:0;
-	color:black
+  color:#BB5A78;
 }
 
 .x-grid-item-focused .x-grid-cell-inner:before{
@@ -83,17 +83,18 @@ background-color: #EBECE8 !important;
     top: 0;
     margin: 0;
     height: 100%;
-    height: calc(100% + 60px);
+    height: calc(100% + 40px) !important;
     height: -moz-calc(100%);
     padding-bottom: 60px;
     background-color: #fff;
     z-index: 999;
-    overflow-y: auto;
+    overflow-y: hidden !important; 
     will-change: left;
+    transition: width 0.30s;
 }
 
 .x-grid-cell-inner {
-    overflow: hidden;
+    overflow: auro;
     white-space: pre-line !important;
 }
 
@@ -101,3 +102,9 @@ background-color: #EBECE8 !important;
     position: relative;
     text-overflow: initial !important;
   }
+
+
+  .x-panel, .x-plain {
+    overflow-y: auto !important;
+    max-height: 390px;
+}

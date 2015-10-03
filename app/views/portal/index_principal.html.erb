@@ -1,0 +1,124 @@
+<% content_for :css_personalizado do %>
+   <%= stylesheet_link_tag    "fullcalendar" %>
+   <%= stylesheet_link_tag    "portal" %>
+<% end %>
+<div class="row titulo-seccion banner banner-perfil">
+  <div class="contenedor">
+    <div class="col s6">
+      <h5 class="text-uppercase">Inicio</h5>
+    </div>
+    <div class="col s6 text-right">
+      <ol class="breadcrumb">
+        <li class="active"><%= link_to "Home", root_path %></li>
+      </ol>
+    </div>
+  </div>
+</div>
+
+<div class="row">
+	<div class="col s6">
+		<div class="panel panel-primary">
+			
+			<div class="panel-heading"><i class="fa fa-bullhorn"></i> Últimos Mensajes</div>
+  		<div class="panel-body">
+              <ul id="lista-ultimos-mensajes" class="bordered hoverable">
+
+            
+          </ul>
+      </div>
+
+		</div>
+    
+	</div>
+	<div class="col s6">
+		<div class="panel panel-danger">
+			<div class="panel-heading pink">
+				<i></i> Últimos Comentarios
+			</div>
+			<div class="panel-body">
+				<ul id="lista-ultimas-acciones" class="bordered hoverable">
+
+				</ul>
+			</div>
+		</div>
+	</div>
+</div>
+<div class="row">
+	<div class="col s6">
+		
+			<div id='calendar'></div>
+	
+	</div>
+	<div class="col s6">
+		<div class="panel panel-warning">
+			<div class="panel-heading purple">
+				<i></i> Mis últimas acciones
+			</div>
+			<div class="panel-body">
+				<ul id="lista-ultimas-acciones" class="bordered hoverable">
+
+				</ul>
+			</div>
+		</div>
+	</div>
+</div>	
+
+
+<% content_for :javascript_personalizado do %>
+  <%= javascript_include_tag 'fullcalendar.min' %>
+  <script type="text/javascript">
+  
+     $('#calendar').fullCalendar({
+        header: {
+          left: 'prev,next today',
+          center: 'month,basicWeek',
+          right: 'title'
+        },
+        defaultDate: Date(),
+        editable: false,
+        eventLimit: true, // allow "more" link when too many events
+        events: [
+          {
+            title: 'Inicio del curso',
+            start: '2014-12-01'
+          },
+          {
+            title: 'Examen Primera Lección',
+            start: '2014-12-10',
+            end: '2014-12-12'
+          },
+          {
+            id: 9,
+            title: 'Discuciones de ejercicios propuestos',
+            start: '2014-12-12T16:00:00'
+          },
+          {
+            id: 999,
+            title: 'Discuciones de ejercicios propuestos',
+            start: '2014-12-19T16:00:00'
+          },
+          {
+            title: 'Examen Segunda Lección',
+            start: '2014-12-28',
+            end: '2014-12-30'
+          },
+          {
+            id: 991,
+            title: 'Discuciones generales',
+            start: '2014-12-24T16:00:00'
+          },
+          {
+            id: 991,
+            title: 'Discuciones generales',
+            start: '2014-12-31T16:00:00'
+          },
+          {
+            title: 'Entregar Proyecto Lab3',
+            url: 'http://google.com/',
+            start: '2015-01-04'
+          }
+        ]
+    });
+  </script>
+
+<% end %>

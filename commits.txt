@@ -1,0 +1,131 @@
+commit 2432994a040cae97adce3d3cdd6f31ca4841ebf8
+Author: Rosire Maiz <rosire08@gmail.com>
+Date:   Sat Sep 12 20:46:56 2015 -0430
+
+    Modificaciones para menu derecho del usuario
+
+commit 08dcb9839c74ee96831d221d035895d3fadb0e1e
+Author: Rosire Maiz <rosire08@gmail.com>
+Date:   Sat Sep 12 19:22:13 2015 -0430
+
+    Modificaciones para mostrar y ocultar el menu
+
+commit 532e90595d2d64e6ca485d1606e51c2e8ef2545e
+Author: Rosire Maiz <rosire08@gmail.com>
+Date:   Sun Sep 6 21:44:26 2015 -0430
+
+    agregado el controlador faltante
+
+commit 92db2777058646a00883cac4844a01f5ddf90110
+Author: Rosire Maiz <rosire08@gmail.com>
+Date:   Sun Sep 6 21:14:26 2015 -0430
+
+    Modificaciones para que el index se carge dependiendiendo si el subdominio esta presente
+
+commit 7e8c2f210192a08517d53810cee480b6b0f20853
+Author: Rosire Maiz <rosire08@gmail.com>
+Date:   Thu Sep 3 23:44:36 2015 -0430
+
+    Modificaciones en el menu para que sea recursivo, se tuvo que usar el de extjs. agregacion de vista para consulta del perfil y modificacion, falta verificar que se guarden las modificaciones del perfil
+
+commit 1fa98d783c9dcf4d05d05209b5efe37604c6ec34
+Author: Rosire Maiz <rosire08@gmail.com>
+Date:   Thu Aug 27 23:10:39 2015 -0430
+
+    registro de la empresa añadido completo con el logo y el usuario en la bd del subdominio
+
+commit 5ddae37701ca814f0ca4ed74018d7e0f984f5bdc
+Author: Rosire Maiz <rosire08@gmail.com>
+Date:   Tue Aug 25 23:11:20 2015 -0430
+
+    imagen del usuario en session en el sidebar
+
+commit 5c31306036a587c4316e2c8fe400e720f691a2a0
+Author: Rosire Maiz <rosire08@gmail.com>
+Date:   Tue Aug 25 23:05:36 2015 -0430
+
+    Configuracion del menu y username del usuario nuevo, perfil con foto automatica encode64
+
+commit 7a49d30a731b35da4b8612dc552cf67b5c88758e
+Author: Rosire Maiz <rosire08@gmail.com>
+Date:   Fri Aug 14 22:52:16 2015 -0430
+
+    Gem therubyracer
+
+commit 59ac8aa61d15b5a17954095968f9130224184139
+Author: ahewstone <ahewstone@gmail.com>
+Date:   Fri Aug 14 21:52:16 2015 -0430
+
+    gema para correr alejandra
+
+commit 892960d2aa96031deba7f22ec7b2728d8df8fc83
+Author: Rosire Maiz <rosire08@gmail.com>
+Date:   Fri Aug 14 21:13:28 2015 -0430
+
+    Formulario de Registrar Empresa
+
+commit 727518055e82140b585cfbe1e7e12a4a1da4041a
+Author: Rosire Maiz <rosire08@gmail.com>
+Date:   Wed Aug 12 21:35:02 2015 -0430
+
+    Header actualizado
+
+commit e5e8a44a9c0f8655b0944acede3de88a76e7cff7
+Author: Rosire Maiz <rosire08@gmail.com>
+Date:   Wed Aug 12 21:26:31 2015 -0430
+
+    index actualizado
+
+commit 5fb60c116396f720773d409730ae0963e3652b11
+Author: ahewstone <ahewstone@gmail.com>
+Date:   Sun Aug 9 12:33:44 2015 -0430
+
+    header
+
+commit 87bd5e970c407612b41823d566d35247b4594f3d
+Author: ahewstone <ahewstone@gmail.com>
+Date:   Fri Aug 7 16:12:03 2015 -0430
+
+    Pagina Inicio
+
+commit c0e9f907bfce436b00322c6591daf5124cc1e703
+Author: Rosire Maiz <rosire08@gmail.com>
+Date:   Sat Aug 1 12:03:05 2015 -0430
+
+    Inicio de Sesión con Devise y redes Sociales
+
+commit 8f42c9487a73ac0fa0111ead86627e531717ba0d
+Author: Daniel LG <danolex51@gmail.com>
+Date:   Tue Jun 30 17:54:04 2015 -0430
+
+    git push origin master
+
+commit 0ec2fe79a0b3ddff9c0c21d0aabd16cb6313ea51
+Author: Daniel LG <danolex51@gmail.com>
+Date:   Tue Jun 30 17:47:15 2015 -0430
+
+    subido footer, pantalla perfil y librerias fontawesome
+
+commit 8ade634e3d2ac4fd7b54f863c945a552a1e671c9
+Author: Daniel LG <danolex51@gmail.com>
+Date:   Sun Jun 14 10:33:48 2015 -0430
+
+    rutas modificadas
+
+commit 8b50ca1bd105227a48f086e35503af77728a490b
+Author: Daniel LG <danolex51@gmail.com>
+Date:   Sun Jun 14 10:33:11 2015 -0430
+
+    Gemfile
+
+commit 47b9a892a2931066df7fa90dcd01b6990196f99d
+Author: Ruben Bello <acskydc@gmail.com>
+Date:   Sun Jun 7 14:11:45 2015 -0430
+
+    Incluidos el layout principal, la carpeta partials para elementos compartidos como el header, y la mitad del index.html.erb
+
+commit 4b37f507afb9b30d376ef224c50e925892d5a455
+Author: Valentina Maldonado <c.valentinamm@gmail.com>
+Date:   Fri May 29 14:58:41 2015 -0430
+
+    Esqueleto principal

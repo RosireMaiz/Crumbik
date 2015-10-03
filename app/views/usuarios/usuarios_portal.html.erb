@@ -1,0 +1,128 @@
+
+<% content_for :css_personalizado do %>
+ <%= stylesheet_link_tag    "jquery.dataTables" %> 
+<% end %>
+
+<div class="row titulo-seccion">
+  <div class="col s6">
+    <h5 class="text-uppercase">Usuarios</h5>
+  </div>
+  <div class="col s6 text-right">
+   <ol class="breadcrumb">
+    <li><%= link_to "Home", root_path %></li>
+    <li class="active">Usuarios</li>
+  </ol>
+  </div>
+</div>
+
+
+
+<div class="row pad30-h">
+<br><br>
+<table id="exampletodos" class="display" cellspacing="0" width="100%">
+          <thead>
+            <tr>
+              <th>foto</th>
+              <th>Nombre</th>
+              <th>correo</th>
+              
+              <th>Acciones</th>
+            </tr>
+          </thead>
+          <tbody>
+
+            <% usuarios = Usuario.all %>
+                <% usuarios.each do |usuari| %>
+
+                 <% if ! usuari.nil? and ! usuari.perfil.nil? %>
+                       <tr>
+                     <% if ! usuari.perfil.foto.nil? and usuari.perfil.foto != "" %>
+                       <td> <img src="/systems/<%= request.subdomain %>/avatar/<%= usuari.perfil.foto %>" style="width: 33px;"></td>
+                      <% else %>
+                        <td> <img src="/assets/avatar/sinfoto.jpg" style="width: 33px;" /> </td>
+                      <% end %>  
+                    <% if ! usuari.nombre.nil?  and ! usuari.apellido.nil? %> <td data-search="<%= usuari.nombre %> <%= usuari.apellido %>"> <%= usuari.nombre %> <%= usuari.apellido %></td> <% end %>
+
+                    <% if ! usuari.email.nil? %> <td><%= usuari.email %></td> <% end %>
+                    
+                    <td> 
+                      <a href="/usuarios/<%= usuari.id %>" class="btn-success btn-sm">Ver</a>
+                       <a class="modal-trigger btn-primary btn-sm" href="#modal<%= usuari.id %>"> Agregar Rol</a>
+                       <a href="javascript:void(0)" class="btn-warning btn-sm disabled ">Desahilitar</a>
+                       <a href="javascript:void(0)" class="btn-info btn-sm disabled ">Mensaje</a>
+                    </td>  
+                    </tr>
+                 <% end %>
+
+
+                <% end %>
+            
+          </tbody>
+        </table>
+
+<% usuarios = Usuario.all %>
+                <% usuarios.each do |usuarios| %>
+
+                <% if ! usuarios.nil? and ! usuarios.perfil.nil?%>
+
+                      
+                    <!-- Modal Structure -->
+                    <div id="modal<%= usuarios.id %>" class="modal">
+                      <div class="modal-content">
+                        <a href="#" style="float:right;" class="waves-effect btn-flat modal-close"><i class="mdi-content-clear"></i></a>
+                        <h4 style="text-align: center;">Agregar Rol</h4>
+                        <br><br>
+                        <div class="row">
+                            <div class="col s12">
+                              <div class="col s3">
+                                   <% if ! usuarios.perfil.foto.nil? and usuarios.perfil.foto != "" %>
+                                     <td> <img src="/systems/<%= request.subdomain %>/avatar/<%= usuarios.perfil.foto %>" style="width: 150px; height: 150px;"></td>
+                                    <% else %>
+                                      <td> <img src="/assets/avatar/sinfoto.jpg" style="width: 33px;" /> </td>
+                                    <% end %>  
+                              </div>
+                              <div class="col s9">
+                                    <p>Usuario: <%= usuarios.nombre %> <%= usuarios.apellido %> </p>
+                                    <br>
+                                    <p> Haz click en el rol que desees para el usuario:</p>
+
+                                      <label>Roles</label>
+                                     <ul class="list-inline">
+                                       <% rol_array = Rol.limit(5)  %>
+                                       <% rol_array.each do |rol| %>
+
+                                          <li> <a href="/agregarRol/<%= rol.id %>/<%= usuarios.id %>" class="btn-success btn-sm"> <%= rol.nombre %></a> </li>
+
+                                       <% end %>
+                                        
+                                          
+                                    </ul>
+                              </div>
+
+                            </div>
+
+                        </div>
+                                    
+                      </div>
+
+
+                    </div>  
+
+              <% end %>
+                    
+
+<% end %>
+
+ 
+  
+</div>
+
+<% content_for :js_personalizado do %>
+
+  <%= javascript_include_tag 'jquery.dataTables.min' %>
+ <script type="text/javascript">
+    $(document).ready(function(){
+  $('#exampletodos').dataTable();
+    });
+  </script>
+<% end %>

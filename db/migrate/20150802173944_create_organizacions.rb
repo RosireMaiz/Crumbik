@@ -6,10 +6,14 @@ class CreateOrganizacions < ActiveRecord::Migration
       t.string :direccion
       t.string :descripcion
       t.string :slogan
+      t.text   :mision
+      t.text   :vision
       t.string :telefono
       t.string :email
       t.binary :logo
       t.string :formato_logo
+      t.binary :banner
+      t.string :formato_banner
       t.string :estatus, default: "A", :limit => 1
       t.references :pais, index: true
       t.references :usuario, index: true

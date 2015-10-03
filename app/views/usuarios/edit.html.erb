@@ -159,16 +159,11 @@
   </div>
   
 </div>
-<% content_for :js_personalizado do %>
+<% content_for :javascript_personalizado do %>
 
   <%= javascript_include_tag 'plugins/fileinput' %>
-  <%= javascript_include_tag 'usuarios' %>
-  
-<% end %>
-<script type="text/javascript" src="http://lvh.me:3000/assets/jquery.js"></script>
-<script type="text/javascript" src="http://lvh.me:3000/assets/plugins/fileinput.js"></script>
 
-<script>
+  <script>
 
     $("#avatar_id").fileinput({
       'browseLabel':'cambiar',
@@ -189,4 +184,4 @@
       'uploadClass':'btn btn-success '
     });
 </script>
-
+<% end %>

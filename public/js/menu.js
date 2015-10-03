@@ -18,14 +18,11 @@ Ext.require([
 	         			expanded: true
 	         		},
 	         		folderSort: false,
-	         		sorters: [{
-	         			property: 'id',
-	         			direction: 'ASC'
 	         			
-	         		}]
 	         	});
 
 	         	var tree = Ext.create('Ext.tree.Panel', {
+	         		id:"tree_el",
 	         		store: store,
 	         		cls:'no-padding',
 	         		rootVisible: false,
@@ -36,6 +33,8 @@ Ext.require([
 	         		lines: false,
 	         		autoScroll: true,
 	         		containerScroll: true,
-    				animated: true
+    				animated: true,
 	         	});
+
+		        
 	         });

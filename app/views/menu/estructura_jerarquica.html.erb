@@ -1,0 +1,283 @@
+
+   
+ <style type="text/css">
+  
+  .x-menu-icon-separator-default {
+    left: 26px;
+     border-left: none !important; 
+    background-color: white;
+    width: 1px;
+}
+
+.x-menu-item-icon-default.x-menu-item-glyph {
+    font-size: 18px;
+    line-height: 18px;
+    color: gray;
+    opacity: 1;
+}
+
+
+.x-menu-item-text-default {
+    font: normal 14px Roboto,verdana,sans-serif;
+    line-height: 23px;
+    padding-top: 1px;
+    color: #5F5B5B;
+    cursor: pointer;
+}
+
+.x-menu-item-icon-default.x-menu-item-glyph {
+    font-size: 18px;
+    line-height: 18px;
+    color: #04ABF7;
+    opacity: 1;
+}
+
+.x-menu-item-default.x-menu-item-active {
+  background-image: none;
+  background-color: #EBECE8;
+}
+
+#estructura-body{
+
+      border-top: none !important;
+}
+
+#ventanaEdicion {
+    width: 450px;
+    border-radius: 10px;
+    padding: 0px;
+    background-color: #F5F7FA;
+    border: 0px;
+    max-height: 65% !important; 
+}
+body {
+    background-color: #e8e7ed !important;
+}
+
+
+.tree_estructura .x-grid-item{
+  height: 43px;
+  background: #E8E7ED;
+}
+
+.tree_estructura .x-grid-item-over{
+  background-color:  rgba(181, 180, 184, 0.41) !important;
+  color:#BB5A78;
+}
+
+.tree_estructura .x-grid-item-selected {
+    color: #BB5A78 !important;
+    background-color: rgba(181, 180, 184, 0.41)  !important;
+}
+
+
+.tree_estructura .x-grid-body {
+    background: #E8E7ED;
+    border-width: 1px;
+    border-style: solid;
+    border-color: #cecece;
+}
+
+#addnode .x-menu-item-glyph {
+  color: #64dd17 !important;
+}
+
+#delnode .x-menu-item-glyph {
+  color: #EA0D1D !important;
+}
+
+#editnode .x-menu-item-glyph {
+  color: #0091ea !important;
+}
+
+.btnForm i {
+    font-size: 1rem !important;
+    line-height: inherit;
+}
+
+.fa-select {
+    font-family: Roboto, 'FontAwesome';
+}
+
+.fa-select > ul{
+
+      max-height: 200px;
+    overflow: auto;
+}
+
+
+
+</style>
+
+
+  
+<!-- Bootstrap -->
+<link rel="stylesheet" href="bootstrap-3.2.0/css/bootstrap.css"/>
+<!-- Elusive Icons -->
+<link rel="stylesheet" href="icon-fonts/font-awesome-4.2.0/css/font-awesome.min.css"/>
+<!-- Bootstrap-Iconpicker -->
+<link rel="stylesheet" href="bootstrap-iconpicker/css/bootstrap-iconpicker.css"/>
+
+<!-- jQuery -->
+<script type="text/javascript" src="jquery/jquery-1.10.2.min.js"></script>
+<!-- Bootstrap -->
+<script type="text/javascript" src="bootstrap-3.2.0/js/bootstrap.min.js"></script>
+
+<script type="text/javascript" src="bootstrap-iconpicker/js/iconset/iconset-fontawesome-4.2.0.min.js"></script> 
+<!-- Bootstrap-Iconpicker -->
+<script type="text/javascript" src="bootstrap-iconpicker/js/bootstrap-iconpicker.js"></script>
+
+<script type="text/javascript">
+       var home_app = '<%= "http://#{request.host}:#{request.port}/"%>';
+</script>
+
+<script type="text/javascript" src= "http://lvh.me:3000/js/estructura_jerarquica.js"></script>
+
+
+<div class="row titulo-seccion">
+  <div class="banner banner-perfil">
+    <div class="contenedor">
+      <div class="col s6">
+        <h5 class="text-uppercase ">
+         Estructura Jerarquica
+        </h5>
+      </div>
+      <div class="col s6 text-right ">
+        <ol class="breadcrumb">
+          <li>
+            <a href="/">Inicio</a>
+          </li>
+          <li class="active">Estructura Jerarquica</li>
+        </ol>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="row "  >
+  <div class="col s12 ">
+    <div class="row">
+      <div class="input-field col s4">
+
+        <select id="select" name="rol" >
+            <option value="-1" disabled selected>Elija un rol</option>
+            <%= options_from_collection_for_select(Rol.all, :id, :nombre) %>
+        </select>
+       
+        <label>Roles</label>
+      </div>
+      <div class="col s4 offset-s1 transparent tree_estructura" id="tree">
+      </div>
+    </div>
+
+    <div class="row">
+      
+    </div>
+
+    <div id="ventanaEdicion" class="modal text-center">
+      
+      <div class="panel-body">
+        <strong>
+          <legend class="text-center" id="titulo">Agregar Nodo</legend>
+        </strong>
+        <div class="col s12 text-center">
+          <div class="input-field ">      
+          </div>
+        </div>
+         <div class="col s12">
+            <div class="row"> 
+              <div class="input-field col s12">
+                    <input id="nombre" type="text" class="validate">
+                    <label for="nombre">Nombre:</label>
+              </div>
+            </div> 
+
+            <div class="row">
+              
+              <div class=" col s2">
+
+                <label>Icono:</label>
+
+              </div>
+              <div class=" col s3">
+                <button class="btn grey" data-iconset="fontawesome" 
+                    data-icon="fa-wifi" data-placement="right"
+                    data-unselected-class="btn-info" data-arrow-class="pink lighten-1"
+                    data-arrow-prev-icon-class="glyphicon glyphicon-chevron-left"
+                    data-arrow-next-icon-class="glyphicon glyphicon-chevron-right" id="icono"  role="iconpicker">
+                </button>
+                <div id="icon" name="fa-home" onload="AddListeners ();"></div>
+              </div>
+            </div>
+
+            <div class="row"> 
+              <div class="input-field col s12">
+                  <input id="url" type="text" class="validate">
+                  <label for="url">Url:</label>
+              </div>
+            </div> 
+
+            <button type="submit" id="btnGuardar" class= "btn btnForm waves-effect pink accent-4 lighten-2 "> <i class="fa fa-save"></i> Guardar</button>
+            <button type="submit"  id="btnCancelar" class= "btn btnForm waves-effect accent-4 lighten-2 "><i class="fa fa-times"></i> Cancelar</button>
+        </div>
+            
+      </div>
+ 
+    </div>
+
+  </div>
+</div>
+<script type="text/javascript">
+  $('#icono').iconpicker({
+    rows:3,
+   searchText: 'Buscar...',
+   cols:5,
+   icon: $('#icon').attr("name")
+ });
+
+
+$("#icon").bind('DOMAttrModified ', function(event) {
+   alert( $("#icon").attr("name") );
+
+   $('#icono').iconpicker({
+    rows:3,
+   searchText: 'Buscar...',
+   cols:5,
+   icon: $('#icon').attr("name")
+ });
+
+});
+
+
+
+
+
+function AddListeners () {
+   alert ("The value of the ");
+            var elemToCheck = document.getElementById ("#icon");
+            if (elemToCheck.addEventListener) { // all browsers except IE before version 9
+                    // Firefox, Opera, IE from version 9
+
+                elemToCheck.addEventListener ('DOMAttrModified', OnAttrModified, false);
+            }
+            if (elemToCheck.attachEvent) {  // Internet Explorer and Opera
+                elemToCheck.attachEvent ('onpropertychange', OnAttrModified);   // Internet Explorer
+            }
+        }
+
+        function OnAttrModified (event) {
+          alert ("The value of ");
+            if ('attrChange' in event) {    // Firefox, Opera, Internet Explorer from version 9
+                alert ("The value of the " + event.target + 
+                    " element's " + event.attrName + " property changed");
+            }
+            if ('propertyName' in event) {  // Internet Explorer
+                alert ("The value of the " + event.srcElement.tagName + 
+                    " element's " + event.propertyName + " property changed");
+            }
+        }
+
+
+
+
+</script>
