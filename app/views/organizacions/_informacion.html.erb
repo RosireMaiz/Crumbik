@@ -1,8 +1,8 @@
 <!-- *************** -->
 <!-- ** ACERCA DE ** -->
 <!-- *************** -->
-<p class="org-sub">Acerca de 
-<span class="org-sub-nombre"> <%= @organizacion.nombre %> </span></p>
+<h4>Acerca de
+<span class="org-sub-nombre"> <%= @organizacion.nombre %></span></h4>
   <% if ! @organizacion.slogan.nil? and @organizacion.slogan != "" %>
     <h6 class="org-sub-bold">{<%= @organizacion.slogan %>}</h6>
   <%else%>

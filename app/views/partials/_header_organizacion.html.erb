@@ -1,4 +1,4 @@
-<div id="prganizacion-header" class="navbar-fixed">
+<div class="navbar-fixed">
 	<nav>
 	    <div class="nav-wrapper white">
 	    	<div class="contenedor">
@@ -6,10 +6,9 @@
 	    	<!-- ***** LOGO Y NOMBRE **** -->
 	    	<!-- ************************ -->
 	    		<% @organizacion = Organizacion.find_by(subdominio: request.subdomain) %>
-				<a href"http://<%= @organizacion.subdominio %>.lvh.me:3000/" class="brand-logo">
-					
+				<a href"http://<%= @organizacion.subdominio %>.lvh.me:3000/" class="brand-logo header-logo">
 					<img src = "<%= @organizacion.formato_logo%><%= @organizacion.logo%>" />
-					<span class="logo-text">
+					<span class="header-nombre">
 						<%= @organizacion.nombre %>
 					</span>
 				</a>
