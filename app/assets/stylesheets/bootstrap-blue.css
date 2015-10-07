@@ -902,7 +902,7 @@ body {
   font-weight: 300;
   line-height: 1.42857143;
   color: #6D6D6D;
-  background-color: #fff;
+  background-color: #eff1f2 !important;
 }
 input,
 button,
@@ -3574,7 +3574,7 @@ select[multiple].input-group-sm > .input-group-btn > .btn {
 }
 .input-group-addon,
 .input-group-btn {
-  width: 10%;
+  width: 16%;
   white-space: nowrap;
   vertical-align: middle;
 }

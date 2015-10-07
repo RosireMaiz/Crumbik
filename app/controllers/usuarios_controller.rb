@@ -21,13 +21,31 @@ class UsuariosController < ApplicationController
 			if request.subdomain.present?
 				render "devise/registrations/new"
 			else
-				@rol = Rol.where("nombre = ?", "Empresario").first  
 				@usuario.build_organizacion
 				@usuario.build_perfil				
 				#@usuario.organizacion.contratos.build
 				render "usuarios/new"
 			end
 		end
+	end
+
+	def new_user
+		if !usuario_signed_in?
+			redirect_to root_path
+		else
+			@usuario = Usuario.new
+			if request.subdomain.present?
+				render "devise/registrations/new"
+			else
+				@usuario.build_perfil				
+				@usuario.rols.build
+				render "usuarios/new_portal"
+			
+			end
+		end
+	end
+
+	def new_portal
 	end
 
 	def create
@@ -69,6 +87,26 @@ class UsuariosController < ApplicationController
 	       @respuesta["errores"] = @usuario.errors.full_messages
 	    end  
 	    render json: @respuesta
+	end
+
+	def usuarios
+		if !usuario_signed_in?
+        	render "portal/index"
+     	else
+
+	        @rol =  Rol.where(nombre: 'Administrador del sistema')
+	        
+	        @usuarioRol = UsuarioRol.where(usuario_id: current_usuario.id, rol_id: current_usuario.rol_actual.id) 
+
+	        if @usuarioRol[0] == nil or @rol[0].id != current_usuario.rol_actual.id
+	          render "portal/index_principal"
+	        else
+	           @usuarios = Usuario.order('id ASC')
+	           @valor = true;
+	           render "usuarios/usuarios_portal"	
+	        end
+         
+     	end
 	end
 
 	def show

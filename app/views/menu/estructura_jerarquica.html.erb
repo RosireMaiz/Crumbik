@@ -1,116 +1,4 @@
-
-   
- <style type="text/css">
-  
-  .x-menu-icon-separator-default {
-    left: 26px;
-     border-left: none !important; 
-    background-color: white;
-    width: 1px;
-}
-
-.x-menu-item-icon-default.x-menu-item-glyph {
-    font-size: 18px;
-    line-height: 18px;
-    color: gray;
-    opacity: 1;
-}
-
-
-.x-menu-item-text-default {
-    font: normal 14px Roboto,verdana,sans-serif;
-    line-height: 23px;
-    padding-top: 1px;
-    color: #5F5B5B;
-    cursor: pointer;
-}
-
-.x-menu-item-icon-default.x-menu-item-glyph {
-    font-size: 18px;
-    line-height: 18px;
-    color: #04ABF7;
-    opacity: 1;
-}
-
-.x-menu-item-default.x-menu-item-active {
-  background-image: none;
-  background-color: #EBECE8;
-}
-
-#estructura-body{
-
-      border-top: none !important;
-}
-
-#ventanaEdicion {
-    width: 450px;
-    border-radius: 10px;
-    padding: 0px;
-    background-color: #F5F7FA;
-    border: 0px;
-    max-height: 65% !important; 
-}
-body {
-    background-color: #e8e7ed !important;
-}
-
-
-.tree_estructura .x-grid-item{
-  height: 43px;
-  background: #E8E7ED;
-}
-
-.tree_estructura .x-grid-item-over{
-  background-color:  rgba(181, 180, 184, 0.41) !important;
-  color:#BB5A78;
-}
-
-.tree_estructura .x-grid-item-selected {
-    color: #BB5A78 !important;
-    background-color: rgba(181, 180, 184, 0.41)  !important;
-}
-
-
-.tree_estructura .x-grid-body {
-    background: #E8E7ED;
-    border-width: 1px;
-    border-style: solid;
-    border-color: #cecece;
-}
-
-#addnode .x-menu-item-glyph {
-  color: #64dd17 !important;
-}
-
-#delnode .x-menu-item-glyph {
-  color: #EA0D1D !important;
-}
-
-#editnode .x-menu-item-glyph {
-  color: #0091ea !important;
-}
-
-.btnForm i {
-    font-size: 1rem !important;
-    line-height: inherit;
-}
-
-.fa-select {
-    font-family: Roboto, 'FontAwesome';
-}
-
-.fa-select > ul{
-
-      max-height: 200px;
-    overflow: auto;
-}
-
-
-
-</style>
-
-
-  
+ 
 <!-- Bootstrap -->
 <link rel="stylesheet" href="bootstrap-3.2.0/css/bootstrap.css"/>
 <!-- Elusive Icons -->
@@ -154,8 +42,8 @@ body {
   </div>
 </div>
 
-<div class="row "  >
-  <div class="col s12 ">
+<div class="row" >
+  <div class="col s12">
     <div class="row">
       <div class="input-field col s4">
 
@@ -234,49 +122,7 @@ body {
    cols:5,
    icon: $('#icon').attr("name")
  });
-
-
-$("#icon").bind('DOMAttrModified ', function(event) {
-   alert( $("#icon").attr("name") );
-
-   $('#icono').iconpicker({
-    rows:3,
-   searchText: 'Buscar...',
-   cols:5,
-   icon: $('#icon').attr("name")
- });
-
-});
-
-
-
-
-
-function AddListeners () {
-   alert ("The value of the ");
-            var elemToCheck = document.getElementById ("#icon");
-            if (elemToCheck.addEventListener) { // all browsers except IE before version 9
-                    // Firefox, Opera, IE from version 9
-
-                elemToCheck.addEventListener ('DOMAttrModified', OnAttrModified, false);
-            }
-            if (elemToCheck.attachEvent) {  // Internet Explorer and Opera
-                elemToCheck.attachEvent ('onpropertychange', OnAttrModified);   // Internet Explorer
-            }
-        }
-
-        function OnAttrModified (event) {
-          alert ("The value of ");
-            if ('attrChange' in event) {    // Firefox, Opera, Internet Explorer from version 9
-                alert ("The value of the " + event.target + 
-                    " element's " + event.attrName + " property changed");
-            }
-            if ('propertyName' in event) {  // Internet Explorer
-                alert ("The value of the " + event.srcElement.tagName + 
-                    " element's " + event.propertyName + " property changed");
-            }
-        }
-
+$('.dropdown-toggle').dropdown();
 
 
 

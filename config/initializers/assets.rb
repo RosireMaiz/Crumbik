@@ -9,6 +9,11 @@
 # application.js, application.css, and all non-JS/CSS in app/assets folder are already added.
 # Rails.application.config.assets.precompile += %w( search.js )
 
+Rails.application.config.assets.precompile += %w( owl.carousel.css )
+Rails.application.config.assets.precompile += %w( owl.theme.css )
+Rails.application.config.assets.precompile += %w( owl.transitions.css )
+Rails.application.config.assets.precompile += %w( owl.carousel.min.js )
+
 Rails.application.config.assets.precompile += %w( plugins/jquery.bootstrap.wizard.min.js )
 Rails.application.config.assets.precompile += %w( organizacion.css )
 Rails.application.config.assets.precompile += %w( plugins/pwstrength-bootstrap-1.2.4.min.js )
@@ -31,6 +36,9 @@ Rails.application.config.assets.precompile += %w( jquery.js)
 Rails.application.config.assets.precompile += %w( fullcalendar.css )
 Rails.application.config.assets.precompile += %w( fullcalendar.min.js )
 Rails.application.config.assets.precompile += %w( portal.css )
+
+Rails.application.config.assets.precompile += %w( jquery.dataTables.css )
+Rails.application.config.assets.precompile += %w( jquery.dataTables.min.js )
 
 
 

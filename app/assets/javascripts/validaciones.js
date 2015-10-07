@@ -69,9 +69,128 @@ jQuery(function ($) {
 					required:"Indica una contraseña",
 					minlength:"Tu contraseña debe tener mínimo 8 caracteres"
 				},
-				"usuario[password_confirmation]":"Las contraseñas no coinciden"
+				"usuario[password_confirmation]": {
+                            minlength: "La contraseña debe tener un mínimo de 8 caracteres.",
+                            required: "Debes indicar de nuevo tu contraseña.",
+                            equalTo: "Las contraseñas no coinciden."
+                },
 			}
 		});
+
+var form = $('#add_usuario');
+                var error = $('.alert-danger', form);
+                var success = $('.alert-success', form);
+	form.validate({
+		            doNotHideMessage: true, //this option enables to show the error/success messages on tab switch.
+                    errorElement: 'span', //default input error message container
+                    errorClass: 'msj-error', // default input error message class
+                    focusInvalid: false, // do not focus the last invalid input
+			rules: {
+				"usuario[perfil_attributes][nombres]":"required",
+                "usuario[perfil_attributes][apellidos]":"required",
+				"usuario[email]":{
+					email:true,
+					required:true,
+				    remote: {
+				       	url: "/validar_email",
+				       	type: "post"
+	        		}
+				},
+				"usuario[username]":{
+					required:true,			    
+				},
+				"usuario[password]":{
+					required:true,
+					minlength:8,
+					maxlength:30
+				},
+				"usuario[password_confirmation]":{
+					required:true,
+					minlength:8,
+					maxlength:30,
+					equalTo: "#usuario_password"
+				},
+				"usuario[rols][]":{
+					required: true,
+                	minlength: 1
+            	}
+			},
+			messages:{
+				"usuario[perfil_attributes][nombres]": "Debes indicar el nombre",
+                "usuario[perfil_attributes][apellidos]": "Debes indicar el apellido",
+				"usuario[email]":{
+					email:"Indica un correo electrónico válido",
+					required:"Indica el correo electrónico",
+					remote:"Ya existe una cuenta asociada a este correo"
+				},
+				"usuario[username]":{
+					required:"Indica el username",
+				},
+				"usuario[password]":{
+					required:"Indica una contraseña",
+					minlength:"La contraseña debe tener mínimo 8 caracteres"
+				},
+				 "usuario[password_confirmation]": {
+                            minlength: "La contraseña debe tener un mínimo de 8 caracteres.",
+                            required: "Debes indicar de nuevo la contraseña.",
+                            equalTo: "Las contraseñas no coinciden."
+                        },
+                "usuario[rols][]":  {
+                	
+                     required: "Debes Seleccionar un Rol",
+                }
+                
+			},
+
+
+			 errorPlacement: function (error, element) { // render error placement for each input type
+                        if (element.attr("name") == "usuario[rols][]") { // for uniform checkboxes, insert the after the given container
+                            error.insertAfter("#rol_list");
+                        } else {
+                            error.insertAfter(element); // for other inputs, just perform default behavior
+                        }
+                    },
+
+             invalidHandler: function (event, validator) { //display error alert on form submit   
+                        success.hide();
+                        error.show();
+                        $('html,body').animate({
+                            scrollTop: $(".steps").offset().top-80
+                        }, 'slow');
+                    },
+
+         	 highlight: function (element) { // hightlight error inputs
+                        $(element)
+                            .closest('.form-group').removeClass('has-success').addClass('has-error'); // set error class to the control group
+                    },
+
+         	 unhighlight: function (element) { // revert the change done by hightlight
+                        $(element)
+                            .closest('.form-group').removeClass('has-error'); // set error class to the control group
+                    },
+
+             success: function (label) {
+                        if (label.attr("for") == "gender" || label.attr("for") == "payment[]") { // for checkboxes and radio buttons, no need to show OK icon
+                            label
+                                .closest('.form-group').removeClass('has-error').addClass('has-success');
+                            label.remove(); // remove error label here
+                        } else { // display success icon for other inputs
+                            label
+                                .addClass('valid') // mark the current input as valid and display OK icon
+                            .closest('.form-group').removeClass('has-error').addClass('has-success'); // set success class to the control group
+                        }
+                    }
+		});
+
+
+
+
+
+
+
+
+
+
 	});
 
 	       

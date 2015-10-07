@@ -1,4 +1,3 @@
-
 <% content_for :css_personalizado do %>
  <%= stylesheet_link_tag    "jquery.dataTables" %> 
 <% end %>
@@ -8,7 +7,7 @@
     <div class="contenedor">
       <div class="col s6">
         <h5 class="text-uppercase ">
-         Usuarios
+         Roles
         </h5>
       </div>
       <div class="col s6 text-right ">
@@ -16,7 +15,7 @@
           <li>
             <a href="/">Inicio</a>
           </li>
-          <li class="active">Usuarios</li>
+          <li class="active">Roles</li>
         </ol>
       </div>
     </div>
@@ -28,42 +27,21 @@
   <table id="usuarios" class="display" cellspacing="0" width="100%" >
     <thead>
       <tr>
-          <th>Foto</th>
-          <th>Username</th>
-          <th>Correo</th>
+          <th>Nombre</th>
           <th>Acciones</th>
       </tr>
     </thead>
     <tbody>
-      <% @usuarios.each do |usuari| %>
+      <% @rols.each do |rol| %>
 
-         <% if ! usuari.nil? and ! usuari.perfil.nil? %>
+         <% if ! rol.nil? %>
             <tr>
-               <% if ! usuari.perfil.foto.nil? and usuari.perfil.foto != "" %>
-                  <td> 
-                      <img src="/assets/avatar/sinfoto.jpg" style="width: 35px;">
-                  </td>
-                <% else %>
-                  <td>
-                    <img src="/assets/avatar/sinfoto.jpg" style="width: 35px;" /> 
-                  </td>
-                <% end %> 
-
-                <% if ! usuari.username.nil?  and ! usuari.username.nil? %> 
-                  <td data-search="<%= usuari.username %>"> 
-                    <%= usuari.username %> 
-                   </td> 
-                <% end %>
-
-                <% if ! usuari.email.nil? %> 
-                  <td> 
-                    <%= usuari.email %>
-                  </td> 
-                <% end %>
-                    
+                <td data-search="<%= rol.nombre %>"> 
+                    <%= rol.nombre %> 
+                 </td>                  
                 <td> 
-                  <a href="/usuarios/perfil/<%= usuari.id %>" rel="nofollow"  data-method="post" class="btn-success btn-sm">Ver</a>
-                  <a class="modal-trigger btn-primary btn-sm" href="#modal<%= usuari.id %>"> Agregar Rol</a>
+                  <a href="/rolos/perfil/<%= rol.id %>" rel="nofollow"  data-method="post" class="btn-success btn-sm">Ver</a>
+                  <a class="modal-trigger btn-primary btn-sm" href="#modal<%= rol.id %>"> Agregar Rol</a>
                   <a href="javascript:void(0)" class="btn-warning btn-sm disabled ">Desahilitar</a>
                   <a href="javascript:void(0)" class="btn-info btn-sm disabled ">Mensaje</a>
                 </td>  

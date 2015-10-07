@@ -123,6 +123,9 @@ $(document).ready(function(){
                         //cuenta
                         "usuario[perfil_attributes][nombres]":"required",
                         "usuario[perfil_attributes][apellidos]":"required",
+                        "usuario[username]":{
+                            required:true,              
+                        },
                         "usuario[email]": {
                             required: true,
                             email: true,
@@ -179,6 +182,9 @@ $(document).ready(function(){
                         //cuenta
                         "usuario[perfil_attributes][nombres]": "Debes indicar tu nombre",
                         "usuario[perfil_attributes][apellidos]": "Debes indicar tu apellido",
+                        "usuario[username]":{
+                            required:"Indica tu username",
+                        },
                         "usuario[email]": {
                             required: "Debes indicar tu email.",
                             email: "Este no parece ser un correo válido.",

@@ -10,6 +10,7 @@ var indexactive = 0;
 var idactive = 0;
 var nodeactive = null;
 var objmenuderecho = null;
+var objrootmenuderecho = null;
 var primeravezmenuderecho = true;
 var funcion = null;
 var agregarnodo = null;
@@ -17,6 +18,7 @@ var eliminarnodo = null;
 var editarnodo = null;
 
 var menuderecho = null;
+var rootmenuderecho = null;
 var idRol = 1;
 
 Ext.require([
@@ -28,8 +30,21 @@ Ext.require([
 Ext.onReady(function() {
 	Ext.QuickTips.init();
 	         	
+	Ext.fly(document.body).on("click", function(e) {
+	    
+	        if (!primeravezmenuderecho) {
+			 	objmenuderecho.hide();
+				objrootmenuderecho.hide();
+			}
+	    
+	});
+
 		$('#select').on('change', function() {
 			 idRol = this.value;
+			 if (!primeravezmenuderecho) {
+			 	objmenuderecho.hide();
+				objrootmenuderecho.hide();
+			}
 			 store_estructura = Ext.create('Ext.data.TreeStore', {
 			         		proxy: {
 			         			type: 'ajax',
@@ -37,14 +52,65 @@ Ext.onReady(function() {
 			         		},
 			         		root: {
 			         			text: 'Menu',
-			         			id: 'root_node',
+			         			id: '0',
+			         			cls: 'active waves-effect',
 			         			expanded: true
 			         		},
 			         		folderSort: false,
 			         		
 			         	});
 
-			estructura.setStore(store_estructura);
+			   estructura = Ext.create('Ext.tree.Panel', {
+	         		id:"estructura",
+	         		cls:'no-padding',
+	         		store: store_estructura,
+	         		renderTo: 'tree',
+	         		border: false,
+	         		titleVisible: false,
+	         		useArrows: true,
+	         		lines: false,
+	         		autoScroll: true,
+	         		containerScroll: true,
+    				animated: true,
+
+    				listeners: {
+                        itemclick: function(view, node) {
+		                        	nodeactive = node;
+		 							idactive = $(node).attr('id');
+		 							if (!primeravezmenuderecho) {
+									 	objmenuderecho.hide();
+										objrootmenuderecho.hide();
+									}
+                        },
+	                    itemcontextmenu: function(view, r, node, index, e) {
+											  e.stopEvent();
+				                              indexactive = index;
+											  idactive = nodeactive.get('id');
+				                              if (primeravezmenuderecho) {
+					                               primeravezmenuderecho = false;
+					                               objmenuderecho = Ext.create('App.MenuDerecho');
+												   objrootmenuderecho =  Ext.create('App.RootMenuDerecho');
+												   if(idactive == 0 ){
+														objrootmenuderecho.showAt(e.getXY());
+												   }else{
+												   		objmenuderecho.showAt(e.getXY());
+												   }
+				                              }
+				                              else {
+					                               if(idactive == 0 ){
+														objrootmenuderecho.showAt(e.getXY());
+												   }else{
+												   		objmenuderecho.showAt(e.getXY());
+												   }
+
+				                              }
+										  	return false;
+                            },
+	         	       	
+                    }
+	         	});
+
+			
 		 
 		});
 
@@ -55,9 +121,9 @@ Ext.onReady(function() {
 		});
 
 
-
  		agregarnodo = Ext.create('Ext.Action', {
-                               	 id: "addnode",
+                               	 
+                               	 cls: "addnode",
 								 glyph: 'xf055@FontAwesome',             
                                  text : 'Agregar nodo',
                                  handler : function() {
@@ -72,8 +138,11 @@ Ext.onReady(function() {
 									$('#url').css("text-transform"," lowercase");
 									
 									$('#ventanaEdicion').openModal();
+									objmenuderecho.hide();
+									objrootmenuderecho.hide();
                                  }
                                 });
+
     	eliminarnodo = Ext.create('Ext.Action', {
                                  id: "delnode",
 								 glyph: 'xf00d@FontAwesome',
@@ -130,46 +199,15 @@ Ext.onReady(function() {
 
 	  	menuderecho = Ext.define('App.MenuDerecho', { 
 	    	            extend: 'Ext.menu.Menu',
-	                  items : [agregarnodo,eliminarnodo,editarnodo]
+	                  items : [agregarnodo, eliminarnodo, editarnodo]
 	                 });
-	
 
-	    estructura = Ext.create('Ext.tree.Panel', {
-	         		id:"estructura",
-	         		cls:'no-padding',
-	         		
-	         		renderTo: 'tree',
-	         		border: false,
-	         		titleVisible: false,
-	         		useArrows: true,
-	         		lines: false,
-	         		autoScroll: true,
-	         		containerScroll: true,
-    				animated: true,
+	  	rootmenuderecho = Ext.define('App.RootMenuDerecho', { 
+	    	            extend: 'Ext.menu.Menu',
+	                  items : [agregarnodo]
+	                 });
 
-    				listeners: {
-                        itemclick: function(view, node) {
-		                        	nodeactive = node;
-		 							var id = $(node).attr('id');
-                        },
-	                    itemcontextmenu: function(view, r, node, index, e) {
-				                          var id = nodeactive.get('id');
-										  e.stopEvent();
-			                              indexactive = index;
-										  idactive = nodeactive.get('id');
-			                              if (primeravezmenuderecho) {
-			                               primeravezmenuderecho = false;
-			                               objmenuderecho = Ext.create('App.MenuDerecho');
-			                               objmenuderecho.showAt(e.getXY());
-			                              }
-			                              else {
-			                               objmenuderecho.showAt(e.getXY());
-			                              }
-										  return false;
-                            },
-	         	       	
-                    }
-	         	});
+
 
 	         });
 

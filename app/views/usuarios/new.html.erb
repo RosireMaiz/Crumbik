@@ -186,7 +186,7 @@
 								<div id="campos-paypal" class="campos">
 									Formulario para pagar con paypal
 								</div>
-								<!-- <div class="form-group">
+								 <div class="form-group">
 									<label class="control-label col-md-3">Payment Options <span class="required">
 									* </span>
 									</label>
@@ -200,7 +200,7 @@
 										<div id="form_payment_error">
 										</div>
 									</div>
-								</div> -->
+								</div> 
 							</div>
 						</div>
 					</div>
@@ -319,6 +319,7 @@
 </div>
           
 <% content_for :javascript_personalizado do %>
+	<%= javascript_include_tag "usuarios" %>
 	<%= javascript_include_tag "plugins/jquery.bootstrap.wizard.min" %>
 	<%= javascript_include_tag "plugins/pwstrength-bootstrap-1.2.4.min" %>
 

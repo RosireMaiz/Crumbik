@@ -3,10 +3,10 @@
 	<head>
 		 <script type="text/javascript" src="http://lvh.me:3000/ext/build/ext-all.js"></script>
   	<!-- Incluya hojas de estilos de: Extjs 5.1 -->
-  	<link rel="stylesheet" type="text/css" href="http://lvh.me:3000/ext/packages/ext-theme-crisp/build/resources/ext-theme-crisp-all.css">
-    <!-- Incluya los javascripts propios -->
-    <script type="text/javascript" src="http://lvh.me:3000/js/menu.js"></script>
-</head>
+	  	<link rel="stylesheet" type="text/css" href="http://lvh.me:3000/ext/packages/ext-theme-crisp/build/resources/ext-theme-crisp-all.css">
+	    <!-- Incluya los javascripts propios -->
+	    <script type="text/javascript" src="http://lvh.me:3000/js/menu.js"></script>
+	</head>
 	<body>
 	    <div class="side-nav fixed right" >
 	      	<div id="bannerdiv" align="center" class="bannerdiv">
@@ -14,11 +14,11 @@
 					<div class="col s3 pad5 div-foto-sidebar">
 			          	<img src="<%= @foto %>" >
 			   		</div>
-				    <div class=" pad15 contenedor">
+				    <div class=" pad5 contenedor">
 				        <span><%= current_usuario.username%></span>
 				    </div>
 
-				    <div class="toggler-wrapper node">
+				    <div class="toggler-wrapper pad5">
 						<a href="javascript:void(0)">
 							<i class="mdi-navigation-menu small"></i>
 							<span>Esconder menu</span>
@@ -29,7 +29,5 @@
 	      	<div id="tree_el" class="no-padding bold " >	
 	      	</div> 
 	    </div>
-  </body>
-
-
+  	</body>
 </html>

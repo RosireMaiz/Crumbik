@@ -3,7 +3,9 @@
 	<head>
 	  <title>Crumbik</title>
 	  <%= stylesheet_link_tag    'application', media: 'all', 'data-turbolinks-track' => true %>
-	  
+	  <link rel="icon" type="image/png" href="<%= asset_path 'header-logo.png' %>" />
+	  <link rel="shortcut icon" type="image/x-icon" href="<%= asset_path 'header-logo.png' %>" />
+
 	  <%= yield :css_personalizado %>
 	  
 	  <%= csrf_meta_tags %>

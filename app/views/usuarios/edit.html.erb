@@ -54,10 +54,10 @@
             </div>
             <label>Sexo</label>
             <div>
-                <%= perfil.radio_button :sexo, "Masculino", :checked => (@usuario.perfil.sexo == true) %>
-                <%= perfil.label :sexo_m, "Masculino" %>
-                <%= perfil.radio_button :sexo, "Femenino", :checked => (@usuario.perfil.sexo == false)%>
-                <%= perfil.label :sexo_f, "Femenino"%>
+                <%= perfil.radio_button :sexo, "masculino", :checked => (@usuario.perfil.sexo == "masculino") %>
+                <%= perfil.label :sexo_masculino, "Masculino" %>
+                <%= perfil.radio_button :sexo, "femenino", :checked => (@usuario.perfil.sexo == "femenino")%>
+                <%= perfil.label :sexo_femenino, "Femenino"%>
             </div> 
             
           </div>
@@ -160,8 +160,9 @@
   
 </div>
 <% content_for :javascript_personalizado do %>
-
-  <%= javascript_include_tag 'plugins/fileinput' %>
+  <%= javascript_include_tag "plugins/pwstrength-bootstrap-1.2.4.min" %>
+  <%= javascript_include_tag 'plugins/fileinput.js' %>
+  <%= javascript_include_tag 'usuarios' %>
 
   <script>
 

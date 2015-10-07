@@ -141,6 +141,10 @@ main{
 /*                      UTILERIA                     */
 /*****************************************************/
 
+.pad5{
+  padding: 5px 0px;
+}
+
 .pad15{
   padding: 15px 0px;
 }
@@ -532,13 +536,14 @@ main.sesion .contenedor {
   max-width: 1130px;
   margin: 0 0;
   position: relative;
-  transition: max-width 1s;
+  transition: max-width 0.3s;
 }
 
 main.cerrado .contenedor {
     margin: 0 0;
     position: relative;
-    transition: max-width 1s;
+    max-width: 1500px;
+    transition: max-width 0.3s;
 }
 
 main.cerrado .brand-logo{

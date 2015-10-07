@@ -32,9 +32,17 @@ Rails.application.routes.draw do
 
 	match "/usuarios/editar" => "usuarios#edit", via: :get
     match "/usuarios/editar" => "usuarios#save", via: :post
+    
     match "/usuarios/perfil" => "usuarios#show", via: :get
+ 	match "/usuarios/perfil/:id" => "usuarios#show", via: :post
+
     match "/usuario/guardar_foto" => "usuarios#save_foto", via: :post
     match "/usuario/guardar_foto" => "usuarios#save_foto", via: :get
+
+    match "/usuarios_portal/consultar" => "usuarios#usuarios", via: :get
+    match "/usuarios_portal/agregarusuario" => "usuarios#new_user", via: :get
+ 
+ 	match "/usuarios/nuevo"=>"usuarios#create_portal", via: :post
 
 	devise_scope :usuario do
 	    post "/entrar" => "devise/sessions#create"
@@ -47,6 +55,7 @@ Rails.application.routes.draw do
 
 
 	constraints(SubdomainPresent) do
+
 	end
 
 end

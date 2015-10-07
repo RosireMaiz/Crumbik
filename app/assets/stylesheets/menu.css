@@ -83,8 +83,6 @@
     top: 0;
     margin: 0;
     height: 100%;
-    height: calc(100% + 40px) !important;
-    height: -moz-calc(100%);
     padding-bottom: 60px;
     background-color: #fff;
     z-index: 999;
@@ -94,7 +92,7 @@
 }
 
 .x-grid-cell-inner {
-    overflow: auro;
+    overflow: auto;
     white-space: pre-line !important;
 }
 
@@ -103,8 +101,119 @@
     text-overflow: initial !important;
   }
 
-
-  .x-panel, .x-plain {
+ #tree_el > .x-panel, .x-plain {
     overflow-y: auto !important;
     max-height: 390px;
+}
+
+.x-body {
+    font-size: 15px !important;
+    font-weight: 300 !important;
+    line-height: 1.42857143 !important;
+    color: #6D6D6D;
+    font-family: "Roboto", sans-serif !important;
+}
+/**************************************/
+/******** Estructura Jerarquica *******/
+/*************************************/
+  .x-menu-icon-separator-default {
+    left: 26px;
+    border-left: none !important; 
+    background-color: white;
+    width: 1px;
+  }
+
+.x-menu-item-icon-default.x-menu-item-glyph {
+    font-size: 18px !important;
+    line-height: 18px !important;
+    color: gray;
+    opacity: 1 !important;
+}
+
+
+.x-menu-item-text-default {
+    font: normal 14px Roboto, verdana, sans-serif !important;
+    line-height: 23px;
+    padding-top: 1px;
+    color: #5F5B5B;
+    cursor: pointer;
+}
+
+.x-menu-item-icon-default.x-menu-item-glyph {
+    font-size: 18px;
+    line-height: 18px;
+    color: #04ABF7;
+    opacity: 1;
+}
+
+.x-menu-item-default.x-menu-item-active {
+  background-image: none;
+  background-color: #EBECE8 !important;
+}
+
+#estructura-body{
+    border-top: none !important;
+}
+
+#ventanaEdicion {
+    width: 450px;
+    border-radius: 10px;
+    padding: 0px;
+    background-color: #F5F7FA;
+    border: 0px;
+    max-height: 65% !important; 
+}
+body {
+    background-color: #e8e7ed !important;
+}
+
+
+.tree_estructura .x-grid-item{
+  height: 43px;
+  background: #E8E7ED;
+}
+
+.tree_estructura .x-grid-item-over{
+  background-color:  rgba(181, 180, 184, 0.41) !important;
+  color:#BB5A78;
+}
+
+.tree_estructura .x-grid-item-selected {
+    color: #BB5A78 !important;
+    background-color: rgba(181, 180, 184, 0.41)  !important;
+}
+
+
+.tree_estructura .x-grid-body {
+    background: transparent;
+    border-width: 1px;
+    border-style: solid;
+    border-color: transparent;
+}
+
+.addnode .x-menu-item-glyph {
+  color: #64dd17 !important;
+}
+
+
+#delnode .x-menu-item-glyph {
+  color: #EA0D1D !important;
+}
+
+#editnode .x-menu-item-glyph {
+  color: #0091ea !important;
+}
+
+.btnForm i {
+    font-size: 1rem !important;
+    line-height: inherit;
+}
+
+.fa-select {
+    font-family: Roboto, 'FontAwesome';
+}
+
+.fa-select > ul{
+    max-height: 200px;
+    overflow: auto;
 }

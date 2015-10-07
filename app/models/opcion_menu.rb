@@ -107,9 +107,9 @@ class OpcionMenu < ActiveRecord::Base
       j=0
       @opcionMenus.each do |arbol|
       if arbol.hijos.length >0
-        @tira = @tira+" { text: '<i class= \" " + arbol.icono.to_s + "\" ></i> <span class=\" node\"  id="+ arbol.id.to_s+"> " + arbol.nombre + " </span> ', cls: 'active node waves-effect ', expanded: false, id: '" + arbol.id.to_s  + "', href: '', "
+        @tira = @tira+" { text: '<i class= \" " + arbol.icono.to_s + "\" ></i> <span  id="+ arbol.id.to_s+"> " + arbol.nombre + " </span> ', cls: 'active waves-effect ', expanded: false, id: '" + arbol.id.to_s  + "', href: '', "
       else
-        @tira = @tira+" { text: '<i class= \" " + arbol.icono.to_s + "\" ></i> <span  class=\" node\" id="+ arbol.id.to_s+"> " + arbol.nombre + " </span> ', cls: 'active node waves-effect ', expanded: false, id: '" + arbol.id.to_s  + "', href: '', "
+        @tira = @tira+" { text: '<i class= \" " + arbol.icono.to_s + "\" ></i> <span  id="+ arbol.id.to_s+"> " + arbol.nombre + " </span> ', cls: 'active waves-effect ', expanded: false, id: '" + arbol.id.to_s  + "', href: '', "
       end
        
       self.ObtenerHijosSinHref(menu,arbol.id)

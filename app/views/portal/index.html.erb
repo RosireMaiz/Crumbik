@@ -1,3 +1,9 @@
+<% content_for :css_personalizado do %>
+	<%= stylesheet_link_tag    "owl.carousel" %>
+	<%= stylesheet_link_tag    "owl.theme" %>
+	<%= stylesheet_link_tag    "owl.transitions" %>
+<% end %>
+
 <!-- ****************** -->
 <!-- *IMAGEN PRINCIPAL* -->
 <!-- ****************** -->
@@ -203,6 +209,7 @@
 <!-- ******* JS ******* -->
 <!-- ****************** -->
 <% content_for :javascript_personalizado do %>
+	<%= javascript_include_tag 'owl.carousel.min' %>
   	<script type="text/javascript">
 		$(document).ready(function() {
   			$("#index-clientes-slider").owlCarousel({

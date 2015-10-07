@@ -15,9 +15,6 @@
 //= require showdown
 //= require react
 //= require react_ujs
-//= require jquery
-//= require jquery_ujs
-//= require turbolinks
 //= require bootstrap.min
 //= require fluxxor
 // require fluxxor.js.map
@@ -26,4 +23,4 @@
 //= require plugins/sweet-alert.min.js
 //= require validaciones
 //= require materialize-sprockets
-//= require_tree 
+//= require main

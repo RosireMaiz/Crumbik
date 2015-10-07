@@ -1,0 +1,140 @@
+<% content_for :css_personalizado do %>
+   <%= stylesheet_link_tag    "organizacion" %>
+<% end %>
+
+<style type="text/css">
+	.checkbox-list input[type="checkbox"] + label {
+	    width: 50% !important;
+	    vertical-align: top;
+	    height: inherit;
+	}
+</style>
+<div class="row titulo-seccion">
+	<div  class="banner div-registro-banner" >
+		<div class="contenedor">
+			<div class="col s6">
+		    	<h5 class="text-uppercase ">Crear una nueva cuenta</h5>
+		  	</div>
+			<div class="col s6 text-right ">
+			   <ol class="breadcrumb">
+				    <li><%= link_to "Inicio", root_path %></li>
+					<li class="active"> Crear cuenta</li>
+				</ol>
+			</div>
+	  	</div>
+  	</div>
+</div>
+
+
+<div id="form_wizard_1" class="center-block">
+	<%= form_for @usuario, :url => usuarios_abrircuenta_path, html:{id: "add_usuario", class: "form-horizontal"} do |f| %>
+		<div class="form-wizard">
+			<div class="form-body steps">
+				
+				
+				<div class="tab-content">
+					<div class="feedback alert alert-danger display-none">
+						<button class="close" data-dismiss="alert"></button>
+						Algunos campos tienen errores. Por favor revisa abajo.
+					</div>
+					<div class="feedback alert-success display-none">
+						<button class="close" data-dismiss="alert"></button>
+						La validación fue exitosa.
+					</div>
+					<div class="tab-pane active" id="tab1">
+						<div class="row">
+							<div class="col s9 offset-s1 left">
+								<h5 >Datos del Usuario </h5>
+								<%= f.fields_for :perfil do |p| %>
+									
+								      <div class="input-field col s6">
+								        <%= p.text_field :nombres, :required=>true,autocomplete: "off" %>
+								        <label for="perfil_nombres">Nombres</label>
+								      </div>
+								      <div class="input-field col s6">
+								        <%= p.text_field :apellidos, :required=>true, autocomplete: "off"  %>
+								        <label for="perfil_apellidos">Apellidos</label>
+								      </div>
+	    							
+	    						<% end %><%# Fin del subfomulario de perfil %>
+    							<div class="input-field col s12">
+									<label for="usuario_email2">Email <span class="required">
+									* </span>
+									</label>
+									<%= f.text_field :email, :required=>true, autocomplete: "off" %>
+								</div>
+								<div class="input-field col s12">
+									<label for="usuario_email2">Username <span class="required">
+									* </span>
+									</label>
+									<%= f.text_field :username, :required=>true,autocomplete: "off"  %>
+								</div>
+								<div class="input-field col s12">
+									<label for="usuario_password2">Contraseña <span class="required">
+									* </span>
+									</label>
+									<%= f.password_field :password, :maxlength=>30, :required=>true, autocomplete: "off" %>
+								</div>
+								<div class="col s12">
+				                    <div class="pwstrength_viewport_progress progress-bar-seguridad"></div>
+
+				          
+				                </div>
+								<div class="input-field col s12">
+									<label for="usuario_password_confirmation">Confirma tu contraseña <span class="required">
+									* </span>
+									</label>
+									<%= f.password_field :password_confirmation, :maxlength=>30, :required=>true, autocomplete: "off" %>
+								</div>
+
+								<div class="row">
+							      <div class="col s12">
+							        <label>Roles:</label>
+							        <div class="checkbox-list" id="rol_list">
+		                                <%= f.collection_check_boxes(:rols, Rol.all, :id, :nombre)  %>
+		                                
+		                           
+							        </div>
+							        
+							      </div>
+							     
+							    </div>
+							</div>
+						</div>
+					</div>
+
+				</div>
+			</div>
+			<div class="form-actions">
+				<div class="row">
+					<div class="col-md-offset-3 col-md-9">
+						
+						<input type="submit" class="btn btn-success " value="Enviar">
+					</div>
+				</div>
+			</div>
+		</div>
+	<% end %>
+</div>
+<div id="notificacion" class="modal text-center">
+</div>
+          
+<% content_for :javascript_personalizado do %>
+	<%= javascript_include_tag "usuarios" %>
+	<%= javascript_include_tag "plugins/jquery.bootstrap.wizard.min" %>
+	<%= javascript_include_tag "plugins/pwstrength-bootstrap-1.2.4.min" %>
+
+	<script type="text/javascript">
+	$(document).ready(function(){
+		$('.datepicker').pickadate({
+    		selectMonths: true, // Creates a dropdown to control month
+    		selectYears: true, // Creates a dropdown of 15 years to control year
+    		format: 'mm/yyyy',
+    		closeOnSelect: true,
+    	 	closeOnClear: false,
+
+    	});
+    
+	});
+	</script>
+<% end %>
