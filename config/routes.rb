@@ -11,6 +11,8 @@ Rails.application.routes.draw do
 
 	match "/validar_email" => "usuarios#validar_email", via: :post
 	match "/validar_subdominio" => "organizacions#validar_subdominio", via: :post
+	match "/validar_rol" => "rols#validar_rol", via: :post
+	match "/validar_servicio" => "servicios#validar_servicio", via: :post
 
 	match "/usuarios/abrircuenta"=>"usuarios#create", via: :post
   	match '/usuarios/:id/confirmar_registro' => 'usuarios#finish_signup', via: [:get, :patch], as: :finish_signup
@@ -43,6 +45,23 @@ Rails.application.routes.draw do
     match "/usuarios_portal/agregarusuario" => "usuarios#new_user", via: :get
  
  	match "/usuarios/nuevo"=>"usuarios#create_portal", via: :post
+
+    match "/roles/consultar" => "rols#consultar", via: :get
+    match "/roles/agregar" => "rols#new", via: :get
+    match "/roles/crear_rol" => "rols#create", via: :post
+    match "/roles/update_estatus" => "rols#update_estatus", via: :post
+    match "/roles/update_estatus" => "rols#update_estatus", via: :get
+    match "/roles/update" => "rols#update", via: :get
+	match "/roles/update" => "rols#update", via: :post
+
+    match "/servicios/consultar" => "servicios#consultar", via: :get
+    match "/servicios/agregar" => "servicios#new", via: :get
+    match "/servicios/crear_servicio" => "servicios#create", via: :post
+    match "/servicios/update_estatus" => "servicios#update_estatus", via: :post
+    match "/servicios/update_estatus" => "servicios#update_estatus", via: :get
+    match "/servicios/update" => "servicios#update", via: :get
+	match "/servicios/update" => "servicios#update", via: :post
+
 
 	devise_scope :usuario do
 	    post "/entrar" => "devise/sessions#create"

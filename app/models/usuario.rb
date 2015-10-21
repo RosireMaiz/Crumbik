@@ -86,7 +86,5 @@ class Usuario < ActiveRecord::Base
     def set_rol_actual
       self.rol_actual = self.rols[0]
     end
-
-
   
 end

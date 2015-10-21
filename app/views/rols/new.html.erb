@@ -1,0 +1,72 @@
+<div class="row titulo-seccion">
+  <div class="banner banner-perfil">
+    <div class="contenedor">
+      <div class="col s6">
+        <h5 class="text-uppercase">
+         Crear Nuevo Rol
+        </h5>
+      </div>
+      <div class="col s6 text-right ">
+        <ol class="breadcrumb">
+          <li>
+            <a href="/">Inicio</a>
+          </li>
+          <li class="active">Crear Rol</li>
+        </ol>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div id="form_wizard_1" class="center-block">
+  <%= form_for @rol, :url => roles_crear_rol_path, html:{id: "add_rol", class: "form-horizontal"} do |f| %>
+    <div class="form-wizard">
+      <div class="form-body steps">
+        
+        
+        <div class="tab-content">
+          <div class="feedback alert alert-danger display-none">
+            <button class="close" data-dismiss="alert"></button>
+            Algunos campos tienen errores. Por favor revisa abajo.
+          </div>
+          <div class="feedback alert-success display-none">
+            <button class="close" data-dismiss="alert"></button>
+            La validación fue exitosa.
+          </div>
+          <div class="tab-pane active" id="tab1">
+            <div class="row">
+              <div class="col s9 offset-s1 left">
+                <h5 >Datos del Rol </h5>
+    
+                <div class="input-field col s12">
+                  <label for="usuario_email2">Nombre <span class="required">
+                  * </span>
+                  </label>
+                  <%= f.text_field :nombre, :required=>true, autocomplete: "off" %>
+                </div>
+              </div>
+            </div>
+          </div>
+
+        </div>
+      </div>
+      <div class="form-actions">
+        <div class="row">
+          <div class="col-md-offset-3 col-md-9">
+            
+            <input type="submit" class="btn btn-success " value="Enviar">
+          </div>
+        </div>
+      </div>
+    </div>
+  <% end %>
+</div>
+
+<% content_for :javascript_personalizado do %>
+<script type="text/javascript">
+  $(document).ready(function(){
+      $('#form_wizard_1 .alert-danger').hide();
+      $('#form_wizard_1 .alert-success').hide();
+  });
+</script>
+<% end %>

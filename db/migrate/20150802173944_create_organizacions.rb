@@ -14,6 +14,7 @@ class CreateOrganizacions < ActiveRecord::Migration
       t.string :formato_logo
       t.binary :banner
       t.string :formato_banner
+      t.string :iframe
       t.string :estatus, default: "A", :limit => 1
       t.references :pais, index: true
       t.references :usuario, index: true

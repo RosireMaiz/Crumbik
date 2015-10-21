@@ -395,7 +395,7 @@ $(document).ready(function(){
                             }else{
                                 var html = "<div><i class='large mdi-content-clear  "+
                                 "red-text darken-2'></i></div><h5>Ha ocurrido un error al momento "+
-                                "de procesar tu inscripción</h5><p class='lead'>"+
+                                "de procesar tu suscripción</h5><p class='lead'>"+
                                 response["errores"]+"</p>"
                                 $("#notificacion").html(html);
                                 //$('#notificacion').openModal();

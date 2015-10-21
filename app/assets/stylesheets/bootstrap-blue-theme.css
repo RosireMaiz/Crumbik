@@ -853,3 +853,7 @@ div.seccion-principal span:after, div.seccion-principal span::after{
   font-size: 30px;
   opacity: 0.6;
 }
+
+.modal-45{
+  width: 45% !important;
+}

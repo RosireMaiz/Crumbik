@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20150913190755) do
+ActiveRecord::Schema.define(version: 20151021024708) do
 
   create_table "autenticacions", force: :cascade do |t|
     t.integer "usuario_id", limit: 4
@@ -51,10 +51,6 @@ ActiveRecord::Schema.define(version: 20150913190755) do
     t.string "estatus", limit: 1,   default: "A"
   end
 
-  create_table "monedas", force: :cascade do |t|
-    t.string "nombre", limit: 255
-  end
-
   create_table "opcion_menus", force: :cascade do |t|
     t.string  "nombre",   limit: 255
     t.boolean "raiz",     limit: 1
@@ -91,6 +87,7 @@ ActiveRecord::Schema.define(version: 20150913190755) do
     t.string  "formato_logo",         limit: 255
     t.binary  "banner",               limit: 65535
     t.string  "formato_banner",       limit: 255
+    t.string  "iframe",               limit: 255
     t.string  "estatus",              limit: 1,     default: "A"
     t.integer "pais_id",              limit: 4
     t.integer "usuario_id",           limit: 4
@@ -107,15 +104,14 @@ ActiveRecord::Schema.define(version: 20150913190755) do
     t.integer  "usuario_id",   limit: 4
     t.integer  "contrato_id",  limit: 4
     t.integer  "modo_pago_id", limit: 4
-    t.integer  "moneda_id",    limit: 4
   end
 
   add_index "pago_contratos", ["contrato_id"], name: "index_pago_contratos_on_contrato_id", using: :btree
   add_index "pago_contratos", ["modo_pago_id"], name: "index_pago_contratos_on_modo_pago_id", using: :btree
-  add_index "pago_contratos", ["moneda_id"], name: "index_pago_contratos_on_moneda_id", using: :btree
   add_index "pago_contratos", ["usuario_id"], name: "index_pago_contratos_on_usuario_id", using: :btree
 
   create_table "pais", force: :cascade do |t|
+    t.string "iso",    limit: 3,   default: "A"
     t.string "nombre", limit: 255
   end
 
@@ -130,15 +126,6 @@ ActiveRecord::Schema.define(version: 20150913190755) do
   end
 
   add_index "perfils", ["usuario_id"], name: "index_perfils_on_usuario_id", using: :btree
-
-  create_table "plan_monedas", force: :cascade do |t|
-    t.float   "monto",     limit: 24
-    t.integer "moneda_id", limit: 4
-    t.integer "plan_id",   limit: 4
-  end
-
-  add_index "plan_monedas", ["moneda_id"], name: "index_plan_monedas_on_moneda_id", using: :btree
-  add_index "plan_monedas", ["plan_id"], name: "index_plan_monedas_on_plan_id", using: :btree
 
   create_table "plans", force: :cascade do |t|
     t.string "nombre",      limit: 255
@@ -176,6 +163,12 @@ ActiveRecord::Schema.define(version: 20150913190755) do
   create_table "rols", force: :cascade do |t|
     t.string "nombre",  limit: 255
     t.string "estatus", limit: 1,   default: "A"
+  end
+
+  create_table "servicios", force: :cascade do |t|
+    t.string "nombre",      limit: 255
+    t.string "descripcion", limit: 255
+    t.string "estatus",     limit: 1,   default: "A"
   end
 
   create_table "tipo_organizacions", force: :cascade do |t|

@@ -184,12 +184,137 @@ var form = $('#add_usuario');
 
 
 
+var form = $('#add_rol');
+                var error = $('.alert-danger', form);
+                var success = $('.alert-success', form);
+	form.validate({
+		            doNotHideMessage: true, //this option enables to show the error/success messages on tab switch.
+                    errorElement: 'span', //default input error message container
+                    errorClass: 'msj-error', // default input error message class
+                    focusInvalid: false, // do not focus the last invalid input
+			rules: {
+				"rol[nombre]":{
+					required:true,
+				    remote: {
+				       	url: "/validar_rol",
+				       	type: "post"
+	        		}
+				},
+			},
+			messages:{
+				"rol[nombre]":{
+					required:"Indica el nombre",
+					remote:"Ya existe un rol con este nombre."
+				},
+				
+                
+			},
 
 
+			 errorPlacement: function (error, element) { // render error placement for each input type
+                     
+                            error.insertAfter(element); // for other inputs, just perform default behavior
+                        
+                    },
+
+             invalidHandler: function (event, validator) { //display error alert on form submit   
+                        success.hide();
+                        error.show();
+                        $('html,body').animate({
+                            scrollTop: $(".steps").offset().top-80
+                        }, 'slow');
+                    },
+
+         	 highlight: function (element) { // hightlight error inputs
+                        $(element)
+                            .closest('.form-group').removeClass('has-success').addClass('has-error'); // set error class to the control group
+                    },
+
+         	 unhighlight: function (element) { // revert the change done by hightlight
+                        $(element)
+                            .closest('.form-group').removeClass('has-error'); // set error class to the control group
+                    },
+
+             success: function (label) {
+                        if (label.attr("for") == "gender" || label.attr("for") == "payment[]") { // for checkboxes and radio buttons, no need to show OK icon
+                            label
+                                .closest('.form-group').removeClass('has-error').addClass('has-success');
+                            label.remove(); // remove error label here
+                        } else { // display success icon for other inputs
+                            label
+                                .addClass('valid') // mark the current input as valid and display OK icon
+                            .closest('.form-group').removeClass('has-error').addClass('has-success'); // set success class to the control group
+                        }
+                    }
+		});
 
 
+var form = $('#add_servicio');
+                var error = $('.alert-danger', form);
+                var success = $('.alert-success', form);
+	form.validate({
+		            doNotHideMessage: true, //this option enables to show the error/success messages on tab switch.
+                    errorElement: 'span', //default input error message container
+                    errorClass: 'msj-error', // default input error message class
+                    focusInvalid: false, // do not focus the last invalid input
+			rules: {
+				"servicio[nombre]":{
+					required:true,
+				    remote: {
+				       	url: "/validar_servicio",
+				       	type: "post"
+	        		}
+				},
+				"servicio[descripcion]":"required",
+			},
+			messages:{
+				"servicio[nombre]":{
+					required:"Indica el nombre",
+					remote:"Ya existe un servicio con este nombre."
+				},
+				"servicio[descripcion]":  {
+                     required: "Debe indicar la descripción.",
+                },
+                
+			},
 
 
+			 errorPlacement: function (error, element) { // render error placement for each input type
+                     
+                            error.insertAfter(element); // for other inputs, just perform default behavior
+                        
+                    },
+
+             invalidHandler: function (event, validator) { //display error alert on form submit   
+                        success.hide();
+                        error.show();
+                        $('html,body').animate({
+                            scrollTop: $(".steps").offset().top-80
+                        }, 'slow');
+                    },
+
+         	 highlight: function (element) { // hightlight error inputs
+                        $(element)
+                            .closest('.form-group').removeClass('has-success').addClass('has-error'); // set error class to the control group
+                    },
+
+         	 unhighlight: function (element) { // revert the change done by hightlight
+                        $(element)
+                            .closest('.form-group').removeClass('has-error'); // set error class to the control group
+                    },
+
+             success: function (label) {
+                        if (label.attr("for") == "gender" || label.attr("for") == "payment[]") { // for checkboxes and radio buttons, no need to show OK icon
+                            label
+                                .closest('.form-group').removeClass('has-error').addClass('has-success');
+                            label.remove(); // remove error label here
+                        } else { // display success icon for other inputs
+                            label
+                                .addClass('valid') // mark the current input as valid and display OK icon
+                            .closest('.form-group').removeClass('has-error').addClass('has-success'); // set success class to the control group
+                        }
+                    }
+		});
 
 	});
 

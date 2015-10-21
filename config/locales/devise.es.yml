@@ -22,6 +22,7 @@ es:
         subject: "Instrucciones para restablecer su contraseña"
       unlock_instructions:
         subject: "Instrucciones de desbloqueo"
+      from: "Portal de trabajo %{name}"
     omniauth_callbacks:
       failure: "No se le ha podido autorizar de %{kind} debido a \"%{reason}\"."
       success: "Identificado correctamente de %{kind}."

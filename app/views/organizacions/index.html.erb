@@ -1,3 +1,9 @@
+<% content_for :css_personalizado do %>
+	<%= stylesheet_link_tag    "owl.carousel" %>
+	<%= stylesheet_link_tag    "owl.theme" %>
+	<%= stylesheet_link_tag    "owl.transitions" %>
+<% end %>
+
 <% @organizacion = Organizacion.find_by(subdominio: request.subdomain) %>
 
 <div>
@@ -27,4 +33,18 @@
 			</div>
 	</div>
 </div>
-
+<% content_for :javascript_personalizado do %>
+	<%= javascript_include_tag 'owl.carousel.min' %>
+  	<script type="text/javascript">
+		$(document).ready(function() {
+  			$("#index-clientes-slider").owlCarousel({
+  				items: 3,
+  				pagination: false,
+  				autoPlay: 3000,
+  				navigation: true,
+  				navigationText: ["<i class='mdi-hardware-keyboard-arrow-left'></i>",
+					"<i class='mdi-hardware-keyboard-arrow-right'></i>"] 
+  			});
+		});
+	</script>
+<% end %>

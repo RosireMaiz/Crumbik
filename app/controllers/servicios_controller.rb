@@ -1,39 +1,38 @@
-class RolsController < ApplicationController
+class ServiciosController < ApplicationController
 
-	def validar_rol
-	    if Rol.exists?(nombre: params[:rol][:nombre])
+	def validar_servicio
+	    if Servicio.exists?(nombre: params[:servicio][:nombre])
 	    	render json: false
 	    else
 	    	render json: true
 	    end
   	end
 
-
-	def new
+  	def new
 		if !usuario_signed_in?
 			redirect_to root_path
 		else
-			@rol = Rol.new
+			@servicio = Servicio.new
 			if request.subdomain.present?
 				render  root_path
 			else
-				render "rols/new"
+				render "servicios/new"
 			end
 		end
 	end
 
 	def create
 		@respuesta = Hash.new
-		@rol = Rol.new(rol_params)
-	    if @rol.save
+		@servicio = Servicio.new(servicio_params)
+	    if @servicio.save
 			@respuesta["codigo"] = 200
 	       	@respuesta["url"] = root_path
 	       	
 	    else  
 	       @respuesta["codigo"] = 500
-	       @respuesta["errores"] = @rol.errors.full_messages
+	       @respuesta["errores"] = @servicio.errors.full_messages
 	    end  
-	  redirect_to :controller => 'rols', :action => 'consultar'
+		redirect_to :controller => 'servicios', :action => 'consultar'
 	end
 
 	def consultar
@@ -48,18 +47,18 @@ class RolsController < ApplicationController
 	        if @usuarioRol[0] == nil or @rol[0].id != current_usuario.rol_actual.id
 	          render "portal/index_principal"
 	        else
-	           @rols = Rol.order('id ASC')
+	           @servicios = Servicio.order('id ASC')
 	           @valor = true;
-	           render "rols/rols"	
+	           render "servicios/servicios"	
 	        end
          
      	end
 	end
 	
 	def update_estatus
-		id = params[:idRol]
+		id = params[:idServicio]
 		estatus = params[:estatus]
-		if Rol.update(id, :estatus => estatus)
+		if Servicio.update(id, :estatus => estatus)
 			render :text =>'{ "success" : "true"}'
 		else
 			render :text => '{ "success" : "false"}'
@@ -68,9 +67,9 @@ class RolsController < ApplicationController
 
 
 	def update
-		id = params[:idRol]
+		id = params[:idServicio]
 		nombre = params[:nombre]
-		if Rol.update(id, :nombre => nombre)
+		if Servicio.update(id, :nombre => nombre)
 			render :text =>'{ "success" : "true"}'
 		else
 
@@ -78,10 +77,11 @@ class RolsController < ApplicationController
 		end
 	end
 
+
 private
-	 def rol_params
-      accessible = [ :nombre ] # extend with your own params
-      params.require(:rol).permit(accessible)
+	 def servicio_params
+      accessible = [ :nombre, :descripcion ] # extend with your own params
+      params.require(:servicio).permit(accessible)
     end
 
 

@@ -1,0 +1,210 @@
+
+<% content_for :css_personalizado do %>
+ <%= stylesheet_link_tag    "jquery.dataTables" %> 
+<% end %>
+
+<div class="row titulo-seccion">
+  <div class="banner banner-perfil">
+    <div class="contenedor">
+      <div class="col s6">
+        <h5 class="text-uppercase ">
+         Servicios
+        </h5>
+      </div>
+      <div class="col s6 text-right ">
+        <ol class="breadcrumb">
+          <li>
+            <a href="/">Inicio</a>
+          </li>
+          <li class="active">Servicios</li>
+        </ol>
+      </div>
+    </div>
+  </div>
+</div>
+
+
+<div class="row pad30-h">
+  <table id="servicios" class="display" cellspacing="0" width="100%" >
+    <thead>
+      <tr>
+          <th>Nombre</th>
+          <th>Estatus</th>
+          <th>Acciones</th>
+      </tr>
+    </thead>
+    <tbody>
+      <% @servicios.each do |servicio| %>
+
+         <% if ! servicio.nil? %>
+            <tr>
+                <td data-search="<%= servicio.nombre %>"> 
+                    <%= servicio.nombre %> 
+                </td>                  
+                <td> 
+                <% if (servicio.estatus == 'A') %>
+                    Activo 
+                <% else %>
+                    Deshabilitado
+                <% end %>
+                </td> 
+                <td> 
+                
+                <% if !(servicio.estatus == 'A') %>
+                  <a  href="#modal<%= servicio.id %>" class="modal-trigger btn-success btn-sm"> Habilitar</a>
+                <% else %>
+                   <a  href="#modal<%= servicio.id %>" class=" modal-trigger btn-warning btn-sm" >Deshabilitar</a>
+                <% end %>
+                   <a href="#modalver<%= servicio.id %>" class="modal-trigger purple btn-primary btn-sm"> Ver</a>
+                   <a href="#modaleditar<%= servicio.id %>" class="modal-trigger btn-primary btn-sm"> Editar</a>
+                </td>  
+                    
+            </tr>
+          <% end %>
+        <% end %>
+            
+     </tbody>
+  </table>
+
+  <% @servicios.each do |servicios| %>
+    <% if ! servicios.nil? %>
+        <!-- Modal Structure -->
+        <div id="modal<%= servicios.id %>" class="modal">
+          <div class="modal-content">
+                <a href="#" style="float:right;" class="waves-effect btn-flat modal-close"><i class="mdi-content-clear"></i></a>
+                <h5>Deshabilitar servicio</h5>
+                
+                <div class="row" style="padding-top: 35px;">
+                    <div class="col s12 text-center">
+                      <% if (servicios.estatus == 'A') %>
+                        <h6 style=" font-size: 20px;"> ¿Seguro que desea deshabilitar el servicio seleccionado? </h6>
+                      <% else %>
+                        <h6 style=" font-size: 20px;"> ¿Seguro que desea Habilitar el servicio seleccionado? </h6>
+                      <% end %>
+                      <div style="padding-top: 35px;" class="right">
+                      <% if (servicios.estatus == 'A') %>
+                         <input type="button" class="btn btn-success btn-sm" value="Aceptar" onclick="update_estatus(<%= servicios.id %>,'I')">
+                      <% else %>
+                        <input type="button" class="btn btn-success btn-sm" value="Aceptar" onclick="update_estatus(<%= servicios.id %>,'A')">
+                      <% end %>
+                       
+                        <input type="button" class="btn btn-danger btn-sm modal-close" value="Cancelar" >
+                      </div>
+
+                    </div>
+                </div>                
+          </div>
+        </div> 
+
+
+        <div id="modaleditar<%= servicios.id %>" class="modal modal-45">
+          <div class="modal-content">
+                <a href="#" style="float:right;" class="waves-effect btn-flat modal-close"><i class="mdi-content-clear"></i></a>
+                <h5>Editar servicio</h5>
+                
+                <div class="row" style="padding-top: 35px;">
+                    <div class="col s12 text-center">
+                      <div class="row">
+                        <div class=" input-field col s8 offset-s2 ">
+                          <input id="nombre<%= servicios.id %>" type="text" class="validate" value="<%= servicios.nombre %>"> 
+                          <label for="nombre<%= servicios.id %>">Nombre:</label>
+
+                        </div>
+                        <div class=" input-field col s8 offset-s2 ">
+                          <textarea id="descripcion<%= servicios.id %>" class="materialize-textarea validate" legth="120" ><%= servicios.descripcion %></textarea> 
+                          <label for="descripcion<%= servicios.id %>">Decripcion:</label>
+
+                        </div>
+                      </div>
+                      
+                        <input type="button" class="btn btn-success btn-sm" value="Guardar" onclick="update(<%= servicios.id %>, nombre<%= servicios.id %> )">
+                      
+                        <input type="button" class="btn btn-danger btn-sm modal-close" value="Cancelar" >
+                      </div>
+
+                    </div>
+                </div>                
+          </div>
+
+        <div id="modalver<%= servicios.id %>" class="modal modal-45">
+          <div class="modal-content">
+                <a href="#" style="float:right;" class="waves-effect btn-flat modal-close"><i class="mdi-content-clear"></i></a>
+                <h5>Ver servicio</h5>
+                
+                <div class="row" style="padding-top: 35px;">
+                    <div class="col s12 ">
+                        <div class="row">
+                         <p><b style="color: #9E9E9E">Nombre:</b>
+                           <%= servicios.nombre %></p>
+
+                        </div>
+                        <div class="row ">
+                         <p><b style="color: #9E9E9E">Decripci&oacute;n:</b>
+                         <%= servicios.descripcion %></p> 
+                  
+
+                        </div>
+                    
+    
+                      </div>
+
+                    </div>
+                </div>                
+          </div>
+
+
+
+    <% end %>
+  <% end %>
+
+</div>
+
+<% content_for :javascript_personalizado do %>
+
+  <%= javascript_include_tag 'jquery.dataTables.min' %>
+  <script type="text/javascript">
+    $(document).ready(function(){
+      $('#servicios').dataTable({
+        "select": false, 
+        "pageLength": 4,
+        "lengthChange": false
+      });
+    });
+
+    function update_estatus(servicio, estatus){
+     var request = $.ajax({
+                            url: '/servicios/update_estatus',
+                            method: "POST",
+                            data: { idServicio: servicio, estatus: estatus},
+                            dataType: "JSON"
+                          });
+
+        request.done(function( data ) {
+                                        location.reload(); 
+                                      });
+                     
+        equest.fail(function( jqXHR, textStatus ) {
+                                                    alert( "Request failed: " + textStatus );
+                                                   });
+    }
+
+    function update(servicio, id){
+      var nombre = $(id).val();
+     var request = $.ajax({
+                            url: '/servicios/update',
+                            method: "POST",
+                            data: { idServicio: servicio, nombre: nombre},
+                            dataType: "JSON"
+                          });
+
+        request.done(function( data ) {
+                                         location.reload(); 
+                                      });
+                     
+        equest.fail(function( jqXHR, textStatus ) {
+                                                    alert( "Request failed: " + textStatus );
+                                                   });
+    }
+
+  </script>
+<% end %>
