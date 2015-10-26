@@ -78,8 +78,8 @@ jQuery(function ($) {
 		});
 
 var form = $('#add_usuario');
-                var error = $('.alert-danger', form);
-                var success = $('.alert-success', form);
+var error = $('.alert-danger', form);
+var success = $('.alert-success', form);
 	form.validate({
 		            doNotHideMessage: true, //this option enables to show the error/success messages on tab switch.
                     errorElement: 'span', //default input error message container
@@ -184,10 +184,10 @@ var form = $('#add_usuario');
 
 
 
-var form = $('#add_rol');
-                var error = $('.alert-danger', form);
-                var success = $('.alert-success', form);
-	form.validate({
+var formRol = $('#add_rol');
+var errorRol = $('.alert-danger', formRol);
+var successRol = $('.alert-success', formRol);
+formRol.validate({
 		            doNotHideMessage: true, //this option enables to show the error/success messages on tab switch.
                     errorElement: 'span', //default input error message container
                     errorClass: 'msj-error', // default input error message class
@@ -213,13 +213,13 @@ var form = $('#add_rol');
 
 			 errorPlacement: function (error, element) { // render error placement for each input type
                      
-                            error.insertAfter(element); // for other inputs, just perform default behavior
+                            error.insertAfter(element); // for other inputs, just performRol default behavior
                         
                     },
 
-             invalidHandler: function (event, validator) { //display error alert on form submit   
-                        success.hide();
-                        error.show();
+             invalidHandler: function (event, validator) { //display error alert on formRol submit   
+                        successRol.hide();
+                        errorRol.show();
                         $('html,body').animate({
                             scrollTop: $(".steps").offset().top-80
                         }, 'slow');
@@ -249,10 +249,10 @@ var form = $('#add_rol');
 		});
 
 
-var form = $('#add_servicio');
-                var error = $('.alert-danger', form);
-                var success = $('.alert-success', form);
-	form.validate({
+var formServicio = $('#add_servicio');
+var errorServicio = $('.alert-danger', formServicio);
+var successServicio = $('.alert-success', formServicio);
+formServicio.validate({
 		            doNotHideMessage: true, //this option enables to show the error/success messages on tab switch.
                     errorElement: 'span', //default input error message container
                     errorClass: 'msj-error', // default input error message class
@@ -281,13 +281,13 @@ var form = $('#add_servicio');
 
 			 errorPlacement: function (error, element) { // render error placement for each input type
                      
-                            error.insertAfter(element); // for other inputs, just perform default behavior
+                            error.insertAfter(element); // for other inputs, just performServicio default behavior
                         
                     },
 
-             invalidHandler: function (event, validator) { //display error alert on form submit   
-                        success.hide();
-                        error.show();
+             invalidHandler: function (event, validator) { //display error alert on formServicio submit   
+                        successServicio.hide();
+                        errorServicio.show();
                         $('html,body').animate({
                             scrollTop: $(".steps").offset().top-80
                         }, 'slow');
@@ -315,6 +315,57 @@ var form = $('#add_servicio');
                         }
                     }
 		});
+
+		
+$("#add_nodo").validate({
+	 ignore: "",
+			        doNotHideMessage: true, //this option enables to show the error/success messages on tab switch.
+                    errorElement: 'span', //default input error message container
+                    errorClass: 'msj-error', // default input error message class
+                    focusInvalid: false, // do not focus the last invalid input
+			rules: {
+				"nombre":{
+					
+					required:true,
+					remote: {
+				       	url: "/validar_opcion",
+				       	type: "post"
+	        		}
+				    
+				},
+				"icono":{
+					required:true,
+				},
+				"url":{
+					required:true,			    
+				}
+			},
+			messages:{
+				"nombre":{
+					
+					required:"Indica el nombre.",
+					remote:"Ya existe un nodo con este nombre."
+				
+				},
+				"icono":{
+					
+					required:"Seleccione el icono del nodo.",
+				
+				},
+				"url":{
+					required:"Indica el url."
+				}
+			},
+
+			 errorPlacement: function (error, element) { // render error placement for each input type
+                        if (element.attr("name") == "icono") { // for uniform checkboxes, insert the after the given container
+                            error.insertAfter("#div_icono");
+                        } else {
+                            error.insertAfter(element); // for other inputs, just perform default behavior
+                        }
+                    },
+		});
+
 
 	});
 

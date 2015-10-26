@@ -4,8 +4,6 @@ class OpcionMenu < ActiveRecord::Base
 	belongs_to :padre, class_name: "OpcionMenu"
 	default_scope { order('orden ASC') }
 
-
-
  @@nro=0
 
   #ContarHijos, Usado por el metodo: BuscarTodosArbolJson
@@ -134,38 +132,43 @@ class OpcionMenu < ActiveRecord::Base
   end
 
   #Actualizar Nodo
-  def Actualizar(idnodo, nombrenodo, icono)
-    nodo = Arbols.find_by(id: "#{idnodo}")
+  def Actualizar(idnodo, nombrenodo, icono, url)
+    nodo = OpcionMenu.find_by(id: "#{idnodo}")
     if nodo.nil?
      return 0
     else
-      nodo.update(text: "#{nombrenodo}")
+      nodo.update(nombre: "#{nombrenodo}", icono: "#{icono}", url: "#{url}")
       return 1
     end
   end
   
   #Agregar Nodo
-  def Agregar(idnodo, nombrenodo, tipo, icono, padreid, vinculo)
-    unless Arbols.exists?(:text => "#{nombrenodo}")
-      @arbols = Arbols.new 
-      @arbols.tipo = tipo
-      @arbols.padre_id = padreid
-      @arbols.text = nombrenodo
-      @arbols.vinculo = vinculo
-      @arbols.save
-      @son = Arbols.maximum("id")
-      return @son, vinculo
+  def Agregar(nombrenodo, menu, icono, padreid, url)
+    unless OpcionMenu.exists?(:nombre => "#{nombrenodo}" , :menu_id  => "#{menu}")
+      @opcionMenu = OpcionMenu.new 
+      @opcionMenu.nombre = nombrenodo
+      @opcionMenu.raiz = 0
+      @opcionMenu.url = url
+      @opcionMenu.padre_id = padreid
+      @opcionMenu.menu_id = menu
+      @opcionMenu.icono = icono
+      @opcionMenu.orden = OpcionMenu.where(menu_id: "#{menu}").maximum("orden") + 1
+      @opcionMenu.save
+      if menu > 0
+        OpcionMenu.update(menu, raiz: true)        
+      end
+      return 1
    end
-   return 0, vinculo
+   return 0
   end
   
   #Eliiminar Nodo
   def Eliminar(id)
-    if Arbols.exists?(id)
-      arbol = Arbols.find_by(id: "#{id}")
-      arbol.destroy
-      if arbol.destroyed?
-        return id
+    if OpcionMenu.exists?(id)
+      opcionMenu = OpcionMenu.find_by(id: "#{id}")
+      opcionMenu.destroy
+      if opcionMenu.destroyed?
+        return 1
       else
        return 0
       end      

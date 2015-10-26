@@ -12,6 +12,10 @@ class UsuariosController < ApplicationController
 			render json: true
 		end
 	end
+	
+	def current_rol
+    	render json: {idRolActual: current_usuario.rol_actual.id}
+	end
 
 	def new
 		if usuario_signed_in?

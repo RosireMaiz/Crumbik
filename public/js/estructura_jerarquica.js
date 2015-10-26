@@ -1,12 +1,7 @@
 
-
- 
-
+var rolActual = null
 var estructura = null;
 var store_estructura = null;
-var root = null;
-var newNode = null;
-var indexactive = 0;
 var idactive = 0;
 var nodeactive = null;
 var objmenuderecho = null;
@@ -23,7 +18,7 @@ var idRol = 1;
 
 Ext.require([
 	         	'Ext.tree.*',
-	         	'Ext.data.*',
+	         	'Ext.data.*', 
 	         	'Ext.tip.*'
 	         ]);
 
@@ -38,105 +33,104 @@ Ext.onReady(function() {
 			}
 	    
 	});
+		$.get('/current_rol', function(result){
+		 	idRolActual = result.idRolActual;
+		});
 
 		$('#select').on('change', function() {
 			 idRol = this.value;
-			 if (!primeravezmenuderecho) {
-			 	objmenuderecho.hide();
-				objrootmenuderecho.hide();
-			}
-			 store_estructura = Ext.create('Ext.data.TreeStore', {
-			         		proxy: {
-			         			type: 'ajax',
-			         			url: '/menu/cargar_estructura?idRol='+idRol
-			         		},
-			         		root: {
-			         			text: 'Menu',
-			         			id: '0',
-			         			cls: 'active waves-effect',
-			         			expanded: true
-			         		},
-			         		folderSort: false,
-			         		
-			         	});
+			actualizar();		
+		});
 
-			   estructura = Ext.create('Ext.tree.Panel', {
-	         		id:"estructura",
-	         		cls:'no-padding',
-	         		store: store_estructura,
-	         		renderTo: 'tree',
-	         		border: false,
-	         		titleVisible: false,
-	         		useArrows: true,
-	         		lines: false,
-	         		autoScroll: true,
-	         		containerScroll: true,
-    				animated: true,
 
-    				listeners: {
-                        itemclick: function(view, node) {
-		                        	nodeactive = node;
-		 							idactive = $(node).attr('id');
-		 							if (!primeravezmenuderecho) {
-									 	objmenuderecho.hide();
-										objrootmenuderecho.hide();
-									}
-                        },
-	                    itemcontextmenu: function(view, r, node, index, e) {
-											  e.stopEvent();
-				                              indexactive = index;
-											  idactive = nodeactive.get('id');
-				                              if (primeravezmenuderecho) {
-					                               primeravezmenuderecho = false;
-					                               objmenuderecho = Ext.create('App.MenuDerecho');
-												   objrootmenuderecho =  Ext.create('App.RootMenuDerecho');
-												   if(idactive == 0 ){
-														objrootmenuderecho.showAt(e.getXY());
-												   }else{
-												   		objmenuderecho.showAt(e.getXY());
-												   }
-				                              }
-				                              else {
-					                               if(idactive == 0 ){
-														objrootmenuderecho.showAt(e.getXY());
-												   }else{
-												   		objmenuderecho.showAt(e.getXY());
-												   }
+		$('#btnGuardar').on('click', function(){
+			if($("#add_nodo").valid()){
+				var request = $.ajax({
+									url: '/menu/actualizar',
+											method: "POST",
+											data: { idnodo: nodeactive.get('id'),
+													funcion: funcion,
+													nombre: $('#nombre').val(),
+													icono: $('#icono').val(),
+													url: $('#url').val(),
+													padre_id: nodeactive.get('id')
+												},
+											dataType: "JSON"
+									});
+					           		request.done(function( data ) {
 
-				                              }
-										  	return false;
-                            },
-	         	       	
-                    }
-	         	});
+					           				if (idRolActual == idRol) {
+					           			
+					           					location.reload(); 
+
+					           				}else{
+					           					$('#ventanaEdicion').closeModal();
+												actualizar();
+					           				};
+					           				
+										});
+										 
+									request.fail(function( jqXHR, textStatus ) {
+										  alert( "Request failed: " + textStatus );
+										});
+      		}           		
 
 			
-		 
-		});
-
-		$('#btnCancelar').on('click', function(){
-
-			$('#ventanaEdicion').closeModal();
-
 		});
 
 
- 		agregarnodo = Ext.create('Ext.Action', {
-                               	 
+		$('#btnAceptar').on('click', function(){
+			
+				var request = $.ajax({
+									url: '/menu/actualizar',
+											method: "POST",
+											data: { idnodo: nodeactive.get('id'),
+													funcion: funcion
+												},
+											dataType: "JSON"
+									});
+					           		request.done(function( data ) {
+					           				if (idRolActual == idRol) {
+					           					location.reload(); 	
+					           				}else{
+					           					$('#ventanaEliminar').closeModal();
+												actualizar();
+					           				};
+					           				
+										});
+										 
+									request.fail(function( jqXHR, textStatus ) {
+										  alert( "Request failed: " + textStatus );
+										});         		
+		});
+
+
+ 		agregarnodo = Ext.create('Ext.Action', {                               	 
                                	 cls: "addnode",
 								 glyph: 'xf055@FontAwesome',             
-                                 text : 'Agregar nodo',
+                                 text : 'Agregar Nodo',
                                  handler : function() {
-									funcion="agregar";                
-                                 	$('legend#titulo').text("Agregar Nodo");       
-									$(' .modal .input-field > label').removeClass('active')
+									funcion="agregar";
+									var request = $.ajax({
+													  url: '/menu/consultar',
+													  method: "POST",
+													  data: { idnodo: nodeactive.get('id'),
+															  funcion: funcion},
+													  dataType: "JSON"
+													});
+									var icono = $('#iconoPicker > i').attr('class');                
+                                 	$('h5#titulo').text("Agregar Nodo");       
+									$('.modal .input-field > label').removeClass('active');
+									$('#nombre').removeClass('msj-error');
+									$('#icono').val(icono);
+									$('#url').removeClass('msj-error');
+									$('#nombre').removeClass('valid');									
+									$('#url').removeClass('valid');
 									$('#nombre').val("");
 									$('#nombre').css("text-transform"," capitalize");
- 
-									
+									$( "span.msj-error" ).remove();
 									$('#url').val("");
 									$('#url').css("text-transform"," lowercase");
-									
 									$('#ventanaEdicion').openModal();
 									objmenuderecho.hide();
 									objrootmenuderecho.hide();
@@ -146,46 +140,65 @@ Ext.onReady(function() {
     	eliminarnodo = Ext.create('Ext.Action', {
                                  id: "delnode",
 								 glyph: 'xf00d@FontAwesome',
-                                 text : 'Eliminar nodo',
+                                 text : 'Eliminar Nodo',
                                  handler : function() {
-									funcion="eliminar";
-									$('legend#titulo').text("Eliminar Nodo");
-                                  
-					           		$('#ventanaEdicion').openModal();
-                                	objmenuderecho.hide();
+
+									var request = $.ajax({
+													  url: '/menu/consultar',
+													  method: "POST",
+													  data: { idnodo: nodeactive.get('id'),
+															  funcion: funcion},
+													  dataType: "JSON"
+													});
+					           		request.done(function( data ) {
+					           			funcion = "eliminar"
+					           			         var nombre = data.nombre;
+												 var mensaje = "¿Seguro que desea ELIMINAR el nodo seleccionado (" + nombre.replace(/(?:^|\s)\S/g, function(a) { return a.toUpperCase(); }) + "), los nodos hijos también seran eliminados? ";
+												 $('#mensajeEliminar').text(mensaje);
+												 $('#ventanaEliminar').openModal();
+										});
+										 
+									request.fail(function( jqXHR, textStatus ) {
+										  alert( "Request failed: " + textStatus );
+										});
+                            		objmenuderecho.hide();
+
                                  }
                                 });
 								
 	 	editarnodo = Ext.create('Ext.Action', {
                                  id: "editnode",
 								 glyph: 'xf044@FontAwesome',
-								                
-                                 text : 'Editar nodo',
+                                 text : 'Editar Nodo',
                                  handler : function() {
-
+									funcion = "actualizar"
 					           		var request = $.ajax({
 													  url: '/menu/consultar',
 													  method: "POST",
-													  data: { idnodo: nodeactive.get('id')},
+													  data: { idnodo: nodeactive.get('id'),
+															  funcion: funcion},
 													  dataType: "JSON"
 													});
 					           		request.done(function( data ) {
-					           			funcion = "actualizar"
+					           			
+
 					           			         var nombre = data.nombre;
 												 var icono = data.icono;
 												 var url = data.url;
 												 var res = icono.substring(2);
+												 $('#nombre').removeClass('msj-error');
+												 $('#url').removeClass('msj-error');
 												 
 												 $(' .modal .input-field > label').addClass('active');
-										    	 $('legend#titulo').text("Editar Nodo");
+										    	 $('h5#titulo').text("Editar Nodo");
 												 $('#nombre').val(nombre);
 												 $('#nombre').css("text-transform"," capitalize");
-												  $("#icon").attr("name", res);
-												  $('#icono > i').removeClass();
-												  $('#icono > i').addClass(icono);
-												  $('#icono').attr("data-icon", res);
+											 	 $('#icono').val(icono);
+											 	 $( "span.msj-error" ).remove();
+												 $('#iconoPicker > i').removeClass();
+												 $('#iconoPicker > i').addClass(icono);
+												 $('#iconoPicker').attr("data-icon", res);
 												 $('#url').val(url);
-												
 												 $('#ventanaEdicion').openModal();
 										});
 										 
@@ -211,3 +224,74 @@ Ext.onReady(function() {
 
 	         });
 
+function actualizar(){
+
+			if (!primeravezmenuderecho) {
+			 	objmenuderecho.hide();
+				objrootmenuderecho.hide();
+			}
+			
+			store_estructura = Ext.create('Ext.data.TreeStore', {
+			         		proxy: {
+			         			type: 'ajax',
+			         			url: '/menu/cargar_estructura?idRol='+idRol
+			         		},
+			         		root: {
+			         			text: 'Menu',
+			         			id: '0',
+			         			cls: 'active waves-effect',
+			         			expanded: true
+			         		},
+			         		folderSort: false,
+			         		
+			         	});
+
+			estructura = Ext.create('Ext.tree.Panel', {
+	         		id:"estructura",
+	         		cls:'no-padding',
+	         		store: store_estructura,
+	         		renderTo: 'tree',
+	         		border: false,
+	         		titleVisible: false,
+	         		useArrows: true,
+	         		lines: false,
+	         		autoScroll: true,
+	         		containerScroll: true,
+    				animated: true,
+
+    				listeners: {
+                        itemclick: function(view, node) {
+		                        	nodeactive = node;
+		 							idactive = $(node).attr('id');
+		 							if (!primeravezmenuderecho) {
+									 	objmenuderecho.hide();
+										objrootmenuderecho.hide();
+									}
+                        },
+	                    itemcontextmenu: function(view, r, node, index, e) {
+											  e.stopEvent();
+											  idactive = nodeactive.get('id');
+				                              if (primeravezmenuderecho) {
+					                               primeravezmenuderecho = false;
+					                               objmenuderecho = Ext.create('App.MenuDerecho');
+												   objrootmenuderecho =  Ext.create('App.RootMenuDerecho');
+												   if(idactive == 0 ){
+														objrootmenuderecho.showAt(e.getXY());
+												   }else{
+												   		objmenuderecho.showAt(e.getXY());
+												   }
+				                              }
+				                              else {
+					                               if(idactive == 0 ){
+														objrootmenuderecho.showAt(e.getXY());
+												   }else{
+												   		objmenuderecho.showAt(e.getXY());
+												   }
+
+				                              }
+										  	return false;
+                            },
+	         	       	
+                    }
+	         	});
+	}

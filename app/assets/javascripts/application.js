@@ -19,6 +19,7 @@
 //= require fluxxor
 // require fluxxor.js.map
 //= require jquery.validate.min
+//= require jquery.validate
 //= require additional-methods.min
 //= require plugins/sweet-alert.min.js
 //= require validaciones

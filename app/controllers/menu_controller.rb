@@ -1,5 +1,25 @@
 class MenuController < ApplicationController
 
+ def validar_opcion
+
+ 	id = $menuJerarquia.id
+	if $funcion == "actualizar"
+	
+
+		if OpcionMenu.exists?( ["nombre = ? AND menu_id = ? AND id <> ?", params[:nombre], id, $idNode])
+		    render json: false
+		else
+		    render json: true
+		end
+	else
+		if OpcionMenu.exists?( ["nombre = ? AND menu_id = ? ", params[:nombre], id])
+		    render json: false
+		else
+		    render json: true
+		end
+	end
+ end
+
  def index
  end
 
@@ -16,16 +36,17 @@ class MenuController < ApplicationController
 
  def cargar_estructura
 	@opcionMenus = OpcionMenu.new
-	@idRol = params[:idRol]
-	@menuJerarquia = Menu.where(rol_id: @idRol).last
-	@tira = @opcionMenus.BuscarTodosArbolJsonSinHref(@menuJerarquia)
+	$idRol = params[:idRol]
+	$menuJerarquia = Menu.where(rol_id: $idRol).last
+	@tira = @opcionMenus.BuscarTodosArbolJsonSinHref($menuJerarquia)
 	render :text => @tira
  end
 
  def consultar
- 	@idNode = params[:idnodo]
+ 	$funcion = params[:funcion]
+ 	$idNode = params[:idnodo]
  	@opcionMenus = OpcionMenu.new
- 	@nodo = @opcionMenus.BuscarNodo(@idNode)
+ 	@nodo = @opcionMenus.BuscarNodo($idNode)
 	render :text => @nodo
  end
 
@@ -35,10 +56,11 @@ class MenuController < ApplicationController
 	#Actualizar Nodo   
 	if @funcion == "actualizar"
 		idnodo = params[:idnodo]
-	   	nombrenodo = params[:nombrenodo]
-		padre_id = [:padre_id]
-	  	@arbols = Arbols.new
-	   	valor = @arbols.Actualizar(idnodo, nombrenodo, tipo, padre_id)
+	   	nombrenodo = params[:nombre]
+		icono = params[:icono]
+		url=params[:url]
+	  	@opcionActualizar = OpcionMenu.new
+	   	valor = @opcionActualizar.Actualizar(idnodo, nombrenodo, icono, url)
 	    if valor == 1
 	    	render :text => '{"success": "true", "exito": "true", "msg": "Transaccion exitosa" }';
 	    else
@@ -47,15 +69,16 @@ class MenuController < ApplicationController
 	end
 	  
 	  #Agregar Nodo
-	if @funcion == "agregar"
-	   idnodo = params[:idnodo]
-	   nombrenodo = params[:nombrenodo]
-	   tipo = params[:tipo]
+	if @funcion == "agregar"	   
+	   nombrenodo = params[:nombre]
+	   menu = $menuJerarquia.id
+	   icono = params[:icono]
 	   padre_id = params[:padre_id]
-	   @arbols = Arbols.new
-	   valor, vinculo = @arbols.Agregar(idnodo, nombrenodo, tipo, padre_id, vinculo)   
-	   if valor >= 1
-	    render :text => "{'success': 'true', 'exito': 'true', 'msg': 'Transaccion exitosa',  'son': '#{valor}', 'vinculo': '#{vinculo}' }"    
+	   url=params[:url]
+	   @opcionNueva = OpcionMenu.new
+	   valor = @opcionNueva.Agregar(nombrenodo, menu, icono, padre_id, url)   
+	   if valor == 1
+	    render :text => '{"success": "true", "exito": "true", "msg": "Eliminacion exitosa"}'   
 	   else
 	    render :text => '{"success": "true", "exito": "false", "msg": "Transaccion No Exitosa" }'
 	   end
@@ -64,10 +87,10 @@ class MenuController < ApplicationController
 	  #Eliminar Nodo
 	if @funcion == "eliminar"
 	   idnodo = params[:idnodo]
-	   @arbols = Arbols.new
-	   valor = @arbols.Eliminar idnodo
-	   if valor.to_i >= 1
-	    render :text => "{'success': 'true', 'exito': 'true', 'msg': 'Eliminacion exitosa',  'son': '#{valor}'}"
+	   @opcionMenu = OpcionMenu.new
+	   valor = @opcionMenu.Eliminar(idnodo)
+	   if valor == 1
+	    render :text => '{"success": "true", "exito": "true", "msg": "Eliminacion exitosa"}'
 	   else
 	    render :text => '{"success": "true", "exito": "false", "msg": "Eliminacion No Exitosa" }'
 	   end

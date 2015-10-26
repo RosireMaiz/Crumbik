@@ -13,10 +13,12 @@ Rails.application.routes.draw do
 	match "/validar_subdominio" => "organizacions#validar_subdominio", via: :post
 	match "/validar_rol" => "rols#validar_rol", via: :post
 	match "/validar_servicio" => "servicios#validar_servicio", via: :post
+	match "/validar_opcion" => "menu#validar_opcion", via: :post
 
 	match "/usuarios/abrircuenta"=>"usuarios#create", via: :post
   	match '/usuarios/:id/confirmar_registro' => 'usuarios#finish_signup', via: [:get, :patch], as: :finish_signup
 	match "/registro" => "usuarios#new", via: :get
+	get 'current_rol' => "usuarios#current_rol"
 
 	get '/catalogo', to: 'paginas#catalogo'
 	match "/inicio" => "portal#index", via: :get
@@ -30,7 +32,8 @@ Rails.application.routes.draw do
 	match '/menu/cargar_estructura' => "menu#cargar_estructura", via: :get
 
 	match '/menu/consultar' => "menu#consultar", via: :post
-	match '/menu/consultar' => "menu#consultar", via: :get
+
+	match '/menu/actualizar' => "menu#actualizar", via: :post
 
 	match "/usuarios/editar" => "usuarios#edit", via: :get
     match "/usuarios/editar" => "usuarios#save", via: :post

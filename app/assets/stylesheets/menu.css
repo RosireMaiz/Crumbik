@@ -155,14 +155,7 @@
     border-top: none !important;
 }
 
-#ventanaEdicion {
-    width: 450px;
-    border-radius: 10px;
-    padding: 0px;
-    background-color: #F5F7FA;
-    border: 0px;
-    max-height: 65% !important; 
-}
+
 body {
     background-color: #e8e7ed !important;
 }
@@ -216,4 +209,9 @@ body {
 .fa-select > ul{
     max-height: 200px;
     overflow: auto;
+}
+
+#ventanaEdicion{
+  max-height: 80% !important;
+  width: 40% !important;
 }
