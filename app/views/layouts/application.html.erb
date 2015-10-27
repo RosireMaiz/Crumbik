@@ -31,9 +31,15 @@
 						
 						<%= yield %>
 
-	           			<footer >
-		        			<%= render "partials/footer" %>
-		        		</footer>
+	           			<% if request.subdomain.present? %>
+				        	<footer >
+				        		<%= render "partials/footer_organizacion" %>
+				       		</footer>
+			       		<% else %>
+			       			<footer >
+				        		<%= render "partials/footer" %>
+				        	</footer>
+			       		<% end %>
 	          		</div>
 	        	</div>	
 	       </main> 
@@ -52,10 +58,16 @@
 				<% end %>
 
 	        	<%= yield %>
-
-	        	<footer >
-	        		<%= render "partials/footer" %>
-	       		</footer>
+				
+				<% if request.subdomain.present? %>
+					<footer >
+				    	<%= render "partials/footer_organizacion" %>
+				    </footer>
+			    <% else %>
+			    	<footer >
+				   		<%= render "partials/footer" %>
+				   	</footer>
+			    <% end %>
 	       	</main>
 	    <% end %>
 	      

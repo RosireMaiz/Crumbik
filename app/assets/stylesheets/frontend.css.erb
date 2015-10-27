@@ -38,7 +38,6 @@ h4 {
 	width: 100%;
 	padding-top: 276px;
   	text-align: center;
-	z-index: -1;
 	position: relative;
 	background-repeat: no-repeat;
 }
@@ -181,20 +180,18 @@ div.dropdown-menu::after {
 }
 .org-contenedor-contenido{
   	background: #fff;
-  	position: relative;
   	width: 100%;
   	max-width: 100%;
   	z-index: 2;
   	top: 33em;
   	left: -0.8em;
-  	border-radius: 1%;
+    border-radius: 1% 1% 0% 0%;
   	-webkit-box-shadow: 0 0 1px #999;
   	-moz-box-shadow: 0 0 1px #999;
   	box-shadow: 0 0 5px 1px #999;
 }
 .org-contenedor-banner{
 	position: absolute;
-	z-index: 1;
 	width: 100%;
 	height: 708px;
 	text-align: center;
@@ -216,4 +213,15 @@ div.dropdown-menu::after {
 	font-weight: lighter;
 	font-style: 20px;
 	font-family: Roboto;
+}
+.banner-organizacion{
+	height: 486px;
+    width: 100%;
+    position: relative !important;
+}
+.org-contenedor-banner > img{
+    max-width: 1349px;
+}
+.org-contenedor-banner-img{
+	z-index: -1;
 }
