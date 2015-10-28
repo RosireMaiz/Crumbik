@@ -47,7 +47,7 @@ Rails.application.routes.draw do
     match "/usuarios_portal/consultar" => "usuarios#usuarios", via: :get
     match "/usuarios_portal/agregarusuario" => "usuarios#new_user", via: :get
  
- 	match "/usuarios/nuevo"=>"usuarios#create_portal", via: :post
+ 	match "/usuarios/create_portal"=>"usuarios#create_portal", via: :post
 
     match "/roles/consultar" => "rols#consultar", via: :get
     match "/roles/agregar" => "rols#new", via: :get
@@ -61,10 +61,8 @@ Rails.application.routes.draw do
     match "/servicios/agregar" => "servicios#new", via: :get
     match "/servicios/crear_servicio" => "servicios#create", via: :post
     match "/servicios/update_estatus" => "servicios#update_estatus", via: :post
-    match "/servicios/update_estatus" => "servicios#update_estatus", via: :get
-    match "/servicios/update" => "servicios#update", via: :get
 	match "/servicios/update" => "servicios#update", via: :post
-
+	match "servicios/consultar_servicio" => "servicios#consultar_servicio", via: :post
 
 	devise_scope :usuario do
 	    post "/entrar" => "devise/sessions#create"

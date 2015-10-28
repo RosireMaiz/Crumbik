@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20151021024708) do
+ActiveRecord::Schema.define(version: 20151027215840) do
 
   create_table "autenticacions", force: :cascade do |t|
     t.integer "usuario_id", limit: 4
@@ -64,14 +64,14 @@ ActiveRecord::Schema.define(version: 20151021024708) do
   add_index "opcion_menus", ["menu_id"], name: "index_opcion_menus_on_menu_id", using: :btree
   add_index "opcion_menus", ["padre_id"], name: "index_opcion_menus_on_padre_id", using: :btree
 
-  create_table "organizacio_red_socials", force: :cascade do |t|
+  create_table "organizacion_red_socials", force: :cascade do |t|
     t.string  "url",             limit: 255
     t.integer "red_social_id",   limit: 4
     t.integer "organizacion_id", limit: 4
   end
 
-  add_index "organizacio_red_socials", ["organizacion_id"], name: "index_organizacio_red_socials_on_organizacion_id", using: :btree
-  add_index "organizacio_red_socials", ["red_social_id"], name: "index_organizacio_red_socials_on_red_social_id", using: :btree
+  add_index "organizacion_red_socials", ["organizacion_id"], name: "index_organizacion_red_socials_on_organizacion_id", using: :btree
+  add_index "organizacion_red_socials", ["red_social_id"], name: "index_organizacion_red_socials_on_red_social_id", using: :btree
 
   create_table "organizacions", force: :cascade do |t|
     t.string  "nombre",               limit: 255
@@ -121,7 +121,7 @@ ActiveRecord::Schema.define(version: 20151021024708) do
     t.string  "sexo",         limit: 255
     t.string  "ocupacion",    limit: 255
     t.integer "usuario_id",   limit: 4
-    t.binary  "foto",         limit: 65535
+    t.binary  "foto",         limit: 4294967295
     t.string  "formato_foto", limit: 255
   end
 
@@ -176,6 +176,15 @@ ActiveRecord::Schema.define(version: 20151021024708) do
     t.string "descripcion", limit: 255
     t.string "estatus",     limit: 1,   default: "A"
   end
+
+  create_table "usuario_red_socials", force: :cascade do |t|
+    t.string  "url",           limit: 255
+    t.integer "red_social_id", limit: 4
+    t.integer "usuario_id",    limit: 4
+  end
+
+  add_index "usuario_red_socials", ["red_social_id"], name: "index_usuario_red_socials_on_red_social_id", using: :btree
+  add_index "usuario_red_socials", ["usuario_id"], name: "index_usuario_red_socials_on_usuario_id", using: :btree
 
   create_table "usuario_rols", force: :cascade do |t|
     t.integer "usuario_id", limit: 4

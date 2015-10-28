@@ -71,13 +71,13 @@
 					              		</div>
 									</div>
 					        	</a>
-					        	<ul class="dropdown-menu" role="menu" aria-labelledby="dropdownMenu1">
+					        	<ul class="dropdown-menu dropdown-menu-header" role="menu" aria-labelledby="dropdownMenu1">
 						            <li role="presentation">
 						              <a id="cambiar-rol" role="menuitem" tabindex="-1" href="javascript:void(0)">Cambiar rol</a>
 						            </li>
 						             <li class="divider center"></li>
 						             <li>
-				        				<%= link_to 'Ver Perfil', edit_usuario_registration_path %> 
+				        				<%= link_to 'Editar Perfil', controller: "usuarios", action: "edit" %>
 				        			</li>
 				        			<li class="divider center"></li>
 						  			<li role="presentation"><%= link_to "Salir", destroy_usuario_session_url,method: :delete %></li>						  			

@@ -69,12 +69,19 @@ class ServiciosController < ApplicationController
 	def update
 		id = params[:idServicio]
 		nombre = params[:nombre]
-		if Servicio.update(id, :nombre => nombre)
+		descripcion = params[:descripcion]
+		if Servicio.update(id, :nombre => nombre, :descripcion => descripcion)
 			render :text =>'{ "success" : "true"}'
 		else
 
 			render :text => '{ "success" : "false"}'
 		end
+	end
+
+	def consultar_servicio
+		id = params[:idServicio]
+		@servicio = Servicio.where(id: id).first
+		render :json => @servicio
 	end
 
 

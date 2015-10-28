@@ -1,6 +1,3 @@
-<% content_for :css_personalizado do %>
-   <%= stylesheet_link_tag    "organizacion" %>
-<% end %>
 
 <style type="text/css">
 	.checkbox-list input[type="checkbox"] + label {
@@ -27,7 +24,7 @@
 
 
 <div id="form_wizard_1" class="center-block">
-	<%= form_for @usuario, :url => usuarios_abrircuenta_path, html:{id: "add_usuario", class: "form-horizontal"} do |f| %>
+	<%= form_for @usuario, :url => usuarios_create_portal_path, html:{id: "add_usuario", class: "form-horizontal"} do |f| %>
 		<div class="form-wizard">
 			<div class="form-body steps">
 				
@@ -91,9 +88,7 @@
 							      <div class="col s12">
 							        <label>Roles:</label>
 							        <div class="checkbox-list" id="rol_list">
-		                                <%= f.collection_check_boxes(:rols, Rol.all, :id, :nombre)  %>
-		                                
-		                           
+		                                 <%= f.collection_check_boxes( :rol_ids, Rol.all, :id, :nombre) %>
 							        </div>
 							        
 							      </div>
@@ -107,8 +102,7 @@
 			</div>
 			<div class="form-actions">
 				<div class="row">
-					<div class="col-md-offset-3 col-md-9">
-						
+					<div class="col s12 center">
 						<input type="submit" class="btn btn-success " value="Enviar">
 					</div>
 				</div>
@@ -120,21 +114,14 @@
 </div>
           
 <% content_for :javascript_personalizado do %>
-	<%= javascript_include_tag "usuarios" %>
-	<%= javascript_include_tag "plugins/jquery.bootstrap.wizard.min" %>
-	<%= javascript_include_tag "plugins/pwstrength-bootstrap-1.2.4.min" %>
+  <%= javascript_include_tag "plugins/pwstrength-bootstrap-1.2.4.min" %>
+  <%= javascript_include_tag 'usuarios' %>
 
-	<script type="text/javascript">
+<script type="text/javascript">
 	$(document).ready(function(){
-		$('.datepicker').pickadate({
-    		selectMonths: true, // Creates a dropdown to control month
-    		selectYears: true, // Creates a dropdown of 15 years to control year
-    		format: 'mm/yyyy',
-    		closeOnSelect: true,
-    	 	closeOnClear: false,
-
-    	});
-    
-	});
-	</script>
+		      $(' .alert-danger').hide();
+		      $('.alert-success').hide();     	
+  		});
+    </script>
+	
 <% end %>

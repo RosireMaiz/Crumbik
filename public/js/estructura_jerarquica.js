@@ -121,14 +121,14 @@ Ext.onReady(function() {
 									var icono = $('#iconoPicker > i').attr('class');                
                                  	$('h5#titulo').text("Agregar Nodo");       
 									$('.modal .input-field > label').removeClass('active');
-									$('#nombre').removeClass('msj-error');
 									$('#icono').val(icono);
+									$('#nombre').removeClass('msj-error');
 									$('#url').removeClass('msj-error');
 									$('#nombre').removeClass('valid');									
 									$('#url').removeClass('valid');
-									$('#nombre').val("");
-									$('#nombre').css("text-transform"," capitalize");
 									$( "span.msj-error" ).remove();
+									$('#nombre').css("text-transform"," capitalize");
+									$('#nombre').val("");
 									$('#url').val("");
 									$('#url').css("text-transform"," lowercase");
 									$('#ventanaEdicion').openModal();
@@ -188,7 +188,9 @@ Ext.onReady(function() {
 												 var res = icono.substring(2);
 												 $('#nombre').removeClass('msj-error');
 												 $('#url').removeClass('msj-error');
-												 
+												
+												 $('#nombre').removeClass('valid');									
+												 $('#url').removeClass('valid');
 												 $(' .modal .input-field > label').addClass('active');
 										    	 $('h5#titulo').text("Editar Nodo");
 												 $('#nombre').val(nombre);

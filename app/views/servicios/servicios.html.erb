@@ -97,29 +97,30 @@
         </div> 
 
 
-        <div id="modaleditar<%= servicios.id %>" class="modal modal-45">
-          <div class="modal-content">
-                <a href="#" style="float:right;" class="waves-effect btn-flat modal-close"><i class="mdi-content-clear"></i></a>
+        <div id="modaleditar<%= servicios.id %>" class="modal modal-45" form="true">
+          <div class="modal-content " >
+                <a href="#" style="float:right;" class="waves-effect btn-flat modal-close" onclick="cancelar(modaleditar<%= servicios.id %>, <%= servicios.id %>, nombre<%= servicios.id %>, descripcion<%= servicios.id %>)"><i class="mdi-content-clear"></i></a>
                 <h5>Editar servicio</h5>
                 
                 <div class="row" style="padding-top: 35px;">
-                    <div class="col s12 text-center">
+                    <div class="col s12 ">
                       <div class="row">
                         <div class=" input-field col s8 offset-s2 ">
-                          <input id="nombre<%= servicios.id %>" type="text" class="validate" value="<%= servicios.nombre %>"> 
+                          <input id="nombre<%= servicios.id %>" name="servicio[nombre]" type="text" value="<%= servicios.nombre %>"> 
                           <label for="nombre<%= servicios.id %>">Nombre:</label>
 
                         </div>
                         <div class=" input-field col s8 offset-s2 ">
-                          <textarea id="descripcion<%= servicios.id %>" class="materialize-textarea validate" legth="120" ><%= servicios.descripcion %></textarea> 
+                          <textarea id="descripcion<%= servicios.id %>" class="materialize-textarea" name="servicio[descripcion]" legth="120" ><%= servicios.descripcion %></textarea> 
                           <label for="descripcion<%= servicios.id %>">Decripcion:</label>
 
                         </div>
                       </div>
-                      
-                      <input type="button" class="btn btn-success btn-sm" value="Guardar" onclick="update(<%= servicios.id %>, nombre<%= servicios.id %> )">
-                      
-                      <input type="button" class="btn btn-danger btn-sm modal-close" value="Cancelar" >
+                      <div class="text-center">
+                        <input type="button" class="btn btn-success btn-sm" value="Guardar" onclick="update(modaleditar<%= servicios.id %>, <%= servicios.id %>, nombre<%= servicios.id %>, descripcion<%= servicios.id %> )">
+                        
+                        <input type="button" class="btn btn-danger btn-sm modal-close" value="Cancelar"  onclick="cancelar(modaleditar<%= servicios.id %>, <%= servicios.id %>, nombre<%= servicios.id %>, descripcion<%= servicios.id %>)">
+                      </div>
                     </div>
                 </div>
             </div>                
@@ -188,23 +189,87 @@
                                                    });
     }
 
-    function update(servicio, id){
-      var nombre = $(id).val();
-     var request = $.ajax({
-                            url: '/servicios/update',
-                            method: "POST",
-                            data: { idServicio: servicio, nombre: nombre},
-                            dataType: "JSON"
-                          });
+    function update(servicio, idservicio, nombre, descripcion){
 
-        request.done(function( data ) {
-                                         location.reload(); 
-                                      });
-                     
-        equest.fail(function( jqXHR, textStatus ) {
-                                                    alert( "Request failed: " + textStatus );
-                                                   });
+      $(servicio).validate({
+              doNotHideMessage: true, //this option enables to show the error/success messages on tab switch.
+                    errorElement: 'span', //default input error message container
+                    errorClass: 'msj-error', // default input error message class
+                    focusInvalid: false, // do not focus the last invalid input
+      rules: {
+        "servicio[nombre]":{
+          required:true,
+            remote: {
+                url: "/validar_servicio",
+                type: "post"
+              }
+        },
+        "servicio[descripcion]":"required",
+      },
+      messages:{
+        "servicio[nombre]":{
+          required:"Indica el nombre",
+          remote:"Ya existe un servicio con este nombre."
+        },
+        "servicio[descripcion]":  {
+                     required: "Debe indicar la descripción.",
+                },           
+      },
+
+       errorPlacement: function (error, element) { // render error placement for each input type
+                       error.insertAfter(element); // for other inputs, just perform default behavior
+                    },
+    });
+
+    if ($(servicio).valid()) {
+          var nombreval = $(nombre).val();
+          var descripcionval = $(descripcion).val();
+          var request = $.ajax({
+                                url: '/servicios/update',
+                                method: "POST",
+                                data: { idServicio: idservicio, 
+                                        nombre: nombreval, 
+                                        descripcion: decripcionval },
+                                dataType: "JSON"
+                              });
+
+            request.done(function( data ) {
+                                             location.reload(); 
+                                          });
+                         
+            equest.fail(function( jqXHR, textStatus ) {
+                                                        alert( "Request failed: " + textStatus );
+                                                       });
     }
+
+  };
+
+      function cancelar(modal,idservicio, nombre, descripcion){
+          $(modal).closeModal();
+          var request = $.ajax({
+                                url: '/servicios/consultar_servicio',
+                                method: "POST",
+                                data: { idServicio: idservicio},
+                                dataType: "JSON",
+                                success: function( data ) {
+
+                                    var nombreval = data.nombre ;
+                                    var descripcionval = data.descripcion;            
+                                    $(nombre).val(nombreval);
+                                    $(descripcion).val(descripcionval);
+                                    $('.input-field > label').attr("class", 'active');
+
+                                    $(nombre).removeClass('msj-error');
+                                    $(descripcion).removeClass('msj-error');
+                                    $(nombre).removeClass('valid');                  
+                                    $(descripcion).removeClass('valid');
+                                    $( "span.msj-error" ).remove();
+
+
+                                          }
+                              });
+        
+  };
 
   </script>
 <% end %>

@@ -72,8 +72,8 @@
 <% content_for :javascript_personalizado do %>
 <script type="text/javascript">
   $(document).ready(function(){
-      $('#form_wizard_1 .alert-danger').hide();
-      $('#form_wizard_1 .alert-success').hide();
+      $(' .alert-danger').hide();
+      $('.alert-success').hide();
        $('textarea#servicio_descripcion').characterCounter(length: "120");
   });
 

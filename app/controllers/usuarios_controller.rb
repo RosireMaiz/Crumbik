@@ -49,8 +49,6 @@ class UsuariosController < ApplicationController
 		end
 	end
 
-	def new_portal
-	end
 
 	def create
     	formato = "data:image/jpg;base64,"
@@ -93,6 +91,17 @@ class UsuariosController < ApplicationController
 	    render json: @respuesta
 	end
 
+	def create_portal
+		formato = "data:image/jpg;base64,"
+    	formato_logo = "data:image/png;base64,"
+    	foto_perfil = Base64.encode64(File.open($ADMIN_ICON, "rb").read)
+    	logo_organizacion = Base64.encode64(File.open($ADMIN_ICONC, "rb").read)
+    	@usuario = Usuario.new(usuario_params_rols)
+		@usuario.perfil.attributes  = {:foto => foto_perfil, :formato_foto => formato}
+		@usuario.save
+		redirect_to :controller => 'usuarios', :action => 'usuarios'
+	end
+
 	def usuarios
 		if !usuario_signed_in?
         	render "portal/index"
@@ -112,6 +121,8 @@ class UsuariosController < ApplicationController
          
      	end
 	end
+
+
 
 	def show
 		if  params[:id].present?
@@ -264,41 +275,20 @@ class UsuariosController < ApplicationController
 		  @perfil.each do |per|
 		  	@perfil = per
 		  end
-
+			
 		  #Archivo subido por el usuario.
 	      archivo = params[:avatar_id]
-	      #Nombre original del archivo.
-	      nombre = archivo.original_filename
 
+ 		  formato = "data:"+ archivo.content_type+";base64,"
+		  foto_perfil = Base64.encode64(File.open(archivo.tempfile, "rb").read)
 
-	      #Extensión del archivo.
-	      extension = nombre.slice(nombre.rindex("."), nombre.length).downcase
+    	  @perfil.foto = foto_perfil
 
-	       #Nombre original del archivo.
-	      nombre = @usuario.id.to_s + extension
-	      
-	     archivo.original_filename = nombre
-
-
-         #Ruta del archivo.
-         path = File.join(dir, nombre)
-         #Crear en el archivo en el directorio. Guardamos el resultado en una variable, será true si el archivo se ha guardado correctamente.
-         resultado = File.open(path, "wb") { |f| f.write(archivo.read) }
-         #Verifica si el archivo se subió correctamente.
-
-    	  @perfil.foto = nombre
+    	  @perfil.formato_foto = formato
 
     	  @perfil.save
 		
-		render "/usuarios/edit"
-
-
-
-		# def cleanup
-  #   File.delete("#{RAILS_ROOT}/dirname/#{@filename}") 
-  #           if File.exist?("#{RAILS_ROOT}/dirname/#{@filename}")
-  # 		end
-		
+		redirect_to :controller => 'usuarios', :action => 'edit'
 	end
 
 
@@ -353,5 +343,10 @@ class UsuariosController < ApplicationController
 	    params.require(:usuario).permit(accessible)
 	end
     
+   def usuario_params_rols
+	    accessible = [ :email, :username, :perfil_attributes =>[ :nombres, :apellidos], :rol_ids => [] ] # extend with your own params
+	    accessible << [ :password, :password_confirmation ] unless params[:usuario][:password].blank?
+	    params.require(:usuario).permit(accessible)
+	end
 
 end

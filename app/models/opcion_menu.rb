@@ -4,8 +4,6 @@ class OpcionMenu < ActiveRecord::Base
 	belongs_to :padre, class_name: "OpcionMenu"
 	default_scope { order('orden ASC') }
 
- @@nro=0
-
   #ContarHijos, Usado por el metodo: BuscarTodosArbolJson
   def ContarHijos(menu,padreid)
    @opcionMenus = OpcionMenu.all   
@@ -28,7 +26,7 @@ class OpcionMenu < ActiveRecord::Base
 	  @opcionMenus = OpcionMenu.where("menu_id = ? AND padre_id = ?", menu.id.to_s, padreid).order(orden: :asc)
 	  i=0
 	  @opcionMenus.each do |arbol|
-     @tira = @tira+" { text: ' <i class= \" " + arbol.icono.to_s + "\"  ></i> <span class= \"no-padding\"> " + arbol.nombre +  " </span>', cls:'no-padding node',id: '" + arbol.id.to_s  + "',  href: '" + arbol.url.to_s  + "', "
+     @tira = @tira+" { text: ' <i class= \" " + arbol.icono.to_s + "\"  ></i> <span class= \"no-padding\"> " + arbol.nombre +  " </span>', cls:'no-padding waves-effect',id: '" + arbol.id.to_s  + "',  href: '" + arbol.url.to_s  + "', "
 	   self.ObtenerHijos(menu,arbol.id)
 	   i=i+1
      if i<totaldeRegistros1
@@ -52,9 +50,9 @@ class OpcionMenu < ActiveRecord::Base
   	  j=0
   		@opcionMenus.each do |arbol|
       if arbol.hijos.length >0
-        @tira = @tira+" { text: '<i class= \" " + arbol.icono.to_s + "\" ></i> <span class=\" node\"  id="+ arbol.id.to_s+"> " + arbol.nombre + " </span> ', cls: 'active node waves-effect ', expanded: false, id: '" + arbol.id.to_s  + "', href: '', "
+        @tira = @tira+" { text: '<i class= \" " + arbol.icono.to_s + "\" ></i> <span id="+ arbol.id.to_s+"> " + arbol.nombre + " </span> ', cls: 'active waves-effect ', expanded: false, id: '" + arbol.id.to_s  + "', href: '', "
       else
-        @tira = @tira+" { text: '<i class= \" " + arbol.icono.to_s + "\" ></i> <span  class=\" node\" id="+ arbol.id.to_s+"> " + arbol.nombre + " </span> ', cls: 'active node waves-effect ', expanded: false, id: '" + arbol.id.to_s  + "', href: '" + arbol.url.to_s  +  "', "
+        @tira = @tira+" { text: '<i class= \" " + arbol.icono.to_s + "\" ></i> <span id="+ arbol.id.to_s+"> " + arbol.nombre + " </span> ', cls: 'active waves-effect ', expanded: false, id: '" + arbol.id.to_s  + "', href: '" + arbol.url.to_s  +  "', "
       end
   		 
   		self.ObtenerHijos(menu,arbol.id)
@@ -81,7 +79,7 @@ class OpcionMenu < ActiveRecord::Base
     @opcionMenus = OpcionMenu.where("menu_id = ? AND padre_id = ?", menu.id.to_s, padreid).order(orden: :asc)
     i=0
     @opcionMenus.each do |arbol|
-     @tira = @tira+" { text: ' <i class= \" " + arbol.icono.to_s + "\"  ></i> <span class= \"no-padding\"> " + arbol.nombre +  " </span>', cls:'no-padding node',id: '" + arbol.id.to_s  + "',  href: '', "
+     @tira = @tira+" { text: ' <i class= \" " + arbol.icono.to_s + "\"  ></i> <span class= \"no-padding\"> " + arbol.nombre +  " </span>', cls:'no-padding waves-effect ',id: '" + arbol.id.to_s  + "',  href: '', "
      self.ObtenerHijosSinHref(menu,arbol.id)
      i=i+1
      if i<totaldeRegistros1
@@ -124,6 +122,7 @@ class OpcionMenu < ActiveRecord::Base
     return @tira
   end
 
+  #Buscar Nodo
   def BuscarNodo(id)
     opcionMenu = OpcionMenu.new
     opcionMenu = OpcionMenu.where("id = ?" , id).first
@@ -144,7 +143,7 @@ class OpcionMenu < ActiveRecord::Base
   
   #Agregar Nodo
   def Agregar(nombrenodo, menu, icono, padreid, url)
-    unless OpcionMenu.exists?(:nombre => "#{nombrenodo}" , :menu_id  => "#{menu}")
+    unless OpcionMenu.exists?( ["nombre = ? AND menu_id = ? AND padre_id = ?", "#{nombrenodo}", "#{menu}", "#{padreid}"])
       @opcionMenu = OpcionMenu.new 
       @opcionMenu.nombre = nombrenodo
       @opcionMenu.raiz = 0

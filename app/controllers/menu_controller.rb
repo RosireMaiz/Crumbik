@@ -4,15 +4,16 @@ class MenuController < ApplicationController
 
  	id = $menuJerarquia.id
 	if $funcion == "actualizar"
-	
 
-		if OpcionMenu.exists?( ["nombre = ? AND menu_id = ? AND id <> ?", params[:nombre], id, $idNode])
+		if OpcionMenu.exists?( ["nombre = ? AND menu_id = ? AND id <> ? AND padre_id = ?", params[:nombre], id, $idNode, $id_padre])
 		    render json: false
 		else
 		    render json: true
 		end
+
 	else
-		if OpcionMenu.exists?( ["nombre = ? AND menu_id = ? ", params[:nombre], id])
+
+		if OpcionMenu.exists?( ["nombre = ? AND menu_id = ? AND padre_id = ?", params[:nombre], id, $idNode])
 		    render json: false
 		else
 		    render json: true
@@ -45,9 +46,17 @@ class MenuController < ApplicationController
  def consultar
  	$funcion = params[:funcion]
  	$idNode = params[:idnodo]
- 	@opcionMenus = OpcionMenu.new
- 	@nodo = @opcionMenus.BuscarNodo($idNode)
-	render :text => @nodo
+
+	if $funcion == "agregar"
+		render :text => '{ "success" : "true"}'
+	else
+	 	@node = OpcionMenu.where(id: $idNode).first
+ 		$id_padre = @node.padre_id
+ 		@opcionMenus = OpcionMenu.new
+ 		@nodo = @opcionMenus.BuscarNodo($idNode)
+		render :text => @nodo
+	end
+ 	
  end
 
 

@@ -6,7 +6,7 @@ class CreatePerfils < ActiveRecord::Migration
       t.string :sexo
       t.string :ocupacion
 	    t.references :usuario, index: true
-	    t.binary :foto
+	    t.binary :foto, :limit => 4294967295.bytes
       t.string :formato_foto
     end
   end
