@@ -8,6 +8,14 @@ class RolsController < ApplicationController
 	    end
   	end
 
+	def validar_rol_update
+	    if Rol.exists?(  ["nombre = ? AND  id <> ? ", params[:rol][:nombre], params[:idrol] ])  
+	    	render json: false
+	    else
+	    	render json: true
+	    end
+  	end
+
 
 	def new
 		if !usuario_signed_in?
@@ -25,15 +33,8 @@ class RolsController < ApplicationController
 	def create
 		@respuesta = Hash.new
 		@rol = Rol.new(rol_params)
-	    if @rol.save
-			@respuesta["codigo"] = 200
-	       	@respuesta["url"] = root_path
-	       	
-	    else  
-	       @respuesta["codigo"] = 500
-	       @respuesta["errores"] = @rol.errors.full_messages
-	    end  
-	  redirect_to :controller => 'rols', :action => 'consultar'
+	    @rol.save
+	  	redirect_to :controller => 'rols', :action => 'consultar'
 	end
 
 	def consultar
@@ -46,7 +47,7 @@ class RolsController < ApplicationController
 	        @usuarioRol = UsuarioRol.where(usuario_id: current_usuario.id, rol_id: current_usuario.rol_actual.id) 
 
 	        if @usuarioRol[0] == nil or @rol[0].id != current_usuario.rol_actual.id
-	          render "portal/index_principal"
+	          render root_path
 	        else
 	           @rols = Rol.order('id ASC')
 	           @valor = true;
@@ -76,6 +77,12 @@ class RolsController < ApplicationController
 
 			render :text => '{ "success" : "false"}'
 		end
+	end
+
+	def consultar_rol
+		id = params[:idrol]
+		@rol = Rol.where(id: id).first
+		render :json => @rol
 	end
 
 private

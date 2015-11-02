@@ -140,6 +140,9 @@ main{
 /*****************************************************/
 /*                      UTILERIA                     */
 /*****************************************************/
+.pad30-t{
+  padding-top: 30px;
+}
 
 .pad5{
   padding: 5px 0px;
@@ -425,7 +428,10 @@ ul.dropdown-menu li{
 
 .logged-in-usuario .media-body{
   line-height: 12px;
+}
 
+.logged-in-usuario .media-body .user{
+  width: 110px;
 }
 
 .logged-in-usuario img{
@@ -502,7 +508,7 @@ main.cerrado .side-nav{
 }
 
 .bannerdiv{
-  height: 245px;
+  height: 235px;
 }
 main.cerrado .banner-sidebar{
     opacity:0;
@@ -865,3 +871,9 @@ div.seccion-principal span:after, div.seccion-principal span::after{
   min-width: 170px !important;
   border-radius: 5px !important;
 }
+
+.btn-table-action{
+    float: right;
+    border-radius: 100% !important;
+}
+

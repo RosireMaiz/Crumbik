@@ -185,7 +185,7 @@ Ext.onReady(function() {
 					           			         var nombre = data.nombre;
 												 var icono = data.icono;
 												 var url = data.url;
-												 var res = icono.substring(2);
+												 var res = icono.substring(3);
 												 $('#nombre').removeClass('msj-error');
 												 $('#url').removeClass('msj-error');
 												

@@ -12,7 +12,11 @@ Rails.application.routes.draw do
 	match "/validar_email" => "usuarios#validar_email", via: :post
 	match "/validar_subdominio" => "organizacions#validar_subdominio", via: :post
 	match "/validar_rol" => "rols#validar_rol", via: :post
+	match "/validar_rol_update" => "rols#validar_rol_update", via: :post
 	match "/validar_servicio" => "servicios#validar_servicio", via: :post
+	match "/validar_servicio_update" => "servicios#validar_servicio_update", via: :post
+	match "/validar_red_social" => "red_socials#validar_red_social", via: :post
+	match "/validar_red_social_update" => "red_socials#validar_red_social_update", via: :post
 	match "/validar_opcion" => "menu#validar_opcion", via: :post
 
 	match "/usuarios/abrircuenta"=>"usuarios#create", via: :post
@@ -30,9 +34,7 @@ Rails.application.routes.draw do
 	match '/estructurajerarquica' => "menu#estructura_jerarquica", via: :get
 
 	match '/menu/cargar_estructura' => "menu#cargar_estructura", via: :get
-
 	match '/menu/consultar' => "menu#consultar", via: :post
-
 	match '/menu/actualizar' => "menu#actualizar", via: :post
 
 	match "/usuarios/editar" => "usuarios#edit", via: :get
@@ -53,16 +55,23 @@ Rails.application.routes.draw do
     match "/roles/agregar" => "rols#new", via: :get
     match "/roles/crear_rol" => "rols#create", via: :post
     match "/roles/update_estatus" => "rols#update_estatus", via: :post
-    match "/roles/update_estatus" => "rols#update_estatus", via: :get
-    match "/roles/update" => "rols#update", via: :get
 	match "/roles/update" => "rols#update", via: :post
+	match "/roles/consultar_rol" => "rols#consultar_rol", via: :post
 
     match "/servicios/consultar" => "servicios#consultar", via: :get
     match "/servicios/agregar" => "servicios#new", via: :get
     match "/servicios/crear_servicio" => "servicios#create", via: :post
     match "/servicios/update_estatus" => "servicios#update_estatus", via: :post
 	match "/servicios/update" => "servicios#update", via: :post
-	match "servicios/consultar_servicio" => "servicios#consultar_servicio", via: :post
+	match "/servicios/consultar_servicio" => "servicios#consultar_servicio", via: :post
+
+
+    match "/redes_sociales" => "red_socials#consultar", via: :get
+    match "/redes_sociales/agregar" => "red_socials#new", via: :get
+    match "/red_socials/crear_red_social" => "red_socials#create", via: :post
+    match "/redes_sociales/update_estatus" => "red_socials#update_estatus", via: :post
+	match "/redes_sociales/update" => "red_socials#update", via: :post
+	match "/redes_sociales/consultar_red_social" => "red_socials#consultar_red_social", via: :post
 
 	devise_scope :usuario do
 	    post "/entrar" => "devise/sessions#create"

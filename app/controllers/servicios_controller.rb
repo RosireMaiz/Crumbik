@@ -8,6 +8,14 @@ class ServiciosController < ApplicationController
 	    end
   	end
 
+  	def validar_servicio_update
+	    if Servicio.exists?(  ["nombre = ? AND  id <> ? ", params[:servicio][:nombre], params[:idservicio] ])  
+	    	render json: false
+	    else
+	    	render json: true
+	    end
+  	end
+
   	def new
 		if !usuario_signed_in?
 			redirect_to root_path

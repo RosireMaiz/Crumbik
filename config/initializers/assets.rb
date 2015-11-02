@@ -40,5 +40,9 @@ Rails.application.config.assets.precompile += %w( portal.css )
 Rails.application.config.assets.precompile += %w( jquery.dataTables.css )
 Rails.application.config.assets.precompile += %w( jquery.dataTables.min.js )
 
+Rails.application.config.assets.precompile += %w( servicios.js )
+Rails.application.config.assets.precompile += %w( rols.js )
+Rails.application.config.assets.precompile += %w( red_socials.js )
+
 
 

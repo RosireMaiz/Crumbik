@@ -1,5 +1,12 @@
 <% content_for :css_personalizado do %>
    <%= stylesheet_link_tag    "organizacion" %>
+   <style type="text/css">
+   .dropdown-content {
+    
+    max-height: 200px; 
+    
+	}
+</style>
 <% end %>
 
 
@@ -120,33 +127,61 @@
 						</div>
 					</div>
 					<div class="tab-pane" id="tab2">
-						<div class="row">
+						<div class="row ">
 							<div class="col s8 offset-s2">
 								<h5 class="block">Datos de la organización</h5>
-								<%= f.fields_for :organizacion do |o| %>
-								<div class="input-field">
-									<label for="organizacion_nombre">Nombre de la organización<span class="required">
-									* </span></label>
-									<%= o.text_field :nombre, :required=>true  %>
+								<div class="pad15">
+									<%= f.fields_for :organizacion do |o| %>
+									<div class="input-field">
+										<label for="organizacion_nombre">Nombre de la organización<span class="required">
+										* </span></label>
+										<%= o.text_field :nombre, :required=>true  %>
+									</div>
+									<div class="input-field">
+										<label for="organizacion_descripcion">Descripción</label>
+										<%= o.text_area :descripcion, :class=>"materialize-textarea"  %>
+									</div>
+									<div class="input-field input-group">
+										<i class="mdi-social-public prefix input-group-addon"></i>
+										<%= o.text_field :subdominio, :required=>true  %>
+										<span class="input-group-addon" id="basic-addon2">.crumbik.com</span>
+										<label for="organizacion_subdominio">Subdominio <span class="required">
+										* </span>
+										</label>
+									</div>
+
+									<div class="row">
+										<label >Pais <span class="required">*</span></label>
+										<%= o.collection_select(:pais_id, Pais.all, :id, :nombre) %>  
+									</div>
+									<div class="row">
+										<label >Tipo de Organizacion <span class="required">*</span></label>
+										<%= o.collection_select(:tipo_organizacion_id, TipoOrganizacion.all, :id, :nombre) %>  
+									</div>
+		
+									<%= o.fields_for :contratos do |c| %>
+										<div class="row">
+											<label>Plan <span class="required">*</span></label>
+											<%= c.collection_select(:plan_id, Plan.all, :id, :nombre) %>
+										</div>
+										<!--<select name="organizacion[contratos][plan]">
+											<option value="-1" disabled selected>Elije tu plan</option>
+											<%#= options_from_collection_for_select(Plan.all, :id, :nombre) %>
+										</select>-->
+										<div class="row">
+											<label>Frecuencia de pago <span class="required">*</span></label>
+											<%= c.collection_select(:frecuencia_pago_id, FrecuenciaPago.all, :id, :nombre) %>
+										</div>
+										<!--<select id="frecuencia" name="organizacion[contratos][frecuencia]">
+											<option value="-1" disabled selected>Elije una frecuencia</option>
+											<%= options_from_collection_for_select(FrecuenciaPago.all, :id, :nombre) %>
+										</select>-->
+										<div id="msj-frecuencia"></div>
+									<% end %> <%# Fin del subformulario de contrato %>
+									
+									<% end %> <%# Fin del subfomulario de organizacion %>
+									<input type="hidden" value="" id="monto" name="pago[monto]"/>
 								</div>
-								<div class="input-field">
-									<label for="organizacion_descripcion">Descripción</label>
-									<%= o.text_area :descripcion, :class=>"materialize-textarea"  %>
-								</div>
-								<div class="input-field input-group">
-									<i class="mdi-social-public prefix input-group-addon"></i>
-									<%= o.text_field :subdominio, :required=>true  %>
-									<span class="input-group-addon" id="basic-addon2">.crumbik.com</span>
-									<label for="organizacion_subdominio">Subdominio <span class="required">
-									* </span>
-									</label>
-								</div>
-								
-	
-								<div id="msj-frecuencia"></div>
-								
-								<% end %> <%# Fin del subfomulario de organizacion %>
-								<input type="hidden" value="" id="monto" name="pago[monto]"/>
 							</div>
 						</div>
 					</div>
@@ -176,7 +211,12 @@
 									</div>
 									<div class="input-field input-group">
 										<input type="text" id="tarjeta_cvc" maxlegth="4" name="tarjeta[cvc]" required/>
-										<a href="javascript:void(0)" class="input-group-addon" id="basic-addon2"  role="button" data-toggle="popover" data-trigger="hover" data-title="¿Qué es CVC?" data-content="Son los ultimos 3 numeros de la parte reversa de la tarjeta." placement="right" data-container="body"><i class="mdi-action-help"></i><abbr>¿Qué es esto?</abbr></a>
+
+										<a href="javascript:void(0)" class="input-group-addon" id="basic-addon2"  role="button" data-toggle="popover" data-trigger="hover" data-title="¿Qué es CVC?" data-content="Son los ultimos 3 numeros de la parte reversa de la tarjeta." placement="right" data-container="body">
+											<i class="mdi-action-help"></i>
+											<abbr>¿Qué es esto?</abbr>
+										</a>
+
 										<label id="tarjeta_cvc">CVC <span class="required">
 										* </span>
 										</label>
@@ -207,88 +247,88 @@
 					<div class="tab-pane" id="tab4">
 						<div class="row">
 							<div class="col s8 offset-s2">
-						<h5 class="block">Confirma tu cuenta</h5>
-						<h6 class="form-section">Datos de la cuenta</h6>
-						<div class="form-group">
-							<label class="control-label col-md-3">Nombre</label>
-							<div class="col-md-4">
-								<span class="form-control-static" data-display="usuario[perfil_attributes][nombres]"></span>
-								<span class="form-control-static" data-display="usuario[perfil_attributes][apellidos]"></span>
+								<h5 class="block">Confirma tu cuenta</h5>
+								<h6 class="form-section">Datos de la cuenta</h6>
+								<div class="form-group">
+									<label class="control-label col-md-3">Nombre</label>
+									<div class="col-md-4">
+										<span class="form-control-static" data-display="usuario[perfil_attributes][nombres]"></span>
+										<span class="form-control-static" data-display="usuario[perfil_attributes][apellidos]"></span>
+									</div>
+								</div>
+								<div class="form-group">
+									<label class="control-label col-md-3">Email</label>
+									<div class="col-md-4">
+										<p class="form-control-static" data-display="usuario[email]">
+										</p>
+									</div>
+								</div>
+								<h6 class="form-section">Datos de la organización</h6>
+								<div class="form-group">
+									<label class="control-label col-md-3">Plan</label>
+									<div class="col-md-4">
+										<p class="form-control-static" data-display="usuario[organizacion_attributes][contratos_attributes][0][plan_id]">
+										</p>
+									</div>
+								</div>
+								<div class="form-group">
+									<label class="control-label col-md-3">Frecuencia de pago</label>
+									<div class="col-md-4">
+										<p class="form-control-static" data-display="usuario[organizacion_attributes][contratos_attributes][0][frecuencia_pago_id]">
+										</p>
+									</div>
+								</div>
+								<div class="form-group">
+									<label class="control-label col-md-3">Nombre de la organización</label>
+									<div class="col-md-4">
+										<p class="form-control-static" data-display="usuario[organizacion_attributes][nombre]">
+										</p>
+									</div>
+								</div>
+								<div class="form-group">
+									<label class="control-label col-md-3">Descripción</label>
+									<div class="col-md-4">
+										<p class="form-control-static" data-display="usuario[organizacion_attributes][descripcion]">
+										</p>
+									</div>
+								</div>
+								<div class="form-group">
+									<label class="control-label col-md-3">Subdominio</label>
+									<div class="col-md-4">
+										<p class="form-control-static" data-display="usuario[organizacion_attributes][subdominio]">
+										</p>
+									</div>
+								</div>
+								<h6 class="form-section">Pago</h6>
+								<div class="form-group">
+									<label class="control-label col-md-3">Nombre del tarjetahabiente</label>
+									<div class="col-md-4">
+										<p class="form-control-static" data-display="tarjeta[nombre]">
+										</p>
+									</div>
+								</div>
+								<div class="form-group">
+									<label class="control-label col-md-3">Número de tarjeta de crédito</label>
+									<div class="col-md-4">
+										<p class="form-control-static" data-display="tarjeta[numero]">
+										</p>
+									</div>
+								</div>
+								<div class="form-group">
+									<label class="control-label col-md-3">CVC:</label>
+									<div class="col-md-4">
+										<p class="form-control-static" data-display="tarjeta[cvc]">
+										</p>
+									</div>
+								</div>
+								<div class="form-group">
+									<label class="control-label col-md-3">Fecha de expiración</label>
+									<div class="col-md-4">
+										<p class="form-control-static" data-display="tarjeta[fecha_expiracion]">
+										</p>
+									</div>
+								</div>
 							</div>
-						</div>
-						<div class="form-group">
-							<label class="control-label col-md-3">Email</label>
-							<div class="col-md-4">
-								<p class="form-control-static" data-display="usuario[email]">
-								</p>
-							</div>
-						</div>
-						<h6 class="form-section">Datos de la organización</h6>
-						<div class="form-group">
-							<label class="control-label col-md-3">Plan</label>
-							<div class="col-md-4">
-								<p class="form-control-static" data-display="usuario[organizacion_attributes][contratos_attributes][0][plan_id]">
-								</p>
-							</div>
-						</div>
-						<div class="form-group">
-							<label class="control-label col-md-3">Frecuencia de pago</label>
-							<div class="col-md-4">
-								<p class="form-control-static" data-display="usuario[organizacion_attributes][contratos_attributes][0][frecuencia_pago_id]">
-								</p>
-							</div>
-						</div>
-						<div class="form-group">
-							<label class="control-label col-md-3">Nombre de la organización</label>
-							<div class="col-md-4">
-								<p class="form-control-static" data-display="usuario[organizacion_attributes][nombre]">
-								</p>
-							</div>
-						</div>
-						<div class="form-group">
-							<label class="control-label col-md-3">Descripción</label>
-							<div class="col-md-4">
-								<p class="form-control-static" data-display="usuario[organizacion_attributes][descripcion]">
-								</p>
-							</div>
-						</div>
-						<div class="form-group">
-							<label class="control-label col-md-3">Subdominio</label>
-							<div class="col-md-4">
-								<p class="form-control-static" data-display="usuario[organizacion_attributes][subdominio]">
-								</p>
-							</div>
-						</div>
-						<h6 class="form-section">Pago</h6>
-						<div class="form-group">
-							<label class="control-label col-md-3">Nombre del tarjetahabiente</label>
-							<div class="col-md-4">
-								<p class="form-control-static" data-display="tarjeta[nombre]">
-								</p>
-							</div>
-						</div>
-						<div class="form-group">
-							<label class="control-label col-md-3">Número de tarjeta de crédito</label>
-							<div class="col-md-4">
-								<p class="form-control-static" data-display="tarjeta[numero]">
-								</p>
-							</div>
-						</div>
-						<div class="form-group">
-							<label class="control-label col-md-3">CVC:</label>
-							<div class="col-md-4">
-								<p class="form-control-static" data-display="tarjeta[cvc]">
-								</p>
-							</div>
-						</div>
-						<div class="form-group">
-							<label class="control-label col-md-3">Fecha de expiración</label>
-							<div class="col-md-4">
-								<p class="form-control-static" data-display="tarjeta[fecha_expiracion]">
-								</p>
-							</div>
-						</div>
-						</div>
 						</div>
 						<!-- <div class="form-group">
 							<label class="control-label col-md-3">Payment Options:</label>
@@ -302,13 +342,13 @@
 			</div>
 			<div class="form-actions">
 				<div class="row">
-					<div class="col-md-offset-3 col-md-9">
-						<a href="javascript:;" class="btn btn-danger button-previous">
+					<div class="col s12 text-center">
+						<a href="javascript:;" class="btn  button-previous waves-effect">
 						<i class="mdi-navigation-arrow-back"></i> Atrás </a>
-						<a href="javascript:;" class="btn btn-primary button-next">
+						<a href="javascript:;" class="btn pink button-next waves-effect">
 						Continuar <i class="mdi-navigation-arrow-forward"></i>
 						</a>
-						<input type="submit" class="btn btn-success button-submit " value="Enviar">
+						<input type="submit" class="btn blue button-submit" value="Confirmar">
 					</div>
 				</div>
 			</div>

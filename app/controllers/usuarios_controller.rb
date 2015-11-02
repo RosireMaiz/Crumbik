@@ -1,7 +1,7 @@
 require "base64"
-$ADMIN_ICON = "app/assets/images/avatar/sinfoto.jpg";
-$ADMIN_ICONC = "app/assets/images/header-logo.png";
-
+$FOTO_DEFAULT = "app/assets/images/avatar/sinfoto.jpg";
+$LOGO_DEFAULT = "app/assets/images/header-logo.png";
+$BANNER_DEFAULT = "app/assets/images/org-banner-construccion.png";
 
 class UsuariosController < ApplicationController
 
@@ -27,7 +27,7 @@ class UsuariosController < ApplicationController
 			else
 				@usuario.build_organizacion
 				@usuario.build_perfil				
-				#@usuario.organizacion.contratos.build
+				@usuario.organizacion.contratos.build
 				render "usuarios/new"
 			end
 		end
@@ -53,14 +53,16 @@ class UsuariosController < ApplicationController
 	def create
     	formato = "data:image/jpg;base64,"
     	formato_logo = "data:image/png;base64,"
-    	foto_perfil = Base64.encode64(File.open($ADMIN_ICON, "rb").read)
-    	logo_organizacion = Base64.encode64(File.open($ADMIN_ICONC, "rb").read)
+    	formato_banner = "data:image/jpg;base64,"
+    	foto_perfil = Base64.encode64(File.open($FOTO_DEFAULT, "rb").read)
+    	logo_organizacion = Base64.encode64(File.open($LOGO_DEFAULT, "rb").read)
+    	banner_organizacion = Base64.encode64(File.open($BANNER_DEFAULT, "rb").read)
 
 		@rol = Rol.where("nombre = ?", "Empresario").first 
 		@usuario = Usuario.new(usuario_params_organizacion)
 
 		@usuario.perfil.attributes  = {:foto => foto_perfil, :formato_foto => formato}
-		@usuario.organizacion.attributes  = {:logo => logo_organizacion, :formato_logo => formato_logo}
+		@usuario.organizacion.attributes  = {:logo => logo_organizacion, :formato_logo => formato_logo, :banner => banner_organizacion , :formato_banner => formato_banner}
 		# @pago = Pago.new
 		# @pago.monto =  params[:pago][:monto]
 		# @pago.modo_pago = ModoPago.find(params[:modo_pago])
@@ -93,9 +95,7 @@ class UsuariosController < ApplicationController
 
 	def create_portal
 		formato = "data:image/jpg;base64,"
-    	formato_logo = "data:image/png;base64,"
-    	foto_perfil = Base64.encode64(File.open($ADMIN_ICON, "rb").read)
-    	logo_organizacion = Base64.encode64(File.open($ADMIN_ICONC, "rb").read)
+    	foto_perfil = Base64.encode64(File.open($FOTO_DEFAULT, "rb").read)
     	@usuario = Usuario.new(usuario_params_rols)
 		@usuario.perfil.attributes  = {:foto => foto_perfil, :formato_foto => formato}
 		@usuario.save
@@ -338,7 +338,7 @@ class UsuariosController < ApplicationController
     end
 
    	def usuario_params_organizacion
-	    accessible = [ :email, :username, :perfil_attributes =>[ :nombres, :apellidos], :organizacion_attributes => [ :id, :nombre, :descripcion, :subdominio] ] # extend with your own params
+	    accessible = [ :email, :username, :perfil_attributes =>[ :nombres, :apellidos], :organizacion_attributes => [ :id, :nombre, :descripcion, :subdominio, :pais_id, :tipo_organizacion_id, :contratos_attributes => [:id, :plan_id, :frecuencia_pago_id] ] ] # extend with your own params
 	    accessible << [ :password, :password_confirmation ] unless params[:usuario][:password].blank?
 	    params.require(:usuario).permit(accessible)
 	end

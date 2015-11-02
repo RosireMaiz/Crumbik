@@ -199,7 +199,7 @@ formServicio.validate({
 
 		
 $("#add_nodo").validate({
-	 ignore: "",
+	 				ignore: "",
 			        doNotHideMessage: true, //this option enables to show the error/success messages on tab switch.
                     errorElement: 'span', //default input error message container
                     errorClass: 'msj-error', // default input error message class
@@ -340,6 +340,49 @@ formUsuario.validate({
                             .closest('.form-group').removeClass('has-error').addClass('has-success'); // set success class to the control group
                         
                     }
+		});
+
+$("#add_red_social").validate({
+					ignore: "",
+			        doNotHideMessage: true, //this option enables to show the error/success messages on tab switch.
+                    errorElement: 'span', //default input error message container
+                    errorClass: 'msj-error', // default input error message class
+                    focusInvalid: false, // do not focus the last invalid input
+			rules: {
+				"red_social[nombre]":{
+					
+					required:true,
+					remote: {
+				       	url: "/validar_red_social",
+				       	type: "post"
+	        		}
+				    
+				},
+				"red_social[icono]":{
+					required:true,
+				},
+			},
+			messages:{
+				"red_social[nombre]":{
+					
+					required:"Indica el nombre.",
+					remote:"Ya existe una red social con este nombre."
+				
+				},
+				"red_social[icono]":{
+					
+					required:"Seleccione el icono de la red social.",
+				
+				},	
+			},
+
+			 errorPlacement: function (error, element) { // render error placement for each input type
+                        if (element.attr("name") == "red_social[icono]") { // for uniform checkboxes, insert the after the given container
+                            error.insertAfter("#div_icono");
+                        } else {
+                            error.insertAfter(element); // for other inputs, just perform default behavior
+                        }
+                    },
 		});
 
 

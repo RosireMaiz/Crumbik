@@ -145,13 +145,18 @@ class OpcionMenu < ActiveRecord::Base
   def Agregar(nombrenodo, menu, icono, padreid, url)
     unless OpcionMenu.exists?( ["nombre = ? AND menu_id = ? AND padre_id = ?", "#{nombrenodo}", "#{menu}", "#{padreid}"])
       @opcionMenu = OpcionMenu.new 
+      @opcionMenu.id = OpcionMenu.maximum("id") + 1
       @opcionMenu.nombre = nombrenodo
       @opcionMenu.raiz = 0
       @opcionMenu.url = url
       @opcionMenu.padre_id = padreid
       @opcionMenu.menu_id = menu
       @opcionMenu.icono = icono
-      @opcionMenu.orden = OpcionMenu.where(menu_id: "#{menu}").maximum("orden") + 1
+      orden = OpcionMenu.select("MAX(Coalesce(orden,0)) as ordenm").where("menu_id = ? AND padre_id = ?","#{menu}", "#{padreid}").first.ordenm
+      if orden.nil?
+        orden = 1
+      end
+      @opcionMenu.orden = orden
       @opcionMenu.save
       if menu > 0
         OpcionMenu.update(menu, raiz: true)        

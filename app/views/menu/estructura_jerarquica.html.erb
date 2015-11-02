@@ -1,21 +1,21 @@
- 
+
 <!-- Bootstrap -->
 <link rel="stylesheet" href="bootstrap-3.2.0/css/bootstrap.css"/>
 <!-- Elusive Icons -->
 <link rel="stylesheet" href="icon-fonts/font-awesome-4.2.0/css/font-awesome.min.css"/>
 <!-- Bootstrap-Iconpicker -->
 <link rel="stylesheet" href="bootstrap-iconpicker/css/bootstrap-iconpicker.css"/>
+ <!-- jQuery -->
+  <script type="text/javascript" src="jquery/jquery-1.10.2.min.js"></script>
+  <!-- Bootstrap -->
+  <script type="text/javascript" src="bootstrap-3.2.0/js/bootstrap.min.js"></script>
 
-<!-- jQuery -->
-<script type="text/javascript" src="jquery/jquery-1.10.2.min.js"></script>
-<!-- Bootstrap -->
-<script type="text/javascript" src="bootstrap-3.2.0/js/bootstrap.min.js"></script>
+  <script type="text/javascript" src="bootstrap-iconpicker/js/iconset/iconset-fontawesome-4.2.0.min.js"></script> 
+  <!-- Bootstrap-Iconpicker -->
+  <script type="text/javascript" src="bootstrap-iconpicker/js/bootstrap-iconpicker.js"></script>
 
-<script type="text/javascript" src="bootstrap-iconpicker/js/iconset/iconset-fontawesome-4.2.0.min.js"></script> 
-<!-- Bootstrap-Iconpicker -->
-<script type="text/javascript" src="bootstrap-iconpicker/js/bootstrap-iconpicker.js"></script>
+  <script type="text/javascript" src= "http://lvh.me:3000/js/estructura_jerarquica.js"></script>
 
-<script type="text/javascript" src= "http://lvh.me:3000/js/estructura_jerarquica.js"></script>
 
 
 <div class="row titulo-seccion">
@@ -100,12 +100,10 @@
           <div class=" text-center">
 
             <button  id="btnGuardar" class= "btn btnForm waves-effect pink accent-4 lighten-2 btn-sm"> 
-              <i class="fa fa-save"></i> 
               Guardar
             </button>
 
             <button id="btnCancelar" class= "btn btnForm waves-effect accent-4 lighten-2 btn-sm modal-close">
-              <i class="fa fa-times"></i> 
               Cancelar
             </button>
 
@@ -141,27 +139,27 @@
 
 </div>
 
-<script type="text/javascript">
-  $('#iconoPicker').iconpicker({
-    rows:3,
-   searchText: 'Buscar...',
-   cols:5
- });
-$('.dropdown-toggle').dropdown();
+  <script type="text/javascript">
+    $('#iconoPicker').iconpicker({
+      rows:3,
+     searchText: 'Buscar...',
+     cols:5
+   });
+  $('.dropdown-toggle').dropdown();
 
-    $('#iconoPicker').on('change', function() {
-      var icono = $('#iconoPicker > i').attr('class');
-      if (icono == "fa fa-") {
-          
-          $('#icono').val("");
-          $('#icono-error').show();
+      $('#iconoPicker').on('change', function() {
+        var icono = $('#iconoPicker > i').attr('class');
+        if (icono == "fa fa-") {
+            
+            $('#icono').val("");
+            $('#icono-error').show();
 
-      }else{
+        }else{
 
-          $('#icono').val(icono);
-          $('#icono-error').hide();
+            $('#icono').val(icono);
+            $('#icono-error').hide();
 
-      };
-       
-    });
-</script>
+        };
+         
+      });
+  </script>

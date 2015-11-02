@@ -94,31 +94,30 @@
         </div> 
 
 
-        <div id="modaleditar<%= rols.id %>" class="modal modal-45">
+        <div id="modaleditar<%= rols.id %>" class="modal modal-45" form="true">
           <div class="modal-content">
                 <a href="#" style="float:right;" class="waves-effect btn-flat modal-close"><i class="mdi-content-clear"></i></a>
                 <h5>Editar Rol</h5>
                 
                 <div class="row" style="padding-top: 35px;">
-                    <div class="col s12 text-center">
+                    <div class="col s12">
                       <div class="row">
                         <div class=" input-field col s8 offset-s2 ">
-                          <input id="nombre<%= rols.id %>" type="text" class="validate" value="<%= rols.nombre %>"> 
-                          <label for="nombre<%= rols.id %>">Nombre:</label>
+                          <input id="nombre<%= rols.id %>" type="text" class="validate" value="<%= rols.nombre %>" name="rol[nombre]"> 
+                          <label for="nombre<%= rols.id %>" >Nombre:</label>
 
                         </div>
                       </div>
+                      <div class="text-center">
+                        <input type="button" class="btn btn-success btn-sm" value="Guardar" onclick="update(modaleditar<%= rols.id %>, <%= rols.id %>, nombre<%= rols.id %> )">
                       
-                        <input type="button" class="btn btn-success btn-sm" value="Guardar" onclick="update(<%= rols.id %>, nombre<%= rols.id %> )">
-                      
-                        <input type="button" class="btn btn-danger btn-sm" value="Cancelar" onclick="cerrarModal(modaleditar<%= rols.id %>)">
+                        <input type="button" class="btn btn-danger btn-sm" value="Cancelar" onclick="cancelar(modaleditar<%= rols.id %>, <%= rols.id %>, nombre<%= rols.id %> )">
                       </div>
-
                     </div>
-                </div>                
-          </div>
-        </div> 
 
+                 </div>
+          </div>                
+        </div>
 
     <% end %>
   <% end %>
@@ -126,7 +125,7 @@
 </div>
 
 <% content_for :javascript_personalizado do %>
-
+  <%= javascript_include_tag 'rols' %>
   <%= javascript_include_tag 'jquery.dataTables.min' %>
   <script type="text/javascript">
     $(document).ready(function(){
@@ -137,44 +136,5 @@
       });
     });
 
-    function update_estatus(rol, estatus){
-     var request = $.ajax({
-                            url: '/roles/update_estatus',
-                            method: "POST",
-                            data: { idRol: rol, estatus: estatus},
-                            dataType: "JSON"
-                          });
-
-        request.done(function( data ) {
-                                        location.reload(); 
-                                      });
-                     
-        equest.fail(function( jqXHR, textStatus ) {
-                                                    alert( "Request failed: " + textStatus );
-                                                   });
-    }
-
-    function update(rol, id){
-      var nombre = $(id).val();
-     var request = $.ajax({
-                            url: '/roles/update',
-                            method: "POST",
-                            data: { idRol: rol, nombre: nombre},
-                            dataType: "JSON"
-                          });
-
-        request.done(function( data ) {
-                                         location.reload(); 
-                                      });
-                     
-        equest.fail(function( jqXHR, textStatus ) {
-                                                    alert( "Request failed: " + textStatus );
-                                                   });
-    }
-
-
-    function cerrarModal(id){
-      $(id).closeModal();
-    }
   </script>
 <% end %>
