@@ -45,9 +45,11 @@
           <th>Nombre</th>
           <th class="text-center">Icono</th>
           <th class="text-center">Estatus</th>
-          <th >Acciones
+          <th>
+            Acciones
 
-          <a href="/redes_sociales/agregar" class=" btn-success pink btn-sm btn-table-action tooltipped waves-effect" data-position="bottom" data-tooltip="Agregar Red Social" data-delay="20"> <i class="fa fa-plus"></i></a></th>
+            <a href="/redes_sociales/agregar" class=" btn-success pink btn-sm btn-table-action tooltipped waves-effect" data-position="bottom" data-tooltip="Agregar Red Social" data-delay="20"><i class="fa fa-plus"></i></a>
+          </th>
       </tr>
     </thead>
     <tbody>
@@ -90,17 +92,21 @@
         <!-- Modal Structure -->
         <div id="modal<%= red_socials.id %>" class="modal">
           <div class="modal-content">
-                <a href="#" style="float:right;" class="waves-effect btn-flat modal-close"><i class="mdi-content-clear"></i></a>
-                <h5>Deshabilitar Red Social</h5>
-                
+                <a style="float:right;" class="waves-effect btn-flat modal-close"><i class="mdi-content-clear"></i></a>
+               <% if (red_socials.estatus == 'A') %>
+                  <h5>Deshabilitar Red Social</h5>
+                <% else %>
+                  <h5>Habilitar Red Social</h5>
+                <% end %>     
+
                 <div class="row" style="padding-top: 35px;">
                     <div class="col s12 text-center">
                       <% if (red_socials.estatus == 'A') %>
-                        <h6 style=" font-size: 20px;"> ¿Seguro que desea deshabilitar la red social seleccionada? </h6>
+                        <h6 style=" font-size: 20px;"> ¿Seguro que desea Deshabilitar la red social seleccionada? </h6>
                       <% else %>
                         <h6 style=" font-size: 20px;"> ¿Seguro que desea Habilitar la red social seleccionada? </h6>
                       <% end %>
-                      <div style="padding-top: 35px;" class="right">
+                      <div  class="right pad30-t">
                       <% if (red_socials.estatus == 'A') %>
                          <input type="button" class="btn btn-success btn-sm" value="Aceptar" onclick="update_estatus(<%= red_socials.id %>,'I')">
                       <% else %>
@@ -111,14 +117,15 @@
                       </div>
 
                     </div>
-                </div>                
+                </div>   
+
           </div>
         </div> 
 
 
         <div id="modaleditar<%= red_socials.id %>" class="modal modal-45" form="true">
           <div class="modal-content " >
-                <a href="#" style="float:right;" class="waves-effect btn-flat modal-close" onclick="cancelar(modaleditar<%= red_socials.id %>, <%= red_socials.id %>, nombre<%= red_socials.id %>, icono<%= red_socials.id %>, '#div_icono<%= red_socials.id %> > button > i')"><i class="mdi-content-clear"></i></a>
+                <a style="float:right;" class="waves-effect btn-flat modal-close" onclick="cancelar(modaleditar<%= red_socials.id %>, <%= red_socials.id %>, nombre<%= red_socials.id %>, icono<%= red_socials.id %>, '#div_icono<%= red_socials.id %> > button > i')"><i class="mdi-content-clear"></i></a>
                 <h5>Editar Red Social</h5>
                 
                 <div class="row" style="padding-top: 35px;">

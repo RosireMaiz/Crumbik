@@ -3,7 +3,7 @@ class CreatePais < ActiveRecord::Migration
     create_table :pais do |t|
       t.string :iso, default: "A", :limit => 3
       t.string :nombre
-
+ 	  t.string :estatus, default: "A", :limit => 1
     end
   end
 end

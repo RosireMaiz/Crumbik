@@ -70,17 +70,20 @@
         <!-- Modal Structure -->
         <div id="modal<%= servicios.id %>" class="modal">
           <div class="modal-content">
-                <a href="#" style="float:right;" class="waves-effect btn-flat modal-close"><i class="mdi-content-clear"></i></a>
-                <h5>Deshabilitar servicio</h5>
-                
+                <a style="float:right;" class="waves-effect btn-flat modal-close"><i class="mdi-content-clear"></i></a>
+                <% if (servicios.estatus == 'A') %>
+                   <h5>Deshabilitar Servicio</h5>
+                <% else %>
+                     <h5>Habilitar Servicio</h5>
+                <% end %>                
                 <div class="row" style="padding-top: 35px;">
                     <div class="col s12 text-center">
                       <% if (servicios.estatus == 'A') %>
-                        <h6 style=" font-size: 20px;"> ¿Seguro que desea deshabilitar el servicio seleccionado? </h6>
+                        <h6 style=" font-size: 20px;"> ¿Seguro que desea Deshabilitar el servicio seleccionado? </h6>
                       <% else %>
                         <h6 style=" font-size: 20px;"> ¿Seguro que desea Habilitar el servicio seleccionado? </h6>
                       <% end %>
-                      <div style="padding-top: 35px;" class="right">
+                      <div class="right pad30-t">
                       <% if (servicios.estatus == 'A') %>
                          <input type="button" class="btn btn-success btn-sm" value="Aceptar" onclick="update_estatus(<%= servicios.id %>,'I')">
                       <% else %>
@@ -98,7 +101,7 @@
 
         <div id="modaleditar<%= servicios.id %>" class="modal modal-45" form="true">
           <div class="modal-content " >
-                <a href="#" style="float:right;" class="waves-effect btn-flat modal-close" onclick="cancelar(modaleditar<%= servicios.id %>, <%= servicios.id %>, nombre<%= servicios.id %>, descripcion<%= servicios.id %>)"><i class="mdi-content-clear"></i></a>
+                <a style="float:right;" class="waves-effect btn-flat modal-close" onclick="cancelar(modaleditar<%= servicios.id %>, <%= servicios.id %>, nombre<%= servicios.id %>, descripcion<%= servicios.id %>)"><i class="mdi-content-clear"></i></a>
                 <h5>Editar servicio</h5>
                 
                 <div class="row" style="padding-top: 35px;">

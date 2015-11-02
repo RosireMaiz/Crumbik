@@ -17,6 +17,8 @@ Rails.application.routes.draw do
 	match "/validar_servicio_update" => "servicios#validar_servicio_update", via: :post
 	match "/validar_red_social" => "red_socials#validar_red_social", via: :post
 	match "/validar_red_social_update" => "red_socials#validar_red_social_update", via: :post
+	match "/validar_pais" => "pais#validar_pais", via: :post
+	match "/validar_pais_update" => "pais#validar_pais_update", via: :post
 	match "/validar_opcion" => "menu#validar_opcion", via: :post
 
 	match "/usuarios/abrircuenta"=>"usuarios#create", via: :post
@@ -72,6 +74,13 @@ Rails.application.routes.draw do
     match "/redes_sociales/update_estatus" => "red_socials#update_estatus", via: :post
 	match "/redes_sociales/update" => "red_socials#update", via: :post
 	match "/redes_sociales/consultar_red_social" => "red_socials#consultar_red_social", via: :post
+
+    match "/paises" => "pais#consultar", via: :get
+    match "/paises/agregar" => "pais#new", via: :get
+    match "/pais/crear_pais" => "pais#create", via: :post
+    match "/paises/update_estatus" => "pais#update_estatus", via: :post
+	match "/paises/update" => "pais#update", via: :post
+	match "/paises/consultar_pais" => "pais#consultar_pais", via: :post
 
 	devise_scope :usuario do
 	    post "/entrar" => "devise/sessions#create"

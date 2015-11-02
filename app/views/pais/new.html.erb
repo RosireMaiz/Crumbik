@@ -3,7 +3,7 @@
     <div class="contenedor">
       <div class="col s6">
         <h5 class="text-uppercase">
-         Crear Nuevo Rol
+         Crear Nuevo Pa&iacute;s
         </h5>
       </div>
       <div class="col s6 text-right ">
@@ -11,7 +11,7 @@
           <li>
             <a href="/">Inicio</a>
           </li>
-          <li class="active">Crear Rol</li>
+          <li class="active">Crear Pa&iacute;s</li>
         </ol>
       </div>
     </div>
@@ -19,7 +19,7 @@
 </div>
 
 <div id="form_wizard_1" class="center-block">
-  <%= form_for @rol, :url => roles_crear_rol_path, html:{id: "add_rol", class: "form-horizontal"} do |f| %>
+  <%= form_for @pais, :url => pais_crear_pais_path, html:{id: "add_pais", class: "form-horizontal"} do |f| %>
     <div class="form-wizard">
       <div class="form-body steps">
         <div class="tab-content">
@@ -34,14 +34,22 @@
           <div class="tab-pane active" id="tab1">
             <div class="row">
               <div class="col s9 offset-s1 left">
-                <h5 >Datos del Rol </h5>
+                <h5>Datos del Pa&iacute;s</h5>
     
-                <div class="input-field col s12">
-                  <label for="rol_nombre">Nombre: <span class="required">
+                <div class="input-field col s8">
+                  <label for="pais_nombre">Nombre: <span class="required">
                   * </span>
                   </label>
-                  <%= f.text_field :nombre, :required=>true, autocomplete: "off" %>
+                  <%= f.text_field :nombre, :required=>true, autocomplete: "off", :class => "text-capitalize" %>
                 </div>
+
+                <div class="input-field pad-30 col s3">
+                  <label for="pais_iso">Iso: <span class="required">
+                  * </span>
+                  </label>
+                  <%= f.text_field :iso, :required=>true, autocomplete: "off", :class => "text-uppercase"  %>
+                </div>
+
               </div>
             </div>
           </div>
@@ -53,6 +61,7 @@
           <div class="col-md-offset-3 col-md-9">
             
             <input type="submit" class="btn btn-success " value="Guardar">
+            <button type="button" onclick="window.location.href='/paises'" class="btn btn-danger waves-effect">Cancelar</button>
           </div>
         </div>
       </div>

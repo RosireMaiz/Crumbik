@@ -51,7 +51,7 @@
                 <% if !(rol.estatus == 'A') %>
                   <a  href="#modal<%= rol.id %>" class="modal-trigger btn-primary btn-sm"> Habilitar</a>
                 <% else %>
-                   <a  href="#modal<%= rol.id %>" class=" modal-trigger btn-warning btn-sm" >Deshabilitar</a>
+                   <a  href="#modal<%= rol.id %>" class=" modal-trigger btn-warning btn-sm">Deshabilitar</a>
                 <% end %>
                   <a  href="#modaleditar<%= rol.id %>" class="modal-trigger btn-primary btn-sm"> Editar</a>
                 </td>  
@@ -68,13 +68,16 @@
         <!-- Modal Structure -->
         <div id="modal<%= rols.id %>" class="modal">
           <div class="modal-content">
-                <a href="#" style="float:right;" class="waves-effect btn-flat modal-close"><i class="mdi-content-clear"></i></a>
-                <h5>Deshabilitar Rol</h5>
-                
-                <div class="row" style="padding-top: 35px;">
+                <a style="float:right;" class="waves-effect btn-flat modal-close"><i class="mdi-content-clear"></i></a>
+                <% if (rols.estatus == 'A') %>
+                  <h5>Deshabilitar Rol</h5>
+                <% else %>
+                  <h5>Habilitar Rol</h5>
+                <% end %>
+                <div class="row pad30-t" >
                     <div class="col s12 text-center">
                       <% if (rols.estatus == 'A') %>
-                        <h6 style=" font-size: 20px;"> ¿Seguro que desea deshabilitar el rol seleccionado? </h6>
+                        <h6 style=" font-size: 20px;"> ¿Seguro que desea Deshabilitar el rol seleccionado? </h6>
                       <% else %>
                         <h6 style=" font-size: 20px;"> ¿Seguro que desea Habilitar el rol seleccionado? </h6>
                       <% end %>
@@ -85,7 +88,7 @@
                         <input type="button" class="btn btn-success btn-sm" value="Aceptar" onclick="update_estatus(<%= rols.id %>,'A')">
                       <% end %>
                        
-                        <input type="button" class="btn btn-danger btn-sm" value="Cancelar" onclick="cerrarModal(modal<%= rols.id %>)">
+                        <input type="button" class="btn btn-danger btn-sm modal-close" value="Cancelar">
                       </div>
 
                     </div>
@@ -96,7 +99,7 @@
 
         <div id="modaleditar<%= rols.id %>" class="modal modal-45" form="true">
           <div class="modal-content">
-                <a href="#" style="float:right;" class="waves-effect btn-flat modal-close"><i class="mdi-content-clear"></i></a>
+                <a style="float:right;" class="waves-effect btn-flat modal-close" onclick="cancelar(modaleditar<%= rols.id %>, <%= rols.id %>, nombre<%= rols.id %> )"><i class="mdi-content-clear"></i></a>
                 <h5>Editar Rol</h5>
                 
                 <div class="row" style="padding-top: 35px;">

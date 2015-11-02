@@ -43,6 +43,4 @@ Rails.application.config.assets.precompile += %w( jquery.dataTables.min.js )
 Rails.application.config.assets.precompile += %w( servicios.js )
 Rails.application.config.assets.precompile += %w( rols.js )
 Rails.application.config.assets.precompile += %w( red_socials.js )
-
-
-
+Rails.application.config.assets.precompile += %w( pais.js )

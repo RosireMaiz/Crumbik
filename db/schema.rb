@@ -113,6 +113,7 @@ ActiveRecord::Schema.define(version: 20151027215840) do
   create_table "pais", force: :cascade do |t|
     t.string "iso",    limit: 3,   default: "A"
     t.string "nombre", limit: 255
+    t.string  "estatus",              limit: 1,     default: "A"
   end
 
   create_table "perfils", force: :cascade do |t|
