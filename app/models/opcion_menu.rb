@@ -26,7 +26,11 @@ class OpcionMenu < ActiveRecord::Base
 	  @opcionMenus = OpcionMenu.where("menu_id = ? AND padre_id = ?", menu.id.to_s, padreid).order(orden: :asc)
 	  i=0
 	  @opcionMenus.each do |arbol|
-     @tira = @tira+" { text: ' <i class= \" " + arbol.icono.to_s + "\"  ></i> <span class= \"no-padding\"> " + arbol.nombre +  " </span>', cls:'no-padding waves-effect',id: '" + arbol.id.to_s  + "',  href: '" + arbol.url.to_s  + "', "
+      if arbol.hijos.length >0
+        @tira = @tira+" { text: ' <i class= \" " + arbol.icono.to_s + "\"  ></i> <span class= \"no-padding\"> " + arbol.nombre +  " </span>', cls:'no-padding waves-effect',id: '" + arbol.id.to_s  + "',  href: '', "
+      else
+        @tira = @tira+" { text: ' <i class= \" " + arbol.icono.to_s + "\"  ></i> <span class= \"no-padding\"> " + arbol.nombre +  " </span>', cls:'no-padding waves-effect',id: '" + arbol.id.to_s  + "',  href: '" + arbol.url.to_s  + "', "
+      end
 	   self.ObtenerHijos(menu,arbol.id)
 	   i=i+1
      if i<totaldeRegistros1

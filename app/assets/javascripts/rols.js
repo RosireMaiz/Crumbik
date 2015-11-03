@@ -1,4 +1,3 @@
-
     function update_estatus(rol, estatus){
      var request = $.ajax({
                             url: '/roles/update_estatus',

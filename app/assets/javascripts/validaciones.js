@@ -475,6 +475,64 @@ formPais.validate({
                     }
 		});
 
+var formDispositivo = $('#add_dispositivo');
+var errorDispositivo = $('.alert-danger', formDispositivo);
+var successDispositivo = $('.alert-success', formDispositivo);
+formDispositivo.validate({
+		            doNotHideMessage: true, //this option enables to show the error/success messages on tab switch.
+                    errorElement: 'span', //default input error message container
+                    errorClass: 'msj-error', // default input error message class
+                    focusInvalid: false, // do not focus the last invalid input
+			rules: {
+				"dispositivo[nombre]":{
+					required:true,
+				    remote: {
+				       	url: "/validar_dispositivo",
+				       	type: "post"
+	        		}
+				},
+			},
+			messages:{
+				"dispositivo[nombre]":{
+					required:"Indica el nombre",
+					remote:"Ya existe un dispositivo con este nombre."
+				},
+				
+                
+			},
+
+
+			 errorPlacement: function (error, element) { // render error placement for each input type
+                     
+                            error.insertAfter(element); // for other inputs, just performRol default behavior
+                        
+                    },
+
+             invalidHandler: function (event, validator) { //display error alert on formRol submit   
+                        successDispositivo.hide();
+                        errorDispositivo.show();
+                        $('html,body').animate({
+                            scrollTop: $(".steps").offset().top
+                        }, 'slow');
+                    },
+
+         	 highlight: function (element) { // hightlight error inputs
+                        $(element)
+                            .closest('.form-group').removeClass('has-success').addClass('has-error'); // set error class to the control group
+                    },
+
+         	 unhighlight: function (element) { // revert the change done by hightlight
+                        $(element)
+                            .closest('.form-group').removeClass('has-error'); // set error class to the control group
+                    },
+
+             success: function (label) {
+
+                            label
+                                .addClass('valid') // mark the current input as valid and display OK icon
+                            .closest('.form-group').removeClass('has-error').addClass('has-success'); // set success class to the control group
+                    }
+		});
 
 
 	});

@@ -30,16 +30,8 @@ class ServiciosController < ApplicationController
 	end
 
 	def create
-		@respuesta = Hash.new
 		@servicio = Servicio.new(servicio_params)
-	    if @servicio.save
-			@respuesta["codigo"] = 200
-	       	@respuesta["url"] = root_path
-	       	
-	    else  
-	       @respuesta["codigo"] = 500
-	       @respuesta["errores"] = @servicio.errors.full_messages
-	    end  
+	    @servicio.save
 		redirect_to :controller => 'servicios', :action => 'consultar'
 	end
 

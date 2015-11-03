@@ -1,7 +1,7 @@
 require "base64"
 $FOTO_DEFAULT = "app/assets/images/avatar/sinfoto.jpg";
 $LOGO_DEFAULT = "app/assets/images/header-logo.png";
-$BANNER_DEFAULT = "app/assets/images/org-banner-construccion.png";
+$BANNER_DEFAULT = "app/assets/images/org-banner-construccion2.jpg";
 
 class UsuariosController < ApplicationController
 
@@ -62,7 +62,7 @@ class UsuariosController < ApplicationController
 		@usuario = Usuario.new(usuario_params_organizacion)
 
 		@usuario.perfil.attributes  = {:foto => foto_perfil, :formato_foto => formato}
-		@usuario.organizacion.attributes  = {:logo => logo_organizacion, :formato_logo => formato_logo, :banner => banner_organizacion , :formato_banner => formato_banner}
+		@usuario.organizacion.attributes  = {:logo => logo_organizacion, :formato_logo => formato_logo, :formato_banner => formato_banner, :banner => banner_organizacion}
 		# @pago = Pago.new
 		# @pago.monto =  params[:pago][:monto]
 		# @pago.modo_pago = ModoPago.find(params[:modo_pago])
@@ -338,7 +338,7 @@ class UsuariosController < ApplicationController
     end
 
    	def usuario_params_organizacion
-	    accessible = [ :email, :username, :perfil_attributes =>[ :nombres, :apellidos], :organizacion_attributes => [ :id, :nombre, :descripcion, :subdominio, :pais_id, :tipo_organizacion_id, :contratos_attributes => [:id, :plan_id, :frecuencia_pago_id] ] ] # extend with your own params
+	    accessible = [ :email, :username, :perfil_attributes =>[ :nombres, :apellidos], :organizacion_attributes => [ :id, :nombre, :descripcion, :subdominio, :pais_id, :tipo_organizacion_id ] ] # extend with your own params
 	    accessible << [ :password, :password_confirmation ] unless params[:usuario][:password].blank?
 	    params.require(:usuario).permit(accessible)
 	end

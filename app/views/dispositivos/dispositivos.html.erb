@@ -1,0 +1,141 @@
+<% content_for :css_personalizado do %>
+ <%= stylesheet_link_tag    "jquery.dataTables" %> 
+<% end %>
+
+<div class="row titulo-seccion">
+  <div class="banner banner-perfil">
+    <div class="contenedor">
+      <div class="col s6">
+        <h5 class="text-uppercase ">
+         Dispositivos
+        </h5>
+      </div>
+      <div class="col s6 text-right ">
+        <ol class="breadcrumb">
+          <li>
+            <a href="/">Inicio</a>
+          </li>
+          <li class="active">Dispositivos</li>
+        </ol>
+      </div>
+    </div>
+  </div>
+</div>
+
+
+<div class="row pad30-h">
+  <table id="dispositivos" class="display" cellspacing="0" width="100%" >
+    <thead>
+      <tr>
+          <th>Nombre</th>
+          <th>
+            Acciones
+
+            <a href="/dispositivos/agregar" class=" btn-success pink btn-sm btn-table-action tooltipped waves-effect" data-position="bottom" data-tooltip="Agregar Dispoditivo" data-delay="20">
+              <i class="fa fa-plus"></i>
+            </a>
+          </th>
+      </tr>
+    </thead>
+    <tbody>
+      <% @dispositivos.each do |dispositivo| %>
+
+         <% if ! dispositivo.nil? %>
+            <tr>
+                <td data-search="<%= dispositivo.nombre %>"> 
+                    <%= dispositivo.nombre %> 
+                </td>                  
+                <td> 
+                
+                  <a href="#modal<%= dispositivo.id %>" class="modal-trigger btn-danger btn-sm"> Eliminar</a>
+                
+                  <a href="#modaleditar<%= dispositivo.id %>" class="modal-trigger btn-primary btn-sm"> Editar</a>
+
+                </td>  
+                    
+            </tr>
+          <% end %>
+        <% end %>
+            
+     </tbody>
+  </table>
+
+  <% @dispositivos.each do |dispositivos| %>
+    <% if ! dispositivos.nil? %>
+        <!-- Modal Structure -->
+        <div id="modal<%= dispositivos.id %>" class="modal">
+          <div class="modal-content">
+                <a style="float:right;" class="waves-effect btn-flat modal-close"><i class="mdi-content-clear"></i></a>
+               
+                  <h5>Eliminar Dispositivo</h5>
+               
+                <div class="row pad30-t" >
+                    <div class="col s12 text-center">
+                     
+                        <h6 style=" font-size: 20px;"> ¿Seguro que desea Eliminar el dispositivo seleccionado? </h6>
+                      
+                      <div style="padding-top: 35px;" class="right">
+                      
+                        <input type="button" class="btn btn-success btn-sm" value="Aceptar" onclick="eliminar(<%= dispositivos.id %>)">
+                      
+                        <input type="button" class="btn btn-danger btn-sm modal-close" value="Cancelar">
+                      </div>
+
+                    </div>
+                </div>                
+          </div>
+        </div> 
+
+
+        <div id="modaleditar<%= dispositivos.id %>" class="modal modal-45" form="true">
+          <div class="modal-content">
+                <a style="float:right;" class="waves-effect btn-flat modal-close" onclick="cancelar(modaleditar<%= dispositivos.id %>, <%= dispositivos.id %>, nombre<%= dispositivos.id %> )"><i class="mdi-content-clear"></i></a>
+                <h5>Editar dispositivo</h5>
+                
+                <div class="row" style="padding-top: 35px;">
+                    <div class="col s12">
+                      <div class="row">
+                        <div class=" input-field col s8 offset-s2 ">
+                          <input id="nombre<%= dispositivos.id %>" type="text" class="validate" value="<%= dispositivos.nombre %>" name="dispositivo[nombre]"> 
+                          <label for="nombre<%= dispositivos.id %>">Nombre:</label>
+
+                        </div>
+                      </div>
+                      <div class="text-center">
+                        <input type="button" class="btn btn-success btn-sm" value="Guardar" onclick="update(modaleditar<%= dispositivos.id %>, <%= dispositivos.id %>, nombre<%= dispositivos.id %> )">
+                      
+                        <input type="button" class="btn btn-danger btn-sm" value="Cancelar" onclick="cancelar(modaleditar<%= dispositivos.id %>, <%= dispositivos.id %>, nombre<%= dispositivos.id %> )">
+                      </div>
+                    </div>
+
+                 </div>
+          </div>                
+        </div>
+
+    <% end %>
+  <% end %>
+
+</div>
+
+<% content_for :javascript_personalizado do %>
+  <%= javascript_include_tag 'dispositivos' %>
+  <%= javascript_include_tag 'jquery.dataTables.min' %>
+  <script type="text/javascript">
+    $(document).ready(function(){
+      $('#dispositivos').dataTable({
+        "select": false, 
+        "pageLength": 4,
+        "lengthChange": false,
+        "language": {
+            
+            "zeroRecords": "No hay datos disponibles en la tabla",
+            
+            "infoEmpty": "No hay datos disponibles en la tabla",
+            
+        }
+
+      });
+    });
+
+  </script>
+<% end %>

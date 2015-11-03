@@ -10,9 +10,9 @@ class CreateOrganizacions < ActiveRecord::Migration
       t.text   :vision
       t.string :telefono
       t.string :email
-      t.binary :logo
+      t.binary :logo,  :limit => 4294967295.bytes
       t.string :formato_logo
-      t.binary :banner
+      t.binary :banner,  :limit => 4294967295.bytes
       t.string :formato_banner
       t.string :iframe
       t.string :estatus, default: "A", :limit => 1

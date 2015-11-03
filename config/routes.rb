@@ -15,10 +15,14 @@ Rails.application.routes.draw do
 	match "/validar_rol_update" => "rols#validar_rol_update", via: :post
 	match "/validar_servicio" => "servicios#validar_servicio", via: :post
 	match "/validar_servicio_update" => "servicios#validar_servicio_update", via: :post
+
 	match "/validar_red_social" => "red_socials#validar_red_social", via: :post
 	match "/validar_red_social_update" => "red_socials#validar_red_social_update", via: :post
 	match "/validar_pais" => "pais#validar_pais", via: :post
-	match "/validar_pais_update" => "pais#validar_pais_update", via: :post
+	match "/validar_pais_update" => "pais#validar_dispoditivo_update", via: :post
+	match "/validar_dispositivo" => "dispositivos#validar_dispositivo", via: :post
+	match "/validar_dispositivo_update" => "dispositivos#validar_dispositivo_update", via: :post
+
 	match "/validar_opcion" => "menu#validar_opcion", via: :post
 
 	match "/usuarios/abrircuenta"=>"usuarios#create", via: :post
@@ -81,6 +85,13 @@ Rails.application.routes.draw do
     match "/paises/update_estatus" => "pais#update_estatus", via: :post
 	match "/paises/update" => "pais#update", via: :post
 	match "/paises/consultar_pais" => "pais#consultar_pais", via: :post
+
+    match "/dispositivos" => "dispositivos#consultar", via: :get
+    match "/dispositivos/agregar" => "dispositivos#new", via: :get
+    match "/dispositivos/crear_dispositivo" => "dispositivos#create", via: :post
+    match "/dispositivos/eliminar" => "dispositivos#eliminar", via: :post
+	match "/dispositivos/update" => "dispositivos#update", via: :post
+	match "/dispositivos/consultar_dispositivo" => "dispositivos#consultar_dispositivo", via: :post
 
 	devise_scope :usuario do
 	    post "/entrar" => "devise/sessions#create"

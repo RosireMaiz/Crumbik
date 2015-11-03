@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20151027215840) do
+ActiveRecord::Schema.define(version: 20151102215351) do
 
   create_table "autenticacions", force: :cascade do |t|
     t.integer "usuario_id", limit: 4
@@ -34,6 +34,10 @@ ActiveRecord::Schema.define(version: 20151027215840) do
   add_index "contratos", ["frecuencia_pago_id"], name: "index_contratos_on_frecuencia_pago_id", using: :btree
   add_index "contratos", ["organizacion_id"], name: "index_contratos_on_organizacion_id", using: :btree
   add_index "contratos", ["plan_id"], name: "index_contratos_on_plan_id", using: :btree
+
+  create_table "dispositivos", force: :cascade do |t|
+    t.string "nombre", limit: 255
+  end
 
   create_table "frecuencia_pagos", force: :cascade do |t|
     t.string  "nombre", limit: 255
@@ -83,12 +87,12 @@ ActiveRecord::Schema.define(version: 20151027215840) do
     t.text    "vision",               limit: 65535
     t.string  "telefono",             limit: 255
     t.string  "email",                limit: 255
-    t.binary  "logo",                 limit: 65535
+    t.binary  "logo",                 limit: 4294967295
     t.string  "formato_logo",         limit: 255
-    t.binary  "banner",               limit: 65535
+    t.binary  "banner",               limit: 4294967295
     t.string  "formato_banner",       limit: 255
     t.string  "iframe",               limit: 255
-    t.string  "estatus",              limit: 1,     default: "A"
+    t.string  "estatus",              limit: 1,          default: "A"
     t.integer "pais_id",              limit: 4
     t.integer "usuario_id",           limit: 4
     t.integer "tipo_organizacion_id", limit: 4
@@ -111,9 +115,9 @@ ActiveRecord::Schema.define(version: 20151027215840) do
   add_index "pago_contratos", ["usuario_id"], name: "index_pago_contratos_on_usuario_id", using: :btree
 
   create_table "pais", force: :cascade do |t|
-    t.string "iso",    limit: 3,   default: "A"
-    t.string "nombre", limit: 255
-    t.string  "estatus",              limit: 1,     default: "A"
+    t.string "iso",     limit: 3,   default: "A"
+    t.string "nombre",  limit: 255
+    t.string "estatus", limit: 1,   default: "A"
   end
 
   create_table "perfils", force: :cascade do |t|
