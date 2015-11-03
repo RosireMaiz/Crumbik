@@ -62,7 +62,7 @@
                 <% else %>
                    <a  href="#modal<%= pais.id %>" class=" modal-trigger btn-warning btn-sm">Deshabilitar</a>
                 <% end %>
-                  <a  href="#modaleditar<%= pais.id %>" class="modal-trigger btn-primary btn-sm">Editar</a>
+                  <a  href="#modaleditar<%= pais.id %>" class="modal-trigger btn-primary btn-sm" onclick="validar(modaleditar<%= pais.id %>, <%= pais.id %>, nombre<%= pais.id %>)">Editar</a>
                 </td>  
                     
             </tr>
@@ -150,7 +150,7 @@
 </div>
 
 <% content_for :javascript_personalizado do %>
-  <%= javascript_include_tag 'pais' %>
+  <%= javascript_include_tag 'maestros/pais' %>
   <%= javascript_include_tag 'jquery.dataTables.min' %>
 
   <script type="text/javascript">

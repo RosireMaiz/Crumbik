@@ -1,15 +1,15 @@
-class RolsController < ApplicationController
+class ModoPagosController < ApplicationController
 
-	def validar_rol
-	    if Rol.exists?(nombre: params[:rol][:nombre])
+	def validar_modo_pago
+	    if ModoPago.exists?(nombre: params[:modo_pago][:nombre])
 	    	render json: false
 	    else
 	    	render json: true
 	    end
   	end
 
-	def validar_rol_update
-	    if Rol.exists?(  ["nombre = ? AND  id <> ? ", params[:rol][:nombre], params[:idrol] ])  
+	def validar_modo_pago_update
+	    if ModoPago.exists?(  ["nombre = ? AND  id <> ? ", params[:modo_pago][:nombre], params[:idmodopago] ])  
 	    	render json: false
 	    else
 	    	render json: true
@@ -20,19 +20,19 @@ class RolsController < ApplicationController
 		if !usuario_signed_in?
 			redirect_to root_path
 		else
-			@rol = Rol.new
+			@modo_pago = ModoPago.new
 			if request.subdomain.present?
 				render  root_path
 			else
-				render "rols/new"
+				render "modo_pagos/new"
 			end
 		end
 	end
 
 	def create
-		@rol = Rol.new(rol_params)
-	    @rol.save
-	  	redirect_to :controller => 'rols', :action => 'consultar'
+		@modo_pago = ModoPago.new(modo_pago_params)
+	    @modo_pago.save
+	  	redirect_to :controller => 'modo_pagos', :action => 'consultar'
 	end
 
 	def consultar
@@ -47,18 +47,18 @@ class RolsController < ApplicationController
 	        if @usuarioRol[0] == nil or @rol[0].id != current_usuario.rol_actual.id
 	          render root_path
 	        else
-	           @rols = Rol.order('id ASC')
+	           @modo_pagos = ModoPago.order('id ASC')
 	           @valor = true;
-	           render "rols/rols"	
+	           render "modo_pagos/modo_pagos"	
 	        end
          
      	end
 	end
 	
 	def update_estatus
-		id = params[:idRol]
+		id = params[:idmodopago]
 		estatus = params[:estatus]
-		if Rol.update(id, :estatus => estatus)
+		if ModoPago.update(id, :estatus => estatus)
 			render :text =>'{ "success" : "true"}'
 		else
 			render :text => '{ "success" : "false"}'
@@ -66,9 +66,9 @@ class RolsController < ApplicationController
 	end
 
 	def update
-		id = params[:idRol]
+		id = params[:idmodopago]
 		nombre = params[:nombre]
-		if Rol.update(id, :nombre => nombre)
+		if ModoPago.update(id, :nombre => nombre)
 			render :text =>'{ "success" : "true"}'
 		else
 
@@ -77,27 +77,25 @@ class RolsController < ApplicationController
 	end
 
 	def eliminar
-		id = params[:idrol]
-		rol = Rol.where(id: id).first
-		rol.destroy
-      if rol.destroyed?
+		id = params[:idmodopago]
+		modo_pago = ModoPago.where(id: id).first
+		modo_pago.destroy
+      if modo_pago.destroyed?
       	render :text =>'{ "success" : "true"}'
 	  else
 		render :text => '{ "success" : "false"}'
 	   end
 	end
 
-	def consultar_rol
-		id = params[:idrol]
-		@rol = Rol.where(id: id).first
-		render :json => @rol
+	def consultar_modo_pago
+		id = params[:idmodopago]
+		@modo_pago = ModoPago.where(id: id).first
+		render :json => @modo_pago
 	end
 
-private
-	 def rol_params
-      accessible = [ :nombre ] # extend with your own params
-      params.require(:rol).permit(accessible)
-    end
-
-
+	private
+		def modo_pago_params
+	      accessible = [ :nombre ] # extend with your own params
+	      params.require(:modo_pago).permit(accessible)
+	    end
 end

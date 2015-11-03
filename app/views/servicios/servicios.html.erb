@@ -52,10 +52,10 @@
                 <% if !(servicio.estatus == 'A') %>
                   <a  href="#modal<%= servicio.id %>" class="modal-trigger btn-success btn-sm"> Habilitar</a>
                 <% else %>
-                   <a  href="#modal<%= servicio.id %>" class=" modal-trigger btn-warning btn-sm" >Deshabilitar</a>
+                   <a  href="#modal<%= servicio.id %>" class=" modal-trigger btn-warning btn-sm">Deshabilitar</a>
                 <% end %>
-                   <a href="#modalver<%= servicio.id %>" class="modal-trigger purple btn-primary btn-sm"> Ver</a>
-                   <a href="#modaleditar<%= servicio.id %>" class="modal-trigger btn-primary btn-sm"> Editar</a>
+                   <a href="#modalver<%= servicio.id %>" class="modal-trigger purple btn-primary btn-sm">Ver</a>
+                   <a href="#modaleditar<%= servicio.id %>" class="modal-trigger btn-primary btn-sm" onclick="validar(modaleditar<%= servicio.id %>, <%= servicio.id %>)">Editar</a>
                 </td>  
                     
             </tr>
@@ -165,7 +165,7 @@
 <% content_for :javascript_personalizado do %>
 
   <%= javascript_include_tag 'jquery.dataTables.min' %>
-  <%= javascript_include_tag 'servicios' %>
+  <%= javascript_include_tag 'maestros/servicios' %>
   <script type="text/javascript">
     $(document).ready(function(){
       $('#servicios').dataTable({

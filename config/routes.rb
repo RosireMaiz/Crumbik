@@ -19,10 +19,13 @@ Rails.application.routes.draw do
 	match "/validar_red_social" => "red_socials#validar_red_social", via: :post
 	match "/validar_red_social_update" => "red_socials#validar_red_social_update", via: :post
 	match "/validar_pais" => "pais#validar_pais", via: :post
-	match "/validar_pais_update" => "pais#validar_dispoditivo_update", via: :post
+	match "/validar_pais_update" => "pais#validar_pais_update", via: :post
 	match "/validar_dispositivo" => "dispositivos#validar_dispositivo", via: :post
 	match "/validar_dispositivo_update" => "dispositivos#validar_dispositivo_update", via: :post
-
+	match "/validar_frecuencia_pago" => "frecuencia_pagos#validar_frecuencia_pago", via: :post
+	match "/validar_modo_pago_update" => "modo_pagos#validar_modo_pago_update", via: :post
+	match "/validar_modo_pago" => "modo_pagos#validar_modo_pago", via: :post
+	match "/validar_modo_pago_update" => "modo_pagos#validar_modo_pago_update", via: :post
 	match "/validar_opcion" => "menu#validar_opcion", via: :post
 
 	match "/usuarios/abrircuenta"=>"usuarios#create", via: :post
@@ -63,6 +66,7 @@ Rails.application.routes.draw do
     match "/roles/update_estatus" => "rols#update_estatus", via: :post
 	match "/roles/update" => "rols#update", via: :post
 	match "/roles/consultar_rol" => "rols#consultar_rol", via: :post
+	match "/roles/eliminar" => "rols#eliminar", via: :post
 
     match "/servicios/consultar" => "servicios#consultar", via: :get
     match "/servicios/agregar" => "servicios#new", via: :get
@@ -70,7 +74,7 @@ Rails.application.routes.draw do
     match "/servicios/update_estatus" => "servicios#update_estatus", via: :post
 	match "/servicios/update" => "servicios#update", via: :post
 	match "/servicios/consultar_servicio" => "servicios#consultar_servicio", via: :post
-
+	match "/servicios/eliminar" => "servicios#eliminar", via: :post
 
     match "/redes_sociales" => "red_socials#consultar", via: :get
     match "/redes_sociales/agregar" => "red_socials#new", via: :get
@@ -78,6 +82,7 @@ Rails.application.routes.draw do
     match "/redes_sociales/update_estatus" => "red_socials#update_estatus", via: :post
 	match "/redes_sociales/update" => "red_socials#update", via: :post
 	match "/redes_sociales/consultar_red_social" => "red_socials#consultar_red_social", via: :post
+	match "/redes_sociales/eliminar" => "red_socials#eliminar", via: :post
 
     match "/paises" => "pais#consultar", via: :get
     match "/paises/agregar" => "pais#new", via: :get
@@ -85,6 +90,7 @@ Rails.application.routes.draw do
     match "/paises/update_estatus" => "pais#update_estatus", via: :post
 	match "/paises/update" => "pais#update", via: :post
 	match "/paises/consultar_pais" => "pais#consultar_pais", via: :post
+	match "/paises/eliminar" => "paises#eliminar", via: :post
 
     match "/dispositivos" => "dispositivos#consultar", via: :get
     match "/dispositivos/agregar" => "dispositivos#new", via: :get
@@ -92,6 +98,23 @@ Rails.application.routes.draw do
     match "/dispositivos/eliminar" => "dispositivos#eliminar", via: :post
 	match "/dispositivos/update" => "dispositivos#update", via: :post
 	match "/dispositivos/consultar_dispositivo" => "dispositivos#consultar_dispositivo", via: :post
+	match "/dispositivos/eliminar" => "dispositivos#eliminar", via: :post
+
+    match "/frecuencias_pago" => "frecuencia_pagos#consultar", via: :get
+    match "/frecuencia_pago/agregar" => "frecuencia_pagos#new", via: :get
+    match "/frecuencia_pago/crear_frecuencia_pago" => "frecuencia_pagos#create", via: :post
+    match "/frecuencia_pagos/update_estatus" => "frecuencia_pagos#update_estatus", via: :post
+	match "/frecuencia_pagos/update" => "frecuencia_pagos#update", via: :post
+	match "/frecuencia_pagos/consultar_frecuencia_pago" => "frecuencia_pagos#consultar_frecuencia_pago", via: :post
+	match "/frecuencia_pagos/eliminar" => "frecuencia_pagos#eliminar", via: :post
+
+    match "/modos_pago" => "modo_pagos#consultar", via: :get
+    match "/modo_pago/agregar" => "modo_pagos#new", via: :get
+    match "/modo_pago/crear_modo_pago" => "modo_pagos#create", via: :post
+    match "/modo_pagos/update_estatus" => "modo_pagos#update_estatus", via: :post
+	match "/modo_pagos/update" => "modo_pagos#update", via: :post
+	match "/modo_pagos/consultar_modo_pago" => "modo_pagos#consultar_modo_pago", via: :post
+	match "/modo_pagos/eliminar" => "modo_pagos#eliminar", via: :post
 
 	devise_scope :usuario do
 	    post "/entrar" => "devise/sessions#create"
@@ -100,8 +123,6 @@ Rails.application.routes.draw do
 
 	devise_for :usuarios,  controllers: { :omniauth_callbacks => 'omniauth_callbacks',
              :registrations => 'registrations'}, via: :post
-
-
 
 	constraints(SubdomainPresent) do
 

@@ -53,7 +53,7 @@
                 <% else %>
                    <a  href="#modal<%= rol.id %>" class=" modal-trigger btn-warning btn-sm">Deshabilitar</a>
                 <% end %>
-                  <a  href="#modaleditar<%= rol.id %>" class="modal-trigger btn-primary btn-sm"> Editar</a>
+                  <a  href="#modaleditar<%= rol.id %>" class="modal-trigger btn-primary btn-sm" onclick="validar(modaleditar<%= rol.id %>, <%= rol.id %>)"> Editar</a>
                 </td>  
                     
             </tr>
@@ -128,14 +128,17 @@
 </div>
 
 <% content_for :javascript_personalizado do %>
-  <%= javascript_include_tag 'rols' %>
+  <%= javascript_include_tag 'maestros/rols' %>
   <%= javascript_include_tag 'jquery.dataTables.min' %>
   <script type="text/javascript">
     $(document).ready(function(){
       $('#rols').dataTable({
         "select": false, 
         "pageLength": 4,
-        "lengthChange": false
+        "lengthChange": false,
+         "language": {
+            "zeroRecords": "No hay datos disponibles en la tabla",
+        }
       });
     });
 

@@ -3,7 +3,7 @@
 -- http://www.phpmyadmin.net
 --
 -- Servidor: 127.0.0.1
--- Tiempo de generación: 03-11-2015 a las 06:34:29
+-- Tiempo de generación: 03-11-2015 a las 21:51:30
 -- Versión del servidor: 5.6.21
 -- Versión de PHP: 5.6.3
 
@@ -70,7 +70,8 @@ CREATE TABLE IF NOT EXISTS `dispositivos` (
 CREATE TABLE IF NOT EXISTS `frecuencia_pagos` (
 `id` int(11) NOT NULL,
   `nombre` varchar(255) DEFAULT NULL,
-  `meses` int(11) DEFAULT NULL
+  `meses` int(11) DEFAULT NULL,
+  `estatus` varchar(1) NOT NULL DEFAULT 'A'
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 -- --------------------------------------------------------

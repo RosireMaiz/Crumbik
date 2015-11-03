@@ -64,16 +64,31 @@ class RedSocialsController < ApplicationController
 		end
 	end
 
-
 	def update
 		id = params[:idredsocial]
 		nombre = params[:nombre]
 		icono = params[:icono]
-		if RedSocial.update(id, :nombre => nombre, :icono => icono)
-			render :text =>'{ "success" : "true"}'
+		if RedSocial.exists?(  ["nombre = ? AND  id <> ? ", nombre, id]) 
+			render :text =>'{ "success" : "true", "existe" : "true" }'
 		else
-			render :text => '{ "success" : "false"}'
+
+			if RedSocial.update(id, :nombre => nombre, :icono => icono)
+				render :text =>'{ "success" : "true", "existe" : "false"}'
+			else
+				render :text => '{ "success" : "false"}'
+			end
 		end
+	end
+
+	def eliminar
+		id = params[:idredsocial]
+		red_social = RedSocial.where(id: id).first
+		red_social.destroy
+      if red_social.destroyed?
+      	render :text =>'{ "success" : "true"}'
+	  else
+		render :text => '{ "success" : "false"}'
+	   end
 	end
 
 	def consultar_red_social
@@ -82,11 +97,10 @@ class RedSocialsController < ApplicationController
 		render :json => @red_social
 	end
 
-
-private
-	 def red_social_params
-      accessible = [ :nombre, :icono ] # extend with your own params
-      params.require(:red_social).permit(accessible)
-    end
+	private
+		def red_social_params
+	      accessible = [ :nombre, :icono ] # extend with your own params
+	      params.require(:red_social).permit(accessible)
+	    end
 
 end

@@ -65,7 +65,6 @@ class ServiciosController < ApplicationController
 		end
 	end
 
-
 	def update
 		id = params[:idServicio]
 		nombre = params[:nombre]
@@ -76,6 +75,17 @@ class ServiciosController < ApplicationController
 
 			render :text => '{ "success" : "false"}'
 		end
+	end
+
+	def eliminar
+		id = params[:idServicio]
+		servicio = Servicio.where(id: id).first
+		servicio.destroy
+      if servicio.destroyed?
+      	render :text =>'{ "success" : "true"}'
+	  else
+		render :text => '{ "success" : "false"}'
+	   end
 	end
 
 	def consultar_servicio

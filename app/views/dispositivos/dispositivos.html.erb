@@ -49,7 +49,7 @@
                 
                   <a href="#modal<%= dispositivo.id %>" class="modal-trigger btn-danger btn-sm"> Eliminar</a>
                 
-                  <a href="#modaleditar<%= dispositivo.id %>" class="modal-trigger btn-primary btn-sm"> Editar</a>
+                  <a href="#modaleditar<%= dispositivo.id %>" class="modal-trigger btn-primary btn-sm" onclick="validar(modaleditar<%= dispositivo.id %>, <%= dispositivo.id %>, nombre<%= dispositivo.id %>)"> Editar</a>
 
                 </td>  
                     
@@ -118,7 +118,7 @@
 </div>
 
 <% content_for :javascript_personalizado do %>
-  <%= javascript_include_tag 'dispositivos' %>
+  <%= javascript_include_tag 'maestros/dispositivos' %>
   <%= javascript_include_tag 'jquery.dataTables.min' %>
   <script type="text/javascript">
     $(document).ready(function(){

@@ -77,7 +77,7 @@
                   <% else %>
                      <a  href="#modal<%= red_social.id %>" class=" modal-trigger btn-warning btn-sm" >Deshabilitar</a>
                   <% end %>
-                     <a href="#modaleditar<%= red_social.id %>" class="modal-trigger btn-primary btn-sm"> Editar</a>
+                     <a href="#modaleditar<%= red_social.id %>" class="modal-trigger btn-primary btn-sm" onclick="validar(modaleditar<%= red_social.id %>, <%= red_social.id %>)"> Editar</a>
                 </td>  
                     
             </tr>
@@ -123,7 +123,7 @@
         </div> 
 
 
-        <div id="modaleditar<%= red_socials.id %>" class="modal modal-45" form="true">
+        <div id="modaleditar<%= red_socials.id %>" class="modal modal-45" form="true" >
           <div class="modal-content " >
                 <a style="float:right;" class="waves-effect btn-flat modal-close" onclick="cancelar(modaleditar<%= red_socials.id %>, <%= red_socials.id %>, nombre<%= red_socials.id %>, icono<%= red_socials.id %>, '#div_icono<%= red_socials.id %> > button > i')"><i class="mdi-content-clear"></i></a>
                 <h5>Editar Red Social</h5>
@@ -158,9 +158,9 @@
                       </div>
                       
                       <div class=" text-center pad30-t">
-                        <input type="button" class="btn btn-success btn-sm" value="Guardar" onclick="update(modaleditar<%= red_socials.id %>, <%= red_socials.id %>, nombre<%= red_socials.id %>, icono<%= red_socials.id %>,'#div_icono<%= red_socials.id %>' )">
-                        
-                        <input type="button" class="btn btn-danger btn-sm modal-close" value="Cancelar"  onclick="cancelar(modaleditar<%= red_socials.id %>, <%= red_socials.id %>, nombre<%= red_socials.id %>, icono<%= red_socials.id %>, '#div_icono<%= red_socials.id %> > button > i')">
+                        <button class="btn btn-success btn-sm" onclick="update(modaleditar<%= red_socials.id %>, <%= red_socials.id %>, nombre<%= red_socials.id %>, icono<%= red_socials.id %>,'#div_icono<%= red_socials.id %>' )">Guardar</button>
+
+                        <button  class="btn btn-danger btn-sm modal-close" value="Cancelar"  onclick="cancelar(modaleditar<%= red_socials.id %>, <%= red_socials.id %>, nombre<%= red_socials.id %>, icono<%= red_socials.id %>, '#div_icono<%= red_socials.id %> > button > i')">Cancelar</button>
                       </div>
                     </div>
                 </div>
@@ -170,6 +170,7 @@
           var iconpicker = '#iconoPicker' + <%= red_socials.id %>;
           var iconoval = "<%= red_socials.icono.to_s -%>";
           var res = iconoval.substring(3);
+          var redsocial = '#modaleditar' + <%= red_socials.id %>;
           $(iconpicker).iconpicker({
                rows:3,
                searchText: 'Buscar...',
@@ -190,7 +191,7 @@
 <% content_for :javascript_personalizado do %>
 
   <%= javascript_include_tag 'jquery.dataTables.min' %>
-  <%= javascript_include_tag 'red_socials' %>
+  <%= javascript_include_tag 'maestros/red_socials' %>
   <script type="text/javascript">
       $(document).ready(function(){
         $('#red_socials').dataTable({

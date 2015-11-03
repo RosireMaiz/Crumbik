@@ -65,7 +65,6 @@ class PaisController < ApplicationController
 		end
 	end
 
-
 	def update
 		id = params[:idpais]
 		nombre = params[:nombre]
@@ -78,12 +77,22 @@ class PaisController < ApplicationController
 		end
 	end
 
+	def eliminar
+		id = params[:idpais]
+		pais = Pais.where(id: id).first
+		pais.destroy
+      if pais.destroyed?
+      	render :text =>'{ "success" : "true"}'
+	  else
+		render :text => '{ "success" : "false"}'
+	   end
+	end
+
 	def consultar_pais
 		id = params[:idpais]
 		@pais = Pais.where(id: id).first
 		render :json => @pais
 	end
-
 
 private
 	 def pais_params

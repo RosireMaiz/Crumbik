@@ -1,0 +1,195 @@
+<% content_for :css_personalizado do %>
+ <%= stylesheet_link_tag "jquery.dataTables" %> 
+<% end %>
+
+<div class="row titulo-seccion">
+  <div class="banner banner-perfil">
+    <div class="contenedor">
+      <div class="col s6">
+        <h5 class="text-uppercase ">
+         Frecuencias de Pago
+        </h5>
+      </div>
+      <div class="col s6 text-right ">
+        <ol class="breadcrumb">
+          <li>
+            <a href="/">Inicio</a>
+          </li>
+          <li class="active">Frecuencias de Pago</li>
+        </ol>
+      </div>
+    </div>
+  </div>
+</div>
+
+
+<div class="row pad30-h">
+  <table id="frecuencia_pagos" class="display" cellspacing="0" width="100%" >
+    <thead>
+      <tr>
+          <th>Nombre</th>
+          <th class="text-center">Meses</th>
+          <th class="text-center">Estatus</th>
+          <th>
+            Acciones
+            <a href="/frecuencia_pago/agregar" class=" btn-success pink btn-sm btn-table-action tooltipped waves-effect" data-position="bottom" data-tooltip="Agregar Frecuencia de Pago" data-delay="20">
+              <i class="fa fa-plus"></i>
+            </a>
+          </th>
+      </tr>
+    </thead>
+    <tbody>
+      <% @frecuencia_pagos.each do |frecuencia_pago| %>
+
+         <% if ! frecuencia_pago.nil? %>
+            <tr>
+                <td data-search="<%= frecuencia_pago.nombre %>"> 
+                    <%= frecuencia_pago.nombre %> 
+                </td>
+                <td class="text-center"> 
+                    <%= frecuencia_pago.meses %> 
+                </td>                    
+                <td class="text-center"> 
+                <% if (frecuencia_pago.estatus == 'A') %>
+                    Activo 
+                <% else %>
+                    Deshabilitado
+                <% end %>
+                </td> 
+                <td> 
+                <% if !(frecuencia_pago.estatus == 'A') %>
+                  <a  href="#modal<%= frecuencia_pago.id %>" class="modal-trigger btn-success btn-sm">Habilitar</a>
+                <% else %>
+                   <a  href="#modal<%= frecuencia_pago.id %>" class=" modal-trigger btn-warning btn-sm">Deshabilitar</a>
+                <% end %>
+                  <a  href="#modaleliminar<%= frecuencia_pago.id %>" class="modal-trigger btn-danger btn-sm">Eliminar</a>
+                  <a  href="#modaleditar<%= frecuencia_pago.id %>" class="modal-trigger btn-primary btn-sm" onclick="validar('#modaleditar<%= frecuencia_pago.id %>', <%= frecuencia_pago.id %>)">Editar</a>
+                 
+                </td>  
+                    
+            </tr>
+          <% end %>
+        <% end %>
+            
+     </tbody>
+  </table>
+
+  <% @frecuencia_pagos.each do |frecuencia_pagos| %>
+    <% if ! frecuencia_pagos.nil? %>
+        <!-- Modal Structure -->
+        <div id="modal<%= frecuencia_pagos.id %>" class="modal">
+          <div class="modal-content">
+                <a href="#" style="float:right;" class="waves-effect btn-flat modal-close"><i class="mdi-content-clear"></i></a>
+                <% if (frecuencia_pagos.estatus == 'A') %>
+                    <h5>Deshabilitar Frecuencia de Pago</h5>
+                <% else %>
+                    <h5>Habilitar Frecuencia de Pago</h5>
+                 <% end %>
+            
+                <div class="row" style="padding-top: 35px;">
+                    <div class="col s12 text-center">
+                      <% if (frecuencia_pagos.estatus == 'A') %>
+                        <h6 style=" font-size: 20px;"> ¿Seguro que desea Deshabilitar la frecuencia de pago seleccionado? </h6>
+                      <% else %>
+                        <h6 style=" font-size: 20px;"> ¿Seguro que desea Habilitar la frecuencia de pago seleccionado? </h6>
+                      <% end %>
+                      <div style="padding-top: 35px;" class="right">
+                      <% if (frecuencia_pagos.estatus == 'A') %>
+                         <input type="button" class="btn btn-success btn-sm" value="Aceptar" onclick="update_estatus(<%= frecuencia_pagos.id %>,'I')">
+                      <% else %>
+                        <input type="button"  class="btn btn-success btn-sm" value="Aceptar" onclick="update_estatus(<%= frecuencia_pagos.id %>,'A')">
+                      <% end %>
+                       
+                        <input type="button" class="btn btn-danger btn-sm modal-close" value="Cancelar">
+                      </div>
+
+                    </div>
+                </div>                
+          </div>
+        </div> 
+
+        <div id="modaleliminar<%= frecuencia_pagos.id %>" class="modal">
+          <div class="modal-content">
+                <a style="float:right;" class="waves-effect btn-flat modal-close"><i class="mdi-content-clear"></i></a>
+               
+                  <h5>Eliminar Frecuencia de Pago</h5>
+               
+                <div class="row pad30-t" >
+                    <div class="col s12 text-center">
+                     
+                        <h6 style=" font-size: 20px;"> ¿Seguro que desea eliminar la frecuencia de pago seleccionada? </h6>
+                      
+                      <div style="padding-top: 35px;" class="right">
+                      
+                        <input type="button" class="btn btn-success btn-sm" value="Aceptar" onclick="eliminar(<%= frecuencia_pagos.id %>)">
+                      
+                        <input type="button" class="btn btn-danger btn-sm modal-close" value="Cancelar">
+                      </div>
+
+                    </div>
+                </div>                
+          </div>
+        </div> 
+
+
+        <div id="modaleditar<%= frecuencia_pagos.id %>" class="modal modal-45" form="true">
+          <div class="modal-content">
+                <a style="float:right;" class="waves-effect btn-flat modal-close" 
+                  onclick="cancelar(modaleditar<%= frecuencia_pagos.id %>, <%= frecuencia_pagos.id %>, nombre<%= frecuencia_pagos.id %>, meses<%= frecuencia_pagos.id %> )">
+                  <i class="mdi-content-clear"></i>
+                </a>
+                <h5>Editar Frecuencia de Pago</h5>
+                
+                <div class="row" style="padding-top: 35px;">
+                    <div class="col s12">
+                      <div class="row">
+                        <div class=" input-field col s8 offset-s2 ">
+                          <input id="nombre<%= frecuencia_pagos.id %>" type="text" class="text-capitalize" value="<%= frecuencia_pagos.nombre %>" name="frecuencia_pago[nombre]"> 
+                          <label for="nombre<%= frecuencia_pagos.id %>" >Nombre:</label>
+
+                        </div>
+
+                      </div>
+                      <div class="row">
+                        <div class=" input-field col s8 offset-s2 ">
+                          <input id="meses<%= frecuencia_pagos.id %>" type="number" min="1" value="<%= frecuencia_pagos.meses %>" name="frecuencia_pago[meses]"> 
+                          <label for="meses<%= frecuencia_pagos.id %>">Meses:</label>
+
+                        </div>
+                      </div>
+                      <div class="text-center">
+                        <button class="btn btn-success btn-sm" onclick="update('#modaleditar<%= frecuencia_pagos.id %>', <%= frecuencia_pagos.id %>, nombre<%= frecuencia_pagos.id %>, meses<%= frecuencia_pagos.id %>)">Guardar</button>
+                      
+                        <button class="btn btn-danger btn-sm" onclick="cancelar(modaleditar<%= frecuencia_pagos.id %>, <%= frecuencia_pagos.id %>, nombre<%= frecuencia_pagos.id %>, meses<%= frecuencia_pagos.id %>)">Cancelar</button>
+
+                      </div>
+                    </div>
+
+                 </div>
+          </div>                
+        </div>
+
+    <% end %>
+  <% end %>
+
+</div>
+
+<% content_for :javascript_personalizado do %>
+  <%= javascript_include_tag 'maestros/frecuencia_pagos' %>
+  <%= javascript_include_tag 'jquery.dataTables.min' %>
+
+  <script type="text/javascript">
+    $(document).ready(function(){
+      $('#frecuencia_pagos').dataTable({
+        "select": false, 
+        "pageLength": 10,
+        "lengthChange": false,
+        "language": {
+            "zeroRecords": "No hay datos disponibles en la tabla",
+        }
+      });
+    });
+
+  </script>
+
+<% end %>

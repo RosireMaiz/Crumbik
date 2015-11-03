@@ -1,0 +1,176 @@
+<% content_for :css_personalizado do %>
+ <%= stylesheet_link_tag    "jquery.dataTables" %> 
+<% end %>
+
+<div class="row titulo-seccion">
+  <div class="banner banner-perfil">
+    <div class="contenedor">
+      <div class="col s6">
+        <h5 class="text-uppercase ">
+         Modos de Pago
+        </h5>
+      </div>
+      <div class="col s6 text-right ">
+        <ol class="breadcrumb">
+          <li>
+            <a href="/">Inicio</a>
+          </li>
+          <li class="active">Modos de Pago</li>
+        </ol>
+      </div>
+    </div>
+  </div>
+</div>
+
+
+<div class="row pad30-h">
+  <table id="modo_pagos" class="display" cellspacing="0" width="100%" >
+    <thead>
+      <tr>
+          <th>Nombre</th>
+          <th>Estatus</th>
+          <th>
+            Acciones
+            <a href="/modo_pago/agregar" class=" btn-success pink btn-sm btn-table-action tooltipped waves-effect" data-position="bottom" data-tooltip="Agregar Modo de Pago" data-delay="20">
+              <i class="fa fa-plus"></i>
+            </a>
+          </th>
+      </tr>
+    </thead>
+    <tbody>
+      <% @modo_pagos.each do |modo_pago| %>
+
+         <% if ! modo_pago.nil? %>
+            <tr>
+                <td data-search="<%= modo_pago.nombre %>"> 
+                    <%= modo_pago.nombre %> 
+                </td>                  
+                <td> 
+                <% if (modo_pago.estatus == 'A') %>
+                    Activo 
+                <% else %>
+                    Deshabilitado
+                <% end %>
+                </td> 
+                <td> 
+                <% if !(modo_pago.estatus == 'A') %>
+                  <a  href="#modal<%= modo_pago.id %>" class="modal-trigger btn-primary btn-sm"> Habilitar</a>
+                <% else %>
+                   <a  href="#modal<%= modo_pago.id %>" class=" modal-trigger btn-warning btn-sm">Deshabilitar</a>
+                <% end %>
+                  <a  href="#modaleliminar<%= modo_pago.id %>" class="modal-trigger btn-danger btn-sm">Eliminar</a>
+                  <a  href="#modaleditar<%= modo_pago.id %>" class="modal-trigger btn-primary btn-sm" onclick="validar(modaleditar<%= modo_pago.id %>, <%= modo_pago.id %>)"> Editar</a>
+                </td>  
+                    
+            </tr>
+          <% end %>
+        <% end %>
+            
+     </tbody>
+  </table>
+
+  <% @modo_pagos.each do |modo_pagos| %>
+    <% if ! modo_pagos.nil? %>
+        <!-- Modal Structure -->
+        <div id="modal<%= modo_pagos.id %>" class="modal">
+          <div class="modal-content">
+                <a style="float:right;" class="waves-effect btn-flat modal-close"><i class="mdi-content-clear"></i></a>
+                <% if (modo_pagos.estatus == 'A') %>
+                  <h5>Deshabilitar Modo de Pago</h5>
+                <% else %>
+                  <h5>Habilitar Modo de Pago</h5>
+                <% end %>
+                <div class="row pad30-t" >
+                    <div class="col s12 text-center">
+                      <% if (modo_pagos.estatus == 'A') %>
+                        <h6 style=" font-size: 20px;"> ¿Seguro que desea Deshabilitar el modo de pago seleccionado? </h6>
+                      <% else %>
+                        <h6 style=" font-size: 20px;"> ¿Seguro que desea Habilitar el modo de pago seleccionado? </h6>
+                      <% end %>
+                      <div style="padding-top: 35px;" class="right">
+                      <% if (modo_pagos.estatus == 'A') %>
+                         <input type="button" class="btn btn-success btn-sm" value="Aceptar" onclick="update_estatus(<%= modo_pagos.id %>,'I')">
+                      <% else %>
+                        <input type="button" class="btn btn-success btn-sm" value="Aceptar" onclick="update_estatus(<%= modo_pagos.id %>,'A')">
+                      <% end %>
+                       
+                        <input type="button" class="btn btn-danger btn-sm modal-close" value="Cancelar">
+                      </div>
+
+                    </div>
+                </div>                
+          </div>
+        </div> 
+
+        <div id="modaleliminar<%= modo_pagos.id %>" class="modal">
+          <div class="modal-content">
+                <a style="float:right;" class="waves-effect btn-flat modal-close"><i class="mdi-content-clear"></i></a>
+               
+                  <h5>Eliminar Modo de Pago</h5>
+               
+                <div class="row pad30-t" >
+                    <div class="col s12 text-center">
+                     
+                        <h6 style=" font-size: 20px;"> ¿Seguro que desea eliminar el modo de pago seleccionado? </h6>
+                      
+                      <div style="padding-top: 35px;" class="right">
+                      
+                        <input type="button" class="btn btn-success btn-sm" value="Aceptar" onclick="eliminar(<%= modo_pagos.id %>)">
+                      
+                        <input type="button" class="btn btn-danger btn-sm modal-close" value="Cancelar">
+                      </div>
+
+                    </div>
+                </div>                
+          </div>
+        </div> 
+
+
+        <div id="modaleditar<%= modo_pagos.id %>" class="modal modal-45" form="true">
+          <div class="modal-content">
+                <a style="float:right;" class="waves-effect btn-flat modal-close" onclick="cancelar(modaleditar<%= modo_pagos.id %>, <%= modo_pagos.id %>, nombre<%= modo_pagos.id %> )"><i class="mdi-content-clear"></i></a>
+                <h5>Editar Modo de Pago</h5>
+                
+                <div class="row" style="padding-top: 35px;">
+                    <div class="col s12">
+                      <div class="row">
+                        <div class=" input-field col s8 offset-s2 ">
+                          <input id="nombre<%= modo_pagos.id %>" type="text" class="validate" value="<%= modo_pagos.nombre %>" name="modo_pago[nombre]"> 
+                          <label for="nombre<%= modo_pagos.id %>" >Nombre:</label>
+
+                        </div>
+                      </div>
+                      <div class="text-center">
+                        <input type="button" class="btn btn-success btn-sm" value="Guardar" onclick="update(modaleditar<%= modo_pagos.id %>, <%= modo_pagos.id %>, nombre<%= modo_pagos.id %> )">
+                      
+                        <input type="button" class="btn btn-danger btn-sm" value="Cancelar" onclick="cancelar(modaleditar<%= modo_pagos.id %>, <%= modo_pagos.id %>, nombre<%= modo_pagos.id %> )">
+                      </div>
+                    </div>
+
+                 </div>
+          </div>                
+        </div>
+
+    <% end %>
+  <% end %>
+
+</div>
+
+<% content_for :javascript_personalizado do %>
+  <%= javascript_include_tag 'maestros/modo_pagos' %>
+  <%= javascript_include_tag 'jquery.dataTables.min' %>
+  <script type="text/javascript">
+    $(document).ready(function(){
+      $('#modo_pagos').dataTable({
+        "select": false, 
+        "pageLength": 4,
+        "lengthChange": false,
+        "language": {
+                "zeroRecords": "No hay datos disponibles en la tabla",
+            
+        }
+      });
+    });
+
+  </script>
+<% end %>
