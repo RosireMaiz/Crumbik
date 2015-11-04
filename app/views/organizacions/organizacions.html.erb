@@ -1,0 +1,245 @@
+<div class="row titulo-seccion">
+  <div class="banner banner-perfil">
+    <div class="contenedor">
+      <div class="col s6">
+        <h5 class="text-uppercase">
+         Organizaciones
+        </h5>
+      </div>
+      <div class="col s6 text-right ">
+        <ol class="breadcrumb">
+          <li>
+            <a href="/">Inicio</a>
+          </li>
+          <li class="active">Organizaciones</li>
+        </ol>
+      </div>
+    </div>
+  </div>
+</div>
+<style type="text/css">
+.foto-user-org{
+  margin-top: 18px;
+    border-radius: 10px;
+    max-width: 210px;
+    max-height: 210px;
+}
+</style>
+<div class="row pad30-h">
+  <% @organizacions.each do |organizacion| %>
+    <% if ! organizacion.nil? %>
+
+    <% redes = OrganizacionRedSocial.includes(:red_social).where("organizacion_id = ?", organizacion.id) %>
+    <div class="col s3">
+      <% if request.subdomain.present? %>
+        <div class="center-align">
+            <img class="foto-user-org"
+                src="<%= @usuario.perfil.formato_foto%><%= @usuario.perfil.foto%>">
+
+            <p class="no-padding ">
+              <b>
+                <%= @usuario.perfil.nombres %>
+                <%= @usuario.perfil.apellidos %>
+              </b>
+             </p>
+         </div>
+         <div class="left-align pad15-h">
+             <p class="no-padding">
+                <b>
+                  <i class="fa fa-user deep-purple-text text-lighten-1"></i>
+                    <%= @usuario.username%> 
+                                
+                </b>
+              </p>
+              <p class="no-padding">
+                 
+                   <i class="fa fa-calendar deep-purple-text text-lighten-1"></i>
+                   Nacio 
+                   <b>
+                    10 de Julio de 1991
+                  </b>
+              </p>
+        </div>
+
+      <% end %>
+
+        <ul class="collapsible popout" data-collapsible="expandable">
+
+          <li>
+            <div class="collapsible-header  grey lighten-4 active"> 
+              Vencimiento de Planes
+            </div>
+            <div class="collapsible-body white ">
+            
+                
+                  <div class="input-field pad30-h" style="margin-top: 0px;">
+                      <i class="fa fa-circle light-green-text text-accent-3 vencimiento-planes"></i> 
+                      <input type="checkbox" id="vigente" >
+                      <label for="vigente" class="vencimiento-planes-label">Vigente</label>
+                  </div>
+
+                   <div class="pad30-h input-field " style=" margin-top: 0px;">
+                      <i class="fa fa-circle yellow-text text-accent-2 vencimiento-planes" ></i>
+                      <input type="checkbox" id="advertencia" >
+                      <label for="advertencia"class="vencimiento-planes-label">Advertencia a Renovar </label>
+                  </div>
+
+                  <div class="input-field pad30-h" style=" margin-top: 0px;">
+                      <i class="fa fa-circle amber-text text-darken-1 vencimiento-planes"></i>   
+                      <input type="checkbox" id="pronto">
+                      <label for="pronto" class="vencimiento-planes-label">Pronto a Vencerse (menos de 15 d&iacute;as)</label>
+                  </div>
+
+                  <div class="input-field pad30-h" style=" margin-top: 0px;">
+                      <i class="fa fa-circle red-text vencimiento-planes"></i>  
+                      <input type="checkbox" id="vencido">
+                      <label for="vencido" class="vencimiento-planes-label">Vencido</label>
+                  </div>
+              
+            </div>
+          </li>
+
+          <li>
+            <div class="collapsible-header grey lighten-4 active"> 
+              Tipos de Organizaciones
+            </div>
+            <div class="collapsible-body white">
+            <% @tipo_organizacions.each do |tipo_organizacion| %>
+              <% if ! tipo_organizacion.nil? %>
+                
+                  <div class="input-field pad30-h" style=" margin-top: 0px;">
+                        <input type="checkbox" id="<%= tipo_organizacion.nombre %>" >
+                        <label for="<%= tipo_organizacion.nombre %>"><%= tipo_organizacion.nombre %></label>
+                  </div>
+
+                
+               <% end %>
+            <% end %>
+            </div>
+          </li>
+        </ul>
+     
+    </div>
+
+    <div class="col s9">
+        <ul class="collapsible popout" data-collapsible="accordion">
+          <li>
+            <div class="collapsible-header grey lighten-4 active ">
+              <i class="fa fa-circle light-green-text text-accent-4 collapsible-header-org"></i>
+
+              <img src = "<%= organizacion.formato_logo%><%= organizacion.logo%>"/> <%= organizacion.nombre %>
+
+              <i class="fa fa-edit right-aligth" style="float:right"></i>
+
+            </div>
+            <div class="collapsible-body white">
+              <div class="row pad30-hv">
+                <div class="col s6">
+                <% if ! request.subdomain.present? %>
+                  <b class="grey-text text-grey-1">Usuario:</b>
+                  <div class=" valign-wrapper">
+                    <div>
+                    <img class="img-usuario-organizacion"src="<%= organizacion.usuario.perfil.formato_foto %><%= organizacion.usuario.perfil.foto %>">
+                    </div>
+                    <div class="col">
+                      <p class="no-padding">
+                        <%= organizacion.usuario.perfil.nombres %>
+                        <%= organizacion.usuario.perfil.apellidos %>
+                      </p>
+                      <p class="no-padding">
+                       
+                        <b>
+                         <i class="fa fa-user grey-text text-grey-1"></i>
+                        <%= organizacion.usuario.username%> 
+                        
+                        </b>
+                      </p>
+                      <p class="no-padding">
+                        <b>
+                        <i class="fa fa-calendar grey-text text-grey-1"></i>
+                        10/07/1991
+                        </b>
+                      </p>
+                    </div>
+                  </div>
+                  <% end %>
+                  <p class="no-padding">
+                      <b class="grey-text text-grey-1">Pa&iacute;s:</b>
+                      <%= organizacion.pais.nombre %>
+                   </p>
+              
+                  <p class="no-padding">
+                      <b class="grey-text text-grey-1">Subdominio:</b>
+                      <%= organizacion.subdominio %>.crumbik.com
+                  </p>
+                  
+                  <p class="no-padding">
+                      <b class="grey-text text-grey-1">Descripci&oacute;n:</b>
+                      <%= organizacion.descripcion %>
+                  </p>
+
+                  <p class="no-padding">
+                    <b class="grey-text text-grey-1">Direcci&oacute;n:</b>
+                    <%= organizacion.direccion %>
+                  </p>
+
+                  <p class="no-padding">
+                    <b class="grey-text text-grey-1">Tel&eacute;fono:</b>
+                    <%= organizacion.telefono %>
+                  </p>
+
+                  <p class="no-padding">
+                    <b class="grey-text text-grey-1">Fecha Venc. Plan:</b>
+                   
+                  </p>
+
+                </div>
+
+                <div class="col s6">
+                 
+                  <p class="no-padding">
+                    <b class="grey-text text-grey-1">Misi&oacute;n:</b>
+                    <%= organizacion.mision %>
+                  </p>
+
+                  <p class="no-padding">
+                    <b class="grey-text text-grey-1">Visi&oacute;n:</b>
+                    <%= organizacion.mision %>
+                  </p>
+
+                  <p class="no-padding">
+                    <b class="grey-text text-grey-1">Slogan:</b>
+                    <%= organizacion.slogan %>
+                  </p>
+
+                  <p class="no-padding">
+                    <b class="grey-text text-grey-1">Email:</b>
+                    <%= organizacion.email %>
+                  </p>
+
+                  <% if ! redes.nil? %>
+                    <b class="grey-text text-grey-1">Redes Sociales:</b>
+                  <% end %>
+
+                  <% redes.each do |red| %>
+
+                    <% if ! red.nil? %>
+                      <p class="no-padding">
+                        <i class=" red-social <%= red.red_social.icono %>  " style="background: <%= red.red_social.color %>;"></i>
+                          <%= red.url %>
+                      </p>
+                    <% end %>
+                  <% end %>
+
+                </div>
+              </div>
+            </div>
+          </li>
+          
+        </ul>
+      </div>
+    <% end %>
+  <% end %>
+
+
+</div>
