@@ -5,7 +5,6 @@
 	    	<!-- ************************ -->
 	    	<!-- ***** LOGO Y NOMBRE **** -->
 	    	<!-- ************************ -->
-	    		<% @organizacion = Organizacion.find_by(subdominio: request.subdomain) %>
 				<a href"http://<%= @organizacion.subdominio %>.lvh.me:3000/" class="brand-logo header-logo">
 					<img src = "<%= @organizacion.formato_logo%><%= @organizacion.logo%>" />
 					<span class="header-nombre">
@@ -18,11 +17,7 @@
 			   	<ul id="nav-mobile" class="right hide-on-med-and-down">
 			        <li><a href="">Inicio</a></li>
 			        <li><a href="">Nosotros</a></li>
-			        <% if ! @organizacion.tipo_organizacion_id == "1" %>
-			        	<li><a href="">Servicios</a></li>
-			        <% else %>
-			        	<li><a href="">Productos</a></li>
-			        <% end %>
+			       	<li><a href=""><%= @tipo.nombre %></a></li>
 			        <li><a href="">Cont&aacute;ctanos</a></li>
 			    </ul>
 			<!-- ************************* -->
