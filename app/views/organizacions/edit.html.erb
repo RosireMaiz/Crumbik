@@ -1,0 +1,247 @@
+<% content_for :css_personalizado do %>
+ <%= stylesheet_link_tag    "usuarios" %> 
+ <%= stylesheet_link_tag    "plugins/fileinput.min" %> 
+    <style type="text/css">
+   .dropdown-content {
+    
+    max-height: 200px; 
+    
+  }
+</style>
+<% end %>
+
+<div class="row titulo-seccion">
+  <div class="banner banner-perfil">
+    <div class="contenedor">
+      <div class="col s6">
+        <h5 class="text-capitalize ">
+           <%= @organizacion.nombre %>
+        </h5>
+      </div>
+      <div class="col s6 text-right ">
+        <ol class="breadcrumb">
+          <li>
+            <a href="/">Inicio</a>
+          </li>
+          <li class="active">Organizacion</li>
+        </ol>
+      </div>
+    </div>
+  </div>
+</div>
+
+
+
+<div class="row pad30-h panel" style=" margin: 15px;">
+
+  <div class="row">
+
+      <%= form_tag( {controller: "organizacions", action: "save_logo", method: "post"},  multipart: true ) do %>
+        <div class=" offset-s3 col s6" align="right">
+          <h5 align="left">Cambiar Logo</h5>
+           <input id="organizacion_id" name="organizacion_id" class="file" value="<%= @organizacion.id %>" hidden />
+
+         <% if ! @organizacion.logo.nil? %>
+            <div id="logo" class="<%= @organizacion.formato_logo%><%= @organizacion.logo%>" > </div>
+          <% else %>
+            <div id="logo" class='/assets/logo/sinfoto.jpg' > </div>
+         <% end %>
+
+          <input id="logo_id" name="logo_id" type="file" class="file"  required/>
+        </div>
+      <% end %>
+    </div>
+
+
+  <%= form_for(@organizacion,  :url => organizacion_editar_path, :html => { :method => :post } ) do |o| %>
+
+  <div class="col s6 pad30-h ">
+<input id="organizacion_id" name="organizacion_id" class="file" value="<%= @organizacion.id %>" hidden />
+      <div class="row">
+      <div class="col s12">
+        
+        <div class="row">
+          <h5>Datos Básicos</h5>
+        </div>
+
+        <div class="input-field">
+          <label for="organizacion_nombre">Nombre de la organización<span class="required">
+          * </span></label>
+          <%= o.text_field :nombre, :required=>true  %>
+        </div>
+        <div class="input-field">
+          <label for="organizacion_descripcion">Descripción</label>
+          <%= o.text_area :descripcion, :class=>"materialize-textarea"  %>
+        </div>
+        <div class="input-field input-group">
+          <i class="mdi-social-public prefix input-group-addon"></i>
+          <%= o.text_field :subdominio, :required=>true  %>
+          <span class="input-group-addon" id="basic-addon2">.crumbik.com</span>
+          <label for="organizacion_subdominio">Subdominio <span class="required">
+          * </span>
+          </label>
+        </div>
+
+        <div class="row">
+          <div class="col s12">
+            <label >Pais <span class="required">*</span></label>
+              <%= o.collection_select(:pais_id, Pais.all, :id, :nombre) %>  
+          </div>
+          
+        </div>
+        <div class="row">
+          <div class="col s12">
+              <label >Tipo de Organizacion <span class="required">*</span></label>
+              <%= o.collection_select(:tipo_organizacion_id, TipoOrganizacion.all, :id, :nombre) %>  
+            </div>
+
+        </div>
+
+        <hr/>
+
+        <h5>Redes sociales</h5>
+        <div class="row">
+          <div class="col s9">
+            <ul id="lista-redes-sociales" class="vacia">
+              <li>Falta agregar alguna red social. Usa el botón a la derecha para hacerlo.</li>
+
+           <% @redes.each do |red| %>
+
+              <% if ! red.nil? %>
+                <li>
+                  <div class="input-group">
+                      <span class="input-group-addon red-social-add " style="background: <%= red.red_social.color %>;">
+                      <i class="<%= red.red_social.icono %>"></i></span>
+                      <input id="organizacion_red_social_<%= red.red_social.id %>" name="organizacion[red_social_attributes][actual][<%= red.id %>]" type='text' class="form-control" value="<%= red.url%>">
+                  </div>
+              </li>
+
+              <% end %>
+             <% end %>
+
+            </ul>
+          </div>
+          <div class="col s3 text-center">
+            <div class="dropdown">
+              <a href="javascript:void(0)" class="btn-floating waves-effect waves-light red"
+                          data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                <i class="mdi-content-add"></i>
+              </a>
+              <ul id="agregar-red-social-org" class='dropdown-menu list-inline' role="menu" style="min-width: 100px;">
+                <% @red_socials.each do |red_social| %>
+
+                  <% if ! red_social.nil? %>
+                     <li style="padding-bottom: 5px;"><a href="javascript:void(0)"  id="<%= red_social.id %>" class="red-social-add" style="background: <%= red_social.color %>;"><i class="<%= red_social.icono %>"></i></a></li> 
+
+                  <% end %>
+                 <% end %>
+
+
+               </ul>
+            </div>
+          </div>
+        </div>
+
+      </div>
+    </div>
+  </div>
+
+  <div class="col s6 pad30-h">
+
+
+    <div class="row">
+      <div class="col s12">
+
+            <div class="row">
+              <h5>Datos Generales</h5>
+            </div>
+              <div class="input-field ">
+                
+                <%= o.text_field  :telefono, :required=>true  %>
+              
+                <label for="organizacion_telefono">Telefono
+                </label>
+              </div>
+                    <div class="input-field ">
+                
+                <%= o.text_field :slogan, :required=>true  %>
+              
+                <label for="organizacion_slogan">Slogan
+                </label>
+              </div>
+              <div class="input-field ">
+                
+                <%= o.text_area  :direccion, :required=>true, :class=>"materialize-textarea"  %>
+              
+                <label for="organizacion_direccionn">Direccion
+                </label>
+              </div>
+
+              <div class="input-field">
+                <label for="organizacion_mision">Misión</label>
+                <%= o.text_area  :mision, :required=>true, :class=>"materialize-textarea"  %>
+              </div>
+              <div class="input-field">
+                <label for="organizacion_vision">Visión</label>
+                <%= o.text_area :vision, :class=>"materialize-textarea"  %>
+              </div>
+
+      </div>
+    </div>
+
+  </div>
+  <div class="row pad30">
+   <div class="col s12 right-align">  
+      <%= o.submit "guardar", :class => 'btn btn-success' %>       
+      <a  class="btn btn-danger" href="/organizaciones">Cancelar</a> 
+   </div>
+  </div>
+<% end -%>
+
+</div>
+
+
+
+
+<% content_for :javascript_personalizado do %>
+  <%= javascript_include_tag "plugins/pwstrength-bootstrap-1.2.4.min" %>
+  <%= javascript_include_tag 'plugins/fileinput.js' %>
+
+  <script>
+
+    $("#logo_id").fileinput({
+      'browseLabel':'Cambiar',
+      'showCaption':false,
+      'initialPreview': [
+        "<img src='" + $("#logo").attr("class") +"' class='file-preview-image' alt='Avatar' title='Logo actual'>"
+      ],
+
+      'initialPreviewShowDelete':false,
+      'initialCaption':'archivo(s) seleccionado(s)',
+      'allowedFileTypes':['image'],
+      'allowedFileExtensions':['jpg', 'png', 'jpeg'],
+      'browseClass':'btn btn-primary',
+      'browseIcon':'<i class="mdi-file-attachment"></i>',
+      'showRemove':false,
+      'uploadLabel':'Subir',
+      'uploadIcon':'<i class="mdi-file-file-upload"></i>',
+      'uploadClass':'btn btn-success '
+    });
+
+
+    $("#agregar-red-social-org a").click(function(){
+        var source = this;
+        if($("#lista-redes-sociales").hasClass("vacia"))
+            $("#lista-redes-sociales").removeClass("vacia").addClass("llena");
+        var class_a = $(source).attr("class"),
+            class_i = $(source).children().first().attr("class"),
+            style_a = $(source).attr("style"),
+             id_a = $(source).attr("id");
+         $("#lista-redes-sociales").append("<li><div class='input-group'><span class='input-group-addon  red-social-add "+
+                    class_a+"' style = \" "+
+                    style_a+" \"'><i class='"+class_i+"'></i></span>"+
+                    "<input id='organizacion_red_social_attributes_nuevo_"+id_a+"' name='organizacion[red_social_attributes][nueva]["+id_a+"]' type='text' class='form-control'></div></li>");
+    });
+   
+</script>
+<% end %>

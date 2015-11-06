@@ -117,6 +117,10 @@ Rails.application.routes.draw do
 	match "/modo_pagos/eliminar" => "modo_pagos#eliminar", via: :post
 
 	match "/organizaciones" => "organizacions#consultar", via: :get
+	match "/organizacion/consultar/:subdominio" => "organizacions#show", via: :get
+	match "/organizacion/editar/:subdominio" => "organizacions#edit", via: :get
+  	match "/organizacion/guardar_logo" => "organizacions#save_logo", via: :post
+  	match "/organizacion/editar" => "organizacions#save", via: :post
 
 	devise_scope :usuario do
 	    post "/entrar" => "devise/sessions#create"

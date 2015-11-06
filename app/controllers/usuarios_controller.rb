@@ -152,26 +152,23 @@ class UsuariosController < ApplicationController
 
 		 @usuario = current_usuario
 
-		 @usuario.update(usuario_params_organizacion)
+		 @usuario.update(usuario_params)
+
+
+		  @perfil = Perfil.where("usuario_id = ?", @usuario.id)
+		  @perfil.each do |per|
+		  	@perfil = per
+		  end
+		  @perfil.nombres = params[:usuario][:perfil_attributes][:nombres]
+		  @perfil.apellidos = params[:usuario][:perfil_attributes][:apellidos]
+		  @perfil.sexo = params[:usuario][:perfil_attributes][:sexo]
+		  @perfil.ocupacion = params[:usuario][:perfil_attributes][:ocupacion]
+		  @perfil.save
 
 		 if ! params[:usuario][:perfil_attributes][:googleplus].nil?
 		 		red_social = RedSocial.find_by(nombre: 'googleplus')
 		 	
-		 		usuarioR = UsuarioRedSocial.where("usuario_id = ? and red_social_id = ?", current_usuario.id, red_social.id)
-		 		usuarioR.each do |us|
-		 			usuarioR = us
-		 		end
-
-		 		if ! usuarioR.nil?
-		 			usuarioR.valor = params[:usuario][:perfil_attributes][:googleplus]
-		 			usuarioR.save
-		 		else 
-			 		usuarioR = UsuarioRedSocial.new
-			 		usuarioR.usuario_id = current_usuario.id
-			 		usuarioR.red_social_id = red_social.id
-			 		usuarioR.valor = params[:usuario][:perfil_attributes][:googleplus]
-			 		usuarioR.save
-		 		end
+		 		put "red social"
 		 end
 		 if ! params[:usuario][:perfil_attributes][:facebook].nil?
 
@@ -263,12 +260,11 @@ class UsuariosController < ApplicationController
 		@usuario = Usuario.find_by(id: current_usuario.id)
 		@usuredes = UsuarioRedSocial.includes(:red_social).where("usuario_id = ?", @usuario.id)
 
-		render "usuarios/show"
+		redirect_to :controller => 'usuarios', :action => 'show'
 	end
 
 	def save_foto
-		dir = "public/systems/"+ request.subdomain + "/avatar"
-
+	
 		@usuario = current_usuario
 
 		  @perfil = Perfil.where("usuario_id = ?", @usuario.id)
@@ -332,10 +328,12 @@ class UsuariosController < ApplicationController
 	 end
 
     def usuario_params
-      accessible = [ :email, :username, :perfil_attributes =>[ :nombres, :apellidos] ] # extend with your own params
+      accessible = [ :email, :username ] # extend with your own params
       accessible << [ :password, :password_confirmation ] unless params[:usuario][:password].blank?
       params.require(:usuario).permit(accessible)
     end
+
+
 
    	def usuario_params_organizacion
 	    accessible = [ :email, :username, :perfil_attributes =>[ :nombres, :apellidos], :organizacion_attributes => [ :id, :nombre, :descripcion, :subdominio, :pais_id, :tipo_organizacion_id ] ] # extend with your own params

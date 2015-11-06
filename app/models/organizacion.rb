@@ -19,6 +19,7 @@ class Organizacion < ActiveRecord::Base
 
 	belongs_to :usuario, class_name: "Usuario", foreign_key: "usuario_id", :inverse_of=>:organizacion
 	belongs_to :pais, class_name: "Pais", foreign_key: "pais_id", :inverse_of=>:organizacion
+	belongs_to :tipo_organizacion, class_name: "TipoOrganizacion", foreign_key: "tipo_organizacion_id", :inverse_of=>:organizacion
 	has_many :organizacion_red_social, class_name: "OrganizacionRedSocial"
 	has_many :contratos, class_name: "Contrato"
   	has_many :red_social, :through => :organizacion_red_social

@@ -110,9 +110,8 @@
 
 .x-body {
     font-size: 15px !important;
-    font-weight: 300 !important;
     line-height: 1.42857143 !important;
-    color: #6D6D6D;
+    color: #6D6D6D  !important;
     font-family: "Roboto", sans-serif !important;
 }
 /**************************************/
