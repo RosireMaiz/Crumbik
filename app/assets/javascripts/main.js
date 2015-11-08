@@ -29,8 +29,9 @@ $("#cambiar-rol").click(function(){
     	});
 	$(function () {
 	  $('[data-toggle="popover"]').popover()
-	})
+	});
 
+	$('.materialboxed').materialbox();
 
 	$("#busqueda-trigger").click(function(){
 		$("#top-search-bar").css("display","table");

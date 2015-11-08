@@ -50,8 +50,15 @@ class OrganizacionsController < ApplicationController
 	end
 
 	def show
-		@organizacion = Organizacion.where(["subdominio = ?", params[:subdominio]]).first
-		$id = @organizacion.id
+		if params[:subdominio].present?
+			@organizacion = Organizacion.where(["subdominio = ?", params[:subdominio]]).first
+			@usuario_organizacion = @organizacion.usuario
+		else
+			Apartment::Tenant.switch!()
+			@organizacion = Organizacion.where(["subdominio = ?", request.subdomain]).first
+			@usuario_organizacion = Usuario.includes(:perfil).where(["id = ?", @organizacion.usuario_id]).first
+		end
+
 		@redes = OrganizacionRedSocial.includes(:red_social).where("organizacion_id = ?", @organizacion.id)
 		render "organizacions/show"	
 	end
@@ -132,6 +139,16 @@ class OrganizacionsController < ApplicationController
 		redirect_to :controller => 'organizacions', :action => 'edit', subdominio: @organizacion.subdominio 
 	end
 
+	def apariencia_index
+		@organizacion = Organizacion.where(["subdominio = ?", request.subdomain]).first
+		render "organizacions/apariencia_index"
+	end
+
+	def editar_ubicacion
+		@organizacion = Organizacion.where(["subdominio = ?", request.subdomain]).first
+		render "organizacions/editar_ubicacion"
+	end
+	
 	private
 		def organizacion_params
 	      accessible = [ :nombre, :descripcion, :subdominio, :pais_id, :tipo_organizacion_id, :telefono, :slogan, :direccion, :mision, :vision] # extend with your own params

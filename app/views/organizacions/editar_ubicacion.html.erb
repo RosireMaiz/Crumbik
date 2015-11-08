@@ -1,0 +1,58 @@
+<div class="row titulo-seccion">
+  <div class="banner banner-perfil">
+    <div class="contenedor">
+      <div class="col s6">
+        <h5 class="text-capitalize ">
+          Editar Ubicaci&oacute;n en Google Maps
+        </h5>
+      </div>
+      <div class="col s6 text-right ">
+        <ol class="breadcrumb">
+          <li>
+            <a href="/">Inicio</a>
+          </li>
+          <li class="active">Editar Ubicaci&oacute;n</li>
+        </ol>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="row pad30-h">
+  <div id="editar-iframe" >
+        
+
+      <div class="row" style="padding-top: 35px;">
+        <div class="col s12 ">           
+            <div class="col s6">
+            <div class="input-field row">
+                <textarea id="organizacion_iframe" name="organizacion[iframe]" type="text" class="active materialize-textarea"><% if !@organizacion.iframe.nil? || !@organizacion.iframe == "" %><%= @organizacion.iframe %><% end %></textarea> 
+                <label for="organizacion_iframe">Ubicaci&oacute;n:</label>
+                
+                </div>
+                <div class="row text-center">
+                 <input type="button" class="btn btn-success btn-sm" value="Guardar">
+                  <button type="button" onclick="window.location.href='/organizacion/apariencia/portal'" class="btn btn-danger waves-effect">Cancelar</button>
+                </div>
+            </div>
+            <div class="col s6 right-align">
+              <div class="row">
+                <a href="#modal_obtener_iframe" class="modal-trigger pad5 pad15-h ">
+                  ¿C&oacute;mo Obtener? 
+                </a>
+              </div>
+              <div class="mapa white no-margin  no-margin-v <% if @organizacion.iframe.nil? || @organizacion.iframe == "" %>hidden<% end %>" style="width:100%">
+                <iframe id="iframe_organizacion" src = "<% if !@organizacion.iframe.nil? || !@organizacion.iframe == "" %><%= @organizacion.iframe %><% end %>"  width="100%" height="400px" frameborder="0" allowfullscreen> </iframe>
+              </div>
+            </div>
+            
+         
+        </div>
+      </div>
+    
+  </div>
+
+  <%= render "organizacions/instrucciones_iframe" %>
+  
+</div>
+

@@ -2,12 +2,12 @@
   <div class="banner banner-perfil">
     <div class="contenedor">
       <div class="col s6 valign-wrapper pad55-t">
-        <a href="http://<%= @organizacion.subdominio %>.lvh.me:3000/" class="white-text valign-wrapper" target="_blank" >
+        <div class="white-text valign-wrapper" >
           <img src = "<%= @organizacion.formato_logo%><%= @organizacion.logo%>" class=" z-depth-2 org-logo-consulta " />
           <h5 class="text-capitalize" style="margin-top: 0px; margin-bottom: 0px;">
             <%= @organizacion.nombre %>
           </h5>
-        </a>
+        </div>
       </div>
       <div class="col s6 text-right ">
         <ol class="breadcrumb">
@@ -30,21 +30,21 @@
          <b class="grey-text text-darken-3">Usuario:</b>
           <div class=" valign-wrapper">
             <div>
-              <img class="img-usuario-org-consulta responsive-img"src="<%= @organizacion.usuario.perfil.formato_foto %><%= @organizacion.usuario.perfil.foto %>">
+              <img class="img-usuario-org-consulta responsive-img"src="<%= @usuario_organizacion.perfil.formato_foto %><%= @usuario_organizacion.perfil.foto %>">
             </div>
             <div class="col">
               <p class="no-padding ">
-                <b><%= @organizacion.usuario.perfil.nombres %>
-                 <%= @organizacion.usuario.perfil.apellidos %>
+                <b><%= @usuario_organizacion.perfil.nombres %>
+                 <%= @usuario_organizacion.perfil.apellidos %>
                 </b>
               </p>
               <p class="no-padding no-margin-v">
                     <i class="fa fa-user grey-text text-darken-3"></i>
-                    <%= @organizacion.usuario.username%> 
+                    <%= @usuario_organizacion.username%> 
               </p>
               <p class="no-padding no-margin-v">
                     <i class="fa fa-calendar grey-text text-darken-3"></i>
-                    <%= @organizacion.usuario.created_at%> 
+                    <%= @usuario_organizacion.created_at%> 
               </p>
             </div>
           </div>
@@ -162,7 +162,7 @@
           <b class="grey-text text-darken-3">Banner:</b>
           </br>
           </br>
-          <img  class="org-banner-consulta responsive-img  z-depth-2" src="/system/<%= @organizacion.subdominio %>/portafolio/Banner.jpg" />
+          <img  class="org-banner-consulta responsive-img  z-depth-2 materialboxed"  src="<%= @organizacion.formato_banner %><%= @organizacion.banner %>" />
         </div>
 
       </div>

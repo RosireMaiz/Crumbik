@@ -119,7 +119,7 @@
             <div class="collapsible-header grey lighten-4 active ">
               <i class="fa fa-circle light-green-text text-accent-4 collapsible-header-org"></i>
 
-              <img src = "<%= organizacion.formato_logo%><%= organizacion.logo%>"/> 
+              <img class="responsive-img" src = "<%= organizacion.formato_logo%><%= organizacion.logo%>"/> 
               <b class="grey-text text-darken-1">
                 <%= organizacion.nombre %>
               </b>
@@ -139,7 +139,7 @@
                     <b class="grey-text text-darken-3">Usuario:</b>
                     <div class=" valign-wrapper">
                       <div>
-                        <img class=" responsive-img img-usuario-organizacion"src="<%= organizacion.usuario.perfil.formato_foto %><%= organizacion.usuario.perfil.foto %>">
+                        <img class="responsive-img img-usuario-organizacion"src="<%= organizacion.usuario.perfil.formato_foto %><%= organizacion.usuario.perfil.foto %>">
                       </div>
                       <div class="col">
                         <p class="no-padding">

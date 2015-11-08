@@ -185,6 +185,13 @@ main{
     padding-top: 55px !important;
 }
 
+.pad10-t {
+    padding-top: 10px !important;
+}
+
+.pad5-t {
+    padding-top: 5px !important;
+}
 .no-padding{
   padding-left: 0px !important;
   padding-right: 0px !important;

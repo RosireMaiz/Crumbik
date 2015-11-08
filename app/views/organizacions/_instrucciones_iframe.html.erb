@@ -1,0 +1,209 @@
+<div id="modal_obtener_iframe" class="modal transparent" style=" box-shadow: none; max-height: 80%; ">
+  
+  <div id="form_wizard_2" class="modal-content no-padding valign-wrapper center-block " >
+
+    <div class="form-wizard valign-wrapper">
+
+      <div class="col s1 text-center form-actions">
+            <a class="btn-table-action btn-sm waves-effect waves-lightgrey grey lighten-5 button-previous" style=" float: initial;"><i class="fa fa-chevron-left grey-text lighten-4 "></i></a>
+        </div>
+        <div class="col s10 grey lighten-5">
+        <div class="form-body">
+          <ul class="nav nav-pills nav-justified steps hide">
+            <li class="active">
+              <a href="#tab1" data-toggle="tab" class="step active">
+              <span class="number">
+              1 </span>
+              <span class="desc">
+               Google Maps </span>
+              </a>
+            </li>
+            <li >
+              <a href="#tab2" data-toggle="tab" class="step">
+              <span class="number">
+              2 </span>
+              <span class="desc">
+              Buscar Direccion </span>
+              </a>
+            </li>
+            <li>
+              <a href="#tab3" data-toggle="tab" class="step ">
+              <span class="number">
+              3 </span>
+              <span class="desc">
+               Compartir </span>
+              </a>
+            </li>
+            <li>
+              <a href="#tab4" data-toggle="tab" class="step">
+              <span class="number">
+              4 </span>
+              <span class="desc">
+               Copiar Mapa </span>
+              </a>
+            </li>
+            <li>
+              <a href="#tab5" data-toggle="tab" class="step">
+              <span class="number">
+              4 </span>
+              <span class="desc">
+              Seleccionar URL </span>
+              </a>
+            </li>
+            <li>
+              <a href="#tab6" data-toggle="tab" class="step">
+              <span class="number">
+              5 </span>
+              <span class="desc">
+              Seleccionar URL </span>
+              </a>
+            </li>
+          </ul>
+          <div class="pad10-t">
+            <a style="float:right;" class="waves-effect btn-flat modal-close"><i class="mdi-content-clear"></i></a>
+                <h5>¿C&oacute;mo Obtener?</h5>
+              </div>
+          <div class="tab-content pad10-t">
+            <div class="tab-pane active" id="tab1">
+              <div class="row">
+                <div class="col s12">
+                  <p>1.- Ingresar al sitio web de <a href="https://www.google.com/maps" target="_blank">Google Maps.</a></p>
+                          <img src="<%= asset_path 'instrucciones-iframe-1.jpg' %>" width="100%" >
+
+                </div>
+              </div>
+            </div>
+            <div class="tab-pane" id="tab2">
+              <div class="row ">
+                <div class="col s12">
+                  <p>2.- Buscar la direccion de la organizaci&oacute;n</p>
+                          <img src="<%= asset_path 'instrucciones-iframe-2.jpg' %>" width="100%" >
+                </div>
+              </div>
+            </div>
+            <div class="tab-pane " id="tab3">
+              <div class="row">
+                <div class="col s12">
+                  <p>3.- Seleccionar el opci&oacute;n compartir</p>
+                          <img src="<%= asset_path 'instrucciones-iframe-3.jpg' %>" width="100%" >
+                </div>
+              </div>
+            </div>
+            <div class="tab-pane" id="tab4">
+              <div class="row">
+                <div class="col s12">
+                  <p>4.- Seleccionar la pestaña <b>"Insertar Mapa"</b></p>
+                          <img src="<%= asset_path 'instrucciones-iframe-4.jpg' %>" width="100%" >
+                </div>
+              </div>
+
+            </div>
+            <div class="tab-pane" id="tab5">
+              <div class="row">
+                <div class="col s12">
+                  <p>5.- Copiar el contenido del cuadro de texto presente.</p>
+                          <img src="<%= asset_path 'instrucciones-iframe-5.jpg' %>" width="100%" >
+                </div>
+              </div>
+            </div>
+            <div class="tab-pane" id="tab6">
+              <div class="row">
+                <div class="col s12">
+                  <p>6.- Del texto copiado quedarse solo con lo que esta entre las primeras comillas (""), el src .</p>
+                          <img src="<%= asset_path 'instrucciones-iframe-6.jpg' %>" width="100%" >
+                </div>
+              </div>
+
+            </div>
+          </div>
+        </div>
+        <div class="row right-align">
+          <a  class=" modal-close waves-effect waves-lightgrey btn-flat blue-text" onclick="cerrarInstrucciones()">Entendido</a>
+        </div>
+        
+      </div>
+
+      <div class="col s1 text-center form-actions">
+            <a class="btn-table-action btn-sm waves-effect waves-lightgrey grey lighten-5 button-next" style=" float: initial;"><i class="fa fa-chevron-right grey-text lighten-4 "></i></a>
+        </div>
+    </div>
+  </div>
+</div>
+
+          
+<% content_for :javascript_personalizado do %>
+  <%= javascript_include_tag "plugins/jquery.bootstrap.wizard.min" %>
+  <%= javascript_include_tag "plugins/pwstrength-bootstrap-1.2.4.min" %>
+<script type="text/javascript">
+
+  $(document).ready(function(){
+
+      var FormWizard = function () {
+          return {
+              //main function to initiate the module
+              init: function () {
+                $('#form_wizard_2').find('.button-previous').hide();
+                  if (!jQuery().bootstrapWizard) {
+                      return;
+                  }
+
+                  var handleTitle = function(tab, navigation, index) {
+
+                      var total = navigation.find('li').length;
+
+                      var current = index + 1;
+
+                      // set done steps
+                      jQuery('li', $('#form_wizard_2')).removeClass("done");
+                      var li_list = navigation.find('li');
+                      for (var i = 0; i < index; i++) {
+                          jQuery(li_list[i]).addClass("done");
+                      }
+
+                      if (current == 1) {
+                          $('#form_wizard_2').find('.button-previous').hide();
+                      } else {
+                          $('#form_wizard_2').find('.button-previous').show();
+                      }
+
+                      if (current >= total) {
+                          $('#form_wizard_2').find('.button-next').hide();
+
+                      } else {
+                          $('#form_wizard_2').find('.button-next').show();
+                      }
+                  }
+                  // default form wizard
+                  $('#form_wizard_2').bootstrapWizard({
+                      'nextSelector': '.button-next',
+                      'previousSelector': '.button-previous',
+                      
+                      onNext: function (tab, navigation, index) {
+                          handleTitle(tab, navigation, index);
+                      },
+                      onPrevious: function (tab, navigation, index) {
+                          handleTitle(tab, navigation, index);
+                      },
+                      
+                  });
+
+              }
+
+          };
+
+      }();
+      FormWizard.init();
+  });
+
+  function cerrarInstrucciones(){
+      jQuery('li', $('#form_wizard_2')).removeClass("done");
+      jQuery('li', $('#form_wizard_2')).removeClass("active");
+      jQuery('div.tab-pane', $('#form_wizard_2')).removeClass("active");
+      jQuery('div.tab-pane', $('#form_wizard_2')).first().addClass("active");
+      $('#form_wizard_2').find('.button-previous').hide();
+  }; 
+
+</script>
+  
+  
+<% end %>

@@ -131,7 +131,11 @@ Rails.application.routes.draw do
              :registrations => 'registrations'}, via: :post
 
 	constraints(SubdomainPresent) do
+		match "/organizacion/consultar" => "organizacions#show", via: :get
+		match "/organizacion/apariencia/portal" => "organizacions#apariencia_index", via: :get
+		match "/organizacion/apariencia/editar_ubicacion" => "organizacions#editar_ubicacion", via: :get
 
+		
 	end
 
 end
