@@ -99,7 +99,7 @@ class RedSocialsController < ApplicationController
 
 	private
 		def red_social_params
-	      accessible = [ :nombre, :icono ] # extend with your own params
+	      accessible = [ :nombre, :icono, :color] # extend with your own params
 	      params.require(:red_social).permit(accessible)
 	    end
 

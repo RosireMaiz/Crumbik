@@ -996,6 +996,25 @@ div.seccion-principal span:after, div.seccion-principal span::after{
     max-width: 580px;
     max-height: 500px;
 }
+
+.org-contenedor-banner-edit > img {
+    max-width: 100%;
+    max-height: 420px;
+}
+
+.org-contenedor-banner-edit {
+    position: absolute;
+    width: 100%;
+    text-align: center;
+    background-repeat: no-repeat;
+}
+
+.banner-organizacion-edit {
+    max-height: 420px;
+    width: 100%;
+    position: relative !important;
+}
+
 /***************************/
 /***** Perfil del Usuario **/
 /***************************/
