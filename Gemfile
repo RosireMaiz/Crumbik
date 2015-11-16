@@ -49,6 +49,8 @@ gem 'tzinfo-data', platforms: [:mingw, :mswin, :x64_mingw, :jruby]
 gem 'mysql2'
 
 gem 'materialize-sass'
+gem 'autoprefixer-rails'
+
 gem 'font-awesome-sass'
 
 gem 'devise'

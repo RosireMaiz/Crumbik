@@ -1,3 +1,8 @@
+<% content_for :css_personalizado do %>
+ <%= stylesheet_link_tag    "usuarios" %> 
+ <%= stylesheet_link_tag    "plugins/fileinput.min" %> 
+<% end %>
+
 <div class="row titulo-seccion">
   <div class="banner banner-perfil">
     <div class="contenedor">
@@ -19,5 +24,86 @@
 </div>
 
 <div class="row pad30-h">
-  <div></div>
+
+  <div class="row no-margin no-margin-v">
+    <div class="col s6 ">
+      <div class="row">
+
+        <div class="col s12 panel">
+          <h5>Texto del Banner</h5>
+          <%= form_for(@organizacion, :url => organizacion_editar_titulo_banner_path, :html => { :method => :post, :class => "pad15"}) do |f| %>
+            <input id="organizacion_id" name="organizacion_id" class="file" value="<%= @organizacion.id %>" hidden />
+            <div class="input-field">
+              <%= f.label :titulo_banner, "Titulo",
+                  {for: "organizacion_titulo_banner"} %>
+              <%= f.text_area :titulo_banner, :autofocus => false, autocomplete: "off", :class=>"materialize-textarea", length: "40" %>
+            </div>
+
+            <div class="input-field">
+              <%= f.label :subtitulo_banner, "Subtitulo", 
+                    {for: "organizacion_subtitulo_banner"} %>
+              <%= f.text_area :subtitulo_banner , autocomplete: "off", :class=>"materialize-textarea" , length: "80"  %>
+            </div>
+
+            <div><%= f.submit "Cambiar", {class: "btn btn-success"} %></div>
+
+          <% end %>
+          
+        </div>
+
+      </div>
+      
+    </div>
+
+    <div class="col s6 ">
+      <div class="row">
+        <%= form_tag( {controller: "organizacions", action: "save_banner", method: "post"},  multipart: true ) do %>
+          <div class=" col s12 panel" align="right">
+            <h5 align="left">Cambiar Banner</h5>
+            <input id="organizacion_id" name="organizacion_id" class="file" value="<%= @organizacion.id %>" hidden />
+
+            <div id="banner" class="<%= @organizacion.formato_banner%><%= @organizacion.banner%>" > </div>
+           
+
+            <input id="banner_id" name="banner_id" type="file" class="file"  required/>
+            <div class="pad15"></div>
+
+          </div>
+        <% end %>
+      </div>
+    </div>
+  </div>
+  
+  <div class="row right-align">
+    <button type="button" onclick="window.location.href='/organizacion/apariencia/portal'" class="btn btn-danger waves-effect">Regresar</button>       
+  </div>
+
 </div>
+
+
+<% content_for :javascript_personalizado do %>
+  <%= javascript_include_tag "plugins/pwstrength-bootstrap-1.2.4.min" %>
+  <%= javascript_include_tag 'plugins/fileinput.js' %>
+
+  <script type="text/javascript">
+
+    $("#banner_id").fileinput({
+      'browseLabel':'Cambiar',
+      'showCaption':false,
+       'initialPreview': [
+        "<img src='" + $("#banner").attr("class") +"' class='file-preview-image' alt='Banner' title='Banner actual'>"
+      ],
+      'initialPreviewShowDelete':false,
+      'initialCaption':'Archivo(s) Seleccionado(s)',
+      'allowedFileTypes':['image'],
+      'allowedFileExtensions':['jpg', 'png', 'jpeg'],
+      'browseClass':'btn btn-primary',
+      'browseIcon':'<i class="mdi-file-attachment"></i>',
+      'showRemove':false,
+      'uploadLabel':'Subir',
+      'uploadIcon':'<i class="mdi-file-file-upload"></i>',
+      'uploadClass':'btn btn-success ',
+    });
+     
+</script>
+<% end %>

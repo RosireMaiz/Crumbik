@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20151102215351) do
+ActiveRecord::Schema.define(version: 20151115224026) do
 
   create_table "autenticacions", force: :cascade do |t|
     t.integer "usuario_id", limit: 4
@@ -24,14 +24,12 @@ ActiveRecord::Schema.define(version: 20151102215351) do
   create_table "contratos", force: :cascade do |t|
     t.datetime "fecha_creacion"
     t.datetime "fecha_vencimiento"
-    t.string   "estatus",            limit: 255
-    t.string   "observacion",        limit: 255
-    t.integer  "organizacion_id",    limit: 4
-    t.integer  "plan_id",            limit: 4
-    t.integer  "frecuencia_pago_id", limit: 4
+    t.string   "estatus",           limit: 255
+    t.string   "observacion",       limit: 255
+    t.integer  "organizacion_id",   limit: 4
+    t.integer  "plan_id",           limit: 4
   end
 
-  add_index "contratos", ["frecuencia_pago_id"], name: "index_contratos_on_frecuencia_pago_id", using: :btree
   add_index "contratos", ["organizacion_id"], name: "index_contratos_on_organizacion_id", using: :btree
   add_index "contratos", ["plan_id"], name: "index_contratos_on_plan_id", using: :btree
 
@@ -40,8 +38,9 @@ ActiveRecord::Schema.define(version: 20151102215351) do
   end
 
   create_table "frecuencia_pagos", force: :cascade do |t|
-    t.string  "nombre", limit: 255
-    t.integer "meses",  limit: 4
+    t.string  "nombre",  limit: 255
+    t.integer "meses",   limit: 4
+    t.string  "estatus", limit: 1,   default: "A"
   end
 
   create_table "menus", force: :cascade do |t|
@@ -81,7 +80,7 @@ ActiveRecord::Schema.define(version: 20151102215351) do
     t.string  "nombre",               limit: 255
     t.string  "subdominio",           limit: 255
     t.string  "direccion",            limit: 255
-    t.string  "descripcion",          limit: 255
+    t.text    "descripcion",          limit: 4294967295
     t.string  "slogan",               limit: 255
     t.text    "mision",               limit: 65535
     t.text    "vision",               limit: 65535
@@ -91,7 +90,9 @@ ActiveRecord::Schema.define(version: 20151102215351) do
     t.string  "formato_logo",         limit: 255
     t.binary  "banner",               limit: 4294967295
     t.string  "formato_banner",       limit: 255
-    t.string  "iframe",               limit: 255
+    t.text    "iframe",               limit: 4294967295
+    t.string  "titulo_banner",        limit: 255
+    t.string  "subtitulo_banner",     limit: 255
     t.string  "estatus",              limit: 1,          default: "A"
     t.integer "pais_id",              limit: 4
     t.integer "usuario_id",           limit: 4
@@ -132,11 +133,26 @@ ActiveRecord::Schema.define(version: 20151102215351) do
 
   add_index "perfils", ["usuario_id"], name: "index_perfils_on_usuario_id", using: :btree
 
-  create_table "plans", force: :cascade do |t|
-    t.string "nombre",      limit: 255
-    t.string "descripcion", limit: 255
-    t.string "estatus",     limit: 1,   default: "A"
+  create_table "plan_servicios", force: :cascade do |t|
+    t.integer "cantidad",    limit: 4
+    t.integer "plan_id",     limit: 4
+    t.integer "servicio_id", limit: 4
   end
+
+  add_index "plan_servicios", ["plan_id"], name: "index_plan_servicios_on_plan_id", using: :btree
+  add_index "plan_servicios", ["servicio_id"], name: "index_plan_servicios_on_servicio_id", using: :btree
+
+  create_table "plans", force: :cascade do |t|
+    t.string  "nombre",             limit: 255
+    t.string  "descripcion",        limit: 255
+    t.float   "costo",              limit: 24
+    t.binary  "imagen",             limit: 4294967295
+    t.string  "formato_imagen",     limit: 255
+    t.string  "estatus",            limit: 1,          default: "A"
+    t.integer "frecuencia_pago_id", limit: 4
+  end
+
+  add_index "plans", ["frecuencia_pago_id"], name: "index_plans_on_frecuencia_pago_id", using: :btree
 
   create_table "productos", force: :cascade do |t|
     t.string "nombre",         limit: 255
@@ -162,6 +178,7 @@ ActiveRecord::Schema.define(version: 20151102215351) do
   create_table "red_socials", force: :cascade do |t|
     t.string "icono",   limit: 255
     t.string "nombre",  limit: 255
+    t.string "color",   limit: 255
     t.string "estatus", limit: 1,   default: "A"
   end
 

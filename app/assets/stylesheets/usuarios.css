@@ -33,8 +33,6 @@
 }
 
 
-
-
 /****************************************************************/
 /*                         Panel_cursos                         */
 /****************************************************************/
@@ -64,8 +62,6 @@ word-wrap: break-word
   width: 150px;
   height: 70px;
 }
-
-
 
 .scroll-curso {
     overflow-x: scroll;
@@ -185,8 +181,6 @@ word-wrap: break-word
    background-color: #6f3ce1;
 }
 
-
-
 .form-wizard .steps {
   padding: 10px 0;
   background-color: transparent;
@@ -196,7 +190,7 @@ word-wrap: break-word
   box-shadow: none;
 }
 .form-wizard .steps > li > a.step {
-  background-color: transparent; !important;
+  background-color: transparent !important;
   background-image: none;
   filter: none;
   border: 0px;
@@ -208,7 +202,6 @@ word-wrap: break-word
   background: rgb(213, 212, 218) !important;
   color: rgb(144,144,144);
 }
-
 
 .form-wizard .steps > li > a.step > .number {
   background-color: #C7C7CC;

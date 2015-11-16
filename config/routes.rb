@@ -134,7 +134,10 @@ Rails.application.routes.draw do
 		match "/organizacion/consultar" => "organizacions#show", via: :get
 		match "/organizacion/apariencia/portal" => "organizacions#apariencia_index", via: :get
 		match "/organizacion/apariencia/editar_ubicacion" => "organizacions#editar_ubicacion", via: :get
-
+		match "/organizacion/apariencia/editar_banner" => "organizacions#editar_banner", via: :get
+		match "/organizacion/guardar_banner" => "organizacions#save_banner", via: :post
+		match "/organizacion/editar_titulo_banner" => "organizacions#editar_titulo_banner", via: :post
+		match "/organizacion/editar_ubicacion" => "organizacions#editar_ubicacion_iframe", via: :post
 		
 	end
 

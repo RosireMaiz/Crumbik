@@ -148,6 +148,64 @@ class OrganizacionsController < ApplicationController
 		@organizacion = Organizacion.where(["subdominio = ?", request.subdomain]).first
 		render "organizacions/editar_ubicacion"
 	end
+
+	def editar_ubicacion_iframe
+		@id = params[:organizacion_id]
+
+		@organizacion = Organizacion.where(["id = ?", @id]).first
+
+
+		iframe = params[:organizacion][:iframe]
+		
+		@organizacion.iframe = iframe
+
+		@organizacion.save
+
+		redirect_to :controller => 'organizacions', :action => 'apariencia_index'
+	end
+
+	def editar_banner
+		@organizacion = Organizacion.where(["subdominio = ?", request.subdomain]).first
+		render "organizacions/editar_banner"
+	end
+
+	def save_banner
+
+		@id = params[:organizacion_id]
+
+		@organizacion = Organizacion.where(["id = ?", @id]).first
+					
+		#Archivo subido por el usuario.
+	    archivo = params[:banner_id]
+
+ 		formato = "data:"+ archivo.content_type+";base64,"
+		banner = Base64.encode64(File.open(archivo.tempfile, "rb").read)
+
+    	@organizacion.banner = banner
+
+    	@organizacion.formato_banner = formato
+
+    	@organizacion.save
+		
+		redirect_to :controller => 'organizacions', :action => 'editar_banner'
+	end
+
+	def editar_titulo_banner
+		@id = params[:organizacion_id]
+
+		@organizacion = Organizacion.where(["id = ?", @id]).first
+
+
+		titulo = params[:organizacion][:titulo_banner]
+		subtitulo = params[:organizacion][:subtitulo_banner]
+
+		@organizacion.titulo_banner = titulo
+		@organizacion.subtitulo_banner = subtitulo
+
+		@organizacion.save
+
+		redirect_to :controller => 'organizacions', :action => 'editar_banner'
+	end
 	
 	private
 		def organizacion_params

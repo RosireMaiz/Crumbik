@@ -41,7 +41,7 @@
             <tr>
                <% if ! usuari.perfil.foto.nil? and usuari.perfil.foto != "" %>
                   <td> 
-                      <img src="/assets/avatar/sinfoto.jpg" style="width: 35px;">
+                      <img src="<%= usuari.perfil.formato_foto %><%= usuari.perfil.foto %>" style="width: 35px;" class="responsive-img">
                   </td>
                 <% else %>
                   <td>
@@ -86,10 +86,10 @@
                 <br><br>
                 <div class="row">
                     <div class="col s12">
-                        <div class="col s3">
+                        <div class="col s3 text-center">
                             <% if ! usuarios.perfil.foto.nil? and usuarios.perfil.foto != "" %>
                                 <td> 
-                                  <img src="/assets/avatar/sinfoto.jpg" style="width: 150px; height: 150px;">
+                                  <img src="<%= usuarios.perfil.formato_foto %><%= usuarios.perfil.foto %>" style="max-width: 150px; max-height: 150px;" class="responsive-img">
                                 </td>
                             <% else %>
                                 <td> 

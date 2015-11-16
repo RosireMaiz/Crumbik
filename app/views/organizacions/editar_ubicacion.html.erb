@@ -23,25 +23,30 @@
         
 
       <div class="row" style="padding-top: 35px;">
-        <div class="col s12 ">           
+        <div class="col s12 "> 
+          <%= form_for(@organizacion, :url => organizacion_editar_ubicacion_path, :html => { :method => :post, :class => "pad15"}) do |f| %>      
+            <input id="organizacion_id" name="organizacion_id" class="file" value="<%= @organizacion.id %>" hidden />    
             <div class="col s6">
-            <div class="input-field row">
+              <div class="input-field row">
                 <textarea id="organizacion_iframe" name="organizacion[iframe]" type="text" class="active materialize-textarea"><% if !@organizacion.iframe.nil? || !@organizacion.iframe == "" %><%= @organizacion.iframe %><% end %></textarea> 
                 <label for="organizacion_iframe">Ubicaci&oacute;n:</label>
-                
-                </div>
-                <div class="row text-center">
-                 <input type="button" class="btn btn-success btn-sm" value="Guardar">
-                  <button type="button" onclick="window.location.href='/organizacion/apariencia/portal'" class="btn btn-danger waves-effect">Cancelar</button>
-                </div>
-            </div>
-            <div class="col s6 right-align">
-              <div class="row">
-                <a href="#modal_obtener_iframe" class="modal-trigger pad5 pad15-h ">
+                 <a href="javascript:void(0)" id="actualizar_mapa" class="pad5 waves-effect waves-lightgrey blue-text" >
+                  Actualizar Mapa
+                  </a>
+                   <a href="#modal_obtener_iframe" class="modal-trigger pad5 pad15-h waves-effect waves-lightgrey" style="float:right">
                   ¿C&oacute;mo Obtener? 
                 </a>
+              
               </div>
-              <div class="mapa white no-margin  no-margin-v <% if @organizacion.iframe.nil? || @organizacion.iframe == "" %>hidden<% end %>" style="width:100%">
+              <div class="row text-center">
+                 <input type="submit" class="btn btn-success btn-sm" value="Guardar">
+                  <button type="button" onclick="window.location.href='/organizacion/apariencia/portal'" class="btn btn-danger waves-effect">Cancelar</button>
+              </div>
+            </div>
+          <% end %>
+
+            <div class="col s6 left-align">
+              <div id="mapa" class="mapa white no-margin  no-margin-v <% if @organizacion.iframe.nil? || @organizacion.iframe == "" %>hidden<% end %>" style="width:100%">
                 <iframe id="iframe_organizacion" src = "<% if !@organizacion.iframe.nil? || !@organizacion.iframe == "" %><%= @organizacion.iframe %><% end %>"  width="100%" height="400px" frameborder="0" allowfullscreen> </iframe>
               </div>
             </div>
@@ -55,4 +60,20 @@
   <%= render "organizacions/instrucciones_iframe" %>
   
 </div>
+<% content_for :javascript_personalizado do %>
+  <script type="text/javascript">
+    $('#actualizar_mapa').on('click',function(){
+      var ubicacion = $('#organizacion_iframe').val();
+      if (ubicacion == "") {
+        $('#mapa').toggleClass("hidden");
+        $('#mapa').hide();
+      } else{
+        $('#iframe_organizacion').attr('src', ubicacion);
+        $('#mapa').toggleClass("hidden");
+        $('#mapa').show();
+      };
+      
+    });
 
+  </script>
+<% end %>

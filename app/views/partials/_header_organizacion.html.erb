@@ -1,16 +1,24 @@
 <div class="navbar-fixed">
-	<nav>
+	<nav id="menu-header">
 	    <div class="nav-wrapper white">
 	    	<div class="contenedor">
 	    	<!-- ************************ -->
 	    	<!-- ***** LOGO Y NOMBRE **** -->
 	    	<!-- ************************ -->
-				<a href"http://<%= @organizacion.subdominio %>.lvh.me:3000/" class="brand-logo header-logo">
-					<img src = "<%= @organizacion.formato_logo%><%= @organizacion.logo%>" />
-					<span class="header-nombre">
-						<%= @organizacion.nombre %>
-					</span>
-				</a>
+	    		<div>
+	    			<div class="toggler-wrapper toggler-header top-nav full">
+
+						<a href="javascript:void(0)" class="tooltipped"  data-position="right" data-delay="50" data-tooltip="Mostrar Menu">
+							<i class="mdi-navigation-menu small"></i>
+						</a>
+					</div>
+					<a href="http://<%= @organizacion.subdominio %>.lvh.me:3000/" class="brand-logo header-logo">
+						<img src = "<%= @organizacion.formato_logo%><%= @organizacion.logo%>" />
+						<span class="header-nombre">
+							<%= @organizacion.nombre %>
+						</span>
+					</a>
+				</div>
 			<!-- *************************** -->
 	    	<!-- ********* OPCIONES ******** -->
 	    	<!-- *************************** -->
@@ -23,16 +31,68 @@
 			<!-- ************************* -->
 	    	<!-- ********* SESION ******** -->
 	    	<!-- ************************* -->
-			    <ul id="nav-sesion" class="hide-on-med-and-down">
-			       	<% if !usuario_signed_in? %>
-			        	<li><a href="#login-form" class="modal-trigger">Iniciar sesi&oacute;n</a></li>
-			       		<li><%= link_to "Registrarse", new_usuario_registration_path %></li>
-  					<% else %>  
-			        	<li>
-			        		<%= link_to 'Edit profile', edit_usuario_registration_path %>
-			        	</li>
-   						<li><%= link_to "Logout", destroy_usuario_session_path, method: :delete%></li>
-			      	<% end %>
+			    <ul id="nav-sesion" class=" hide-on-med-and-down">
+					<% if !usuario_signed_in? %>
+				    	<li>
+				    		<a href="#login-form" class="modal-trigger">Iniciar sesi&oacute;n</a>
+				    	</li>
+
+				       	<li>
+				       	 	<%= link_to "Registrarse", registro_path %>
+				       	</li>
+
+	  				<% else %>  
+				        <li>
+				          <a href="javascript:void(0)">
+				            <span class="badge light-blue">2</span><i class="mdi-social-notifications-none"></i>
+				          </a>
+				        </li>
+				        <li>
+				          <a href="javascript:void(0)">
+				            <span class="badge light-blue">2</span><i class="fa fa-envelope-o"></i>
+				          </a>
+				        </li>
+				        <li class="dropdown  valign-wrapper ">
+				        	<a href="/" class="dropdown-toggle" data-toggle="dropdown" aria-expanded="true">
+				        		<div class="media logged-in-usuario  valign-wrapper ">
+				        			<div class="media-body user">
+					    				<h6 class="media-heading"><%= current_usuario.username%></h6>
+										<span class="rol"><%= current_usuario.rol_actual.nombre %></span>
+					    			</div>
+					    			
+					    			<div class="media-right ">
+						
+										<%  if  ! current_usuario.perfil.nil? %>
+					     
+											<% if ! current_usuario.perfil.foto.nil? and current_usuario.perfil.foto != "" %>
+				    			   				<img src="<%= @foto %>" class="img-circle" alt=""/>
+				    						<% else %>
+				                        		<img src="/assets/avatar/sinfoto.jpg" />
+				                 			<% end %>
+				          
+										<% else %>
+				  							<img src="/assets/avatar/sinfoto.jpg" />
+
+										<% end %>
+				              		</div>
+				              		<div class="media-body pull-right">
+				              			<i class="fa fa-chevron-down "></i>
+				              		</div>
+								</div>
+				        	</a>
+				        	<ul class="dropdown-menu dropdown-menu-header" role="menu" aria-labelledby="dropdownMenu1">
+					            <li role="presentation">
+					              <a id="cambiar-rol" role="menuitem" tabindex="-1" href="javascript:void(0)">Cambiar rol</a>
+					            </li>
+					             <li class="divider center"></li>
+					             <li>
+			        				<%= link_to 'Editar Perfil', controller: "usuarios", action: "edit" %>
+			        			</li>
+			        			<li class="divider center"></li>
+					  			<li role="presentation"><%= link_to "Salir", destroy_usuario_session_url,method: :delete %></li>
+							</ul>
+				        </li>
+				    <% end %>
 			    </ul>
 	    	</div>
 	    </div>
@@ -44,10 +104,3 @@
 <% if !usuario_signed_in? %>
 	<%= render "devise/sessions/new" %>
 <% end %>
-
-<script type="text/javascript">
-	$(document).ready(function(){
-    // the "href" attribute of .modal-trigger must specify the modal ID that wants to be triggered
-    $('.modal-trigger').leanModal();
-  });
- </script>
