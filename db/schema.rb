@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20151115224026) do
+ActiveRecord::Schema.define(version: 20151207005627) do
 
   create_table "autenticacions", force: :cascade do |t|
     t.integer "usuario_id", limit: 4
@@ -20,6 +20,12 @@ ActiveRecord::Schema.define(version: 20151115224026) do
   end
 
   add_index "autenticacions", ["usuario_id"], name: "index_autenticacions_on_usuario_id", using: :btree
+
+  create_table "categoria", force: :cascade do |t|
+    t.string "nombre",      limit: 255
+    t.string "descripcion", limit: 255
+    t.string "estatus",     limit: 1,   default: "A"
+  end
 
   create_table "contratos", force: :cascade do |t|
     t.datetime "fecha_creacion"
@@ -134,7 +140,7 @@ ActiveRecord::Schema.define(version: 20151115224026) do
   add_index "perfils", ["usuario_id"], name: "index_perfils_on_usuario_id", using: :btree
 
   create_table "plan_servicios", force: :cascade do |t|
-    t.integer "cantidad",    limit: 4
+    t.string  "descripcion", limit: 255
     t.integer "plan_id",     limit: 4
     t.integer "servicio_id", limit: 4
   end
@@ -193,6 +199,12 @@ ActiveRecord::Schema.define(version: 20151115224026) do
     t.string "estatus",     limit: 1,   default: "A"
   end
 
+  create_table "tipo_clientes", force: :cascade do |t|
+    t.string "nombre",      limit: 255
+    t.string "descripcion", limit: 255
+    t.string "estatus",     limit: 1,   default: "A"
+  end
+
   create_table "tipo_organizacions", force: :cascade do |t|
     t.string "nombre",      limit: 255
     t.string "descripcion", limit: 255
@@ -235,6 +247,11 @@ ActiveRecord::Schema.define(version: 20151115224026) do
 
   add_index "usuarios", ["email"], name: "index_usuarios_on_email", unique: true, using: :btree
   add_index "usuarios", ["reset_password_token"], name: "index_usuarios_on_reset_password_token", unique: true, using: :btree
+
+  create_table "variable_psicograficas", force: :cascade do |t|
+    t.string "nombre",  limit: 255
+    t.string "estatus", limit: 1,   default: "A"
+  end
 
   add_foreign_key "autenticacions", "usuarios"
 end

@@ -12,13 +12,46 @@ $link-color: color("light-blue", "darken-1") !default;
 
 @import "materialize";
 
-@media only screen and (min-width: 301px){
+@media only screen and (max-width: 991px){
 
-  	nav a.brand-logo{
+  	nav#menu-header{
+	    height: 85px;
+	    line-height: 80px;
+	}
+
+	nav a.brand-logo{
+  		padding-top: 0px;
+  		top: -2px;
+  		height: 85px;
+  		padding-left: 0px;
+  	}
+
+	#contenedor.logged-in{
+	  margin-left: 0px;
+
+	}
+
+	.navbar-fixed {
+	    position: relative;
+	    height: 85px;
+	    z-index: 998;
+	} 
+	
+}
+
+
+@media only screen and (min-width: 991px){
+nav a.brand-logo{
+  		left:0px;
+  	}
+  
+	
+}
+
+nav a.brand-logo{
   		padding-top: 4px;
   		padding-left: 40px;
   		top: -2px;
-  		left: 0;
   		height: 85px;
   	}
   	.navbar-fixed {
@@ -26,8 +59,6 @@ $link-color: color("light-blue", "darken-1") !default;
 	    height: 85px;
 	    z-index: 998;
 	} 
-	
-}
 
 nav span#logo-text, nav ul a{
 	color: #646464;

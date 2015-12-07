@@ -168,10 +168,6 @@
 											<option value="-1" disabled selected>Elije tu plan</option>
 											<%#= options_from_collection_for_select(Plan.all, :id, :nombre) %>
 										</select>-->
-										<div class="row">
-											<label>Frecuencia de pago <span class="required">*</span></label>
-											<%= c.collection_select(:frecuencia_pago_id, FrecuenciaPago.all, :id, :nombre) %>
-										</div>
 										<!--<select id="frecuencia" name="organizacion[contratos][frecuencia]">
 											<option value="-1" disabled selected>Elije una frecuencia</option>
 											<%= options_from_collection_for_select(FrecuenciaPago.all, :id, :nombre) %>

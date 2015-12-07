@@ -26,7 +26,8 @@ Rails.application.routes.draw do
 	match "/validar_modo_pago_update" => "modo_pagos#validar_modo_pago_update", via: :post
 	match "/validar_modo_pago" => "modo_pagos#validar_modo_pago", via: :post
 	match "/validar_modo_pago_update" => "modo_pagos#validar_modo_pago_update", via: :post
-	match "/validar_opcion" => "menu#validar_opcion", via: :post
+	match "/validar_opcion" => "menu#validar_opcion", via: :post		
+	match "/validar_plan" => "plans#validar_plan", via: :post
 
 	match "/usuarios/abrircuenta"=>"usuarios#create", via: :post
   	match '/usuarios/:id/confirmar_registro' => 'usuarios#finish_signup', via: [:get, :patch], as: :finish_signup
@@ -115,6 +116,17 @@ Rails.application.routes.draw do
 	match "/modo_pagos/update" => "modo_pagos#update", via: :post
 	match "/modo_pagos/consultar_modo_pago" => "modo_pagos#consultar_modo_pago", via: :post
 	match "/modo_pagos/eliminar" => "modo_pagos#eliminar", via: :post
+
+
+	match "/planes" => "plans#consultar", via: :get
+    match "/planes/agregar" => "plans#new", via: :get
+    match "/plans/crear_plan" => "plans#create", via: :post
+    match "/plans/update_estatus" => "plans#update_estatus", via: :post
+	match "/plans/eliminar" => "plans#eliminar", via: :post
+	match "/plan/editar" => "plans#save_edit", via: :post
+	match "/plan/guardar_imagen" => "plans#save_imagen", via: :post
+  	match "/plan/editar/:id_plan" => "plans#edit", via: :get
+
 
 	match "/organizaciones" => "organizacions#consultar", via: :get
 	match "/organizacion/consultar/:subdominio" => "organizacions#show", via: :get

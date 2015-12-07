@@ -88,8 +88,6 @@ class OrganizacionsController < ApplicationController
 			 	else
 			 		red_social_org.update(:url => url)
 			 	end
-			  	puts "id " + id
-			  	puts "url " + url
 			end
 		end
 		redes_sociales_nuevas = params[:organizacion][:red_social_attributes][:nueva]
@@ -107,10 +105,6 @@ class OrganizacionsController < ApplicationController
 		 			red_social_org.organizacion_id = id_organizacion
 		 			red_social_org.save
 		 		end
-		 		
-
-			  	puts "id n " + id
-			  	puts "url n " + url
 		  	end
 		end
 

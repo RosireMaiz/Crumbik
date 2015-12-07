@@ -1,0 +1,179 @@
+<% content_for :css_personalizado do %>
+ <%= stylesheet_link_tag    "usuarios" %> 
+ <%= stylesheet_link_tag    "plugins/fileinput.min" %> 
+    <style type="text/css">
+  .dropdown-content {
+    max-height: 200px; 
+  }
+</style>
+<% end %>
+
+<div class="row titulo-seccion">
+  <div class="banner banner-perfil">
+    <div class="contenedor">
+      <div class="col s6">
+        <h5 class="text-uppercase">
+         Editar Plan
+        </h5>
+      </div>
+      <div class="col s6 text-right ">
+        <ol class="breadcrumb">
+          <li>
+            <a href="/">Inicio</a>
+          </li>
+          <li class="active">Editar Plan</li>
+        </ol>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div  class="row pad30-h">
+  <div class="col s8 left panel z-depth-3">
+    <%= form_for(@plan,  :url => plan_editar_path, :html => { :method => :post } ) do |f| %>
+      <div class="form-body">
+        <div class="steps pad30-t">
+          <div class="feedback alert alert-danger display-none">
+            <button class="close" data-dismiss="alert"></button>
+            Algunos campos tienen errores. Por favor revisa abajo.
+          </div>
+          <div class="feedback alert-success display-none">
+            <button class="close" data-dismiss="alert"></button>
+            La validación fue exitosa.
+          </div>
+        </div>
+        <div class="row">
+         <input id="plan_id" name="plan_id" class="file" value="<%= @plan.id %>" hidden />
+
+            <h5 >Datos del Plan </h5>
+            <div class="input-field col s8">
+              <label for="plan_nombre">Nombre <span class="required">
+                * </span>
+              </label>
+              <%= f.text_field :nombre, :required=>true, autocomplete: "off" %>
+            </div>
+            <div class="col s4">
+              <div class="input-field  input-group ">
+                <label for="plan_costo">Costo <span class="required">
+                  *  </span>
+                </label>
+
+                <%= f.number_field :costo,:min=> 1, :required=>true, autocomplete: "off" %>
+                <span class="input-group-addon no-padding">
+                  $ </span>
+                </div>
+              </div>
+
+              <div class="input-field col s12">
+                <label for="plan_descripcion">Descripcion <span class="required">
+                  * </span>
+                </label>
+                <%= f.text_area :descripcion, :required=>true, autocomplete: "off", class: "materialize-textarea", length: "120" %>
+
+              </div>
+
+              <div class="col s12">
+                <label>Frecuencia de pago <span class="required">*</span></label>
+                <%= f.collection_select(:frecuencia_pago_id, FrecuenciaPago.all, :id, :nombre) %>
+              </div>
+
+              <div class="col s12 ">
+                <h6>Servicios</h6>
+                <% @servicios = Servicio.all %>
+
+                <% @servicios.each do |servicio| -%>
+                  <% @descripcion = nil  %>
+                  <% @plan.plan_servicio.each do |plan_servicio| -%>
+                    <% if plan_servicio.servicio.id == servicio.id -%>
+                      <% @descripcion = plan_servicio.descripcion %>
+                    <% end -%>
+                  <% end -%>
+                  <div class="row valign-wrapper" style=" padding: 10px 10px; margin: 0; border-bottom: 1px solid #e0e0e0;">
+                      <div class="col s4">
+                        <input type="checkbox" id="plan_servicio_<%= servicio.id%>" name="plan[servicio][<%= servicio.id%>][servicio]" onchange="seleccion_servicio('#<%= servicio.id%>div')" <% if ! @descripcion.nil? -%> checked <% end -%> />
+                        <label for="plan_servicio_<%= servicio.id%>" ><%= servicio.nombre%></label>
+                      </div>
+
+                      <div id="<%= servicio.id%>div" class="col s8 input-field <% if  @descripcion.nil? -%> hidden <% end -%>">   
+
+                        <input  id="plan_servicio_descripcion_<%= servicio.id%>" name="plan[servicio][<%= servicio.id%>][descripcion]" type="text" class="validate" value=" <%= @descripcion -%>">
+
+                        <label for="plan_servicio__descripcion_<%= servicio.id%>" >Descripcón</label>
+
+                      </div>
+                  </div>
+              <% end -%>
+
+            </div>
+
+            <div class="form-actions">
+              <div class="row ">
+                <div class="center col s12 pad30-t">
+
+                  <input type="submit" class="btn btn-success " value="Guardar">
+                  <button type="button" onclick="window.location.href='/planes'" class="btn btn-danger waves-effect">Cancelar</button>
+                </div>
+              </div>
+            </div>
+        </div>
+      </div>
+     
+    <% end %>
+  </div>
+
+  <div class="col s4 ">
+    <div class="row">
+      <%= form_tag( {controller: "plans", action: "save_imagen", method: "post"},  multipart: true ) do %>
+        <div class="col s12 panel" align="right" style="padding-top: 10px; padding-bottom: 20px;">
+          <h5 align="left">Cambiar imagen</h5>
+          <input id="plan_id" name="plan_id" class="file" value="<%= @plan.id %>" hidden />
+
+          <% if ! @plan.imagen.nil? %>
+            <div id="imagen" class="<%= @plan.formato_imagen%><%= @plan.imagen%>" > </div>
+          <% else %>
+            <div id="imagen" class='/assets/avatar/sinfoto.jpg' > </div>
+          <% end %>
+
+          <input id="imagen_id" name="imagen_id" type="file" class="file"  required/>
+        </div>
+      <% end %>
+    </div>
+   </div> 
+
+</div>
+
+<% content_for :javascript_personalizado do %>
+  <%= javascript_include_tag "plugins/pwstrength-bootstrap-1.2.4.min" %>
+  <%= javascript_include_tag 'plugins/fileinput.js' %>
+
+<script >
+  $(document).ready(function(){
+     $(' .alert-danger').hide();
+      $('.alert-success').hide();
+  });
+ function seleccion_servicio(id){
+    $(id).toggleClass('hidden');
+  }
+
+
+    $("#imagen_id").fileinput({
+      'browseLabel':'Cambiar',
+      'showCaption':false,
+      'initialPreview': [
+        "<img src='" + $("#imagen").attr("class") +"' class='file-preview-image' alt='Avatar' title='Logo actual'>"
+      ],
+
+      'initialPreviewShowDelete':false,
+      'initialCaption':'Archivo(s) Seleccionado(s)',
+      'allowedFileTypes':['image'],
+      'allowedFileExtensions':['jpg', 'png', 'jpeg'],
+      'browseClass':'btn btn-primary',
+      'browseIcon':'<i class="mdi-file-attachment"></i>',
+      'showRemove':false,
+      'uploadLabel':'Subir',
+      'uploadIcon':'<i class="mdi-file-file-upload"></i>',
+      'uploadClass':'btn btn-success ',
+    });
+   
+</script>
+<% end %>

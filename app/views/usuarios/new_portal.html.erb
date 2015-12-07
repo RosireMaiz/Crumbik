@@ -86,7 +86,7 @@
 
 								<div class="row">
 							      <div class="col s12">
-							        <label>Roles:</label>
+							        <label for="usuario[rol_ids][]">Roles:</label>
 							        <div class="checkbox-list" id="rol_list">
 		                                 <%= f.collection_check_boxes( :rol_ids, Rol.all, :id, :nombre) %>
 							        </div>

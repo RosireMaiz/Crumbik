@@ -1,0 +1,177 @@
+<% content_for :css_personalizado do %>
+  <%= stylesheet_link_tag    "owl.carousel" %>
+  <%= stylesheet_link_tag    "owl.theme" %>
+  <%= stylesheet_link_tag    "owl.transitions" %>
+
+  <style type="text/css">
+
+    .owl-theme .owl-controls{
+      text-align: center;
+      position: relative !important;
+        width: 100%;
+        top: -10px;
+    }
+
+    .card .card-image{
+        overflow: hidden;
+        -webkit-transform-style: preserve-3d;
+        -moz-transform-style: preserve-3d;
+        -ms-transform-style: preserve-3d;
+        -o-transform-style: preserve-3d;
+        transform-style: preserve-3d;
+    }
+
+    .card .card-image img{
+        -webkit-transition: all 0.4s ease;
+        -moz-transition: all 0.4s ease;
+        -ms-transition: all 0.4s ease;
+        -o-transition: all 0.4s ease;
+        transition: all 0.4s ease;
+    }
+
+    .card .card-image:hover img{
+        -webkit-transform: scale(1.2) rotate(-7deg);
+        -moz-transform: scale(1.2) rotate(-7deg);
+        -ms-transform: scale(1.2) rotate(-7deg);
+        -o-transform: scale(1.2) rotate(-7deg);
+        transform: scale(1.2) rotate(-7deg);
+    }
+  </style>
+<% end %>
+
+<div class="row titulo-seccion">
+  <div class="banner banner-perfil">
+    <div class="contenedor">
+      <div class="col s6">
+        <h5 class="text-uppercase">
+         Planes
+        </h5>
+      </div>
+      <div class="col s6 text-right ">
+        <ol class="breadcrumb">
+          <li>
+            <a href="/">Inicio</a>
+          </li>
+          <li class="active">Planes</li>
+        </ol>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div  class="row pad30-h">
+
+  <div id="planes">
+
+    <% @plans.each do |plan| %>
+      <div class="col s12">
+         <div class="card waves-effect">
+          <div class="card-image waves-effect waves-block waves-light">
+            <img class="activator img-responsive" src="<%= plan.formato_imagen %><%= plan.imagen %>">
+          </div>
+          <div class="card-content">
+            <span class="card-title activator grey-text text-darken-4 text-capitalize" style="font-size: 20px; line-height: 30px;">
+              <%= plan.nombre %>
+              <i class="waves-effect  right mdi-navigation-more-vert"></i>
+            </span>
+            <p>
+              <a href="javascript:void(0)" onclick="mostrar_detalles('#detalle_plan_<%= plan.id %>')" class="waves-effect">Detalles</a>
+            </p>
+
+          </div>
+          <div class="card-reveal left">
+            <span class="card-title grey-text text-darken-4 text-capitalize"  style="font-size: 20px; line-height: 30px;">
+              <%= plan.nombre %><i class="material-icons right mdi-content-clear waves-effect "></i>
+            </span>
+            <ul>
+               <li> <a href="/plan/editar/<%= plan.id %>" class="waves-effect">Editar</a></li>
+              <li> <a href="#" class="waves-effect">Deshabilitar</a></li>
+               <li><a href="#" class="waves-effect">Eliminar</a></li>
+
+            </ul>
+          </div>
+        </div>
+      </div>
+    <% end %>
+  
+  </div>
+
+  <div id="detalle_plan" style="padding-top:20px">
+    <% @plans.each do |plan| %>
+    <div id="detalle_plan_<%= plan.id %>" class="hidden plan" >
+      <div class="row">
+         <div class="col s4">
+           <img class="responsive-img materialboxed" src="<%= plan.formato_imagen %><%= plan.imagen %>">
+         </div>
+         <div class="col s8 ">
+           <h5 class="text-capitalize"><%= plan.nombre %></h5>
+           <div class="row no-margin-v">
+              <div class="col s3"><p><strong>Descripción:</strong></p></div>
+              <div class="col s9 justify"> 
+               <p><%= plan.descripcion %></p>
+              </div>
+           </div>
+            <div class="row no-margin-v">
+              <div class="col s3"><p><strong>Costo:</strong></p></div>
+              <div class="col s8 justify"> 
+               <p>$<%= plan.costo %></p>
+              </div>
+           </div>
+            <div class="row no-margin-v valign-wrapper">
+              <div class="col s3"><p><strong>Frecuencia de Pagos:</strong></p></div>
+              <div class="col s9 justify"> 
+               <p><%= plan.frecuencia_pago.nombre %> 
+               - Renovación cada <%= plan.frecuencia_pago.meses %> 
+               <% if (plan.frecuencia_pago.meses>1) %>meses
+               <% else %>mes
+               <% end -%>
+                </p>
+              </div>
+           </div>
+            <div class="row no-margin-v ">
+              <div class="col s3"><p><strong>Servicios:</strong></p></div>
+              <div class="col s9 justify"> 
+                <ul class="index-vinnetas">
+                  <% plan.plan_servicio.each do |plan_servicio| %>
+                  
+                    <li><%=plan_servicio.servicio.nombre %>: <%=plan_servicio.descripcion %> </li>
+                  
+                  <% end %>
+                </ul>
+              </div>
+           </div>
+         </div>
+      </div>
+    </div>
+  <% end %>
+  </div>
+
+
+</div>
+
+
+<% content_for :javascript_personalizado do %>
+  <%= javascript_include_tag 'owl.carousel.min' %>
+    <script type="text/javascript">
+    $(document).ready(function() {
+        $("#planes").owlCarousel({
+          items: 4,
+          pagination: true,
+         lazyLoad : true,
+         mouseDrag: true, 
+        });
+    });
+
+    function mostrar_detalles(id){
+      $('div.active').removeClass('active').addClass('hidden');
+      $(id).removeClass('hidden');
+
+      $('#detalle_plan').fadeOut("fast");
+      $('#detalle_plan').fadeIn("slow");
+      $(id).addClass('active');
+      $('html,body').animate({
+                                scrollTop: $("#detalle_plan").offset().top-200
+                            }, 'slow');
+    }
+  </script>
+<% end %>
