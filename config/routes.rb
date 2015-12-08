@@ -25,7 +25,8 @@ Rails.application.routes.draw do
 	match "/validar_frecuencia_pago" => "frecuencia_pagos#validar_frecuencia_pago", via: :post
 	match "/validar_modo_pago_update" => "modo_pagos#validar_modo_pago_update", via: :post
 	match "/validar_modo_pago" => "modo_pagos#validar_modo_pago", via: :post
-	match "/validar_modo_pago_update" => "modo_pagos#validar_modo_pago_update", via: :post
+	match "/validar_tipo_organizacion_update" => "tipo_organizacions#validar_tipo_organizacion_update", via: :post
+	match "/validar_tipo_organizacion" => "tipo_organizacions#validar_modo_pago", via: :post
 	match "/validar_opcion" => "menu#validar_opcion", via: :post		
 	match "/validar_plan" => "plans#validar_plan", via: :post
 
@@ -116,6 +117,14 @@ Rails.application.routes.draw do
 	match "/modo_pagos/update" => "modo_pagos#update", via: :post
 	match "/modo_pagos/consultar_modo_pago" => "modo_pagos#consultar_modo_pago", via: :post
 	match "/modo_pagos/eliminar" => "modo_pagos#eliminar", via: :post
+
+	match "/tipos_organizaciones" => "tipo_organizacions#consultar", via: :get
+    match "/tipo_organizacion/agregar" => "tipo_organizacions#new", via: :get
+    match "/tipo_organizacion/crear_tipo_organizacion" => "tipo_organizacions#create", via: :post
+    match "/tipo_organizacions/update_estatus" => "tipo_organizacions#update_estatus", via: :post
+	match "/tipo_organizacions/update" => "tipo_organizacions#update", via: :post
+	match "/tipo_organizacions/consultar_tipo_organizacion" => "tipo_organizacions#consultar_tipo_organizacion", via: :post
+	match "/tipo_organizacions/eliminar" => "tipo_organizacions#eliminar", via: :post
 
 
 	match "/planes" => "plans#consultar", via: :get
