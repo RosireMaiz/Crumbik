@@ -123,9 +123,9 @@ Rails.application.routes.draw do
     match "/plans/crear_plan" => "plans#create", via: :post
     match "/plans/update_estatus" => "plans#update_estatus", via: :post
 	match "/plans/eliminar" => "plans#eliminar", via: :post
+  	match "/plan/editar/:id_plan" => "plans#edit", via: :get
 	match "/plan/editar" => "plans#save_edit", via: :post
 	match "/plan/guardar_imagen" => "plans#save_imagen", via: :post
-  	match "/plan/editar/:id_plan" => "plans#edit", via: :get
 
 
 	match "/organizaciones" => "organizacions#consultar", via: :get

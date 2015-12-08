@@ -1,0 +1,2 @@
+class TipoOrganizacionsController < ApplicationController
+end

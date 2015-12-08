@@ -85,8 +85,13 @@
             </span>
             <ul>
                <li> <a href="/plan/editar/<%= plan.id %>" class="waves-effect">Editar</a></li>
-              <li> <a href="#" class="waves-effect">Deshabilitar</a></li>
-               <li><a href="#" class="waves-effect">Eliminar</a></li>
+                <% if (plan.estatus == 'A') %>
+                    <li> <a href="#modal<%= plan.id %>" class=" modal-trigger waves-effect">Deshabilitar</a></li>
+                <% else %>
+                    <li> <a href="#modal<%= plan.id %>" class=" modal-trigger waves-effect">Habilitar</a></li>
+                 <% end %>
+              
+               <li><a href="#modaleliminar<%= plan.id %>" class="modal-trigger waves-effect">Eliminar</a></li>
 
             </ul>
           </div>
@@ -143,6 +148,60 @@
          </div>
       </div>
     </div>
+    <div id="modal<%= plan.id %>" class="modal">
+      <div class="modal-content">
+        <a href="#" style="float:right;" class="waves-effect btn-flat modal-close"><i class="mdi-content-clear"></i></a>
+        <% if (plan.estatus == 'A') %>
+        <h5>Deshabilitar Plan</h5>
+        <% else %>
+        <h5>Habilitar Plan</h5>
+        <% end %>
+
+
+        <div class="row" style="padding-top: 35px;">
+          <div class="col s12 text-center">
+          <% if (plan.estatus == 'A') %>
+            <h6 style=" font-size: 20px;"> ¿Seguro que desea Deshabilitar el plan seleccionado? </h6>
+            <% else %>
+            <h6 style=" font-size: 20px;"> ¿Seguro que desea Habilitar el plan seleccionado? </h6>
+            <% end %>
+            <div style="padding-top: 35px;" class="right">
+              <% if (plan.estatus == 'A') %>
+                <input type="button" class="btn btn-success btn-sm" value="Aceptar" onclick="update_estatus(<%= plan.id %>,'I')">
+              <% else %>
+                <input type="button" class="btn btn-success btn-sm" value="Aceptar" onclick="update_estatus(<%= plan.id %>,'A')">
+              <% end %>
+               <input type="button" class="btn btn-danger btn-sm modal-close" value="Cancelar">
+            </div>
+
+          </div>
+        </div>                
+      </div>
+    </div> 
+
+    <div id="modaleliminar<%= plan.id %>" class="modal">
+      <div class="modal-content">
+        <a style="float:right;" class="waves-effect btn-flat modal-close"><i class="mdi-content-clear"></i></a>
+
+        <h5>Eliminar Plan</h5>
+
+        <div class="row pad30-t" >
+          <div class="col s12 text-center">
+
+            <h6 style=" font-size: 20px;"> ¿Seguro que desea eliminar el plan seleccionada? </h6>
+
+            <div style="padding-top: 35px;" class="right">
+
+              <input type="button" class="btn btn-success btn-sm" value="Aceptar" onclick="eliminar(<%= plan.id %>)">
+
+              <input type="button" class="btn btn-danger btn-sm modal-close" value="Cancelar">
+            </div>
+
+          </div>
+        </div>                
+      </div>
+    </div> 
+
   <% end %>
   </div>
 
@@ -152,7 +211,7 @@
 
 <% content_for :javascript_personalizado do %>
   <%= javascript_include_tag 'owl.carousel.min' %>
-    <script type="text/javascript">
+  <script type="text/javascript">
     $(document).ready(function() {
         $("#planes").owlCarousel({
           items: 4,
@@ -173,5 +232,41 @@
                                 scrollTop: $("#detalle_plan").offset().top-200
                             }, 'slow');
     }
+
+
+  function update_estatus(idplan, estatus){
+    var request = $.ajax({
+                            url: '/plans/update_estatus',
+                            method: "POST",
+                            data: { idplan: idplan, estatus: estatus},
+                            dataType: "JSON"
+                          });
+
+        request.done(function( data ) {
+                                        location.reload(); 
+                                      });
+                     
+        request.fail(function( jqXHR, textStatus ) {
+                                                    alert( "Request failed: " + textStatus );
+                                                   });
+    };
+
+  function eliminar(idplan){
+    var request = $.ajax({
+                            url: '/plans/eliminar',
+                            method: "POST",
+                            data: { idplan: idplan},
+                            dataType: "JSON"
+                          });
+
+        request.done(function( data ) {
+                                        location.reload(); 
+                                      });
+                     
+        request.fail(function( jqXHR, textStatus ) {
+                                                    alert( "Request failed: " + textStatus );
+                                                   });
+  }
+
   </script>
 <% end %>

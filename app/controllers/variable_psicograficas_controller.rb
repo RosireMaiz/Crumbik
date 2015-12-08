@@ -1,0 +1,2 @@
+class VariablePsicograficasController < ApplicationController
+end

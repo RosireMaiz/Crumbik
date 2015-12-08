@@ -1,0 +1,2 @@
+class TipoClientesController < ApplicationController
+end

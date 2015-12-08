@@ -87,7 +87,8 @@ class PlansController < ApplicationController
 			 	end
 			end
 		end
-
+		
+		redirect_to :controller => 'plans', :action => 'consultar'
 
 	end
 
@@ -162,6 +163,28 @@ class PlansController < ApplicationController
 	        end
          
      	end
+	end
+
+	def update_estatus
+		id = params[:idplan]
+		estatus = params[:estatus]
+		if Plan.update(id, :estatus => estatus)
+			render :text =>'{ "success" : "true"}'
+		else
+			render :text => '{ "success" : "false"}'
+		end
+	end
+
+
+	def eliminar
+		id = params[:idplan]
+		plan = Plan.where(id: id).first
+		plan.destroy
+      if plan.destroyed?
+      	render :text =>'{ "success" : "true"}'
+	  else
+		render :text => '{ "success" : "false"}'
+	   end
 	end
 
 
