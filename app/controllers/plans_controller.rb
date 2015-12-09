@@ -23,7 +23,7 @@ class PlansController < ApplicationController
 		else
 			@plan = Plan.new
 			if request.subdomain.present?
-				render  root_path
+				redirect_to root_path
 			else
 				render "plans/new"
 			end
@@ -36,7 +36,7 @@ class PlansController < ApplicationController
 		else
 			@plan = Plan.new
 			if request.subdomain.present?
-				render  root_path
+				redirect_to root_path
 			else
 				id = params[:id_plan]
 				@plan = Plan.where("id = ?", id).first

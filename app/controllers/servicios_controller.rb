@@ -22,7 +22,7 @@ class ServiciosController < ApplicationController
 		else
 			@servicio = Servicio.new
 			if request.subdomain.present?
-				render  root_path
+				redirect_to root_path
 			else
 				render "servicios/new"
 			end

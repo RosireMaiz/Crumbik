@@ -22,7 +22,7 @@ class RolsController < ApplicationController
 		else
 			@rol = Rol.new
 			if request.subdomain.present?
-				render  root_path
+				redirect_to root_path
 			else
 				render "rols/new"
 			end

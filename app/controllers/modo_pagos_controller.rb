@@ -22,7 +22,7 @@ class ModoPagosController < ApplicationController
 		else
 			@modo_pago = ModoPago.new
 			if request.subdomain.present?
-				render  root_path
+				redirect_to root_path
 			else
 				render "modo_pagos/new"
 			end
@@ -45,7 +45,7 @@ class ModoPagosController < ApplicationController
 	        @usuarioRol = UsuarioRol.where(usuario_id: current_usuario.id, rol_id: current_usuario.rol_actual.id) 
 
 	        if @usuarioRol[0] == nil or @rol[0].id != current_usuario.rol_actual.id
-	          render root_path
+	          redirect_to root_path
 	        else
 	           @modo_pagos = ModoPago.order('id ASC')
 	           @valor = true;

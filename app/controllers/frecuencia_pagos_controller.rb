@@ -21,7 +21,7 @@ class FrecuenciaPagosController < ApplicationController
 		else
 			@frecuencia_pago = FrecuenciaPago.new
 			if request.subdomain.present?
-				render  root_path
+				redirect_to root_path
 			else
 				render "frecuencia_pagos/new"
 			end

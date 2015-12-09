@@ -21,7 +21,7 @@ class RedSocialsController < ApplicationController
 		else
 			@red_social = RedSocial.new
 			if request.subdomain.present?
-				render  root_path
+				redirect_to root_path
 			else
 				render "red_socials/new"
 			end

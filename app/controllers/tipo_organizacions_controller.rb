@@ -21,7 +21,7 @@ class TipoOrganizacionsController < ApplicationController
 		else
 			@tipo_organizacion = TipoOrganizacion.new
 			if request.subdomain.present?
-				render  root_path
+				redirect_to root_path
 			else
 				render "tipo_organizacions/new"
 			end

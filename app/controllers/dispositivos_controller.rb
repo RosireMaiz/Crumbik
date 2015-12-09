@@ -21,7 +21,7 @@ class DispositivosController < ApplicationController
 		else
 			@dispositivo = Dispositivo.new
 			if request.subdomain.present?
-				render  root_path
+				redirect_to root_path
 			else
 				render "dispositivos/new"
 			end
