@@ -25,10 +25,11 @@ Rails.application.routes.draw do
 	match "/validar_frecuencia_pago" => "frecuencia_pagos#validar_frecuencia_pago", via: :post
 	match "/validar_modo_pago_update" => "modo_pagos#validar_modo_pago_update", via: :post
 	match "/validar_modo_pago" => "modo_pagos#validar_modo_pago", via: :post
-	match "/validar_tipo_organizacion_update" => "tipo_organizacions#validar_tipo_organizacion_update", via: :post
-	match "/validar_tipo_organizacion" => "tipo_organizacions#validar_modo_pago", via: :post
-	match "/validar_opcion" => "menu#validar_opcion", via: :post		
 	match "/validar_plan" => "plans#validar_plan", via: :post
+	match "/validar_tipo_organizacion_update" => "tipo_organizacions#validar_tipo_organizacion_update", via: :post
+	match "/validar_tipo_organizacion" => "tipo_organizacions#validar_tipo_organizacion", via: :post
+
+	match "/validar_opcion" => "menu#validar_opcion", via: :post		
 
 	match "/usuarios/abrircuenta"=>"usuarios#create", via: :post
   	match '/usuarios/:id/confirmar_registro' => 'usuarios#finish_signup', via: [:get, :patch], as: :finish_signup

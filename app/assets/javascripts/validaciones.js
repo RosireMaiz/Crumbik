@@ -605,10 +605,10 @@ formFrecuenciaPago.validate({
 					                    }
 							});
 
-var formModoPago = $('#add_modo_pago');
-var errorModoPago = $('.alert-danger', formModoPago);
-var successModoPago = $('.alert-success', formModoPago);
-formModoPago.validate({
+	var formModoPago = $('#add_modo_pago');
+	var errorModoPago = $('.alert-danger', formModoPago);
+	var successModoPago = $('.alert-success', formModoPago);
+	formModoPago.validate({
 						        doNotHideMessage: true, //this option enables to show the error/success messages on tab switch.
 			                    errorElement: 'span', //default input error message container
 			                    errorClass: 'msj-error', // default input error message class
@@ -663,11 +663,11 @@ formModoPago.validate({
 					                    }
 							});
 
-var formPlan = $('#add_plan');
-var errorPlan = $('.alert-danger', formPlan);
-var successPlan = $('.alert-success', formPlan);
-formPlan.validate({
-						        doNotHideMessage: true, //this option enables to show the error/success messages on tab switch.
+	var formPlan = $('#add_plan');
+	var errorPlan = $('.alert-danger', formPlan);
+	var successPlan = $('.alert-success', formPlan);
+	formPlan.validate({
+							    doNotHideMessage: true, //this option enables to show the error/success messages on tab switch.
 			                    errorElement: 'span', //default input error message container
 			                    errorClass: 'msj-error', // default input error message class
 			                    focusInvalid: false, // do not focus the last invalid input
@@ -715,6 +715,73 @@ formPlan.validate({
 					             invalidHandler: function (event, validator) { //display error alert on formServicio submit   
 					                        successPlan.hide();
 					                        errorPlan.show();
+					                        $('html,body').animate({
+					                            scrollTop: $(".steps").offset().top-350
+					                        }, 'slow');
+					                    },
+
+					         	 highlight: function (element) { // hightlight error inputs
+					                        $(element)
+					                            .closest('.form-group').removeClass('has-success').addClass('has-error'); // set error class to the control group
+					                    },
+
+					         	 unhighlight: function (element) { // revert the change done by hightlight
+					                        $(element)
+					                            .closest('.form-group').removeClass('has-error'); // set error class to the control group
+					                    },
+
+					             success: function (label) {
+					                            label.addClass('valid') // mark the current input as valid and display OK icon
+					                            .closest('.form-group').removeClass('has-error').addClass('has-success'); // set success class to the control group
+					                    }
+							});
+
+
+	var formTipoOrganizacion = $('#add_tipo_organizacion');
+	var errorTipoOrganizacion = $('.alert-danger', formTipoOrganizacion);
+	var successTipoOrganizacion = $('.alert-success', formTipoOrganizacion);
+	formTipoOrganizacion.validate({
+						        doNotHideMessage: true, //this option enables to show the error/success messages on tab switch.
+			                    errorElement: 'span', //default input error message container
+			                    errorClass: 'msj-error', // default input error message class
+			                    focusInvalid: false, // do not focus the last invalid input
+								rules: {
+									"tipo_organizacion[nombre]":{
+										
+										required:true,
+										remote: {
+									       	url: "/validar_tipo_organizacion",
+									       	type: "post"
+						        		}
+									    
+									},
+									
+									"tipo_organizacion[descripcion]":{
+										required:true,
+									},
+									
+								},
+								messages:{
+									"tipo_organizacion[nombre]":{
+										required:"Indica el nombre.",
+										remote:"Ya existe un tipo de organización con este nombre."
+									},
+									
+									"tipo_organizacion[descripcion]":{
+										required:"Indica la descripción del tipo de organización.",
+									},
+
+								},
+
+								 errorPlacement: function (error, element) { // render error placement for each input type
+					                     
+					                            error.insertAfter(element); // for other inputs, just performServicio default behavior
+					                        
+					                    },
+
+					             invalidHandler: function (event, validator) { //display error alert on formServicio submit   
+					                        successTipoOrganizacion.hide();
+					                        errorTipoOrganizacion.show();
 					                        $('html,body').animate({
 					                            scrollTop: $(".steps").offset().top-350
 					                        }, 'slow');

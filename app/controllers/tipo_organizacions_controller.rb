@@ -67,7 +67,8 @@ class TipoOrganizacionsController < ApplicationController
 	def update
 		id = params[:id_tipo_organizacion]
 		nombre = params[:nombre]
-		if TipoOrganizacion.update(id, :nombre => nombre)
+		descripcion = params[:descripcion]
+		if TipoOrganizacion.update(id, :nombre => nombre, :descripcion => descripcion)
 			render :text =>'{ "success" : "true"}'
 		else
 
@@ -94,7 +95,7 @@ class TipoOrganizacionsController < ApplicationController
 
 	private
 		def tipo_organizacion_params
-	      accessible = [ :nombre ] # extend with your own params
+	      accessible = [ :nombre, :descripcion ] # extend with your own params
 	      params.require(:tipo_organizacion).permit(accessible)
 	    end
 

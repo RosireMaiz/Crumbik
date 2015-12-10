@@ -128,7 +128,7 @@
 
         <div id="modaleditar<%= tipo_organizacions.id %>" class="modal modal-45" form="true">
           <div class="modal-content">
-                <a style="float:right;" class="waves-effect btn-flat modal-close" onclick="cancelar(modaleditar<%= tipo_organizacions.id %>, <%= tipo_organizacions.id %>, nombre<%= tipo_organizacions.id %> )"><i class="mdi-content-clear"></i></a>
+                <a style="float:right;" class="waves-effect btn-flat modal-close" onclick="cancelar(modaleditar<%= tipo_organizacions.id %>, <%= tipo_organizacions.id %>, nombre<%= tipo_organizacions.id %>, descripcion<%= tipo_organizacions.id %> )"><i class="mdi-content-clear"></i></a>
                 <h5>Editar Tipo de Organizaci&oacute;n</h5>
                 
                 <div class="row" style="padding-top: 35px;">
@@ -147,9 +147,9 @@
                         </div>
                       </div>
                       <div class="text-center">
-                        <input type="button" class="btn btn-success btn-sm" value="Guardar" onclick="update(modaleditar<%= tipo_organizacions.id %>, <%= tipo_organizacions.id %>, nombre<%= tipo_organizacions.id %> )">
+                        <input type="button" class="btn btn-success btn-sm" value="Guardar" onclick="update(modaleditar<%= tipo_organizacions.id %>, <%= tipo_organizacions.id %>, nombre<%= tipo_organizacions.id %>, descripcion<%= tipo_organizacions.id %> )">
                       
-                        <input type="button" class="btn btn-danger btn-sm" value="Cancelar" onclick="cancelar(modaleditar<%= tipo_organizacions.id %>, <%= tipo_organizacions.id %>, nombre<%= tipo_organizacions.id %> )">
+                        <input type="button" class="btn btn-danger btn-sm" value="Cancelar" onclick="cancelar(modaleditar<%= tipo_organizacions.id %>, <%= tipo_organizacions.id %>, nombre<%= tipo_organizacions.id %>, descripcion<%= tipo_organizacions.id %> )">
                       </div>
                     </div>
 
@@ -173,7 +173,6 @@
         "lengthChange": false,
         "language": {
                 "zeroRecords": "No hay datos disponibles en la tabla",
-            
         }
       });
     });
