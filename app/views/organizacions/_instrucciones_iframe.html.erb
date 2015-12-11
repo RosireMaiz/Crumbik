@@ -58,63 +58,140 @@
               Seleccionar URL </span>
               </a>
             </li>
+            <li>
+              <a href="#tab7" data-toggle="tab" class="step">
+              <span class="number">
+              7 </span>
+              <span class="desc">
+              Seleccionar URL </span>
+              </a>
+            </li>
+            <li>
+              <a href="#tab8" data-toggle="tab" class="step">
+              <span class="number">
+              8 </span>
+              <span class="desc">
+              Seleccionar URL </span>
+              </a>
+            </li>
           </ul>
           <div class="pad10-t">
             <a style="float:right;" class="waves-effect btn-flat modal-close"><i class="mdi-content-clear"></i></a>
                 <h5>¿C&oacute;mo Obtener?</h5>
               </div>
           <div class="tab-content pad10-t">
+
             <div class="tab-pane active" id="tab1">
               <div class="row">
                 <div class="col s12">
-                  <p>1.- Ingresar al sitio web de <a href="https://www.google.com/maps" target="_blank">Google Maps.</a></p>
-                          <img src="<%= asset_path 'instrucciones-iframe-1.jpg' %>" width="100%" >
-
+                  <p>
+                    <span class="text-pink">1.</span>
+                    Ingresar al sitio web de <a href="https://www.google.com/maps" target="_blank">
+                    <strong class="text-purple">Google Maps.</strong></a>
+                  </p></br>
+                    <img src="<%= asset_path 'instrucciones-iframe-1.png' %>" width="100%" >
                 </div>
               </div>
             </div>
+
             <div class="tab-pane" id="tab2">
               <div class="row ">
                 <div class="col s12">
-                  <p>2.- Buscar la direccion de la organizaci&oacute;n</p>
-                          <img src="<%= asset_path 'instrucciones-iframe-2.jpg' %>" width="100%" >
+                  <p>
+                    <span class="text-pink">2.</span>
+                    En la parte superior izquierda, indicar la direcci&oacute;n de la organizaci&oacute;n y <strong class="text-purple"> buscar </strong>.
+                  </p></br>
+                  <img src="<%= asset_path 'instrucciones-iframe-2.png' %>" width="100%" >
                 </div>
               </div>
             </div>
+
             <div class="tab-pane " id="tab3">
               <div class="row">
                 <div class="col s12">
-                  <p>3.- Seleccionar el opci&oacute;n compartir</p>
-                          <img src="<%= asset_path 'instrucciones-iframe-3.jpg' %>" width="100%" >
+                  <p>
+                    <span class="text-pink">3.</span>
+                    Podr&aacute;s visualizar el mapa de la organizaci&oacute;n, usa
+                    <img class="text-img" src="<%= asset_path 'iframe-zoom.png' %>"/>   
+                    <span id="text-left">para manejar el 
+                    <strong class="text-purple">zoom</strong>.
+                    </span>
+                  </p></br>
+                  <img src="<%= asset_path 'instrucciones-iframe-3.png' %>" width="100%" >
                 </div>
               </div>
             </div>
+
             <div class="tab-pane" id="tab4">
               <div class="row">
                 <div class="col s12">
-                  <p>4.- Seleccionar la pestaña <b>"Insertar Mapa"</b></p>
-                          <img src="<%= asset_path 'instrucciones-iframe-4.jpg' %>" width="100%" >
+                  <p>
+                    <span class="text-pink">4.</span>
+                    Cuando est&eacute;s satisfecho con el mapa que observas, hacer click en
+                    <strong class="text-purple">men&uacute;</strong>.
+                    <img style="padding-left:1%" class="text-img" src="<%=asset_path 'iframe-menu.png' %>">
+                  </p></br>
+                  <img src="<%= asset_path 'instrucciones-iframe-4.png' %>" width="100%" >
                 </div>
               </div>
-
             </div>
+
             <div class="tab-pane" id="tab5">
               <div class="row">
                 <div class="col s12">
-                  <p>5.- Copiar el contenido del cuadro de texto presente.</p>
-                          <img src="<%= asset_path 'instrucciones-iframe-5.jpg' %>" width="100%" >
+                  <p>
+                    <span class="text-pink">5.</span>
+                    Hacer click en la opci&oacute;n de
+                    <strong class="text-purple">compartir</strong>.
+                    <img class="text-img" style="padding-left:1%" src="<%= asset_path 'iframe-clip.png' %>">
+                  </p></br>
+                  <img src="<%= asset_path 'instrucciones-iframe-5.png' %>" width="100%" >
                 </div>
               </div>
             </div>
+
             <div class="tab-pane" id="tab6">
               <div class="row">
                 <div class="col s12">
-                  <p>6.- Del texto copiado quedarse solo con lo que esta entre las primeras comillas (""), el src .</p>
-                          <img src="<%= asset_path 'instrucciones-iframe-6.jpg' %>" width="100%" >
+                  <p>
+                    <span class="text-pink">6.</span>
+                    Seleccionar la opci&oacute;n de
+                    <strong class="text-purple">insertar mapa</strong>.
+                  </p></br>
+                  <img src="<%= asset_path 'instrucciones-iframe-6.png' %>" width="100%" >
                 </div>
               </div>
-
             </div>
+
+            <div class="tab-pane" id="tab7">
+              <div class="row ">
+                <div class="col s12">
+                  <p>
+                    <span class="text-pink">7.</span>
+                    Seleccionar la direcci&oacute;n URL que se encuentra entre comillas (" ") y 
+                    <strong class="text-purple"> copiar </strong>.
+                    Es importante notar, que solo se copia lo que est&aacute; entre las primeras comillas (es un contenido extenso).
+                  </p>
+                  <img src="<%= asset_path 'instrucciones-iframe-7.png' %>" width="100%" >
+                </div>
+              </div>
+            </div>
+
+            <div class="tab-pane" id="tab8">
+              <div class="row ">
+                <div class="col s12">
+                  <p>
+                    <span class="text-pink">7.</span>
+                    Finalmente,  
+                    <strong class="text-purple"> pegar </strong>
+                    la URL copiada en el campo ubicaci&oacute;n y
+                    <strong class="text-purple"> guardar </strong>.
+                  </p></br>
+                  <img src="<%= asset_path 'instrucciones-iframe-8.png' %>" width="100%" >
+                </div>
+              </div>
+            </div>
+
           </div>
         </div>
         <div class="row right-align">

@@ -3,7 +3,7 @@
 
 <% if ! @organizacion.iframe.nil? and @organizacion.iframe != "" %>
   
-  <div class="row col s12">
+  <div class="row col s12 pad60-h">
     <!-- **** -->
     <!-- CARD -->
     <!-- **** -->
@@ -14,7 +14,7 @@
             <i class="fa fa-map-marker fa-2x"></i>
         </div>
         <div class="org-direccion">
-          <p>DIRECCION:</p>
+          <p><b>DIRECCION:</b></p>
           <p><%= @organizacion.direccion %></p>
         </div>
       </div>
@@ -64,7 +64,7 @@
 
 <%else%>
 
-<div class="row col s12">
+<div class="row col s6">
   <form class="col s8 offset-s2">
       <div class="row">
         <div class="input-field">
