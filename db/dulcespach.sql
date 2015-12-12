@@ -3,7 +3,7 @@
 -- http://www.phpmyadmin.net
 --
 -- Servidor: 127.0.0.1
--- Tiempo de generación: 07-12-2015 a las 04:04:06
+-- Tiempo de generación: 12-12-2015 a las 21:09:54
 -- Versión del servidor: 5.6.21
 -- Versión de PHP: 5.6.3
 
@@ -254,6 +254,22 @@ CREATE TABLE IF NOT EXISTS `plan_servicios` (
 -- --------------------------------------------------------
 
 --
+-- Estructura de tabla para la tabla `pregunta_frecuentes`
+--
+
+CREATE TABLE IF NOT EXISTS `pregunta_frecuentes` (
+`id` int(11) NOT NULL,
+  `titulo` varchar(255) DEFAULT NULL,
+  `contenido` varchar(255) DEFAULT NULL,
+  `estatus` varchar(1) DEFAULT 'A',
+  `organizacion_id` int(11) DEFAULT NULL,
+  `created_at` datetime NOT NULL,
+  `updated_at` datetime NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+
+-- --------------------------------------------------------
+
+--
 -- Estructura de tabla para la tabla `productos`
 --
 
@@ -350,7 +366,9 @@ INSERT INTO `schema_migrations` (`version`) VALUES
 ('20151115224026'),
 ('20151207002957'),
 ('20151207004416'),
-('20151207005627');
+('20151207005627'),
+('20151212185229'),
+('20151212191759');
 
 -- --------------------------------------------------------
 
@@ -364,6 +382,21 @@ CREATE TABLE IF NOT EXISTS `servicios` (
   `descripcion` varchar(255) COLLATE utf8_unicode_ci DEFAULT NULL,
   `estatus` varchar(1) COLLATE utf8_unicode_ci DEFAULT 'A'
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
+
+-- --------------------------------------------------------
+
+--
+-- Estructura de tabla para la tabla `sugerencia`
+--
+
+CREATE TABLE IF NOT EXISTS `sugerencia` (
+`id` int(11) NOT NULL,
+  `titulo` varchar(255) DEFAULT NULL,
+  `contenido` varchar(255) DEFAULT NULL,
+  `usuario_id` int(11) DEFAULT NULL,
+  `created_at` datetime NOT NULL,
+  `updated_at` datetime NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 -- --------------------------------------------------------
 
@@ -561,6 +594,12 @@ ALTER TABLE `plan_servicios`
  ADD PRIMARY KEY (`id`), ADD KEY `index_plan_servicios_on_plan_id` (`plan_id`), ADD KEY `index_plan_servicios_on_servicio_id` (`servicio_id`);
 
 --
+-- Indices de la tabla `pregunta_frecuentes`
+--
+ALTER TABLE `pregunta_frecuentes`
+ ADD PRIMARY KEY (`id`);
+
+--
 -- Indices de la tabla `productos`
 --
 ALTER TABLE `productos`
@@ -595,6 +634,12 @@ ALTER TABLE `schema_migrations`
 --
 ALTER TABLE `servicios`
  ADD PRIMARY KEY (`id`);
+
+--
+-- Indices de la tabla `sugerencia`
+--
+ALTER TABLE `sugerencia`
+ ADD PRIMARY KEY (`id`), ADD KEY `index_sugerencia_on_usuario_id` (`usuario_id`);
 
 --
 -- Indices de la tabla `tipo_clientes`
@@ -712,6 +757,11 @@ MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
 ALTER TABLE `plan_servicios`
 MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
 --
+-- AUTO_INCREMENT de la tabla `pregunta_frecuentes`
+--
+ALTER TABLE `pregunta_frecuentes`
+MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
+--
 -- AUTO_INCREMENT de la tabla `productos`
 --
 ALTER TABLE `productos`
@@ -735,6 +785,11 @@ MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
 -- AUTO_INCREMENT de la tabla `servicios`
 --
 ALTER TABLE `servicios`
+MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
+--
+-- AUTO_INCREMENT de la tabla `sugerencia`
+--
+ALTER TABLE `sugerencia`
 MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
 --
 -- AUTO_INCREMENT de la tabla `tipo_clientes`
