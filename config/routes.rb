@@ -160,6 +160,7 @@ Rails.application.routes.draw do
 		match "/organizacion/guardar_banner" => "organizacions#save_banner", via: :post
 		match "/organizacion/editar_titulo_banner" => "organizacions#editar_titulo_banner", via: :post
 		match "/organizacion/editar_ubicacion" => "organizacions#editar_ubicacion_iframe", via: :post
+		match "/organizacion/eliminar_ubicacion_iframe" => "organizacions#eliminar_ubicacion_iframe", via: :post
 		
 	end
 

@@ -65,13 +65,12 @@
     $('#actualizar_mapa').on('click',function(){
       var ubicacion = $('#organizacion_iframe').val();
       if (ubicacion == "") {
-      
         $('#mapa').hide("slow");
       } else{
+        $("#mapa").removeClass("hidden")
         $('#iframe_organizacion').attr('src', ubicacion);
         $('#mapa').hide("fast");
         $('#mapa').show("slow");
-       // $('#mapa').show();
       };
       
     });

@@ -148,15 +148,40 @@ class OrganizacionsController < ApplicationController
 
 		@organizacion = Organizacion.where(["id = ?", @id]).first
 
+		puts "id" + @id.to_s
 
-		iframe = params[:organizacion][:iframe]
-		
+		if params[:organizacion][:iframe].present?
+			iframe = params[:organizacion][:iframe]
+		else
+			iframe = nil
+		end
+			
+		puts "iframe" + iframe.to_s
+
 		@organizacion.iframe = iframe
 
 		@organizacion.save
+		if iframe.nil?
+			render :text =>'{ "success" : "true"}'
+		end
 
 		redirect_to :controller => 'organizacions', :action => 'apariencia_index'
 	end
+
+	def eliminar_ubicacion_iframe
+		@id = params[:organizacion_id]
+
+		@organizacion = Organizacion.where(["id = ?", @id]).first
+
+		iframe = nil	
+
+		@organizacion.iframe = iframe
+
+		@organizacion.save
+		render :text =>'{ "success" : "true"}'
+
+	end
+
 
 	def editar_banner
 		@organizacion = Organizacion.where(["subdominio = ?", request.subdomain]).first

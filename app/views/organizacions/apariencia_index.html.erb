@@ -74,7 +74,7 @@
               </li>
               <% if @organizacion.iframe.nil? || @organizacion.iframe == "" %>
                 <li class="pad5-t">
-                  <a href="" >
+                  <a href="/organizacion/apariencia/editar_ubicacion" >
                     Agregar
                   </a>
                 </li>
@@ -102,7 +102,7 @@
   </ul>
 
  
- <div id="modal_eliminar" class="modal ">
+  <div id="modal_eliminar" class="modal ">
     <div class="modal-content">
       <a style="float:right;" class="waves-effect btn-flat modal-close"><i class="mdi-content-clear"></i></a>
      
@@ -114,7 +114,7 @@
                       
             <div  class="right pad30-t">
                      
-              <input type="button" class="btn btn-success btn-sm" value="Aceptar">
+              <input type="button" class="btn btn-success btn-sm modal-close" value="Aceptar" onclick="eliminar_iframe(<%= @organizacion.id %>)">
                       
               <input type="button" class="btn btn-danger btn-sm modal-close" value="Cancelar" >
             </div>
@@ -124,30 +124,28 @@
 
     </div>   
   </div>
-
-  <div id="modal_editar_banner" class="modal ">
-    <div class="modal-content">
-      <a style="float:right;" class="waves-effect btn-flat modal-close"><i class="mdi-content-clear"></i></a>
-      <h5>Editar Banner</h5>
-
-      <div class="row" style="padding-top: 35px;">
-        <div class="col s12 text-center">
-          <div class="row">
-            <div class=" input-field col s10 offset-s1 ">
-              
-              <label for="organizacion_iframe">Ubicaci&oacute;n:</label>
-            </div>
-          </div>
-            
-          <input type="button" class="btn btn-success btn-sm" value="Aceptar">
-                       
-          <input type="button" class="btn btn-danger btn-sm modal-close" value="Cancelar">
-
-        </div>
-      </div>
-    </div>   
-  </div>
   
   <%= render "organizacions/instrucciones_iframe" %>
 </div>
 
+
+<% content_for :javascript_personalizado do %>
+<script type="text/javascript">
+function eliminar_iframe (idorganizacion) {
+    var request = $.ajax({
+                            url: '/organizacion/eliminar_ubicacion_iframe',
+                            method: "POST",
+                            data: { organizacion_id: idorganizacion},
+                            dataType: "JSON"
+                          });
+
+        request.done(function( data ) {
+                                        location.reload(); 
+                                      });
+                     
+        request.fail(function( jqXHR, textStatus ) {
+                                                    alert( "Request failed: " + textStatus );
+                                                   });
+}
+</script>
+<% end %>
