@@ -1,0 +1,2 @@
+class SugerenciasController < ApplicationController
+end

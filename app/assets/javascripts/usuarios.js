@@ -80,7 +80,6 @@ $(document).ready(function(){
     });
 
 
-
     //Mostrar el mensaje de cuando se vence el contrato actual
     $(".tab-pane").on("change","#usuario_organizacion_attributes_contratos_attributes_0_frecuencia_pago_id",
         function(){

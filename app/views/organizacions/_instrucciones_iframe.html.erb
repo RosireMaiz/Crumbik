@@ -4,13 +4,13 @@
 
     <div class="form-wizard valign-wrapper">
 
-      <div class="col s1 text-center form-actions">
-            <a class="btn-table-action btn-sm waves-effect waves-lightgrey grey lighten-5 button-previous" style=" float: initial;"><i class="fa fa-chevron-left grey-text lighten-4 "></i></a>
+        <div class="col s1 text-center form-actions">
+            <a class="btn-table-action btn-sm waves-effect waves-lightgrey grey lighten-5 button-previous" style=" float: initial;" ><i class="fa fa-chevron-left grey-text lighten-4 "></i></a>
         </div>
         <div class="col s10 grey lighten-5">
         <div class="form-body">
           <ul class="nav nav-pills nav-justified steps hide">
-            <li class="active">
+            <li id="step1" class="active">
               <a href="#tab1" data-toggle="tab" class="step active">
               <span class="number">
               1 </span>
@@ -76,7 +76,7 @@
             </li>
           </ul>
           <div class="pad10-t">
-            <a style="float:right;" class="waves-effect btn-flat modal-close"><i class="mdi-content-clear"></i></a>
+            <a style="float:right;" class="waves-effect btn-flat modal-close button-first"  onclick="cerrarInstrucciones()"><i class="mdi-content-clear"></i></a>
                 <h5>¿C&oacute;mo Obtener?</h5>
               </div>
           <div class="tab-content pad10-t">
@@ -195,7 +195,7 @@
           </div>
         </div>
         <div class="row right-align">
-          <a  class=" modal-close waves-effect waves-lightgrey btn-flat blue-text" onclick="cerrarInstrucciones()">Entendido</a>
+          <a  class=" modal-close waves-effect waves-lightgrey btn-flat blue-text button-first" onclick="cerrarInstrucciones()">Entendido</a>
         </div>
         
       </div>
@@ -212,8 +212,6 @@
   <%= javascript_include_tag "plugins/jquery.bootstrap.wizard.min" %>
   <%= javascript_include_tag "plugins/pwstrength-bootstrap-1.2.4.min" %>
 <script type="text/javascript">
-
-  $(document).ready(function(){
 
       var FormWizard = function () {
           return {
@@ -254,7 +252,7 @@
                   $('#form_wizard_2').bootstrapWizard({
                       'nextSelector': '.button-next',
                       'previousSelector': '.button-previous',
-                      
+                      'firstSelector':'.button-first',
                       onNext: function (tab, navigation, index) {
                           handleTitle(tab, navigation, index);
                       },
@@ -269,15 +267,17 @@
           };
 
       }();
+  $(document).ready(function(){
+
+
       FormWizard.init();
   });
 
   function cerrarInstrucciones(){
-      jQuery('li', $('#form_wizard_2')).removeClass("done");
-      jQuery('li', $('#form_wizard_2')).removeClass("active");
-      jQuery('div.tab-pane', $('#form_wizard_2')).removeClass("active");
-      jQuery('div.tab-pane', $('#form_wizard_2')).first().addClass("active");
-      $('#form_wizard_2').find('.button-previous').hide();
+
+    $('#form_wizard_2').find('.button-previous').hide();
+    $('#form_wizard_2').find('.button-next').show();
+
   }; 
 
 </script>

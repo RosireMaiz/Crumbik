@@ -154,15 +154,23 @@
 										<label >Pais <span class="required">*</span></label>
 										<%= o.collection_select(:pais_id, Pais.all, :id, :nombre) %>  
 									</div>
-									<div class="row">
+									<div class="row input-group">
 										<label >Tipo de Organizacion <span class="required">*</span></label>
 										<%= o.collection_select(:tipo_organizacion_id, TipoOrganizacion.all, :id, :nombre) %>  
+										<a href="javascript:void(0)" class="input-group-addon" id="basic-addoe"  role="button" data-toggle="popover" data-trigger="hover" data-title="Descripción Tipo de Organización" data-content="hola" placement="right" data-container="body">
+											<i class="mdi-action-help"></i>
+											<abbr>Detalles</abbr>
+											</a>
 									</div>
 		
 									<%= o.fields_for :contratos do |c| %>
-										<div class="row">
+										<div class="row input-group">
 											<label>Plan <span class="required">*</span></label>
 											<%= c.collection_select(:plan_id, Plan.all, :id, :nombre) %>
+											<a href="javascript:void(0)" class="input-group-addon" id="basic-addo"  role="button" data-toggle="popover" data-trigger="hover" data-title="Descripción Tipo de Organización" data-content="hola" placement="right" data-container="body">
+											<i class="mdi-action-help"></i>
+											<abbr>Detalles</abbr>
+											</a>
 										</div>
 										<!--<select name="organizacion[contratos][plan]">
 											<option value="-1" disabled selected>Elije tu plan</option>
@@ -297,7 +305,7 @@
 								</div>
 								<h6 class="form-section">Pago</h6>
 								<div class="form-group">
-									<label class="control-label col-md-3">Nombre del tarjetahabiente</label>
+									<label class="control-label col-md-3">Nombre del tarjeta habiente</label>
 									<div class="col-md-4">
 										<p class="form-control-static" data-display="tarjeta[nombre]">
 										</p>
