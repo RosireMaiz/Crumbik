@@ -3,6 +3,7 @@ class CreateTipoClientes < ActiveRecord::Migration
     create_table :tipo_clientes do |t|
       t.string :nombre
       t.string :descripcion
-  	  t.string :estatus, default: "A", :limit => 1    end
+  	  t.string :estatus, default: "A", :limit => 1
+  	end
   end
 end

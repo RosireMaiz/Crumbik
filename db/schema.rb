@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20151207005627) do
+ActiveRecord::Schema.define(version: 20151212191759) do
 
   create_table "autenticacions", force: :cascade do |t|
     t.integer "usuario_id", limit: 4
@@ -160,6 +160,15 @@ ActiveRecord::Schema.define(version: 20151207005627) do
 
   add_index "plans", ["frecuencia_pago_id"], name: "index_plans_on_frecuencia_pago_id", using: :btree
 
+  create_table "pregunta_frecuentes", force: :cascade do |t|
+    t.string   "titulo",          limit: 255
+    t.string   "contenido",       limit: 255
+    t.string   "estatus",         limit: 1,   default: "A"
+    t.integer  "organizacion_id", limit: 4
+    t.datetime "created_at",                                null: false
+    t.datetime "updated_at",                                null: false
+  end
+
   create_table "productos", force: :cascade do |t|
     t.string "nombre",         limit: 255
     t.text   "descripcion",    limit: 65535
@@ -198,6 +207,16 @@ ActiveRecord::Schema.define(version: 20151207005627) do
     t.string "descripcion", limit: 255
     t.string "estatus",     limit: 1,   default: "A"
   end
+
+  create_table "sugerencia", force: :cascade do |t|
+    t.string   "titulo",     limit: 255
+    t.string   "contenido",  limit: 255
+    t.integer  "usuario_id", limit: 4
+    t.datetime "created_at",             null: false
+    t.datetime "updated_at",             null: false
+  end
+
+  add_index "sugerencia", ["usuario_id"], name: "index_sugerencia_on_usuario_id", using: :btree
 
   create_table "tipo_clientes", force: :cascade do |t|
     t.string "nombre",      limit: 255
