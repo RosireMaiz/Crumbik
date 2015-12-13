@@ -63,6 +63,7 @@
                    <a  href="#modal<%= pais.id %>" class=" modal-trigger btn-warning btn-sm">Deshabilitar</a>
                 <% end %>
                   <a  href="#modaleditar<%= pais.id %>" class="modal-trigger btn-primary btn-sm" onclick="validar(modaleditar<%= pais.id %>, <%= pais.id %>, nombre<%= pais.id %>)">Editar</a>
+                   <a  href="#modaleliminar<%= pais.id %>" class="modal-trigger btn-primary btn-sm btn-danger" >Eliminar</a>
                 </td>  
                     
             </tr>
@@ -106,6 +107,30 @@
                 </div>                
           </div>
         </div> 
+
+        <div id="modaleliminar<%= pais.id %>" class="modal">
+          <div class="modal-content">
+                <a style="float:right;" class="waves-effect btn-flat modal-close"><i class="mdi-content-clear"></i></a>
+               
+                  <h5>Eliminar Pa&iacute;s</h5>
+               
+                <div class="row pad30-t" >
+                    <div class="col s12 text-center">
+                     
+                        <h6 style=" font-size: 20px;"> ¿Seguro que desea eliminar el pa&iacute;s seleccionado? </h6>
+                      
+                      <div style="padding-top: 35px;" class="right">
+                      
+                        <input type="button" class="btn btn-success btn-sm" value="Aceptar" onclick="eliminar(<%= pais.id %>)">
+                      
+                        <input type="button" class="btn btn-danger btn-sm modal-close" value="Cancelar">
+                      </div>
+
+                    </div>
+                </div>                
+          </div>
+        </div> 
+
 
 
         <div id="modaleditar<%= pais.id %>" class="modal modal-45" form="true">

@@ -10,6 +10,7 @@ Rails.application.routes.draw do
 	root 'portal#index'
 
 	match "/validar_email" => "usuarios#validar_email", via: :post
+	match "/validar_email_update" => "usuarios#validar_email_update", via: :post
 	match "/validar_subdominio" => "organizacions#validar_subdominio", via: :post
 	match "/validar_rol" => "rols#validar_rol", via: :post
 	match "/validar_rol_update" => "rols#validar_rol_update", via: :post
@@ -82,8 +83,10 @@ Rails.application.routes.draw do
     match "/redes_sociales" => "red_socials#consultar", via: :get
     match "/redes_sociales/agregar" => "red_socials#new", via: :get
     match "/red_socials/crear_red_social" => "red_socials#create", via: :post
+   	match "/red_socials/editar_red_social" => "red_socials#update", via: :post
+  	match "/red_social/editar/:id_red_social" => "red_socials#edit", via: :post
     match "/redes_sociales/update_estatus" => "red_socials#update_estatus", via: :post
-	match "/redes_sociales/update" => "red_socials#update", via: :post
+
 	match "/redes_sociales/consultar_red_social" => "red_socials#consultar_red_social", via: :post
 	match "/redes_sociales/eliminar" => "red_socials#eliminar", via: :post
 
@@ -93,7 +96,7 @@ Rails.application.routes.draw do
     match "/paises/update_estatus" => "pais#update_estatus", via: :post
 	match "/paises/update" => "pais#update", via: :post
 	match "/paises/consultar_pais" => "pais#consultar_pais", via: :post
-	match "/paises/eliminar" => "paises#eliminar", via: :post
+	match "/paises/eliminar" => "pais#eliminar", via: :post
 
     match "/dispositivos" => "dispositivos#consultar", via: :get
     match "/dispositivos/agregar" => "dispositivos#new", via: :get

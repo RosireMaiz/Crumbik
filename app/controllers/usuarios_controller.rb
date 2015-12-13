@@ -13,6 +13,14 @@ class UsuariosController < ApplicationController
 		end
 	end
 	
+	def validar_email_update
+		if Usuario.exists?( ["email = ? AND  id <> ? ",  params[:usuario][:email], current_usuario.id ])
+			render json: false
+		else
+			render json: true
+		end
+	end
+
 	def current_rol
     	render json: {idRolActual: current_usuario.rol_actual.id}
 	end

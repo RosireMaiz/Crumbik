@@ -40,7 +40,6 @@ class PlansController < ApplicationController
 			else
 				id = params[:id_plan]
 				@plan = Plan.where("id = ?", id).first
-				puts "plan" + @plan.to_s
 				render "plans/edit"
 			end
 		end
@@ -50,41 +49,35 @@ class PlansController < ApplicationController
 		id = params[:plan_id]
 
 		plan_edit = Plan.where(["id = ?", id]).first
-
-		#@plan_edit.update(plan_params)
+		puts "id " + id.to_s
+		plan_edit.update(plan_params)
 
 		plan_servicios = plan_edit.plan_servicio
 		if ! plan_servicios.nil?
 			plan_servicios.each do |plan_servicio|
-				puts "plan de" + plan_servicio.descripcion.to_s
-				puts "plan se " + plan_servicio.servicio.nombre.to_s
+				puts "plan des" + plan_servicio.descripcion.to_s
+				puts "plan ser " + plan_servicio.servicio.nombre.to_s
+				plan_servicio.destroy
 			end
 		end
 
-		servicios = params[:plan][:servicio]
+		servicios = params[:plan_servicio][:servicio_ids]
+
+		descripciones = params[:plan_servicio][:descripcion]
+		puts "descripciones " + descripciones.to_s
 
 		plan_id = plan_edit.id
 		if ! servicios.nil?
-			servicios.each do |servicios|
-			 	servicio_id = servicios[0]
-
-			 	servicio = params[:plan][:servicio][servicio_id][:servicio]
-			 	if !servicio.nil?
-
-
-			 		descripcion = params[:plan][:servicio][servicio_id][:descripcion]
-			 		
-			 		@plan_servicio = PlanServicio.new
-			 		@plan_servicio.servicio_id = servicio_id
-			 		@plan_servicio.plan_id = plan_id
-					@plan_servicio.descripcion = descripcion
-					#@plan_servicio.save
-
-			 		puts "servicio_id " + servicio_id
-			 		puts "servicio " + servicio.to_s
-
-			  		puts "descripcion " + descripcion.to_s
-			 	end
+			servicios.each do |servicio|
+			 	servicio_id = servicio
+			 	puts "servicio_id " + servicio_id
+			 	descripcion = descripciones[servicio.to_i-1]
+			 	puts "descripcion " + descripcion.to_s
+			 	@plan_servicio = PlanServicio.new
+			 	@plan_servicio.servicio_id = servicio_id
+			 	@plan_servicio.plan_id = plan_id
+				@plan_servicio.descripcion = descripcion
+				@plan_servicio.save
 			end
 		end
 		

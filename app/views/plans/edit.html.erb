@@ -28,9 +28,9 @@
   </div>
 </div>
 
-<div  class="row pad30-h">
+<div id="form_wizard_1" class="row pad30-h" style="    width: 100%">
   <div class="col s8 left panel z-depth-3">
-    <%= form_for(@plan,  :url => plan_editar_path, :html => { :method => :post } ) do |f| %>
+    <%= form_for(@plan,  :url => plan_editar_path, :html => { :method => :post, id:"edit_plan" } ) do |f| %>
       <div class="form-body">
         <div class="steps pad30-t">
           <div class="feedback alert alert-danger display-none">
@@ -90,19 +90,21 @@
                   <% end -%>
                   <div class="row valign-wrapper" style=" padding: 10px 10px; margin: 0; border-bottom: 1px solid #e0e0e0;">
                       <div class="col s4">
-                        <input type="checkbox" id="plan_servicio_<%= servicio.id%>" name="plan[servicio][<%= servicio.id%>][servicio]" onchange="seleccion_servicio('#<%= servicio.id%>div')" <% if ! @descripcion.nil? -%> checked <% end -%> />
+                        <input type="checkbox" id="plan_servicio_<%= servicio.id%>" value="<%= servicio.id%>" name="plan_servicio[servicio_ids][]"  <% if ! @descripcion.nil? -%> checked <% end -%> />
                         <label for="plan_servicio_<%= servicio.id%>" ><%= servicio.nombre%></label>
                       </div>
 
-                      <div id="<%= servicio.id%>div" class="col s8 input-field <% if  @descripcion.nil? -%> hidden <% end -%>">   
+                      <div id="div<%= servicio.id%>" class="col s8 input-field <% if  @descripcion.nil? -%> hidden <% end -%>">   
 
-                        <input  id="plan_servicio_descripcion_<%= servicio.id%>" name="plan[servicio][<%= servicio.id%>][descripcion]" type="text" class="validate" value=" <%= @descripcion -%>">
+                        <input  id="plan_servicio_descripcion_<%= servicio.id%>" name="plan_servicio[descripcion][]" type="text" class="validate" value="<%= @descripcion -%>" oninput="validarDescripcion('<%= servicio.id%>')">
 
                         <label for="plan_servicio__descripcion_<%= servicio.id%>" >Descripcón</label>
 
+                        <span id='plan_servicio_descripcion_<%= servicio.id%>-error' class="hidden" style='text-transform: uppercase; font-size: 11px;"+ "margin-bottom: 15px;  color: #d34836; font-weight: 400;'>Debe ingresar la descripción.</span>
                       </div>
                   </div>
-              <% end -%>
+                <% end -%>
+                <span id='plan_servicio_ids-error' class="hidden" style='text-transform: uppercase; font-size: 11px;"+ "margin-bottom: 15px;  color: #d34836; font-weight: 400;'>Debe Seleccionar un Servicio.</span>
 
             </div>
 
@@ -123,7 +125,7 @@
 
   <div class="col s4 ">
     <div class="row">
-      <%= form_tag( {controller: "plans", action: "save_imagen", method: "post"},  multipart: true ) do %>
+      <%= form_tag( {controller: "plans", action: "save_imagen", method: "post"},  multipart: true,  id:"form_imagen_plan" ) do %>
         <div class="col s12 panel" align="right" style="padding-top: 10px; padding-bottom: 20px;">
           <h5 align="left">Cambiar imagen</h5>
           <input id="plan_id" name="plan_id" class="file" value="<%= @plan.id %>" hidden />
@@ -147,13 +149,80 @@
   <%= javascript_include_tag 'plugins/fileinput.js' %>
 
 <script >
-  $(document).ready(function(){
-     $(' .alert-danger').hide();
-      $('.alert-success').hide();
-  });
- function seleccion_servicio(id){
-    $(id).toggleClass('hidden');
-  }
+    $(document).ready(function(){
+       $(' .alert-danger').hide();
+        $('.alert-success').hide();
+    });
+
+    function validarDescripcion(id){
+      var id_input = '#plan_servicio_descripcion_' + id;
+      var msj_error = '#plan_servicio_descripcion_' + id + "-error";
+      var valor_descripcion = $(id_input).val();
+      if (valor_descripcion == null || valor_descripcion == "") {
+         $(msj_error).removeClass("hidden");
+      } else{
+          $(msj_error).addClass("hidden");
+      };
+    }
+
+    $("input[name='plan_servicio[servicio_ids][]']").on('change', function (){
+
+      var value = this.value;
+      var msj_error = '#plan_servicio_descripcion_' + value + "-error";
+      var id_input = '#plan_servicio_descripcion_' + value;
+      var id_div = "#div" + value;
+      var checked =$(this).prop("checked");
+      if (checked) {
+        $(id_div).removeClass('hidden');
+      } else{
+        $(id_div).addClass('hidden');
+        $(id_input).val("");
+         $(msj_error).addClass("hidden");
+      };
+
+      var fields = $("input[name='plan_servicio[servicio_ids][]']").serializeArray(); 
+        if (fields.length == 0) 
+        { 
+         $("#plan_servicio_ids-error").removeClass("hidden");
+         } 
+        else 
+        { 
+           $("#plan_servicio_ids-error").addClass("hidden");
+        }
+    });
+
+
+    $('#edit_plan').submit(function(event){
+       
+      var fields = $("input[name='plan_servicio[servicio_ids][]']").serializeArray(); 
+        if (fields.length == 0) 
+        { 
+            $("#plan_servicio_ids-error").removeClass("hidden");
+            event.preventDefault();
+            return false;
+         } 
+        else 
+        { 
+           $("#plan_servicio_ids-error").addClass("hidden");
+        }
+         var valid = true;
+        for (var i = 0; i < fields.length; i++) {
+           var value =  fields[i].value;
+           var id_input = '#plan_servicio_descripcion_' + value;
+           var valor_descripcion = $(id_input).val();
+           var msj_error = '#plan_servicio_descripcion_' + value + "-error";
+           if (valor_descripcion == null || valor_descripcion == "") {
+              valid = false;
+              $(msj_error).removeClass("hidden");
+           };
+
+        };
+
+        if (!valid) {
+          event.preventDefault();
+            return false;
+        };
+      });
 
 
     $("#imagen_id").fileinput({

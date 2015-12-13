@@ -174,14 +174,32 @@ class OpcionMenu < ActiveRecord::Base
   def Eliminar(id)
     if OpcionMenu.exists?(id)
       opcionMenu = OpcionMenu.find_by(id: "#{id}")
+      EliminarHijos(opcionMenu.menu,opcionMenu.id)
       opcionMenu.destroy
+
       if opcionMenu.destroyed?
         return 1
       else
-       return 0
-      end      
+        return 0
+      end     
+
     end 
     return 0
+  end
+
+  def EliminarHijos(menu,padreid)
+    totaldeRegistros1 = self.ContarHijos(menu,padreid)
+
+    if totaldeRegistros1>0
+      @opcionMenus = OpcionMenu.where("menu_id = ? AND padre_id = ?", menu.id.to_s, padreid).order(orden: :asc)
+      
+      @opcionMenus.each do |opcion|        
+        self.EliminarHijos(menu,opcion.id)
+        opcion.destroy
+      end
+
+    end
+
   end
 
 end

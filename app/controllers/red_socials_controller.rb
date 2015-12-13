@@ -64,20 +64,29 @@ class RedSocialsController < ApplicationController
 		end
 	end
 
-	def update
-		id = params[:idredsocial]
-		nombre = params[:nombre]
-		icono = params[:icono]
-		if RedSocial.exists?(  ["nombre = ? AND  id <> ? ", nombre, id]) 
-			render :text =>'{ "success" : "true", "existe" : "true" }'
+	def edit
+		if !usuario_signed_in?
+			redirect_to root_path
 		else
-
-			if RedSocial.update(id, :nombre => nombre, :icono => icono)
-				render :text =>'{ "success" : "true", "existe" : "false"}'
+			@red_social = RedSocial.new
+			if request.subdomain.present?
+				redirect_to root_path
 			else
-				render :text => '{ "success" : "false"}'
+				id = params[:id_red_social]
+				@red_social = RedSocial.where("id = ?", id).first
+				render "red_socials/edit"
 			end
 		end
+	end
+
+	def update
+		id = params[:red_social_id]
+
+		red_social_edit = RedSocial.where(["id = ?", id]).first
+		
+		red_social_edit.update(red_social_params)
+		
+		redirect_to :controller => 'red_socials', :action => 'consultar'
 	end
 
 	def eliminar

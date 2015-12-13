@@ -1,0 +1,226 @@
+<link rel="stylesheet" href="http://lvh.me:3000/bootstrap-3.2.0/css/bootstrap.css"/>
+<!-- Elusive Icons -->
+<link rel="stylesheet" href="http://lvh.me:3000/icon-fonts/font-awesome-4.2.0/css/font-awesome.min.css"/>
+<!-- Bootstrap-Iconpicker -->
+<link rel="stylesheet" href="http://lvh.me:3000/bootstrap-iconpicker/css/bootstrap-iconpicker.css"/>
+
+<link rel="stylesheet" href="http://lvh.me:3000/bootstrap-colorpicker/css/bootstrap-formhelpers.css"/>
+
+
+ <!-- jQuery -->
+  <script type="text/javascript" src="http://lvh.me:3000/jquery/jquery-1.10.2.min.js"></script>
+  <!-- Bootstrap -->
+  <script type="text/javascript" src="http://lvh.me:3000/bootstrap-3.2.0/js/bootstrap.min.js"></script>
+
+  <script type="text/javascript" src="http://lvh.me:3000/bootstrap-iconpicker/js/iconset/iconset-fontawesome-4.2.0.min.js"></script> 
+  <!-- Bootstrap-Iconpicker -->
+  <script type="text/javascript" src="http://lvh.me:3000/bootstrap-iconpicker/js/bootstrap-iconpicker.js"></script>
+
+  <script type="text/javascript" src="http://lvh.me:3000/bootstrap-colorpicker/js/bootstrap-formhelpers.js"></script>
+
+
+<div class="row titulo-seccion">
+  <div class="banner banner-perfil">
+    <div class="contenedor">
+      <div class="col s6">
+        <h5 class="text-uppercase">
+         Editar Red Social
+        </h5>
+      </div>
+      <div class="col s6 text-right ">
+        <ol class="breadcrumb">
+          <li>
+            <a href="/">Inicio</a>
+          </li>
+          <li class="active">Editar Red Social</li>
+        </ol>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div id="form_wizard_1" class="center-block">
+  <%= form_for @red_social, :url => red_socials_editar_red_social_path, html:{id: "edit_red_social", class: "form-horizontal", :method => :post } do |f| %>
+    <input type="hidden" id="red_social_id" name="red_social_id" value="<%= @red_social.id %>">
+    <div class="form-wizard">
+      <div class="form-body steps">
+        <div class="tab-content">
+          <div class="feedback alert alert-danger display-none">
+            <button class="close" data-dismiss="alert"></button>
+            Algunos campos tienen errores. Por favor revisa abajo.
+          </div>
+          <div class="feedback alert-success display-none">
+            <button class="close" data-dismiss="alert"></button>
+            La validación fue exitosa.
+          </div>
+          <div class="tab-pane active" id="tab1">
+            <div class="row">
+              <div class="col s8 offset-s2 left">
+                <h5 >Datos de la Red Social </h5>
+    
+                <div class="input-field col s10">
+                  <label for="red_social_nombre">Nombre <span class="required">
+                  * </span>
+                  </label>
+                  <%= f.text_field :nombre, :required=>true, autocomplete: "off" %>
+                </div>
+
+                <div class="col s12 "  >
+                  <div class="col" style="padding-top: 10px;">
+                    <p style="color: #9E9E9E">
+                        <b>Color:</b>
+                        <span class="required">* </span>
+                      </p>
+                    </div>
+                    <div class="col s6">
+                      <div class="bfh-colorpicker" data-name="red_social[color]" data-id="red-social-color" data-color="<%= @red_social.color%>">
+                      </div>
+                    </div>
+                </div>
+
+                <input type="hidden" id="icono" name="red_social[icono]" value="<%= @red_social.icono %>">
+
+
+                <div class="col s12" style="padding-top: 20px;">
+              
+                  <div class="col" >
+                      <p style="color: #9E9E9E">
+                        <b>Icono:</b>
+                        <span class="required">* </span>
+                      </p>
+                  </div>
+
+                  <div class="col s3" id="div_icono"  >
+                      <button class="btn grey" data-iconset="fontawesome" 
+                          data-placement="right"
+                          data-unselected-class="btn-info" data-arrow-class="pink lighten-1"
+                          data-arrow-prev-icon-class="glyphicon glyphicon-chevron-left"
+                          data-arrow-next-icon-class="glyphicon glyphicon-chevron-right" id="iconoPicker"  role="iconpicker">
+                      </button>
+                  </div>
+                </div>
+
+
+
+              </div>
+            </div>
+          </div>
+
+        </div>
+      </div>
+      <div class="form-actions">
+        <div class="row">
+          <div class="offset-s1 col s8 text-center pad30-t">
+            <input type="submit" class="btn btn-success btn-submit" value="Guardar">
+            <button type="button" onclick="window.location.href='/redes_sociales'" class="btn btn-danger waves-effect">Cancelar</button>
+          </div>
+        </div>
+      </div>
+    </div>
+  <% end %>
+</div>
+
+<script type="text/javascript">
+  $(document).ready(function(){
+    $(' .alert-danger').hide();
+    $('.alert-success').hide();
+
+
+    var formRedSocial = $('#edit_red_social');
+    var errorRedSocial = $('.alert-danger', formRedSocial);
+    var successRedSocial = $('.alert-success', formRedSocial);
+    formRedSocial.validate({
+                ignore: "",
+                    doNotHideMessage: true, //this option enables to show the error/success messages on tab switch.
+                          errorElement: 'span', //default input error message container
+                          errorClass: 'msj-error', // default input error message class
+                          focusInvalid: false, // do not focus the last invalid input
+                rules: {
+                  "red_social[nombre]":{
+                    
+                    required:true,
+                    remote: {
+                          url: "/validar_red_social_update/?idredsocial=<%= @red_social.id %>",
+                          type: "post"
+                        }
+                      
+                  },
+                  "red_social[icono]":{
+                    required:true,
+                  },
+                },
+                messages:{
+                  "red_social[nombre]":{
+                    required:"Indica el nombre.",
+                    remote:"Ya existe una red social con este nombre."
+                  
+                  },
+                  "red_social[icono]":{
+                    required:"Seleccione el icono de la red social.",
+                  },  
+                },
+
+                 errorPlacement: function (error, element) { // render error placement for each input type
+                                  if (element.attr("name") == "red_social[icono]") { // for uniform checkboxes, insert the after the given container
+                                      error.insertAfter("#div_icono");
+                                  } else {
+                                      error.insertAfter(element); // for other inputs, just perform default behavior
+                                  }
+                              },
+
+                      invalidHandler: function (event, validator) { //display error alert on formServicio submit   
+                                  successRedSocial.hide();
+                                  errorRedSocial.show();
+                                  $('html,body').animate({
+                                      scrollTop: $(".steps").offset().top-350
+                                  }, 'slow');
+                              },
+
+                     highlight: function (element) { // hightlight error inputs
+                                  $(element)
+                                      .closest('.form-group').removeClass('has-success').addClass('has-error'); // set error class to the control group
+                              },
+
+                     unhighlight: function (element) { // revert the change done by hightlight
+                                  $(element)
+                                      .closest('.form-group').removeClass('has-error'); // set error class to the control group
+                              },
+
+                       success: function (label) {
+                                      label.addClass('valid') // mark the current input as valid and display OK icon
+                                      .closest('.form-group').removeClass('has-error').addClass('has-success'); // set success class to the control group
+                              }
+                });
+
+
+
+  });
+
+  var icono = '<%= @red_social.icono %>';
+  var subicon = icono.substring(3);
+  $('#iconoPicker').iconpicker({
+    rows:3,
+    searchText: 'Buscar...',
+    cols:5,
+    icon: subicon,
+  });
+
+  $('.dropdown-toggle').dropdown();
+
+  $('#iconoPicker').on('change', function() {
+    var icono = $('#iconoPicker > i').attr('class');
+    if (icono == "fa fa-") {
+
+      $('#icono').val("");
+      $('#icono-error').show();
+
+    }else{
+
+      $('#icono').val(icono);
+      $('#icono-error').hide();
+
+    };
+
+  });
+
+</script>
