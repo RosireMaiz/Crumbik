@@ -54,6 +54,7 @@
                    <a  href="#modal<%= rol.id %>" class=" modal-trigger btn-warning btn-sm">Deshabilitar</a>
                 <% end %>
                   <a  href="#modaleditar<%= rol.id %>" class="modal-trigger btn-primary btn-sm" onclick="validar(modaleditar<%= rol.id %>, <%= rol.id %>)"> Editar</a>
+                  <a  href="#modaleliminar<%= rol.id %>" class="modal-trigger btn-danger btn-sm">Eliminar</a>
                 </td>  
                     
             </tr>
@@ -68,59 +69,82 @@
         <!-- Modal Structure -->
         <div id="modal<%= rols.id %>" class="modal">
           <div class="modal-content">
-                <a style="float:right;" class="waves-effect btn-flat modal-close"><i class="mdi-content-clear"></i></a>
+            <a style="float:right;" class="waves-effect btn-flat modal-close"><i class="mdi-content-clear"></i></a>
+            <% if (rols.estatus == 'A') %>
+              <h5>Deshabilitar Rol</h5>
+            <% else %>
+              <h5>Habilitar Rol</h5>
+            <% end %>
+            <div class="row pad30-t" >
+              <div class="col s12 text-center">
                 <% if (rols.estatus == 'A') %>
-                  <h5>Deshabilitar Rol</h5>
+                  <h6 style=" font-size: 20px;"> ¿Seguro que desea Deshabilitar el rol seleccionado? </h6>
                 <% else %>
-                  <h5>Habilitar Rol</h5>
+                  <h6 style=" font-size: 20px;"> ¿Seguro que desea Habilitar el rol seleccionado? </h6>
                 <% end %>
-                <div class="row pad30-t" >
-                    <div class="col s12 text-center">
-                      <% if (rols.estatus == 'A') %>
-                        <h6 style=" font-size: 20px;"> ¿Seguro que desea Deshabilitar el rol seleccionado? </h6>
-                      <% else %>
-                        <h6 style=" font-size: 20px;"> ¿Seguro que desea Habilitar el rol seleccionado? </h6>
-                      <% end %>
-                      <div style="padding-top: 35px;" class="right">
-                      <% if (rols.estatus == 'A') %>
-                         <input type="button" class="btn btn-success btn-sm" value="Aceptar" onclick="update_estatus(<%= rols.id %>,'I')">
-                      <% else %>
-                        <input type="button" class="btn btn-success btn-sm" value="Aceptar" onclick="update_estatus(<%= rols.id %>,'A')">
-                      <% end %>
-                       
-                        <input type="button" class="btn btn-danger btn-sm modal-close" value="Cancelar">
-                      </div>
+                <div style="padding-top: 35px;" class="right">
+                  <% if (rols.estatus == 'A') %>
+                    <input type="button" class="btn btn-success btn-sm" value="Aceptar" onclick="update_estatus(<%= rols.id %>,'I')">
+                  <% else %>
+                    <input type="button" class="btn btn-success btn-sm" value="Aceptar" onclick="update_estatus(<%= rols.id %>,'A')">
+                  <% end %>
 
-                    </div>
-                </div>                
+                  <input type="button" class="btn btn-danger btn-sm modal-close" value="Cancelar">
+                </div>
+
+              </div>
+            </div>                
           </div>
         </div> 
 
 
         <div id="modaleditar<%= rols.id %>" class="modal modal-45" form="true">
           <div class="modal-content">
-                <a style="float:right;" class="waves-effect btn-flat modal-close" onclick="cancelar(modaleditar<%= rols.id %>, <%= rols.id %>, nombre<%= rols.id %> )"><i class="mdi-content-clear"></i></a>
-                <h5>Editar Rol</h5>
-                
-                <div class="row" style="padding-top: 35px;">
-                    <div class="col s12">
-                      <div class="row">
-                        <div class=" input-field col s8 offset-s2 ">
-                          <input id="nombre<%= rols.id %>" type="text" class="validate" value="<%= rols.nombre %>" name="rol[nombre]"> 
-                          <label for="nombre<%= rols.id %>" >Nombre:</label>
+            <a style="float:right;" class="waves-effect btn-flat modal-close" onclick="cancelar(modaleditar<%= rols.id %>, <%= rols.id %>, nombre<%= rols.id %> )"><i class="mdi-content-clear"></i></a>
+            <h5>Editar Rol</h5>
 
-                        </div>
-                      </div>
-                      <div class="text-center">
-                        <input type="button" class="btn btn-success btn-sm" value="Guardar" onclick="update(modaleditar<%= rols.id %>, <%= rols.id %>, nombre<%= rols.id %> )">
-                      
-                        <input type="button" class="btn btn-danger btn-sm" value="Cancelar" onclick="cancelar(modaleditar<%= rols.id %>, <%= rols.id %>, nombre<%= rols.id %> )">
-                      </div>
-                    </div>
+            <div class="row" style="padding-top: 35px;">
+              <div class="col s12">
+                <div class="row">
+                  <div class=" input-field col s8 offset-s2 ">
+                    <input id="nombre<%= rols.id %>" type="text" class="validate" value="<%= rols.nombre %>" name="rol[nombre]"> 
+                    <label for="nombre<%= rols.id %>" >Nombre:</label>
 
-                 </div>
+                  </div>
+                </div>
+                <div class="text-center">
+                  <input type="button" class="btn btn-success btn-sm" value="Guardar" onclick="update(modaleditar<%= rols.id %>, <%= rols.id %>, nombre<%= rols.id %> )">
+
+                  <input type="button" class="btn btn-danger btn-sm" value="Cancelar" onclick="cancelar(modaleditar<%= rols.id %>, <%= rols.id %>, nombre<%= rols.id %> )">
+                </div>
+              </div>
+
+            </div>
           </div>                
         </div>
+
+        <div id="modaleliminar<%= rols.id %>" class="modal">
+          <div class="modal-content">
+            <a style="float:right;" class="waves-effect btn-flat modal-close"><i class="mdi-content-clear"></i></a>
+
+            <h5>Eliminar Rol</h5>
+
+            <div class="row pad30-t" >
+              <div class="col s12 text-center">
+
+              <h6 style=" font-size: 20px;"> ¿Seguro que desea eliminar el rol seleccionado? </h6>
+
+              <div style="padding-top: 35px;" class="right">
+
+                <input type="button" class="btn btn-success btn-sm" value="Aceptar" onclick="eliminar(<%= rols.id %>)">
+
+                  <input type="button" class="btn btn-danger btn-sm modal-close" value="Cancelar">
+                </div>
+
+              </div>
+            </div>                
+          </div>
+        </div> 
 
     <% end %>
   <% end %>

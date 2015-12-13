@@ -1,11 +1,17 @@
-
-<style type="text/css">
-	.checkbox-list input[type="checkbox"] + label {
-	    width: 50% !important;
-	    vertical-align: top;
-	    height: inherit;
-	}
-</style>
+<% content_for :css_personalizado do %>
+	<style type="text/css">
+		.checkbox-list input[type="checkbox"] + label {
+		    width: 50% !important;
+		    vertical-align: top;
+		    height: inherit;
+		}
+	     .dropdown-content {
+	      
+	      max-height: 300px; 
+	      
+	    }
+	</style>
+<% end %>
 <div class="row titulo-seccion">
 	<div  class="banner div-registro-banner" >
 		<div class="contenedor">
@@ -24,7 +30,7 @@
 
 
 <div id="form_wizard_1" class="center-block">
-	<%= form_for @usuario, :url => usuarios_create_portal_path, html:{id: "add_usuario", class: "form-horizontal"} do |f| %>
+	<%= form_for @usuario, :url => usuarios_create_portal_path, html:{id: "add_usuario_portal", class: "form-horizontal"} do |f| %>
 		<div class="form-wizard">
 			<div class="form-body steps">
 				
@@ -38,34 +44,53 @@
 						<button class="close" data-dismiss="alert"></button>
 						La validación fue exitosa.
 					</div>
-					<div class="tab-pane active" id="tab1">
+					<div  id="tab1">
 						<div class="row">
-							<div class="col s9 offset-s1 left">
+							<div class="col s10 offset-s1 left panel">
 								<h5 >Datos del Usuario </h5>
 								<%= f.fields_for :perfil do |p| %>
-									
-								      <div class="input-field col s6">
-								        <%= p.text_field :nombres, :required=>true,autocomplete: "off" %>
-								        <label for="perfil_nombres">Nombres</label>
-								      </div>
-								      <div class="input-field col s6">
-								        <%= p.text_field :apellidos, :required=>true, autocomplete: "off"  %>
-								        <label for="perfil_apellidos">Apellidos</label>
-								      </div>
+									<div class="input-field col s6">
+									        <%= p.text_field :nombres, :required=>true,autocomplete: "off" %>
+									        <label for="perfil_nombres">Nombres</label>
+									</div>
+									<div class="input-field col s6">
+									    <%= p.text_field :apellidos, :required=>true, autocomplete: "off"  %>
+									    <label for="perfil_apellidos">Apellidos</label>
+									</div>
 	    							
-	    						<% end %><%# Fin del subfomulario de perfil %>
-    							<div class="input-field col s12">
-									<label for="usuario_email2">Email <span class="required">
-									* </span>
-									</label>
-									<%= f.text_field :email, :required=>true, autocomplete: "off" %>
+	    							<div class=" input-field col s12">
+										<label for="usuario_email2">Email <span class="required">
+										* </span>
+										</label>
+										<%= f.text_field :email, :required=>true, autocomplete: "off" %>
+									</div>
+
+									
+									<div class="input-field col s7 ">
+										<label for="usuario_email2">Username <span class="required">
+											* </span>
+										</label>
+										<%= f.text_field :username, :required=>true,autocomplete: "off"  %>
+									</div>
+									<div class=" col s5">
+										<label>Sexo</label>
+										<div>
+											<%= p.radio_button :sexo, "masculino"%>
+											<%= p.label :sexo_masculino, "Masculino" %>
+											<%= p.radio_button :sexo, "femenino"%>
+											<%= p.label :sexo_femenino, "Femenino"%>
+										</div> 
+									</div>
+									
+								<% end %><%# Fin del subfomulario de perfil %>
+
+								
+								<div class="col s8">
+									<label >Pais <span class="required">*</span></label>
+									<%= f.collection_select(:pais_id, Pais.all, :id, :nombre) %>  
 								</div>
-								<div class="input-field col s12">
-									<label for="usuario_email2">Username <span class="required">
-									* </span>
-									</label>
-									<%= f.text_field :username, :required=>true,autocomplete: "off"  %>
-								</div>
+								
+
 								<div class="input-field col s12">
 									<label for="usuario_password2">Contraseña <span class="required">
 									* </span>
@@ -85,32 +110,29 @@
 								</div>
 
 								<div class="row">
-							      <div class="col s12">
+							      <div class="col s12" id="rol_list">
 							        <label for="usuario[rol_ids][]">Roles:</label>
-							        <div class="checkbox-list" id="rol_list">
+							        <div class="checkbox-list" >
 		                                 <%= f.collection_check_boxes( :rol_ids, Rol.all, :id, :nombre) %>
 							        </div>
-							        
+							        <span id='usuario_rols_ids-error' class="hidden" style='text-transform: uppercase; font-size: 11px;"+ "margin-bottom: 15px;  color: #d34836; font-weight: 400;'>Debe Seleccionar un rol.</span>
 							      </div>
 							     
 							    </div>
+							    <div class="row">
+									<div class="col s12 center">
+										<button id="subscribeForm" type="submit" class="btn btn-success">Guardar</button>
+										<button type="button" onclick="window.location.href='/usuarios_portal/consultar'" class="btn btn-danger waves-effect">Cancelar</button>
+									</div>
+								</div>
 							</div>
 						</div>
-					</div>
-
-				</div>
-			</div>
-			<div class="form-actions">
-				<div class="row">
-					<div class="col s12 center">
-						<input type="submit" class="btn btn-success " value="Enviar">
+						
 					</div>
 				</div>
 			</div>
 		</div>
 	<% end %>
-</div>
-<div id="notificacion" class="modal text-center">
 </div>
           
 <% content_for :javascript_personalizado do %>
@@ -119,9 +141,38 @@
 
 <script type="text/javascript">
 	$(document).ready(function(){
-		      $(' .alert-danger').hide();
+		      $('.alert-danger').hide();
 		      $('.alert-success').hide();     	
   		});
+
+		
+		$('#add_usuario_portal').submit(function(event){
+       
+			var fields = $("input[name='usuario[rol_ids][]']").serializeArray(); 
+		    if (fields.length == 1) 
+		    { 
+		       $("#usuario_rols_ids-error").removeClass("hidden");
+		        event.preventDefault();
+		       return false;
+		    } 
+		    else 
+		    { 
+		        $("#usuario_rols_ids-error").addClass("hidden");
+		    }
+    	});
+
+		$("input[name='usuario[rol_ids][]']").on('change', function (){
+			var fields = $("input[name='usuario[rol_ids][]']").serializeArray(); 
+		    if (fields.length == 1) 
+		    { 
+		       $("#usuario_rols_ids-error").removeClass("hidden");
+		    } 
+		    else 
+		    { 
+		        $("#usuario_rols_ids-error").addClass("hidden");
+		    }
+		});
+
     </script>
 	
 <% end %>

@@ -9,6 +9,8 @@ class DeviseCreateUsuarios < ActiveRecord::Migration
       t.string  :username,           null: false, default: ""
       t.boolean :confirmacion_email, null: false, default: false
 
+      t.references :pais, index: true
+
       ## Recoverable
       t.string   :reset_password_token
       t.datetime :reset_password_sent_at

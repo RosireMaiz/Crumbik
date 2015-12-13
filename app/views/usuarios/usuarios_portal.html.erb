@@ -25,100 +25,59 @@
 
 
 <div class="row pad30-h">
-  <table id="usuarios" class="display" cellspacing="0" width="100%" >
-    <thead>
-      <tr>
-          <th>Foto</th>
-          <th>Username</th>
-          <th>Correo</th>
-          <th>Acciones</th>
-      </tr>
-    </thead>
-    <tbody>
-      <% @usuarios.each do |usuari| %>
 
-         <% if ! usuari.nil? and ! usuari.perfil.nil? %>
-            <tr>
-               <% if ! usuari.perfil.foto.nil? and usuari.perfil.foto != "" %>
-                  <td> 
-                      <img src="<%= usuari.perfil.formato_foto %><%= usuari.perfil.foto %>" style="width: 35px;" class="responsive-img">
-                  </td>
-                <% else %>
-                  <td>
-                    <img src="/assets/avatar/sinfoto.jpg" style="width: 35px;" /> 
-                  </td>
-                <% end %> 
+  <div class="row">
+    <% @usuarios.each do |usuario| %>
 
-                <% if ! usuari.username.nil?  and ! usuari.username.nil? %> 
-                  <td data-search="<%= usuari.username %>"> 
-                    <%= usuari.username %> 
-                   </td> 
-                <% end %>
-
-                <% if ! usuari.email.nil? %> 
-                  <td> 
-                    <%= usuari.email %>
-                  </td> 
-                <% end %>
-                    
-                <td> 
-                  <a href="/usuarios/perfil/<%= usuari.id %>" rel="nofollow"  data-method="post" class="btn-success btn-sm">Ver</a>
-                  <a class="modal-trigger btn-primary btn-sm" href="#modal<%= usuari.id %>"> Agregar Rol</a>
-                  <a href="javascript:void(0)" class="btn-warning btn-sm disabled ">Desahilitar</a>
-                  <a href="javascript:void(0)" class="btn-info btn-sm disabled ">Mensaje</a>
-                </td>  
-                    
-            </tr>
-          <% end %>
-        <% end %>
-            
-     </tbody>
-  </table>
-    
-
-  <% @usuarios.each do |usuarios| %>
-    <% if ! usuarios.nil? and ! usuarios.perfil.nil?%>
-        <!-- Modal Structure -->
-        <div id="modal<%= usuarios.id %>" class="modal">
-          <div class="modal-content">
-                <a href="#" style="float:right;" class="waves-effect btn-flat modal-close"><i class="mdi-content-clear"></i></a>
-                <h4 style="text-align: center;">Agregar Rol</h4>
-                <br><br>
-                <div class="row">
-                    <div class="col s12">
-                        <div class="col s3 text-center">
-                            <% if ! usuarios.perfil.foto.nil? and usuarios.perfil.foto != "" %>
-                                <td> 
-                                  <img src="<%= usuarios.perfil.formato_foto %><%= usuarios.perfil.foto %>" style="max-width: 150px; max-height: 150px;" class="responsive-img">
-                                </td>
-                            <% else %>
-                                <td> 
-                                  <img src="/assets/avatar/sinfoto.jpg" style="width: 33px;" /> 
-                                </td>
-                            <% end %>  
-                        </div>
-                        <div class="col s9">
-                            <p>Usuario: <%= usuarios.username %> </p>
-                            <br>
-                            <p> Haz click en el rol que desees para el usuario:</p>
-                            <label>Roles</label>
-                            <ul class="list-inline">
-                              <% rol_array = Rol.limit(5)  %>
-                              <% rol_array.each do |rol| %>
-                                <li> 
-                                  <a href="/agregarRol/<%= rol.id %>/<%= usuarios.id %>" class="btn-success btn-sm"> 
-                                    <%= rol.nombre %>
-                                  </a> 
-                                </li>
-                              <% end %>      
-                            </ul>
-                        </div>
+      <% if ! usuario.nil? and ! usuario.perfil.nil? %>
+       
+          <div class="col m4 animate">
+            <div class="card ">
+              <div class="card-content center-align">
+                <div class="card-title truncate  grey-text text-darken-2"><%= usuario.username %></div>
+                <img class="circle" src="<%= usuario.perfil.formato_foto %><%= usuario.perfil.foto %>" style="max-width: 150px; max-height: 150px;">
+                <br>
+                <p class="blue-text text-darken-4"><%= usuario.perfil.nombres %> <%= usuario.perfil.apellidos %></p>
+                <br>
+                <div class="row no-margin-v">
+                  <div class="col <% if ! usuario.organizacion.nil? %> m2 <% else %> m3 <% end %> hide-on-small-only">&nbsp;</div>
+                  <div class="col m2 s6 center-align">
+                    <a href="/usuarios/perfil/<%= usuario.id %>" rel="nofollow"  data-method="post" class="tooltipped" 
+                      data-position="bottom" data-delay="50" data-tooltip="Ver Perfil">
+                      <i class="small mdi-action-face-unlock"></i>
+                    </a>
+                  </div>
+                  <div class="col m2 s6 center-align">
+                    <a href="#!" class="tooltipped" data-position="bottom" data-delay="50" data-tooltip="Eliminar">
+                      <i class="small mdi-action-highlight-remove"></i>
+                    </a>
+                  </div>
+                  <div class="col m2 s6 center-align" >
+                    <a href="#!" class="tooltipped modal-trigger" data-position="bottom" data-delay="50" data-tooltip="Deshabilitar">
+                      <i class=" small mdi-action-alarm-on"></i>
+                    </a>
+                  </div>
+                  <% if ! usuario.organizacion.nil? %>
+                    <div class="col m2 s6 center-align" >
+                      <a href="http://<%= usuario.organizacion.subdominio %>.lvh.me:3000/" target="_blank" class="tooltipped" data-position="bottom" data-delay="50" data-tooltip="Ver Compañía">
+                        <i class="small mdi-action-account-balance"></i>
+                      </a>
                     </div>
-                </div>                
+                  <% end %>
+                   <div class="col m2 .hide-on-small-only">&nbsp;</div>
+                </div>
+              </div>
+              <div class="card-action center-align truncate">
+                <a href="#!" class="blue-text text-darken-4"><%= usuario.email%></a>
+              </div>
+            </div><!--/card-->
           </div>
-        </div>  
+      <% end %>
     <% end %>
-  <% end %>
+  </div>
+  <div class="row valign-wrapper">
+      <%= paginate(@usuarios) %>
+   </div>
 </div>
 
 <% content_for :javascript_personalizado do %>

@@ -10,7 +10,7 @@ class Usuario < ActiveRecord::Base
 
   has_many :autenticacions, dependent: :delete_all
 
-  has_one :pais
+  belongs_to :pais
   has_one :perfil
   has_one :organizacion, :inverse_of=>:usuario
 

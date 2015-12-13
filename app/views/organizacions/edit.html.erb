@@ -104,19 +104,19 @@
             <ul id="lista-redes-sociales" class="vacia">
               <li>Falta agregar alguna red social. Usa el botón a la derecha para hacerlo.</li>
 
-           <% @redes.each do |red| %>
+                <% @redes.each do |red| %>
 
-              <% if ! red.nil? %>
-                <li>
-                  <div class="input-group">
-                      <span class="input-group-addon red-social-add " style="background: <%= red.red_social.color %>;">
-                      <i class="<%= red.red_social.icono %>"></i></span>
-                      <input id="organizacion_red_social_<%= red.red_social.id %>" name="organizacion[red_social_attributes][actual][<%= red.id %>]" type='text' class="form-control" value="<%= red.url%>">
-                  </div>
-              </li>
+                  <% if ! red.nil? %>
+                    <li>
+                      <div class="input-group">
+                          <span class="input-group-addon red-social-add " style="background: <%= red.red_social.color %>;">
+                          <i class="<%= red.red_social.icono %>"></i></span>
+                          <input id="organizacion_red_social_<%= red.red_social.id %>" name="organizacion[red_social_attributes][actual][<%= red.id %>]" type='text' class="form-control" value="<%= red.url%>">
+                      </div>
+                  </li>
 
-              <% end %>
-             <% end %>
+                  <% end %>
+                <% end %>
 
             </ul>
           </div>
@@ -131,10 +131,8 @@
 
                   <% if ! red_social.nil? %>
                      <li style="padding-bottom: 5px;"><a href="javascript:void(0)"  id="<%= red_social.id %>" class="red-social-add" style="background: <%= red_social.color %>;"><i class="<%= red_social.icono %>"></i></a></li> 
-
                   <% end %>
-                 <% end %>
-
+                <% end %>
 
                </ul>
             </div>

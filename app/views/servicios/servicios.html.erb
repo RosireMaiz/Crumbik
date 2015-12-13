@@ -55,7 +55,9 @@
                    <a  href="#modal<%= servicio.id %>" class=" modal-trigger btn-warning btn-sm">Deshabilitar</a>
                 <% end %>
                    <a href="#modalver<%= servicio.id %>" class="modal-trigger purple btn-primary btn-sm">Ver</a>
+
                    <a href="#modaleditar<%= servicio.id %>" class="modal-trigger btn-primary btn-sm" onclick="validar(modaleditar<%= servicio.id %>, <%= servicio.id %>)">Editar</a>
+                   <a  href="#modaleliminar<%= servicio.id %>" class="modal-trigger btn-danger btn-sm">Eliminar</a>
                 </td>  
                     
             </tr>
@@ -130,30 +132,50 @@
 
         <div id="modalver<%= servicios.id %>" class="modal modal-45">
           <div class="modal-content">
-                <a href="#" style="float:right;" class="waves-effect btn-flat modal-close"><i class="mdi-content-clear"></i></a>
-                <h5>Ver servicio</h5>
-                
-                <div class="row" style="padding-top: 35px;">
-                    <div class="col s12 ">
-                        <div class="row">
-                         <p><b style="color: #9E9E9E">Nombre:</b>
-                           <%= servicios.nombre %></p>
+            <a href="#" style="float:right;" class="waves-effect btn-flat modal-close"><i class="mdi-content-clear"></i></a>
+            <h5>Ver servicio</h5>
 
-                        </div>
-                        
-                        <div class="row ">
-                         <p><b style="color: #9E9E9E">Decripci&oacute;n:</b>
-                         <%= servicios.descripcion %></p> 
-                  
+            <div class="row" style="padding-top: 35px;">
+              <div class="col s8 offset-s2 " align="justify">
+                <div class="row">
+                 <p><b style="color: #9E9E9E">Nombre:</b></p>
+                 <p>
+                   <%= servicios.nombre %></p>
 
-                        </div>
-                    
-    
-                    </div>
+                 </div>
 
-                </div>
-          </div>                
+                 <div class="row ">
+                   <p><b style="color: #9E9E9E">Decripci&oacute;n:</b></p>
+                   <p><%= servicios.descripcion %></p> 
+                 </div>
+               </div>
+
+             </div>
+           </div>                
         </div>
+
+        <div id="modaleliminar<%= servicios.id %>" class="modal">
+          <div class="modal-content">
+                <a style="float:right;" class="waves-effect btn-flat modal-close"><i class="mdi-content-clear"></i></a>
+               
+                  <h5>Eliminar Servicio</h5>
+               
+                <div class="row pad30-t" >
+                    <div class="col s12 text-center">
+                     
+                        <h6 style=" font-size: 20px;"> ¿Seguro que desea eliminar el servicio seleccionado? </h6>
+                      
+                      <div style="padding-top: 35px;" class="right">
+                      
+                        <input type="button" class="btn btn-success btn-sm" value="Aceptar" onclick="eliminar(<%= servicios.id %>)">
+                      
+                        <input type="button" class="btn btn-danger btn-sm modal-close" value="Cancelar">
+                      </div>
+
+                    </div>
+                </div>                
+          </div>
+        </div> 
 
 
 

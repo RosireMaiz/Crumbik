@@ -1,4 +1,5 @@
 <%= paginator.render do %>
+<div class="row text-center">
   <ul class="pagination">
     <%= prev_page_tag %>
     <% each_page do |page| %>
@@ -10,4 +11,5 @@
     <% end %>
     <%= next_page_tag %>
   </ul>
+</div>
 <% end %>

@@ -3,7 +3,7 @@
 -- http://www.phpmyadmin.net
 --
 -- Servidor: 127.0.0.1
--- Tiempo de generación: 12-12-2015 a las 21:09:54
+-- Tiempo de generación: 13-12-2015 a las 02:30:47
 -- Versión del servidor: 5.6.21
 -- Versión de PHP: 5.6.3
 
@@ -436,6 +436,7 @@ CREATE TABLE IF NOT EXISTS `usuarios` (
   `encrypted_password` varchar(255) COLLATE utf8_unicode_ci NOT NULL DEFAULT '',
   `username` varchar(255) COLLATE utf8_unicode_ci NOT NULL DEFAULT '',
   `confirmacion_email` tinyint(1) NOT NULL DEFAULT '0',
+  `pais_id` int(11) NOT NULL,
   `reset_password_token` varchar(255) COLLATE utf8_unicode_ci DEFAULT NULL,
   `reset_password_sent_at` datetime DEFAULT NULL,
   `remember_created_at` datetime DEFAULT NULL,
@@ -452,8 +453,8 @@ CREATE TABLE IF NOT EXISTS `usuarios` (
 -- Volcado de datos para la tabla `usuarios`
 --
 
-INSERT INTO `usuarios` (`id`, `email`, `encrypted_password`, `username`, `confirmacion_email`, `reset_password_token`, `reset_password_sent_at`, `remember_created_at`, `sign_in_count`, `current_sign_in_at`, `last_sign_in_at`, `current_sign_in_ip`, `last_sign_in_ip`, `created_at`, `updated_at`) VALUES
-(1, 'ahewstone@gmail.com', '$2a$10$EJCkGNLt5fW..o7YqTTjSeph1eUfcqfPGKh85xg/w8BX78PaiNcvO', 'Ale', 0, NULL, NULL, NULL, 16, '2015-12-07 00:22:13', '2015-12-06 02:15:53', '127.0.0.1', '127.0.0.1', '2015-11-03 03:51:21', '2015-12-07 00:22:13');
+INSERT INTO `usuarios` (`id`, `email`, `encrypted_password`, `username`, `confirmacion_email`, `pais_id`, `reset_password_token`, `reset_password_sent_at`, `remember_created_at`, `sign_in_count`, `current_sign_in_at`, `last_sign_in_at`, `current_sign_in_ip`, `last_sign_in_ip`, `created_at`, `updated_at`) VALUES
+(1, 'ahewstone@gmail.com', '$2a$10$EJCkGNLt5fW..o7YqTTjSeph1eUfcqfPGKh85xg/w8BX78PaiNcvO', 'Ale', 0, 0, NULL, NULL, NULL, 16, '2015-12-07 00:22:13', '2015-12-06 02:15:53', '127.0.0.1', '127.0.0.1', '2015-11-03 03:51:21', '2015-12-07 00:22:13');
 
 -- --------------------------------------------------------
 

@@ -1,8 +1,15 @@
 <!-- Usuario/editar perfil -->
 
 <% content_for :css_personalizado do %>
- <%= stylesheet_link_tag    "usuarios" %> 
- <%= stylesheet_link_tag    "plugins/fileinput.min" %> 
+   <%= stylesheet_link_tag    "usuarios" %> 
+   <%= stylesheet_link_tag    "plugins/fileinput.min" %> 
+    <style type="text/css">
+     .dropdown-content {
+      
+      max-height: 300px; 
+      
+    }
+  </style>
 <% end %>
 
 <div class="row titulo-seccion">
@@ -33,87 +40,95 @@
         <%= form_for(@usuario,  :as => resource_name, :url => usuarios_editar_path, :html => { :method => :post },  :multipart => true ) do |f| %>
           
           <%= f.fields_for :perfil do |perfil| %>
-          <div class="row">
-            <h5>Datos básicos</h5>
-            <div class="input-field col s6">
-             <%= perfil.label :nombre %>
-              <%= perfil.text_field :nombres, :required => true %>
+            <div class="row">
+              <h5>Datos básicos</h5>
+              <div class="input-field col s6">
+                <%= perfil.label :nombre %>
+                <%= perfil.text_field :nombres, :required => true %>
+              </div>
+              <div class="input-field col s6">
+                <%= perfil.label :apellido %>
+                <%= perfil.text_field :apellidos, :required => true %>
+              </div>
             </div>
-            <div class="input-field col s6">
-              <%= perfil.label :apellido %>
-              <%= perfil.text_field :apellidos, :required => true %>
-              
+
+            <div class="row">
+              <div class="input-field col s6">
+                <%= f.label :email %>
+                <%= f.email_field :email, :required => true %>
+              </div>
+              <label>Sexo</label>
+              <div>
+                  <%= perfil.radio_button :sexo, "masculino", :checked => (@usuario.perfil.sexo == "masculino") %>
+                  <%= perfil.label :sexo_masculino, "Masculino" %>
+                  <%= perfil.radio_button :sexo, "femenino", :checked => (@usuario.perfil.sexo == "femenino")%>
+                  <%= perfil.label :sexo_femenino, "Femenino"%>
+              </div> 
             </div>
-          </div>
-          <div class="row">
-            <div class="input-field col s6">
-              <%= f.label :email %>
-              
-               <%= f.email_field :email, :required => true %>
-                    
+
+            <div class="row">
+              <div class="input-field col s6">
+                 <%= perfil.label :ocupacion %>
+                 <%= perfil.text_field :ocupacion, :required => true %>             
+              </div>
+              <div class="input-field col s6">
+                 <%= f.label :username %>
+                 <%= f.text_field :username, :required => true %>             
+              </div>
             </div>
-            <label>Sexo</label>
-            <div>
-                <%= perfil.radio_button :sexo, "masculino", :checked => (@usuario.perfil.sexo == "masculino") %>
-                <%= perfil.label :sexo_masculino, "Masculino" %>
-                <%= perfil.radio_button :sexo, "femenino", :checked => (@usuario.perfil.sexo == "femenino")%>
-                <%= perfil.label :sexo_femenino, "Femenino"%>
-            </div> 
+
+            <div class="row">
+              <div class="col s8">
+                <label >Pais <span class="required">*</span></label>
+                <%= f.collection_select(:pais_id, Pais.all, :id, :nombre) %>  
+              </div>
+            </div>
+
+            <hr/>
+            <h5>Redes sociales</h5>
             
-          </div>
-          <div class="row">
-            <div class="col s6">
-              
-            </div>
-          </div>
+            <div class="row">
+              <div class="col s7">
+                <ul id="lista-redes-sociales" class="vacia">
+                  <li>Te falta agregar alguna red social. Usa el botón a la derecha para hacerlo.</li>
 
-          <hr/>
-          <h5></h5>
-          <div class="row">
-            <div class="input-field col s5">
-               <%= perfil.label :ocupacion %>
-               <%= perfil.text_field :ocupacion, :required => true %>             
-            </div>
-          </div>
-          <div class="col s12 input-field">
-            <div class="col s12">
-            
-            </div>  
-          </div>
+                  <% @usuredes.each do |red| %>
 
-          <hr/>
-
-          <h5>Redes sociales</h5>
-                    <div class="row">
-                      <div class="col s7">
-                        <ul id="lista-redes-sociales" class="vacia">
-                          <li>Te falta agregar alguna red social. Usa el botón a la derecha para hacerlo.</li>
-                        </ul>
-                      </div>
-                      <div class="col s5 text-center">
-                        <div class="dropdown">
-                          <a href="javascript:void(0)" class="btn-floating waves-effect waves-light red"
-                            data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                            <i class="mdi-content-add"></i>
-                          </a>
-                          <ul id="agregar-red-social" class='dropdown-menu list-inline' role="menu">
-                          <li ><a href="javascript:void(0)" id="facebook" class="fb"><i class="fa fa-facebook"></i></a></li> 
-
-                             <li ><a href="javascript:void(0)" id="twitter" class="tw"><i class="fa fa-twitter"></i></a></li>
-
-                           <li><a href="javascript:void(0)" id="googleplus" class="gp"><i class="fa fa-google-plus"></i></a></li> 
-
-                            <li><a href="javascript:void(0)" id="linkedin" class="lk"><i class="fa fa-linkedin"></i></a></li>
-
-                            <li><a href="javascript:void(0)"  id="github" class="gh"><i class="fa fa-github "></i></a></li> 
-                          </ul>
+                    <% if ! red.nil? %>
+                      <li>
+                        <div class="input-group">
+                          <span class="input-group-addon red-social-add " style="background: <%= red.red_social.color %>;">
+                          <i class="<%= red.red_social.icono %>"></i></span>
+                          <input id="usuario_red_social_<%= red.red_social.id %>" name="usuario[red_social_attributes][actual][<%= red.id %>]" type='text' class="form-control" value="<%= red.url%>">
                         </div>
-                      </div>
-                    </div>
-      <%end%>
+                      </li>
+
+                    <% end %>
+                  <% end %>
+                </ul>
+              </div>
+              <div class="col s5 text-center">
+                <div class="dropdown">
+                  <a href="javascript:void(0)" class="btn-floating waves-effect waves-light red"
+                  data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                  <i class="mdi-content-add"></i>
+                  </a>
+                  <ul id="agregar-red-social-usuario" class='dropdown-menu list-inline' role="menu" style="min-width: 100px;">
+                    <% @red_socials.each do |red_social| %>
+
+                      <% if ! red_social.nil? %>
+                         <li style="padding-bottom: 5px;"><a href="javascript:void(0)"  id="<%= red_social.id %>" class="red-social-add" style="background: <%= red_social.color %>;"><i class="<%= red_social.icono %>"></i></a></li> 
+
+                      <% end %>
+                    <% end %>
+                 </ul>
+                </div>
+              </div>
+            </div>
+          <%end%>
           <div class="row pad30">
             <div class="col s12">  
-            <%= f.submit "guardar", :class => 'btn btn-success' %>       
+            <%= f.submit "Guardar", :class => 'btn btn-success' %>       
               <a href="javascript:void(0)" class="btn btn-info">Cancelar</a> 
             </div>
           </div>
@@ -122,42 +137,41 @@
       </div>
     </div> 
   </div>
+
   <div class="col s4">
-    <div class="row">
+    <div class="row no-margin-v">
 
-    <%= form_tag( {controller: "usuarios", action: "save_foto", method: "post"},  multipart: true ) do %>
-      <div class="col s12 panel">
-        <h5>Cambiar foto</h5>
+      <%= form_tag( {controller: "usuarios", action: "save_foto", method: "post"},  multipart: true ) do %>
+        <div class="col s12 panel">
+          <h5>Cambiar foto</h5>
 
-       <% if ! @usuario.perfil.nil? %>
+          <% if ! @usuario.perfil.nil? %>
 
-              <% if ! @usuario.perfil.foto.nil? and @usuario.perfil.foto != "" %>
-                <div id="avatar" class="<%= @usuario.perfil.formato_foto%><%= @usuario.perfil.foto%>" > </div>
-              <% else %>
-                 <div id="avatar" class="<%= @usuario.perfil.formato_foto%><%= @usuario.perfil.foto%>" > </div>
-              <% end %>
+            <% if ! @usuario.perfil.foto.nil? and @usuario.perfil.foto != "" %>
+              <div id="avatar" class="<%= @usuario.perfil.formato_foto%><%= @usuario.perfil.foto%>" > </div>
+            <% else %>
+              <div id="avatar" class="/assets/avatar/sinfoto.jpg'" > </div>
+            <% end %>
 
-        <% else %>
-          <div id="avatar" class='/assets/avatar/sinfoto.jpg' > </div>
-       <% end %>
+          <% else %>
+            <div id="avatar" class='/assets/avatar/sinfoto.jpg' > </div>
+          <% end %>
 
-
-
-        <input id="avatar_id" name="avatar_id" type="file" class="file"  required/>
-        <div class="pad15"></div>
-      </div>
-    <% end %>
+          <input id="avatar_id" name="avatar_id" type="file" class="file"  required/>
+          <div class="pad15"></div>
+        </div>
+      <% end %>
     </div>
-    <div class="pad15"></div>
-    <div class="row panel pad15 pad30-h">
+    
+    <div class="row panel pad15 pad30-h ">
       <div class="col s12">
         <%= render "devise/passwords/edit" %>
         <div class="pad15"></div>
       </div>
     </div>
+
     <div class="pad15"></div>
   </div>
-  
 </div>
 <% content_for :javascript_personalizado do %>
   <%= javascript_include_tag "plugins/pwstrength-bootstrap-1.2.4.min" %>

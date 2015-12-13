@@ -248,7 +248,7 @@ $("#add_nodo").validate({
 
 
 
-var formUsuario = $('#add_usuario');
+var formUsuario = $('#add_usuario_portal');
 var errorUsuario = $('.alert-danger', formUsuario);
 var successUsuario = $('.alert-success', formUsuario);
 formUsuario.validate({
@@ -281,10 +281,7 @@ formUsuario.validate({
 								maxlength:30,
 								equalTo: "#usuario_password"
 							},
-							"usuario[rol_ids][]":{
-									required: true,
-				                	
-							}
+							
 
 						},
 						messages:{
@@ -308,11 +305,7 @@ formUsuario.validate({
 			                            equalTo: "Las contraseñas no coinciden."
 			                        },
 			                        
-							"usuario[rol_ids][]":  {
-                	
-				                     required: "Debes Seleccionar un Rol",
-
-				                }
+							
 			                
 							},
 

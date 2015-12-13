@@ -1,5 +1,5 @@
 require "base64"
-$FOTO_DEFAULT = "app/assets/images/index-plan3.jpg";
+$IMAGEN_DEFAULT = "app/assets/images/index-plan3.jpg";
 class PlansController < ApplicationController
 	def validar_plan
 	    if Plan.exists?(nombre: params[:plan][:nombre])
@@ -116,7 +116,7 @@ class PlansController < ApplicationController
 	def create
 		@plan = Plan.new(plan_params)
 		formato_imagen = "data:image/jpg;base64,"
-    	imagen_plan = Base64.encode64(File.open($FOTO_DEFAULT, "rb").read)
+    	imagen_plan = Base64.encode64(File.open($IMAGEN_DEFAULT, "rb").read)
 		@plan.attributes  = {:imagen => imagen_plan, :formato_imagen => formato_imagen}
 		@plan.save
 		servicios = params[:plan][:servicio]

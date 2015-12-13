@@ -252,6 +252,7 @@ ActiveRecord::Schema.define(version: 20151212191759) do
     t.string   "encrypted_password",     limit: 255, default: "",    null: false
     t.string   "username",               limit: 255, default: "",    null: false
     t.boolean  "confirmacion_email",     limit: 1,   default: false, null: false
+    t.integer  "pais_id",                limit: 4
     t.string   "reset_password_token",   limit: 255
     t.datetime "reset_password_sent_at"
     t.datetime "remember_created_at"
@@ -265,6 +266,7 @@ ActiveRecord::Schema.define(version: 20151212191759) do
   end
 
   add_index "usuarios", ["email"], name: "index_usuarios_on_email", unique: true, using: :btree
+  add_index "usuarios", ["pais_id"], name: "index_usuarios_on_pais_id", using: :btree
   add_index "usuarios", ["reset_password_token"], name: "index_usuarios_on_reset_password_token", unique: true, using: :btree
 
   create_table "variable_psicograficas", force: :cascade do |t|
