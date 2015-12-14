@@ -1,12 +1,10 @@
 <% content_for :css_personalizado do %>
    <style type="text/css">
-     .dropdown-content {
-      
-      max-height: 200px; 
-      
+    .dropdown-content {      
+      max-height: 200px;  
     }
 
-      .checkbox-list input[type="checkbox"] + label {
+    .checkbox-list input[type="checkbox"] + label {
       width: 50% !important;
       vertical-align: top;
      height: inherit;
@@ -35,7 +33,7 @@
   </div>
 </div>
 
-<div  id="form_wizard_1" class=" row pad30-h">
+<div  id="form_wizard_1" class="row pad30-h"  style="width: 100%">
 
   <%= form_for @plan, :url => plans_crear_plan_path, html:{id: "add_plan", class: "form-horizontal"} do |f| %>
     <div class="form-wizard">
@@ -92,26 +90,28 @@
                   <% @servicios = Servicio.all %>
 
                   <% @servicios.each do |servicio| -%>
-                    <div class="row" style="
-                    padding: 10px 10px;
-                    margin: 0;
-                    border-bottom: 1px solid #e0e0e0;">
+                    <div class="row" style="padding: 10px 10px; margin: 0; border-bottom: 1px solid #e0e0e0;">
                       <div class="valign-wrapper">
 
                         <div class="col s4">
-                          <input type="checkbox" id="plan_servicio_<%= servicio.id%>" name="plan[servicio][<%= servicio.id%>][servicio]" onchange="seleccion_servicio('#<%= servicio.id%>div')"  />
-                          <label for="plan_servicio_<%= servicio.id%>" ><%= servicio.nombre%></label>
+                          <input type="checkbox" id="plan_servicio_<%= servicio.id%>" value="<%= servicio.id%>" name="plan_servicio[servicio_ids][]"  <% if ! @descripcion.nil? -%> checked <% end -%> />
+                          <label for="plan_servicio_<%= servicio.id%>"><%= servicio.nombre%></label>
                         </div>
 
-                        <div id="<%= servicio.id%>div" class="col s8 input-field hidden">   
+                        <div id="div<%= servicio.id%>" class="col s8 input-field hidden">   
 
-                          <input  id="plan_servicio_descripcion_<%= servicio.id%>" name="plan[servicio][<%= servicio.id%>][descripcion]" type="text" class="validate">
-                          <label for="plan_servicio__descripcion_<%= servicio.id%>" >Descripcón</label>
+                          <input  id="plan_servicio_descripcion_<%= servicio.id%>" name="plan_servicio[descripcion][]" type="text" class="validate" oninput="validarDescripcion('<%= servicio.id%>')">
+
+                          <label for="plan_servicio__descripcion_<%= servicio.id%>" >Descripción</label>
+
+                          <span id='plan_servicio_descripcion_<%= servicio.id%>-error' class="hidden" style='text-transform: uppercase; font-size: 11px;"+ "margin-bottom: 15px;  color: #d34836; font-weight: 400;'>Debe ingresar la descripción.</span>
                         </div>
 
                       </div>
-                  </div>
-                 <% end -%>
+                    </div>
+                  <% end -%>
+
+                  <span id='plan_servicio_ids-error' class="hidden" style='text-transform: uppercase; font-size: 11px;"+ "margin-bottom: 15px;  color: #d34836; font-weight: 400;'>Debe Seleccionar un Servicio.</span>
                  
                 </div>
           
@@ -143,9 +143,71 @@
         $('.alert-danger').hide();
         $(' .alert-success').hide();
     });
-     function seleccion_servicio(id){
-    $(id).toggleClass('hidden');
-  };
+
+    function validarDescripcion(id){
+      var id_input = '#plan_servicio_descripcion_' + id;
+      var msj_error = '#plan_servicio_descripcion_' + id + "-error";
+      var valor_descripcion = $(id_input).val();
+      if (valor_descripcion == null || valor_descripcion == "") {
+         $(msj_error).removeClass("hidden");
+      } else{
+          $(msj_error).addClass("hidden");
+      };
+    }
+
+    $("input[name='plan_servicio[servicio_ids][]']").on('change', function (){
+
+      var value = this.value;
+      var msj_error = '#plan_servicio_descripcion_' + value + "-error";
+      var id_input = '#plan_servicio_descripcion_' + value;
+      var id_div = "#div" + value;
+      var checked =$(this).prop("checked");
+      if (checked) {
+        $(id_div).removeClass('hidden');
+      } else {
+        $(id_div).addClass('hidden');
+        $(id_input).val("");
+         $(msj_error).addClass("hidden");
+      };
+
+      var fields = $("input[name='plan_servicio[servicio_ids][]']").serializeArray(); 
+        if (fields.length == 0){ 
+         $("#plan_servicio_ids-error").removeClass("hidden");
+         } else { 
+           $("#plan_servicio_ids-error").addClass("hidden");
+        }
+    });
+
+
+    $('#add_plan').submit(function(event){
+       
+      var fields = $("input[name='plan_servicio[servicio_ids][]']").serializeArray(); 
+        if (fields.length == 0) { 
+            $("#plan_servicio_ids-error").removeClass("hidden");
+            event.preventDefault();
+            return false;
+        } else { 
+           $("#plan_servicio_ids-error").addClass("hidden");
+        }
+         var valid = true;
+        for (var i = 0; i < fields.length; i++) {
+           var value =  fields[i].value;
+           var id_input = '#plan_servicio_descripcion_' + value;
+           var valor_descripcion = $(id_input).val();
+           var msj_error = '#plan_servicio_descripcion_' + value + "-error";
+           if (valor_descripcion == null || valor_descripcion == "") {
+              valid = false;
+              $(msj_error).removeClass("hidden");
+           };
+
+        };
+
+        if (!valid) {
+          event.preventDefault();
+            return false;
+        };
+      });
+
   </script>
 <% end %>
 

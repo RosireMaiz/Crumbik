@@ -1,11 +1,11 @@
 <% content_for :css_personalizado do %>
- <%= stylesheet_link_tag    "usuarios" %> 
- <%= stylesheet_link_tag    "plugins/fileinput.min" %> 
-    <style type="text/css">
-  .dropdown-content {
-    max-height: 200px; 
-  }
-</style>
+  <%= stylesheet_link_tag    "usuarios" %> 
+  <%= stylesheet_link_tag    "plugins/fileinput.min" %> 
+  <style type="text/css">
+    .dropdown-content {
+      max-height: 200px; 
+    }
+  </style>
 <% end %>
 
 <div class="row titulo-seccion">
@@ -28,7 +28,7 @@
   </div>
 </div>
 
-<div id="form_wizard_1" class="row pad30-h" style="    width: 100%">
+<div id="form_wizard_1" class="row pad30-h" style="width: 100%">
   <div class="col s8 left panel z-depth-3">
     <%= form_for(@plan,  :url => plan_editar_path, :html => { :method => :post, id:"edit_plan" } ) do |f| %>
       <div class="form-body">
@@ -98,12 +98,13 @@
 
                         <input  id="plan_servicio_descripcion_<%= servicio.id%>" name="plan_servicio[descripcion][]" type="text" class="validate" value="<%= @descripcion -%>" oninput="validarDescripcion('<%= servicio.id%>')">
 
-                        <label for="plan_servicio__descripcion_<%= servicio.id%>" >Descripcón</label>
+                        <label for="plan_servicio__descripcion_<%= servicio.id%>">Descripción</label>
 
                         <span id='plan_servicio_descripcion_<%= servicio.id%>-error' class="hidden" style='text-transform: uppercase; font-size: 11px;"+ "margin-bottom: 15px;  color: #d34836; font-weight: 400;'>Debe ingresar la descripción.</span>
                       </div>
                   </div>
                 <% end -%>
+
                 <span id='plan_servicio_ids-error' class="hidden" style='text-transform: uppercase; font-size: 11px;"+ "margin-bottom: 15px;  color: #d34836; font-weight: 400;'>Debe Seleccionar un Servicio.</span>
 
             </div>
@@ -150,8 +151,79 @@
 
 <script >
     $(document).ready(function(){
-       $(' .alert-danger').hide();
-        $('.alert-success').hide();
+      $('.alert-danger').hide();
+      $('.alert-success').hide();
+
+      var formPlan = $('#edit_plan');
+      var errorPlan = $('.alert-danger', formPlan);
+      var successPlan = $('.alert-success', formPlan);
+      formPlan.validate({
+                      doNotHideMessage: true, //this option enables to show the error/success messages on tab switch.
+                              errorElement: 'span', //default input error message container
+                              errorClass: 'msj-error', // default input error message class
+                              focusInvalid: false, // do not focus the last invalid input
+                    rules: {
+                      "plan[nombre]":{
+                        required:true,
+                        remote: {
+                              url: "/validar_plan_update/?idplan=<%= @plan.id %>",
+                              type: "post"
+                            }
+                      },
+                      "plan[costo]":{
+                        
+                        required:true,
+                        min: 1,
+                      },
+                      "plan[descripcion]":{
+                        required:true,
+                      },
+                      
+                    },
+                    messages:{
+                      "plan[nombre]":{
+                        required:"Indica el nombre.",
+                        remote:"Ya existe un plan con este nombre."
+                      },
+                      "plan[costo]":{
+                        required:"Indica el costo del plan.",
+                        min: "Ingrese una cantidad mayor que 0",
+                      },
+                      "plan[descripcion]":{
+                        required:"Indica la descripción del plan.",
+                      },
+
+                    },
+
+                     errorPlacement: function (error, element) { // render error placement for each input type
+                                          error.insertAfter(element); // for other inputs, just performServicio default behavior
+                                      
+                                  },
+
+                           invalidHandler: function (event, validator) { //display error alert on formServicio submit   
+                                      successPlan.hide();
+                                      errorPlan.show();
+                                      $('html,body').animate({
+                                          scrollTop: $(".steps").offset().top-350
+                                      }, 'slow');
+                                  },
+
+                         highlight: function (element) { // hightlight error inputs
+                                      $(element)
+                                          .closest('.form-group').removeClass('has-success').addClass('has-error'); // set error class to the control group
+                                  },
+
+                         unhighlight: function (element) { // revert the change done by hightlight
+                                      $(element)
+                                          .closest('.form-group').removeClass('has-error'); // set error class to the control group
+                                  },
+
+                           success: function (label) {
+                                          label.addClass('valid') // mark the current input as valid and display OK icon
+                                          .closest('.form-group').removeClass('has-error').addClass('has-success'); // set success class to the control group
+                                  }
+                  });
+
     });
 
     function validarDescripcion(id){

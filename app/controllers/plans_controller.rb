@@ -10,7 +10,7 @@ class PlansController < ApplicationController
   	end
 
   	def validar_plan_update
-	    if Plan.exists?(  ["nombre = ? AND  id <> ? ", params[:plan][:nombre], params[:idplan] ])  
+	    if Plan.exists?( [ "nombre = ? AND  id <> ? ", params[:plan][:nombre], params[:idplan] ])  
 	    	render json: false
 	    else
 	    	render json: true
@@ -112,26 +112,23 @@ class PlansController < ApplicationController
     	imagen_plan = Base64.encode64(File.open($IMAGEN_DEFAULT, "rb").read)
 		@plan.attributes  = {:imagen => imagen_plan, :formato_imagen => formato_imagen}
 		@plan.save
-		servicios = params[:plan][:servicio]
+		servicios = params[:plan_servicio][:servicio_ids]
+
+		descripciones = params[:plan_servicio][:descripcion]
+		puts "descripciones " + descripciones.to_s
+
 		plan_id = @plan.id
 		if ! servicios.nil?
-			servicios.each do |servicios|
-			 	servicio_id = servicios[0]
-			 	servicio = params[:plan][:servicio][servicio_id][:servicio]
-			 	if !servicio.nil?
-			 		descripcion = params[:plan][:servicio][servicio_id][:descripcion]
-			 		
-			 		@plan_servicio = PlanServicio.new
-			 		@plan_servicio.servicio_id = servicio_id
-			 		@plan_servicio.plan_id = plan_id
-					@plan_servicio.descripcion = descripcion
-					@plan_servicio.save
-
-			 		puts "servicio_id " + servicio_id
-			 		puts "servicio " + servicio.to_s
-
-			  		puts "descripcion " + descripcion.to_s
-			 	end
+			servicios.each do |servicio|
+			 	servicio_id = servicio
+			 	puts "servicio_id " + servicio_id
+			 	descripcion = descripciones[servicio.to_i-1]
+			 	puts "descripcion " + descripcion.to_s
+			 	@plan_servicio = PlanServicio.new
+			 	@plan_servicio.servicio_id = servicio_id
+			 	@plan_servicio.plan_id = plan_id
+				@plan_servicio.descripcion = descripcion
+				@plan_servicio.save
 			end
 		end
 

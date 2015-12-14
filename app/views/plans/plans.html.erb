@@ -65,36 +65,32 @@
 
     <% @plans.each do |plan| %>
       <div class="col s12">
-         <div class="card waves-effect">
+         <div class="card hoverable ">
           <div class="card-image waves-effect waves-block waves-light">
-            <img class="activator img-responsive" src="<%= plan.formato_imagen %><%= plan.imagen %>">
+            <img class="img-responsive" src="<%= plan.formato_imagen %><%= plan.imagen %>">
           </div>
           <div class="card-content">
-            <span class="card-title activator grey-text text-darken-4 text-capitalize" style="font-size: 20px; line-height: 30px;">
+            <span class="card-title  grey-text text-darken-4 text-capitalize" style="font-size: 20px; line-height: 30px;">
               <%= plan.nombre %>
-              <i class="waves-effect  right mdi-navigation-more-vert"></i>
+              
             </span>
-            <p>
+            <p class="text-right">
               <a href="javascript:void(0)" onclick="mostrar_detalles('#detalle_plan_<%= plan.id %>')" class="waves-effect">Detalles</a>
             </p>
 
           </div>
-          <div class="card-reveal left">
-            <span class="card-title grey-text text-darken-4 text-capitalize"  style="font-size: 20px; line-height: 30px;">
-              <%= plan.nombre %><i class="material-icons right mdi-content-clear waves-effect "></i>
-            </span>
-            <ul>
-               <li> <a href="/plan/editar/<%= plan.id %>" class="waves-effect">Editar</a></li>
-                <% if (plan.estatus == 'A') %>
-                    <li> <a href="#modal<%= plan.id %>" class=" modal-trigger waves-effect">Deshabilitar</a></li>
-                <% else %>
-                    <li> <a href="#modal<%= plan.id %>" class=" modal-trigger waves-effect">Habilitar</a></li>
-                 <% end %>
+          <div class="card-action">
               
-               <li><a href="#modaleliminar<%= plan.id %>" class="modal-trigger waves-effect">Eliminar</a></li>
+            <a href="/plan/editar/<%= plan.id %>" class="waves-effect">Editar</a>
+            <a href="#modaleliminar<%= plan.id %>" class="modal-trigger waves-effect">Eliminar</a>
+            <% if (plan.estatus == 'A') %>
+                 <a href="#modal<%= plan.id %>" class=" modal-trigger waves-effect">Deshabilitar</a>
+            <% else %>
+                 <a href="#modal<%= plan.id %>" class=" modal-trigger waves-effect">Habilitar</a>
+             <% end %>
 
-            </ul>
           </div>
+
         </div>
       </div>
     <% end %>

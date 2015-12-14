@@ -27,6 +27,7 @@ Rails.application.routes.draw do
 	match "/validar_modo_pago_update" => "modo_pagos#validar_modo_pago_update", via: :post
 	match "/validar_modo_pago" => "modo_pagos#validar_modo_pago", via: :post
 	match "/validar_plan" => "plans#validar_plan", via: :post
+	match "/validar_plan_update" => "plans#validar_plan_update", via: :post
 	match "/validar_tipo_organizacion_update" => "tipo_organizacions#validar_tipo_organizacion_update", via: :post
 	match "/validar_tipo_organizacion" => "tipo_organizacions#validar_tipo_organizacion", via: :post
 
@@ -146,6 +147,8 @@ Rails.application.routes.draw do
 	match "/organizacion/editar/:subdominio" => "organizacions#edit", via: :get
   	match "/organizacion/guardar_logo" => "organizacions#save_logo", via: :post
   	match "/organizacion/editar" => "organizacions#save", via: :post
+
+	match "/sugerencias" => "sugerencias#consultar", via: :get
 
 	devise_scope :usuario do
 	    post "/entrar" => "devise/sessions#create"
