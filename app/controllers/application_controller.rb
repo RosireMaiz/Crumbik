@@ -41,13 +41,13 @@ class ApplicationController < ActionController::Base
   
   private
     def load_db
-      Apartment::Tenant.switch()
+      Apartment::Tenant.switch!()
       return unless request.subdomain.present?
       organizacion = Organizacion.where(["subdominio = ?", request.subdomain]).pluck(:subdominio)
       if organizacion.length > 0
         @organizacion = Organizacion.find_by(subdominio: request.subdomain)
         @tipo = TipoOrganizacion.find_by(id: @organizacion.tipo_organizacion_id)
-        Apartment::Tenant.switch(request.subdomain)
+        Apartment::Tenant.switch!(request.subdomain)
       else
         redirect_to root_url(subdomain: false)
       end

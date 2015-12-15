@@ -18,8 +18,13 @@ class SugerenciasController < ApplicationController
         	redirect_to root_path
      	else
      		if request.subdomain.present?
-     			id_user = current_usuario.id
-     			@sugerencias = Sugerencium.where(usuario_id: id_user).order('id ASC')
+     			
+     			Apartment::Tenant.switch!()
+     			organizacion = Organizacion.where(["subdominio = ?", request.subdomain]).first
+     			
+     			
+     			@sugerencias = Sugerencium.where(usuario_id: organizacion.usuario_id).order('created_at DESC')
+     			
 		        render "sugerencias/sugerencias"	
      		else
      			@rol =  Rol.where(nombre: 'Administrador del sistema')
@@ -29,7 +34,7 @@ class SugerenciasController < ApplicationController
 		        if @usuarioRol[0] == nil or @rol[0].id != current_usuario.rol_actual.id
 		          redirect_to root_path
 		        else
-		           @sugerencias = Sugerencium.order('id ASC')
+		           @sugerencias = Sugerencium.order('created_at DESC')
 		           render "sugerencias/sugerencias"	
 		        end
 
@@ -38,4 +43,24 @@ class SugerenciasController < ApplicationController
          
      	end
 	end
+
+	def create
+		@sugerencia = Sugerencium.new(sugerencia_params)
+		if request.subdomain.present?
+     		Apartment::Tenant.switch!()
+     		organizacion = Organizacion.where(["subdominio = ?", request.subdomain]).first
+     		@sugerencia.usuario_id = organizacion.usuario_id
+     	else
+     		@sugerencia.usuario_id = current_usuario.id
+     	end
+	    @sugerencia.save
+	  	redirect_to :controller => 'sugerencias', :action => 'consultar'
+	end
+
+	private
+		def sugerencia_params
+	      accessible = [ :titulo, :contenido ] # extend with your own params
+	      params.require(:sugerencium).permit(accessible)
+	    end
+
 end

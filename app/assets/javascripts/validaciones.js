@@ -893,6 +893,68 @@ jQuery(function ($) {
 					                    }
 							});
 
+	var formSugerencia = $('#add_sugerencia');
+	var errorSugerencia = $('.alert-danger', formSugerencia);
+	var successSugerencia = $('.alert-success', formSugerencia);
+	formSugerencia.validate({
+						        doNotHideMessage: true, //this option enables to show the error/success messages on tab switch.
+			                    errorElement: 'span', //default input error message container
+			                    errorClass: 'msj-error', // default input error message class
+			                    focusInvalid: false, // do not focus the last invalid input
+								rules: {
+									"sugerencium[titulo]":{
+										
+										required:true,
+									    
+									},
+									
+									"sugerencium[contenido]":{
+										required:true,
+									},
+									
+								},
+								messages:{
+									"sugerencium[titulo]":{
+										required:"Indica el titulo.",
+										
+									},
+									
+									"sugerencium[contenido]":{
+										required:"Indica el contenido de la sugerencia.",
+									},
+
+								},
+
+								 errorPlacement: function (error, element) { // render error placement for each input type
+					                     
+					                            error.insertAfter(element); // for other inputs, just performServicio default behavior
+					                        
+					                    },
+
+					             invalidHandler: function (event, validator) { //display error alert on formServicio submit   
+					                        successSugerencia.hide();
+					                        errorSugerencia.show();
+					                        $('html,body').animate({
+					                            scrollTop: $(".steps").offset().top-350
+					                        }, 'slow');
+					                    },
+
+					         	 highlight: function (element) { // hightlight error inputs
+					                        $(element)
+					                            .closest('.form-group').removeClass('has-success').addClass('has-error'); // set error class to the control group
+					                    },
+
+					         	 unhighlight: function (element) { // revert the change done by hightlight
+					                        $(element)
+					                            .closest('.form-group').removeClass('has-error'); // set error class to the control group
+					                    },
+
+					             success: function (label) {
+					                            label.addClass('valid') // mark the current input as valid and display OK icon
+					                            .closest('.form-group').removeClass('has-error').addClass('has-success'); // set success class to the control group
+					                    }
+							});
+
 
 	});
 

@@ -168,6 +168,9 @@ Rails.application.routes.draw do
 		match "/organizacion/editar_ubicacion" => "organizacions#editar_ubicacion_iframe", via: :post
 		match "/organizacion/eliminar_ubicacion_iframe" => "organizacions#eliminar_ubicacion_iframe", via: :post
 		
+		match "/sugerencia/agregar"=> "sugerencias#new", via: :get
+		match "/sugerencias/crear_sugerencia" => "sugerencias#create", via: :post
+
 	end
 
 end
