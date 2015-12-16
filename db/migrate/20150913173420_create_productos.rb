@@ -6,6 +6,7 @@ class CreateProductos < ActiveRecord::Migration
       t.float :precio
       t.binary :imagen
       t.string :formato_imagen
+      t.references :categoria, index: true
       t.string :estatus, default: "A", :limit => 1
 
     end

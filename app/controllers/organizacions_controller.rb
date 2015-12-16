@@ -225,6 +225,11 @@ class OrganizacionsController < ApplicationController
 
 		redirect_to :controller => 'organizacions', :action => 'editar_banner'
 	end
+
+	def apariencia_tema
+		@valor = true;
+		render "organizacions/temas"
+	end
 	
 	private
 		def organizacion_params

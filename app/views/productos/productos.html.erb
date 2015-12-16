@@ -1,0 +1,98 @@
+<div class="row titulo-seccion">
+  <div class="banner banner-perfil">
+    <div class="contenedor">
+      <div class="col s6">
+        <h5 class="text-uppercase">
+         Productos
+        </h5>
+      </div>
+      <div class="col s6 text-right ">
+        <ol class="breadcrumb">
+          <li>
+            <a href="/">Inicio</a>
+          </li>
+          <li class="active">Productos</li>
+        </ol>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="row pad30-h">
+
+  <div class = "col s3 ">
+
+    <ul class="collapsible filtro" data-collapsible="expandable">
+      <li>
+        <div class="collapsible-header active  grey lighten-4"><i class="fa fa-usd fa-2x deep-purple-text text-darken-1"></i><span class="deep-purple-text text-darken-1">Precio</span></div>
+        <div class="collapsible-body white">
+          <div style = " display: table;
+          width : 100%;">
+            <div class="input-field col s6">
+              <input id="Desde" type="text" class="validate">
+              <label for="Desde" class = "morado">Desde</label>
+
+            </div>
+            <div class="input-field col s6">
+              <input id="Hasta" type="text" class="validate">
+              <label for="Hasta" class = "morado">Hasta</label>
+            </div>
+
+          </div>
+          <a class="waves-effect waves-light btn z-depth-1 espacio pink accent-3" style = " margin-left: 27px;">Buscar     </a>
+        </div>
+      </li>
+      <li class="white">
+          <div class="collapsible-header active  grey lighten-4">
+            <i class="small mdi-social-cake deep-purple-text text-darken-1"></i>Categorías
+          </div>
+          <div class="collapsible-body white" style="display: inline-block; border-bottom: 0px solid #ddd;">
+          <% if !@categorias.blank? %>
+            <% for item in @categorias %>
+              <div class="input-field col s12 left">
+                <input type="checkbox" id="<%= item.nombre %>" />
+                <label for="<%= item.nombre %>"><%= item.nombre %></label>
+              </div>
+            <% end %>
+           
+          <% end %>
+            
+          </div>
+
+      </li>
+
+    </ul> 
+  </div>
+
+  <div class="col s9">
+    <div class="row">
+      <div class="input-field col m6 s12">
+        <input id="BuscarNombre" type="text" class="validate">
+        <label for="BuscarNombre" >Buscar</label>
+      </div>
+    </div> 
+
+    <div class="row">
+
+      <div class = "col s3 fat">
+        <div class="card ">
+          <div class="card-image">
+            <img src="<%= asset_path '1.jpg' %>">
+          </div>
+          <div class="card-content accordion">
+            <h6>Tarta de Lim&oacute;n</h6>
+          </div>
+          <div class="card-action ">
+            <p class = "purple-text right"> $24.99</p>
+          </div>
+        </div>
+    
+      </div>
+
+    </div>
+    
+
+  </div>
+
+
+</div>

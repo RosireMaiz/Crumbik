@@ -171,6 +171,12 @@ Rails.application.routes.draw do
 		match "/sugerencia/agregar"=> "sugerencias#new", via: :get
 		match "/sugerencias/crear_sugerencia" => "sugerencias#create", via: :post
 
+		match "/organizacion/apariencia/tema"=> "organizacions#apariencia_tema", via: :get
+
+		match "/productos/consultar" => "productos#consultar", via: :get
+	    match "/productos/agregar" => "productos#new", via: :get
+	    match "/productos/crear_producto" => "productos#create", via: :post
+		
 	end
 
 end

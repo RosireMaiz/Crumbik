@@ -1,0 +1,179 @@
+
+
+<% content_for :css_personalizado do %>
+   <%= stylesheet_link_tag    "plugins/fileinput.min" %> 
+
+<% end %>
+
+<div class="row titulo-seccion">
+  <div class="banner banner-perfil">
+    <div class="contenedor">
+      <div class="col s6">
+        <h5 class="text-uppercase">
+         Nuevo Producto
+        </h5>
+      </div>
+      <div class="col s6 text-right ">
+        <ol class="breadcrumb">
+          <li>
+            <a href="/">Inicio</a>
+          </li>
+          <li class="active">Crear Producto</li>
+        </ol>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div  id="form_wizard_1" class="row pad30-h"  style="width: 100%">
+
+  <%= form_for @producto, :url => productos_crear_producto_path, html:{id: "add_producto", class: "form-horizontal"}, multipart: true do |f| %>
+    <div class="form-wizard">
+      <div class="form-body steps">
+        
+        
+        <div class="tab-content">
+          <div class="feedback alert alert-danger display-none">
+            <button class="close" data-dismiss="alert"></button>
+            Algunos campos tienen errores. Por favor revisa abajo.
+          </div>
+          <div class="feedback alert-success display-none">
+            <button class="close" data-dismiss="alert"></button>
+            La validación fue exitosa.
+          </div>
+          <div class="panel  hoverable pad30-h">
+            <div class="row pad15">
+              <div class="col s8 left ">
+                <h5 >Datos del producto </h5>
+                
+                <div class="input-field col s8">
+                  <label for="producto_nombre">Nombre <span class="required">
+                  * </span>
+                  </label>
+                  <%= f.text_field :nombre, :required=>true, autocomplete: "off" %>
+                </div>
+                <div class="col s4">
+                  <div class="input-field  input-group ">
+                    <label for="producto_costo">Costo <span class="required">
+                    *  </span>
+                    </label>
+
+                    <%= f.number_field :precio,:min=> 1, :required=>true, autocomplete: "off" %>
+                    <span class="input-group-addon no-padding">
+                      $ </span>
+                  </div>
+                </div>
+
+                <%= f.hidden_field :imagen, :required=>true, autocomplete: "off" %>
+                <%= f.hidden_field :formato_imagen, :required=>true, autocomplete: "off" %>
+            
+              
+                <div class="input-field col s12">
+                  <label for="producto_descripcion">Descripción <span class="required">
+                  * </span>
+                  </label>
+                  <%= f.text_area :descripcion, :required=>true, autocomplete: "off", class: "materialize-textarea", length: "120" %>
+
+                </div>
+
+                <div class="col s12">
+                  <label >Categoria <span class="required">*</span></label>
+                  <%= f.collection_select(:categoria_id, Categorium.all, :id, :nombre) %>  
+                </div>
+      
+              
+              </div>
+
+              <div class="col s4 ">
+                  <h5>Imagen de Producto</h5>
+
+                  
+                  <div id="imagen" class="/assets/producto.png" > </div>
+                  
+
+                  <input id="imagen_id" name="imagen_id" type="file" class="file"  required/>
+
+                  
+                  <div class="pad15"></div>
+              </div>
+            </div>
+
+            <div class="form-actions">
+              <div class="row pad15">
+                <div class="offset-s4 col s8">
+                  
+                  <input type="submit" class="btn btn-success " value="Guardar">
+                  <button type="button" onclick="window.location.href='/productos/consultar'" class="btn btn-danger waves-effect">Cancelar</button>
+                </div>
+              </div>
+            </div>
+
+          </div>
+
+        </div>
+      </div>
+
+    </div>
+  <% end %>
+</div>
+
+
+<% content_for :javascript_personalizado do %>
+  <%= javascript_include_tag "plugins/pwstrength-bootstrap-1.2.4.min" %>
+  <%= javascript_include_tag 'plugins/fileinput.js' %>
+  
+  <script>
+
+    $("#imagen_id").fileinput({
+      'browseLabel':'cambiar',
+      'showCaption':false,
+      'initialPreview': [ "<img src='" + $("#imagen").attr("class") +"' class='file-preview-image' alt='Avatar' title='Imagen de producto'>"],
+      'initialPreviewShowDelete':false,
+      'initialCaption':'archivo(s) seleccionado(s)',
+      'allowedFileTypes':['image'],
+      'allowedFileExtensions':['jpg', 'png', 'jpeg'],
+      'browseClass':'btn btn-primary right',
+      'browseIcon':'<i class="mdi-file-attachment"></i>',
+      'showRemove':false,
+      'showUpload':false,
+      'uploadLabel':'Subir',
+      'uploadIcon':'<i class="mdi-file-file-upload"></i>',
+      'uploadClass':'btn btn-success '
+    });
+
+/*$('#imagen_id').on('fileloaded', function(event, file, previewId, index, reader) {
+  var formato = "data:" + file.type + ";base64,"
+  alert(formato);
+  $("#formato").val(formato);
+  if (this.files && this.files[0] ) {
+        var FR = new FileReader();
+        FR.onload = function(e) {
+          alert(e.target.result);
+          
+          var base64 = e.target.result.split("data:" + file.type + ";base64,")[1];
+          alert(base64);
+          $("#data64").val(base64);
+        };       
+        FR.readAsDataURL( this.files[0] );
+    }
+    console.log("fileloaded");
+});
+*/
+function readImage() {
+    if ( this.files && this.files[0] ) {
+        var FR = new FileReader();
+        FR.onload = function(e) {
+          var formato = e.target.result.split(";base64,")[0] + ";base64,";
+          var base64 = e.target.result.split( formato)[1];
+          $("#producto_imagen").val(base64);
+          $("#producto_formato_imagen").val(formato);
+        };       
+        FR.readAsDataURL( this.files[0] );
+    }
+}
+
+$("#imagen_id").change( readImage );
+
+
+</script>
+<% end %>
