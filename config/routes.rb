@@ -145,7 +145,6 @@ Rails.application.routes.draw do
 	match "/organizaciones" => "organizacions#consultar", via: :get
 	match "/organizacion/consultar/:subdominio" => "organizacions#show", via: :get
 	match "/organizacion/editar/:subdominio" => "organizacions#edit", via: :get
-  	match "/organizacion/guardar_logo" => "organizacions#save_logo", via: :post
   	match "/organizacion/editar" => "organizacions#save", via: :post
 
 	match "/sugerencias" => "sugerencias#consultar", via: :get
@@ -163,8 +162,7 @@ Rails.application.routes.draw do
 		match "/organizacion/apariencia/portal" => "organizacions#apariencia_index", via: :get
 		match "/organizacion/apariencia/editar_ubicacion" => "organizacions#editar_ubicacion", via: :get
 		match "/organizacion/apariencia/editar_banner" => "organizacions#editar_banner", via: :get
-		match "/organizacion/guardar_banner" => "organizacions#save_banner", via: :post
-		match "/organizacion/editar_titulo_banner" => "organizacions#editar_titulo_banner", via: :post
+		match "/organizacion/save_banner" => "organizacions#save_banner", via: :post
 		match "/organizacion/editar_ubicacion" => "organizacions#editar_ubicacion_iframe", via: :post
 		match "/organizacion/eliminar_ubicacion_iframe" => "organizacions#eliminar_ubicacion_iframe", via: :post
 		
@@ -176,6 +174,20 @@ Rails.application.routes.draw do
 		match "/productos/consultar" => "productos#consultar", via: :get
 	    match "/productos/agregar" => "productos#new", via: :get
 	    match "/productos/crear_producto" => "productos#create", via: :post
+	    match "/productos/editar/:id_producto" => "productos#edit", via: :get
+	    match "/producto/editar" => "productos#save_edit", via: :post
+	    match "/productos/update_estatus" => "productos#update_estatus", via: :post
+		match "/productos/eliminar" => "productos#eliminar", via: :post
+		
+
+		match "/productos/publicidad/consultar" => "publicidads#consultar", via: :get
+	    match "/productos/publicidad/agregar" => "publicidads#new", via: :get
+	    match "/publicidad/crear_publicidad" => "publicidads#create", via: :post
+	    match "/publicidad/editar/:id_producto" => "publicidads#edit", via: :get
+	    match "/publicidad/editar" => "publicidads#save_edit", via: :post
+	    match "/publicidad/update_estatus" => "publicidads#update_estatus", via: :post
+		match "/publicidad/eliminar" => "publicidads#eliminar", via: :post
+
 		
 	end
 

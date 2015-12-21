@@ -50,12 +50,17 @@ class OrganizacionsController < ApplicationController
 	end
 
 	def show
-		if params[:subdominio].present?
-			@organizacion = Organizacion.where(["subdominio = ?", params[:subdominio]]).first
+		if  params[:subdominio].present?
+			subdominio = params[:subdominio]
+		else
+			subdominio = request.subdomain
+		end
+		if !request.subdomain.present?
+			@organizacion = Organizacion.where(["subdominio = ?", subdominio]).first
 			@usuario_organizacion = @organizacion.usuario
 		else
 			Apartment::Tenant.switch!()
-			@organizacion = Organizacion.where(["subdominio = ?", request.subdomain]).first
+			@organizacion = Organizacion.where(["subdominio = ?", subdominio]).first
 			@usuario_organizacion = Usuario.includes(:perfil).where(["id = ?", @organizacion.usuario_id]).first
 		end
 
@@ -75,7 +80,7 @@ class OrganizacionsController < ApplicationController
 
 		@organizacion = Organizacion.where(["id = ?", id_organizacion]).first
 
-		@organizacion.update(organizacion_params)
+		@organizacion.update(organizacion_edit_params)
 		redes_sociales = params[:organizacion][:red_social_attributes][:actual]
 
 		if ! redes_sociales.nil?
@@ -189,27 +194,6 @@ class OrganizacionsController < ApplicationController
 	end
 
 	def save_banner
-
-		@id = params[:organizacion_id]
-
-		@organizacion = Organizacion.where(["id = ?", @id]).first
-					
-		#Archivo subido por el usuario.
-	    archivo = params[:banner_id]
-
- 		formato = "data:"+ archivo.content_type+";base64,"
-		banner = Base64.encode64(File.open(archivo.tempfile, "rb").read)
-
-    	@organizacion.banner = banner
-
-    	@organizacion.formato_banner = formato
-
-    	@organizacion.save
-		
-		redirect_to :controller => 'organizacions', :action => 'editar_banner'
-	end
-
-	def editar_titulo_banner
 		@id = params[:organizacion_id]
 
 		@organizacion = Organizacion.where(["id = ?", @id]).first
@@ -218,16 +202,21 @@ class OrganizacionsController < ApplicationController
 		titulo = params[:organizacion][:titulo_banner]
 		subtitulo = params[:organizacion][:subtitulo_banner]
 
+		banner = params[:organizacion][:banner]
+		formato_banner = params[:organizacion][:formato_banner]
+
 		@organizacion.titulo_banner = titulo
 		@organizacion.subtitulo_banner = subtitulo
+		@organizacion.banner = banner
+		@organizacion.formato_banner = formato_banner
 
 		@organizacion.save
 
-		redirect_to :controller => 'organizacions', :action => 'editar_banner'
+		redirect_to :controller => 'organizacions', :action => 'apariencia_index'
 	end
 
 	def apariencia_tema
-		@valor = true;
+		@valor = true
 		render "organizacions/temas"
 	end
 	
@@ -236,5 +225,11 @@ class OrganizacionsController < ApplicationController
 	      accessible = [ :nombre, :descripcion, :subdominio, :pais_id, :tipo_organizacion_id, :telefono, :slogan, :direccion, :mision, :vision] # extend with your own params
 	      params.require(:organizacion).permit(accessible)
     	end
+
+    	def organizacion_edit_params
+	      accessible = [ :nombre, :descripcion, :subdominio, :pais_id, :tipo_organizacion_id, :telefono, :slogan, :direccion, :mision, :vision, :logo, :formato_logo] # extend with your own params
+	      params.require(:organizacion).permit(accessible)
+    	end
+
 
 end

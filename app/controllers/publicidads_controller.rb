@@ -1,6 +1,6 @@
 require "base64"
 $IMAGEN_DEFAULT = "app/assets/images/producto.png";
-class ProductosController < ApplicationController
+class PublicidadsController < ApplicationController
 
 	def new
 		if !usuario_signed_in?
@@ -9,20 +9,20 @@ class ProductosController < ApplicationController
 			if !request.subdomain.present?
 				redirect_to root_path
 			else
-				@producto = Producto.new
+				@publicidad = Publicidad.new
 				formato_imagen = "data:image/png;base64,"
     			imagen = Base64.encode64(File.open($IMAGEN_DEFAULT, "rb").read)
-    			@producto.formato_imagen = formato_imagen
-    			@producto.imagen = imagen
-				render "productos/new"
+    			@publicidad.formato_imagen = formato_imagen
+    			@publicidad.imagen = imagen
+				render "publicidads/new"
 			end
 		end
 	end
 
 	def create
-		@producto = Producto.new(producto_params)
-	    @producto.save
-	  	redirect_to :controller => 'productos', :action => 'consultar'
+		publicidad = Publicidad.new(publicidad_params)
+	    publicidad.save
+	  	redirect_to :controller => 'publicidads', :action => 'consultar'
 	end
 
 	def consultar
@@ -37,10 +37,8 @@ class ProductosController < ApplicationController
 	        if @usuarioRol[0] == nil or @rol[0].id != current_usuario.rol_actual.id
 	          render root_path
 	        else
-	           @productos = Producto.order('id ASC').page(params[:page]).per(9)
-	           @categorias = Categorium.order('id ASC')
-	           @valor = true;
-	           render "productos/productos"	
+	           publicidads = Publicidad.order('id ASC').page(params[:page]).per(9)
+	           render "publicidads/publicidads"	
 	        end
          
      	end
@@ -53,27 +51,27 @@ class ProductosController < ApplicationController
 			if !request.subdomain.present?
 				redirect_to root_path
 			else
-				id = params[:id_producto]
-				@producto = Producto.where("id = ?", id).first	
-				render "productos/edit"
+				id = params[:id_publicidad]
+				publicidad = Publicidad.where("id = ?", id).first	
+				render "publicidads/edit"
 			end
 		end
 	end
 
 	def save_edit
-		id = params[:producto_id]
+		id = params[:publicidad_id]
 
-		producto_edit = Producto.where(["id = ?", id]).first
+		publicidad_edit = Publicidadd.where(["id = ?", id]).first
 		
-		producto_edit.update(producto_params)
+		publicidad_edit.update(publicidad_params)
 
-		redirect_to :controller => 'productos', :action => 'consultar'
+		redirect_to :controller => 'publicidads', :action => 'consultar'
 	end
 
 	def update_estatus
-		id = params[:idproducto]
+		id = params[:idpublicidad]
 		estatus = params[:estatus]
-		if Producto.update(id, :estatus => estatus)
+		if Publicidad.update(id, :estatus => estatus)
 			render :text =>'{ "success" : "true"}'
 		else
 			render :text => '{ "success" : "false"}'
@@ -82,10 +80,10 @@ class ProductosController < ApplicationController
 
 
 	def eliminar
-		id = params[:idproducto]
-		producto = Producto.where(id: id).first
-		producto.destroy
-      if producto.destroyed?
+		id = params[:idpublicidad]
+		publicidad = Publicidad.where(id: id).first
+		publicidad.destroy
+      if publicidad.destroyed?
       	render :text =>'{ "success" : "true"}'
 	  else
 		render :text => '{ "success" : "false"}'
@@ -93,9 +91,8 @@ class ProductosController < ApplicationController
 	end
 
 	private
-	 def producto_params
-      accessible = [ :nombre,  :precio, :descripcion,  :formato_imagen, :imagen, :categoria_id  ] # extend with your own params
-      params.require(:producto).permit(accessible)
+	 def publicidad_params
+      accessible = [ :descripcion,  :formato_imagen, :imagen, :producto_id  ] # extend with your own params
+      params.require(:publicidad).permit(accessible)
     end
-
 end

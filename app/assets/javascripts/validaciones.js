@@ -827,6 +827,81 @@ jQuery(function ($) {
 							});
 
 
+	var formProducto = $('#add_producto');
+	var errorProducto = $('.alert-danger', formProducto);
+	var successProducto = $('.alert-success', formProducto);
+	formProducto.validate({
+							    doNotHideMessage: true, //this option enables to show the error/success messages on tab switch.
+			                    errorElement: 'span', //default input error message container
+			                    errorClass: 'msj-error', // default input error message class
+			                    focusInvalid: false, // do not focus the last invalid input
+								rules: {
+									"producto[nombre]":{
+										
+										required:true,
+										
+									},
+									"producto[precio]":{
+										required:true,
+										min: 1,
+									},
+									"producto[descripcion]":{
+										required:true,
+										maxlength:255,
+										minlength:60,
+									},
+									
+								},
+								messages:{
+									"producto[nombre]":{
+										required:"Indica el nombre.",
+										
+									},
+									"producto[precio]":{
+										required:"Indica el precio.",
+										min: "Ingrese una cantidad mayor que 0",
+									},
+									"producto[descripcion]":{
+										required:"Indica la descripción.",
+										maxlength:"Se acepta un máximo de 255 caracteres ",
+										minlength:"Se acepta un mínimo de 60 caracteres ",
+									},
+
+								},
+
+								 errorPlacement: function (error, element) { // render error placement for each input type
+					                     
+					                            error.insertAfter(element); // for other inputs, just perform default behavior
+					                        
+					                    },
+
+					             invalidHandler: function (event, validator) { //display error alert on formServicio submit   
+					                        successProducto.hide();
+					                        errorProducto.show();
+					                        $('html,body').animate({
+					                            scrollTop: $(".steps").offset().top-350
+					                        }, 'slow');
+					                    },
+
+					         	 highlight: function (element) { // hightlight error inputs
+					                        $(element)
+					                            .closest('.form-group').removeClass('has-success').addClass('has-error'); // set error class to the control group
+					                    },
+
+					         	 unhighlight: function (element) { // revert the change done by hightlight
+					                        $(element)
+					                            .closest('.form-group').removeClass('has-error'); // set error class to the control group
+					                    },
+
+					             success: function (label) {
+					                            label.addClass('valid') // mark the current input as valid and display OK icon
+					                            .closest('.form-group').removeClass('has-error').addClass('has-success'); // set success class to the control group
+					                    }
+							});
+
+
+
+
 	var formTipoOrganizacion = $('#add_tipo_organizacion');
 	var errorTipoOrganizacion = $('.alert-danger', formTipoOrganizacion);
 	var successTipoOrganizacion = $('.alert-success', formTipoOrganizacion);

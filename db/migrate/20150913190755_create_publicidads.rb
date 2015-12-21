@@ -5,7 +5,7 @@ class CreatePublicidads < ActiveRecord::Migration
       t.date :fecha_inicio
       t.date :fecha_vencimiento
       t.string :estatus, default: "A", :limit => 1
-      t.binary :imagen
+      t.binary :imagen, :limit => 4294967295.bytes
       t.string :formato_imagen
       t.references :producto, index: true
     end

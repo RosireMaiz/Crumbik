@@ -1,9 +1,17 @@
+<% content_for :css_personalizado do %>
+  <style type="text/css">
+    .tabs .indicator {
+      background-color: #616161;
+    }
+  </style>
+<% end %>
+
 <div class="row titulo-seccion">
   <div class="banner banner-perfil">
     <div class="contenedor">
       <div class="col s6">
         <h5 class="text-uppercase">
-         Productos
+         Productos/Servicios
         </h5>
       </div>
       <div class="col s6 text-right ">
@@ -11,7 +19,7 @@
           <li>
             <a href="/">Inicio</a>
           </li>
-          <li class="active">Productos</li>
+          <li class="active">Productos/Servicios</li>
         </ol>
       </div>
     </div>
@@ -19,6 +27,12 @@
 </div>
 
 <div class="row pad30-h">
+
+<div class="fixed-action-btn " style="top: 250px; bottom: 0px">
+  <a href="/productos/agregar" class="btn-floating btn-sm waves-effect waves-light red left absolute tooltipped" style="margin-bottom: 60px;" data-position="left" data-delay="50" data-tooltip="Agregar Producto/Servicio">
+    <i class=" mdi-av-playlist-add"></i>
+  </a>
+ </div>
 
   <div class = "col s3 ">
 
@@ -64,35 +78,231 @@
     </ul> 
   </div>
 
-  <div class="col s9">
+  <div class="col s9 ">
     <div class="row">
       <div class="input-field col m6 s12">
         <input id="BuscarNombre" type="text" class="validate">
         <label for="BuscarNombre" >Buscar</label>
       </div>
     </div> 
-
-    <div class="row">
-
-      <div class = "col s3 fat">
-        <div class="card ">
-          <div class="card-image">
-            <img src="<%= asset_path '1.jpg' %>">
-          </div>
-          <div class="card-content accordion">
-            <h6>Tarta de Lim&oacute;n</h6>
-          </div>
-          <div class="card-action ">
-            <p class = "purple-text right"> $24.99</p>
-          </div>
-        </div>
     
+    <div class="row">
+      <div class="col s12">
+        <ul class="tabs">
+          <li class="tab col s3"><a href="#todos" class="grey-text text-darken-2 active">Todos</a></li>
+          <li class="tab col s3"><a class="grey-text text-darken-2 " href="#habilitados">Habilitados</a></li>
+          <li class="tab col s3 "><a class="grey-text text-darken-2" href="#deshabilitados">Deshabilitados</a></li>
+        </ul>
       </div>
+    </div>
+
+    <div class="row center-align valign-wrappe">
+      
+      <% if !@productos.blank? %>
+
+        <div id="todos">
+          <% for producto in @productos %>
+
+            <div class = "col s3 " style="width: 33%;">
+              <div class="card hoverable">
+                <div class="card-image">
+                  <img src="<%= producto.formato_imagen %><%= producto.imagen %>">
+                </div>
+                <div class="card-content  pad5-hv left-align">
+                  <h6><%= producto.nombre %></h6>
+                </div>
+                <div class="card-action pad5-15">
+                  <p class = "blue-text right"> $<%= producto.precio %></p>
+                  <a href="/productos/editar/<%= producto.id %>" class="left"> Editar</a>
+                  <a href="#modaleliminar<%= producto.id %>" class="modal-trigger waves-effect left"> Eliminar</a>
+                  <% if producto.estatus == 'A' %>
+                     <a href="#modal<%= producto.id %>" class=" modal-trigger waves-effect left"> Deshabilitar</a>
+                  <% else %>
+                    <a href="#modal<%= producto.id %>" class=" modal-trigger waves-effect left"> Habilitar</a>
+                  <%  end %>
+                 
+                </div>
+                
+              </div>
+          
+            </div>
+            
+          <% end %>
+        </div>
+
+        <div id="habilitados">
+          <% for producto in @productos %>
+            <% if producto.estatus == 'A' %>
+              <div class = "col s3 " style="width: 33%;">
+                <div class="card hoverable">
+                  <div class="card-image">
+                    <img src="<%= producto.formato_imagen %><%= producto.imagen %>">
+                  </div>
+                  <div class="card-content  pad5-hv left-align">
+                    <h6><%= producto.nombre %></h6>
+                  </div>
+                  <div class="card-action pad5-15">
+                    <p class = "blue-text right"> $<%= producto.precio %></p>
+                    <a href="/productos/editar/<%= producto.id %>" class="left"> Editar</a>
+                    <a href="#modaleliminar<%= producto.id %>" class="modal-trigger waves-effect left"> Eliminar</a>
+                    <% if producto.estatus == 'A' %>
+                       <a href="#modal<%= producto.id %>" class=" modal-trigger waves-effect left"> Deshabilitar</a>
+                    <% else %>
+                      <a href="#modal<%= producto.id %>" class=" modal-trigger waves-effect left"> Habilitar</a>
+                    <%  end %>
+                   
+                  </div>
+                  
+                </div>
+            
+              </div>
+             <% end %>
+            
+          <% end %>
+        </div>
+
+        <div id="deshabilitados">
+          <% for producto in @productos %>
+            <% if producto.estatus == 'I' %>
+              <div class = "col s3 " style="width: 33%;">
+                <div class="card hoverable">
+                  <div class="card-image">
+                    <img src="<%= producto.formato_imagen %><%= producto.imagen %>">
+                  </div>
+                  <div class="card-content  pad5-hv left-align">
+                    <h6><%= producto.nombre %></h6>
+                  </div>
+                  <div class="card-action pad5-15">
+                    <p class = "blue-text right"> $<%= producto.precio %></p>
+                    <a href="/productos/editar/<%= producto.id %>" class="left"> Editar</a>
+                    <a href="#modaleliminar<%= producto.id %>" class="modal-trigger waves-effect left"> Eliminar</a>
+                    <% if producto.estatus == 'A' %>
+                       <a href="#modal<%= producto.id %>" class=" modal-trigger waves-effect left"> Deshabilitar</a>
+                    <% else %>
+                      <a href="#modal<%= producto.id %>" class=" modal-trigger waves-effect left"> Habilitar</a>
+                    <%  end %>
+                   
+                  </div>
+                  
+                </div>
+            
+              </div>
+             <% end %>
+            
+          <% end %>
+        </div>
+      
+      <% end %>
 
     </div>
-    
 
+    <div class="row valign-wrapper">
+      <%= paginate(@productos) %>
+    </div>
+  
+  </div>
+
+
+  <div>
+     <% @productos.each do |producto| %>
+      <div id="modal<%= producto.id %>" class="modal">
+        <div class="modal-content">
+          <a href="#" style="float:right;" class="waves-effect btn-flat modal-close"><i class="mdi-content-clear"></i></a>
+          <% if (producto.estatus == 'A') %>
+          <h5>Deshabilitar Producto/Servicio</h5>
+          <% else %>
+          <h5>Habilitar Producto/Servicio</h5>
+          <% end %>
+
+
+          <div class="row" style="padding-top: 35px;">
+            <div class="col s12 text-center">
+            <% if (producto.estatus == 'A') %>
+              <h6 style=" font-size: 20px;"> ¿Seguro que desea Deshabilitar el producto/servicio seleccionado? </h6>
+              <% else %>
+              <h6 style=" font-size: 20px;"> ¿Seguro que desea Habilitar el producto/servicio seleccionado? </h6>
+              <% end %>
+              <div style="padding-top: 35px;" class="right">
+                <% if (producto.estatus == 'A') %>
+                  <input type="button" class="btn btn-success btn-sm" value="Aceptar" onclick="update_estatus(<%= producto.id %>,'I')">
+                <% else %>
+                  <input type="button" class="btn btn-success btn-sm" value="Aceptar" onclick="update_estatus(<%= producto.id %>,'A')">
+                <% end %>
+                 <input type="button" class="btn btn-danger btn-sm modal-close" value="Cancelar">
+              </div>
+
+            </div>
+          </div>                
+        </div>
+      </div> 
+
+      <div id="modaleliminar<%= producto.id %>" class="modal">
+        <div class="modal-content">
+          <a style="float:right;" class="waves-effect btn-flat modal-close"><i class="mdi-content-clear"></i></a>
+
+          <h5>Eliminar Producto/Servicio</h5>
+
+          <div class="row pad30-t" >
+            <div class="col s12 text-center">
+
+              <h6 style=" font-size: 20px;"> ¿Seguro que desea eliminar el producto/servicio seleccionado? </h6>
+
+              <div style="padding-top: 35px;" class="right">
+
+                <input type="button" class="btn btn-success btn-sm" value="Aceptar" onclick="eliminar(<%= producto.id %>)">
+
+                <input type="button" class="btn btn-danger btn-sm modal-close" value="Cancelar">
+              </div>
+
+            </div>
+          </div>                
+        </div>
+      </div> 
+
+    <% end %>
   </div>
 
 
 </div>
+
+
+<% content_for :javascript_personalizado do %>
+  <script type="text/javascript">
+
+
+  function update_estatus(idproducto, estatus){
+    var request = $.ajax({
+                            url: '/productos/update_estatus',
+                            method: "POST",
+                            data: { idproducto: idproducto, estatus: estatus},
+                            dataType: "JSON"
+                          });
+
+        request.done(function( data ) {
+                                        location.reload(); 
+                                      });
+                     
+        request.fail(function( jqXHR, textStatus ) {
+                                                    alert( "Request failed: " + textStatus );
+                                                   });
+    };
+
+  function eliminar(idproducto){
+    var request = $.ajax({
+                            url: '/productos/eliminar',
+                            method: "POST",
+                            data: { idproducto: idproducto},
+                            dataType: "JSON"
+                          });
+
+        request.done(function( data ) {
+                                        location.reload(); 
+                                      });
+                     
+        request.fail(function( jqXHR, textStatus ) {
+                                                    alert( "Request failed: " + textStatus );
+                                                   });
+  }
+
+  </script>
+<% end %>

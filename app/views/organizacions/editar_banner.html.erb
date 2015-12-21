@@ -25,57 +25,59 @@
 
 <div class="row pad30-h">
 
-  <div class="row no-margin no-margin-v">
-    <div class="col s6 ">
-      <div class="row">
+  <div class="row no-margin no-margin-v panel">
+   <%= form_for(@organizacion, :url => organizacion_save_banner_path, :html => { :method => :post, :class => "pad15"}) do |f| %>
+      <div class="col s6 ">
+        <div class="row">
 
-        <div class="col s12 panel">
-          <h5>Texto del Banner</h5>
-          <%= form_for(@organizacion, :url => organizacion_editar_titulo_banner_path, :html => { :method => :post, :class => "pad15"}) do |f| %>
-            <input id="organizacion_id" name="organizacion_id" class="file" value="<%= @organizacion.id %>" hidden />
-            <div class="input-field">
-              <%= f.label :titulo_banner, "Titulo",
-                  {for: "organizacion_titulo_banner"} %>
-              <%= f.text_area :titulo_banner, :autofocus => false, autocomplete: "off", :class=>"materialize-textarea", length: "40" %>
-            </div>
+          <div class="col s12 ">
+            <h5>Texto del Banner</h5>
 
-            <div class="input-field">
-              <%= f.label :subtitulo_banner, "Subtitulo", 
-                    {for: "organizacion_subtitulo_banner"} %>
-              <%= f.text_area :subtitulo_banner , autocomplete: "off", :class=>"materialize-textarea" , length: "80"  %>
-            </div>
+               <%= f.hidden_field :banner, :required=>true, autocomplete: "off" %>
+               <%= f.hidden_field :formato_banner, :required=>true, autocomplete: "off" %>
+           
+              <input id="organizacion_id" name="organizacion_id" class="file" value="<%= @organizacion.id %>" hidden />
+              <div class="input-field">
+                <%= f.label :titulo_banner, "Titulo",
+                    {for: "organizacion_titulo_banner"} %>
+                <%= f.text_area :titulo_banner, :autofocus => false, autocomplete: "off", :class=>"materialize-textarea", length: "40" %>
+              </div>
 
-            <div><%= f.submit "Cambiar", {class: "btn btn-success"} %></div>
+              <div class="input-field">
+                <%= f.label :subtitulo_banner, "Subtitulo", 
+                      {for: "organizacion_subtitulo_banner"} %>
+                <%= f.text_area :subtitulo_banner , autocomplete: "off", :class=>"materialize-textarea" , length: "80"  %>
+              </div>
+          </div>
 
-          <% end %>
-          
         </div>
-
+        
       </div>
-      
-    </div>
 
-    <div class="col s6 ">
-      <div class="row">
-        <%= form_tag( {controller: "organizacions", action: "save_banner", method: "post"},  multipart: true ) do %>
-          <div class=" col s12 panel" align="right">
-            <h5 align="left">Cambiar Banner</h5>
+      <div class="col s6">
+        <div class="row">
+          <div class=" col s12 " align="right">
+            <h5 align="left">Imagen del Banner</h5>
             <input id="organizacion_id" name="organizacion_id" class="file" value="<%= @organizacion.id %>" hidden />
 
             <div id="banner" class="<%= @organizacion.formato_banner%><%= @organizacion.banner%>" > </div>
-           
 
-            <input id="banner_id" name="banner_id" type="file" class="file"  required/>
+
+            <input id="banner_id" name="banner_id" type="file" class="file" />
             <div class="pad15"></div>
 
           </div>
-        <% end %>
+        </div>
+        
       </div>
-    </div>
-  </div>
-  
-  <div class="row right-align">
-    <button type="button" onclick="window.location.href='/organizacion/apariencia/portal'" class="btn btn-danger waves-effect">Regresar</button>       
+
+      <div class="row center-align">
+        <%= f.submit "Guardar", {class: "btn btn-success"} %>
+        <button type="button" onclick="window.location.href='/organizacion/apariencia/portal'" class="btn btn-danger waves-effect">Regresar</button>       
+      </div>
+
+    <% end %>
+
   </div>
 
 </div>
@@ -100,10 +102,30 @@
       'browseClass':'btn btn-primary',
       'browseIcon':'<i class="mdi-file-attachment"></i>',
       'showRemove':false,
+      'showUpload':false,
       'uploadLabel':'Subir',
       'uploadIcon':'<i class="mdi-file-file-upload"></i>',
       'uploadClass':'btn btn-success ',
+      'showClose':false
     });
+
+  function readImage() {
+      
+    if ( this.files && this.files[0] ) {
+        var FR = new FileReader();
+        FR.onload = function(e) {
+          var formato = e.target.result.split(";base64,")[0] + ";base64,";
+          var base64 = e.target.result.split(formato)[1];
+          $("#organizacion_banner").val(base64);
+          $("#organizacion_formato_banner").val(formato);
+        };       
+        FR.readAsDataURL( this.files[0] );
+       
+    }
+
+  }
+
+  $("#banner_id").change( readImage );
      
-</script>
+  </script>
 <% end %>

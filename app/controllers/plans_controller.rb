@@ -1,5 +1,4 @@
 require "base64"
-$IMAGEN_DEFAULT = "app/assets/images/index-plan3.jpg";
 class PlansController < ApplicationController
 	def validar_plan
 	    if Plan.exists?(nombre: params[:plan][:nombre])
@@ -21,10 +20,14 @@ class PlansController < ApplicationController
 		if !usuario_signed_in?
 			redirect_to root_path
 		else
-			@plan = Plan.new
+
 			if request.subdomain.present?
 				redirect_to root_path
 			else
+				formato_imagen = "data:image/jpg;base64,"
+	    		imagen_plan = Base64.encode64(File.open($IMAGEN_DEFAULT, "rb").read)
+				@plan = Plan.new
+				@plan.attributes  = {:imagen => imagen_plan, :formato_imagen => formato_imagen}
 				render "plans/new"
 			end
 		end
@@ -49,14 +52,11 @@ class PlansController < ApplicationController
 		id = params[:plan_id]
 
 		plan_edit = Plan.where(["id = ?", id]).first
-		puts "id " + id.to_s
 		plan_edit.update(plan_params)
 
 		plan_servicios = plan_edit.plan_servicio
 		if ! plan_servicios.nil?
 			plan_servicios.each do |plan_servicio|
-				puts "plan des" + plan_servicio.descripcion.to_s
-				puts "plan ser " + plan_servicio.servicio.nombre.to_s
 				plan_servicio.destroy
 			end
 		end
@@ -64,15 +64,12 @@ class PlansController < ApplicationController
 		servicios = params[:plan_servicio][:servicio_ids]
 
 		descripciones = params[:plan_servicio][:descripcion]
-		puts "descripciones " + descripciones.to_s
 
 		plan_id = plan_edit.id
 		if ! servicios.nil?
 			servicios.each do |servicio|
 			 	servicio_id = servicio
-			 	puts "servicio_id " + servicio_id
 			 	descripcion = descripciones[servicio.to_i-1]
-			 	puts "descripcion " + descripcion.to_s
 			 	@plan_servicio = PlanServicio.new
 			 	@plan_servicio.servicio_id = servicio_id
 			 	@plan_servicio.plan_id = plan_id
@@ -84,33 +81,10 @@ class PlansController < ApplicationController
 		redirect_to :controller => 'plans', :action => 'consultar'
 
 	end
-
-	def save_imagen
-
-		@id = params[:plan_id]
-
-		@plan = Plan.where(["id = ?", @id]).first
-					
-		#Archivo subido por el usuario.
-	    archivo = params[:imagen_id]
-
- 		formato = "data:"+ archivo.content_type+";base64,"
-		imagen = Base64.encode64(File.open(archivo.tempfile, "rb").read)
-
-    	@plan.imagen = imagen
-
-    	@plan.formato_imagen = formato
-
-    	@plan.save
-		
-		redirect_to :controller => 'plans', :action => 'edit', id_plan: @id
-	end
 	
 	def create
 		@plan = Plan.new(plan_params)
-		formato_imagen = "data:image/jpg;base64,"
-    	imagen_plan = Base64.encode64(File.open($IMAGEN_DEFAULT, "rb").read)
-		@plan.attributes  = {:imagen => imagen_plan, :formato_imagen => formato_imagen}
+		
 		@plan.save
 		servicios = params[:plan_servicio][:servicio_ids]
 
@@ -121,9 +95,7 @@ class PlansController < ApplicationController
 		if ! servicios.nil?
 			servicios.each do |servicio|
 			 	servicio_id = servicio
-			 	puts "servicio_id " + servicio_id
 			 	descripcion = descripciones[servicio.to_i-1]
-			 	puts "descripcion " + descripcion.to_s
 			 	@plan_servicio = PlanServicio.new
 			 	@plan_servicio.servicio_id = servicio_id
 			 	@plan_servicio.plan_id = plan_id
@@ -180,7 +152,7 @@ class PlansController < ApplicationController
 
 	private
 		def plan_params
-	      accessible = [ :nombre, :descripcion, :costo, :frecuencia_pago_id] # extend with your own params
+	      accessible = [ :nombre, :descripcion, :costo, :frecuencia_pago_id, :imagen, :formato_imagen] # extend with your own params
 	      params.require(:plan).permit(accessible)
 	    end
 

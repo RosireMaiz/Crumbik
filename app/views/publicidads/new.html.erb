@@ -2,17 +2,22 @@
     <%= stylesheet_link_tag    "plugins/fileinput.min" %> 
     <style type="text/css">
       .dropdown-content {
-        max-height: 300px;  
+        max-height: 250px;  
       }
+      .ui-datepicker-calendar {
+
+    display: none !important;
+
+}​
+
     </style>
 <% end %>
-
 <div class="row titulo-seccion">
   <div class="banner banner-perfil">
     <div class="contenedor">
       <div class="col s6">
         <h5 class="text-uppercase">
-         Nuevo Producto
+         Agregar Publicidad
         </h5>
       </div>
       <div class="col s6 text-right ">
@@ -20,16 +25,17 @@
           <li>
             <a href="/">Inicio</a>
           </li>
-          <li class="active">Crear Producto</li>
+          <li class="active">Crear Publicidad</li>
         </ol>
       </div>
     </div>
   </div>
 </div>
 
+
 <div  id="form_wizard_1" class="row pad30-h"  style="width: 100%">
 
-  <%= form_for @producto, :url => productos_crear_producto_path, html:{id: "add_producto", class: "form-horizontal"}, multipart: true do |f| %>
+  <%= form_for @publicidad, :url => publicidad_crear_publicidad_path, html:{id: "add_publicidad", class: "form-horizontal"}, multipart: true do |f| %>
     <div class="form-wizard">
       <div class="form-body steps">
 
@@ -43,53 +49,14 @@
             La validación fue exitosa.
           </div>
           <div class="panel  hoverable pad30-h">
-            <div class="row pad15">
-              <div class="col s8 left ">
-                <h5 >Datos del producto </h5>
-                
-                <div class="input-field col s8">
-                  <label for="producto_nombre">Nombre <span class="required">
-                  * </span>
-                  </label>
-                  <%= f.text_field :nombre, :required=>true, autocomplete: "off" %>
-                </div>
-                <div class="col s4">
-                  <div class="input-field  input-group ">
-                    <label for="producto_costo">Precio <span class="required">
-                    *  </span>
-                    </label>
 
-                    <%= f.number_field :precio,:min=> 1, :required=>true, autocomplete: "off",  :step => 'any' %>
-                    <span class="input-group-addon no-padding">
-                      $ </span>
-                  </div>
-                </div>
-
-                <%= f.hidden_field :imagen, :required=>true, autocomplete: "off" %>
-                <%= f.hidden_field :formato_imagen, :required=>true, autocomplete: "off" %>
-            
+            <div class="row">
               
-                <div class="input-field col s12">
-                  <label for="producto_descripcion">Descripción <span class="required">
-                  * </span>
-                  </label>
-                  <%= f.text_area :descripcion, :required=>true, autocomplete: "off", class: "materialize-textarea", length: "255" %>
-
-                </div>
-
-                <div class="col s12">
-                  <label >Categoria <span class="required">*</span></label>
-                  <%= f.collection_select(:categoria_id, Categorium.all, :id, :nombre) %>  
-                </div>
-      
-              
-              </div>
-
-              <div class="col s4 ">
-                  <h5>Imagen de Producto</h5>
+              <div class="col s12">
+                  <h5>Imagen de la Publicidad</h5>
 
                   
-                  <div id="imagen" class="<%= @producto.formato_imagen %><%= @producto.imagen %>" > </div>
+                  <div id="imagen" class="<%= @publicidad.formato_imagen %><%= @publicidad.imagen %>" > </div>
                   
 
                   <input id="imagen_id" name="imagen_id" type="file" class="file"  />
@@ -98,13 +65,49 @@
                   <div class="pad15"></div>
               </div>
             </div>
+            <div class="row pad15">
+              <div class="col s12  left ">
+                <h5 >Datos de la Publicidad </h5>
+                
+
+                <%= f.hidden_field :imagen, :required=>true, autocomplete: "off" %>
+                <%= f.hidden_field :formato_imagen, :required=>true, autocomplete: "off" %>
+            
+              
+                <div class="input-field col s12">
+                  <label for="publicidad_descripcion">Descripción <span class="required">
+                  * </span>
+                  </label>
+                  <%= f.text_area :descripcion, :required=>true, autocomplete: "off", class: "materialize-textarea", length: "30" %>
+
+                </div>
+
+                <div class="col s12">
+                  <label>Producto <span class="required">*</span></label>
+                  <%= f.collection_select(:producto_id, Producto.all, :id, :nombre) %>  
+                </div>
+
+                <div class="col s6">
+                  <label>Fecha de Inicio <span class="required">*</span></label>
+                  <input type="date" class="datepicker">
+                </div>
+
+                <div class="col s6">
+                  <label>Fecha de Finalización <span class="required">*</span></label>
+                  <input type="date" class="datepicker">
+                </div>
+              
+              </div>
+
+
+            </div>
 
             <div class="form-actions">
               <div class="row pad15">
                 <div class="offset-s4 col s8">
                   
                   <input type="submit" class="btn btn-success " value="Guardar">
-                  <button type="button" onclick="window.location.href='/productos/consultar'" class="btn btn-danger waves-effect">Cancelar</button>
+                  <button type="button" onclick="window.location.href='/productos/publicidad/consultar'" class="btn btn-danger waves-effect">Cancelar</button>
                 </div>
               </div>
             </div>
@@ -128,7 +131,7 @@
     $("#imagen_id").fileinput({
       'browseLabel':'cambiar',
       'showCaption':false,
-      'initialPreview': [ "<img src='" + $("#imagen").attr("class") +"' class='file-preview-image' alt='Avatar' title='Imagen de producto'>"],
+      'initialPreview': [ "<img src='" + $("#imagen").attr("class") +"' class='file-preview-image' alt='Avatar' title='Imagen de publicidad'>"],
       'initialPreviewShowDelete':false,
       'initialCaption':'archivo(s) seleccionado(s)',
       'allowedFileTypes':['image'],
@@ -143,39 +146,20 @@
       'showClose':false
     });
 
-/*$('#imagen_id').on('fileloaded', function(event, file, previewId, index, reader) {
-  var formato = "data:" + file.type + ";base64,"
-  alert(formato);
-  $("#formato").val(formato);
-  if (this.files && this.files[0] ) {
-        var FR = new FileReader();
-        FR.onload = function(e) {
-          alert(e.target.result);
-          
-          var base64 = e.target.result.split("data:" + file.type + ";base64,")[1];
-          alert(base64);
-          $("#data64").val(base64);
-        };       
-        FR.readAsDataURL( this.files[0] );
-    }
-    console.log("fileloaded");
-});
-*/
 function readImage() {
     if ( this.files && this.files[0] ) {
         var FR = new FileReader();
         FR.onload = function(e) {
           var formato = e.target.result.split(";base64,")[0] + ";base64,";
           var base64 = e.target.result.split( formato)[1];
-          $("#producto_imagen").val(base64);
-          $("#producto_formato_imagen").val(formato);
+          $("#publicidad_imagen").val(base64);
+          $("#publicidad_formato_imagen").val(formato);
         };       
         FR.readAsDataURL( this.files[0] );
     }
 }
 
 $("#imagen_id").change( readImage );
-
 
 </script>
 <% end %>

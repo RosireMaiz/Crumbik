@@ -12,7 +12,7 @@
     <div class="contenedor">
       <div class="col s6">
         <h5 class="text-uppercase">
-         Nuevo Producto
+         Editar Producto/Servicio
         </h5>
       </div>
       <div class="col s6 text-right ">
@@ -20,7 +20,7 @@
           <li>
             <a href="/">Inicio</a>
           </li>
-          <li class="active">Crear Producto</li>
+          <li class="active">Editar Producto/Servicio</li>
         </ol>
       </div>
     </div>
@@ -29,7 +29,7 @@
 
 <div  id="form_wizard_1" class="row pad30-h"  style="width: 100%">
 
-  <%= form_for @producto, :url => productos_crear_producto_path, html:{id: "add_producto", class: "form-horizontal"}, multipart: true do |f| %>
+  <%= form_for @producto, :url => producto_editar_path, html:{:method => :post, id: "add_producto", class: "form-horizontal"}, multipart: true do |f| %>
     <div class="form-wizard">
       <div class="form-body steps">
 
@@ -45,8 +45,11 @@
           <div class="panel  hoverable pad30-h">
             <div class="row pad15">
               <div class="col s8 left ">
-                <h5 >Datos del producto </h5>
+
+                <h5>Datos del producto/servicio </h5>
                 
+                <input id="producto_id" name="producto_id" class="file" value="<%= @producto.id %>" hidden />
+
                 <div class="input-field col s8">
                   <label for="producto_nombre">Nombre <span class="required">
                   * </span>
@@ -175,6 +178,7 @@ function readImage() {
 }
 
 $("#imagen_id").change( readImage );
+
 
 
 </script>

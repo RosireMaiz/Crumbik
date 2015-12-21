@@ -1,8 +1,4 @@
 require "base64"
-$FOTO_DEFAULT = "app/assets/images/avatar/sinfoto.jpg";
-$LOGO_DEFAULT = "app/assets/images/header-logo.png";
-$BANNER_DEFAULT = "app/assets/images/org-banner-construccion2.jpg";
-
 class UsuariosController < ApplicationController
 
 	def validar_email
@@ -134,7 +130,6 @@ class UsuariosController < ApplicationController
 		if  params[:id].present?
 			@u_id = params[:id]
 			usua = Usuario.where("id = ?", @u_id)
-		
 			usua.each do |usuario|
 				@usuario = usuario;
 			end

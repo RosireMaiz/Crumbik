@@ -148,8 +148,17 @@ main{
   padding: 5px 0px;
 }
 
+.pad5-hv{
+  padding: 5px 5px !important;
+}
+
+
 .pad15{
   padding: 15px 0px;
+}
+
+.pad5-15{
+  padding: 5px 15px !important;
 }
 
 .pad30{
@@ -179,6 +188,10 @@ main{
 .pad45-h{
   padding-left: 45px;
   padding-right: 45px;
+}
+
+.pad10-hv {
+  padding: 10px !important;
 }
 
 .pad55-t {
@@ -1088,4 +1101,29 @@ nav a.brand-logo {
 .brand-logo img{
     max-height: 76px;
     max-width: 74px;
+}
+
+.card .card-image{
+  overflow: hidden;
+  -webkit-transform-style: preserve-3d;
+  -moz-transform-style: preserve-3d;
+  -ms-transform-style: preserve-3d;
+  -o-transform-style: preserve-3d;
+  transform-style: preserve-3d;
+}
+
+.card .card-image img{
+  -webkit-transition: all 0.4s ease;
+  -moz-transition: all 0.4s ease;
+  -ms-transition: all 0.4s ease;
+  -o-transition: all 0.4s ease;
+  transition: all 0.4s ease;
+}
+
+.card .card-image:hover img{
+  -webkit-transform: scale(1.2) rotate(-7deg);
+  -moz-transform: scale(1.2) rotate(-7deg);
+  -ms-transform: scale(1.2) rotate(-7deg);
+  -o-transform: scale(1.2) rotate(-7deg);
+  transform: scale(1.2) rotate(-7deg);
 }

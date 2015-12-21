@@ -4,7 +4,7 @@ class CreateProductos < ActiveRecord::Migration
       t.string :nombre
       t.text :descripcion
       t.float :precio
-      t.binary :imagen
+      t.binary :imagen, :limit => 4294967295.bytes
       t.string :formato_imagen
       t.references :categoria, index: true
       t.string :estatus, default: "A", :limit => 1

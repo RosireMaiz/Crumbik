@@ -18,15 +18,30 @@ $("#cambiar-rol").click(function(){
 	      //hover: false // Activate on click
 	    }
 	);
-	 $('.tooltipped').tooltip({delay: 50});
-	$('.datepicker').pickadate({
-    		selectMonths: true, // Creates a dropdown to control month
-    		selectYears: true, // Creates a dropdown of 15 years to control year
-    		format: "mm/yyyy",
-    		closeOnSelect: true,
-    	 	closeOnClear: false,
+	$('.tooltipped').tooltip({delay: 50});
+    $('.datepicker').pickadate({
+        selectMonths: true, // Creates a dropdown to control month
+        selectYears: true, // Creates a dropdown of 15 years to control year
+        labelMonthNext: 'Próximo Mes',
+        labelMonthPrev: 'Mes Anterior',
+        labelMonthSelect: 'Selecione Mes',
+        labelYearSelect: 'Selecione Año',
+        monthsFull: [ 'Enero', 'Febrero', 'MArzo', 'Abril', 'Mayo', 'Junio', 'Julio', 'Agosto', 'Septiembre', 'Octubre', 'Noviembre', 'Diciembre' ],
+        monthsShort: [ 'Ene', 'Feb', 'Mar', 'Abr', 'May', 'Jun', 'Jul', 'Ago', 'Sep', 'Oct', 'Nov', 'Dic' ],
+        weekdaysFull: [ 'Domingo', 'Lunes', 'Martes', 'Miercoles', 'Jueves', 'Viernes', 'Sábado' ],
+        weekdaysShort: [ 'Dom', 'Lun', 'Mar', 'Mier', 'Jue', 'Vie', 'Sab' ],
+        weekdaysLetter: [ 'D', 'L', 'M', 'X', 'J', 'V', 'S' ],
+        today: 'Hoy',
+        clear: 'Limpiar',
+        close: 'Cerrar',
+        format: 'dd/mm/yyyy',
+        closeOnSelect: true,
+        closeOnClear: false,
+        onSet: function () {
+          this.close();
+          },
+      });
 
-    	});
 	$(function () {
 	  $('[data-toggle="popover"]').popover()
 	});

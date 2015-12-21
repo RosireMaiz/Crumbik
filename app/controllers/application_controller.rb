@@ -1,4 +1,9 @@
 require 'base64'
+$IMAGEN_DEFAULT = "app/assets/images/producto.png";
+$FOTO_DEFAULT = "app/assets/images/avatar/sinfoto.jpg";
+$LOGO_DEFAULT = "app/assets/images/header-logo.png";
+$BANNER_DEFAULT = "app/assets/images/org-banner-construccion2.jpg";
+
 class ApplicationController < ActionController::Base
   # Prevent CSRF attacks by raising an exception.
   # For APIs, you may want to use :null_session instead.
