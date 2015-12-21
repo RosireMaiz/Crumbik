@@ -30,6 +30,8 @@ Rails.application.routes.draw do
 	match "/validar_plan_update" => "plans#validar_plan_update", via: :post
 	match "/validar_tipo_organizacion_update" => "tipo_organizacions#validar_tipo_organizacion_update", via: :post
 	match "/validar_tipo_organizacion" => "tipo_organizacions#validar_tipo_organizacion", via: :post
+	match "/validar_pregunta_frecuente_update" => "pregunta_frecuentes#validar_pregunta_frecuente_update", via: :post
+	match "/validar_pregunta_frecuente" => "pregunta_frecuentes#validar_pregunta_frecuente", via: :post
 
 	match "/validar_opcion" => "menu#validar_opcion", via: :post		
 
@@ -131,6 +133,13 @@ Rails.application.routes.draw do
 	match "/tipo_organizacions/consultar_tipo_organizacion" => "tipo_organizacions#consultar_tipo_organizacion", via: :post
 	match "/tipo_organizacions/eliminar" => "tipo_organizacions#eliminar", via: :post
 
+	match "/preguntas_frecuentes" => "pregunta_frecuentes#consultar", via: :get
+    match "/preguntas_frecuentes/agregar" => "pregunta_frecuentes#new", via: :get
+    match "/pregunta_frecuente/crear_pregunta_frecuente" => "pregunta_frecuentes#create", via: :post
+    match "/pregunta_frecuentes/update_estatus" => "pregunta_frecuentes#update_estatus", via: :post
+	match "/pregunta_frecuentes/update" => "pregunta_frecuentes#update", via: :post
+	match "/pregunta_frecuentes/consultar_pregunta_frecuente" => "pregunta_frecuentes#consultar_pregunta_frecuente", via: :post
+	match "/pregunta_frecuentes/eliminar" => "pregunta_frecuentes#eliminar", via: :post
 
 	match "/planes" => "plans#consultar", via: :get
     match "/planes/agregar" => "plans#new", via: :get

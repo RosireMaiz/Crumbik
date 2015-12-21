@@ -1,0 +1,181 @@
+<% content_for :css_personalizado do %>
+ <%= stylesheet_link_tag    "jquery.dataTables" %> 
+<% end %>
+
+<div class="row titulo-seccion">
+  <div class="banner banner-perfil">
+    <div class="contenedor">
+      <div class="col s6">
+        <h5 class="text-uppercase ">
+         Preguntas Frecuentes
+        </h5>
+      </div>
+      <div class="col s6 text-right ">
+        <ol class="breadcrumb">
+          <li>
+            <a href="/">Inicio</a>
+          </li>
+          <li class="active">Preguntas Frecuentes</li>
+        </ol>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="row pad30-h">
+  <table id="pregunta_frecuentes" class="display" cellspacing="0" width="100%" >
+    <thead>
+      <tr>
+          <th>Pregunta</th>
+          <th>Estatus</th>
+          <th>
+            Acciones
+            <a href="/preguntas_frecuentes/agregar"  class="white-text red lighten-1 btn-sm btn-table-action tooltipped waves-effect" data-position="bottom" data-tooltip="Agregar Pregunta Frecuente" data-delay="20">
+              <i class="fa fa-plus"></i>
+            </a>
+          </th>
+      </tr>
+    </thead>
+    <tbody>
+      <% @pregunta_frecuentes.each do |pregunta_frecuente| %>
+
+         <% if ! pregunta_frecuente.nil? %>
+            <tr>
+                <td data-search="<%= pregunta_frecuente.pregunta %>"> 
+                    <%= pregunta_frecuente.pregunta %> 
+                </td>                  
+                <td> 
+                <% if (pregunta_frecuente.estatus == 'A') %>
+                    Activo 
+                <% else %>
+                    Deshabilitado
+                <% end %>
+                </td> 
+                <td> 
+                <% if !(pregunta_frecuente.estatus == 'A') %>
+                  <a  href="#modal<%= pregunta_frecuente.id %>" class="modal-trigger btn-primary btn-sm"> Habilitar</a>
+                <% else %>
+                   <a  href="#modal<%= pregunta_frecuente.id %>" class=" modal-trigger btn-warning btn-sm">Deshabilitar</a>
+                <% end %>
+                  <a  href="#modaleditar<%= pregunta_frecuente.id %>" class="modal-trigger btn-primary btn-sm" onclick="validar(modaleditar<%= pregunta_frecuente.id %>, <%= pregunta_frecuente.id %>)"> Editar</a>
+                  <a  href="#modaleliminar<%= pregunta_frecuente.id %>" class="modal-trigger btn-danger btn-sm">Eliminar</a>
+                  
+                </td>  
+                    
+            </tr>
+          <% end %>
+        <% end %>
+            
+     </tbody>
+  </table>
+
+  <% @pregunta_frecuentes.each do |pregunta_frecuentes| %>
+    <% if ! pregunta_frecuentes.nil? %>
+        <!-- Modal Structure -->
+        <div id="modal<%= pregunta_frecuentes.id %>" class="modal">
+          <div class="modal-content">
+                <a style="float:right;" class="waves-effect btn-flat modal-close"><i class="mdi-content-clear"></i></a>
+                <% if (pregunta_frecuentes.estatus == 'A') %>
+                  <h5>Deshabilitar Pregunta Frecuente</h5>
+                <% else %>
+                  <h5>Habilitar Pregunta Frecuente</h5>
+                <% end %>
+                <div class="row pad30-t" >
+                    <div class="col s12 text-center">
+                      <% if (pregunta_frecuentes.estatus == 'A') %>
+                        <h6 style=" font-size: 20px;">¿Seguro que desea Deshabilitar la pregunta frecuente seleccionada? 
+                        </h6>
+                      <% else %>
+                        <h6 style=" font-size: 20px;">¿Seguro que desea Habilitar la pregunta frecuente seleccionada?</h6>
+                      <% end %>
+                      <div style="padding-top: 35px;" class="right">
+                      <% if (pregunta_frecuentes.estatus == 'A') %>
+                         <input type="button" class="btn btn-success btn-sm" value="Aceptar" onclick="update_estatus(<%= pregunta_frecuentes.id %>,'I')">
+                      <% else %>
+                        <input type="button" class="btn btn-success btn-sm" value="Aceptar" onclick="update_estatus(<%= pregunta_frecuentes.id %>,'A')">
+                      <% end %>
+                       
+                        <input type="button" class="btn btn-danger btn-sm modal-close" value="Cancelar">
+                      </div>
+
+                    </div>
+                </div>                
+          </div>
+        </div> 
+
+        <div id="modaleliminar<%= pregunta_frecuentes.id %>" class="modal">
+          <div class="modal-content">
+                <a style="float:right;" class="waves-effect btn-flat modal-close"><i class="mdi-content-clear"></i></a>
+               
+                  <h5>Eliminar Pregunta Frecuente</h5>
+               
+                <div class="row pad30-t" >
+                    <div class="col s12 text-center">
+                     
+                        <h6 style=" font-size: 20px;"> ¿Seguro que desea eliminar la pregunta frecuente seleccionada? </h6>
+                      
+                      <div style="padding-top: 35px;" class="right">
+                      
+                        <input type="button" class="btn btn-success btn-sm" value="Aceptar" onclick="eliminar(<%= pregunta_frecuentes.id %>)">
+                      
+                        <input type="button" class="btn btn-danger btn-sm modal-close" value="Cancelar">
+                      </div>
+
+                    </div>
+                </div>                
+          </div>
+        </div> 
+
+        <div id="modaleditar<%= pregunta_frecuentes.id %>" class="modal modal-45" form="true">
+          <div class="modal-content">
+                <a style="float:right;" class="waves-effect btn-flat modal-close" onclick="cancelar(modaleditar<%= pregunta_frecuentes.id %>, <%= pregunta_frecuentes.id %>, pregunta<%= pregunta_frecuentes.id %>, respuesta<%= pregunta_frecuentes.id %> )"><i class="mdi-content-clear"></i></a>
+                <h5>Editar Pregunta Frecuente</h5>
+                
+                <div class="row" style="padding-top: 35px;">
+                    <div class="col s12">
+                      <div class="row">
+                        <div class=" input-field col s8 offset-s2 ">
+                          <input id="pregunta<%= pregunta_frecuentes.id %>" type="text" class="validate" value="<%= pregunta_frecuentes.pregunta %>" name="pregunta_frecuente[pregunta]"> 
+                          <label for="pregunta<%= pregunta_frecuentes.id %>" >Pregunta:</label>
+
+                        </div>
+
+                        <div class=" input-field col s8 offset-s2 ">
+                          <textarea id="respuesta<%= pregunta_frecuentes.id %>" class="validate materialize-textarea active" length= "200"  name="pregunta_frecuente[respuesta]"><%= pregunta_frecuentes.respuesta %></textarea>  
+                          <label for="respuesta<%= pregunta_frecuentes.id %>" >Respuesta:</label>
+
+                        </div>
+                      </div>
+                      <div class="text-center">
+                        <input type="button" class="btn btn-success btn-sm" value="Guardar" onclick="update(modaleditar<%= pregunta_frecuentes.id %>, <%= pregunta_frecuentes.id %>, pregunta<%= pregunta_frecuentes.id %>, respuesta<%= pregunta_frecuentes.id %> )">
+                      
+                        <input type="button" class="btn btn-danger btn-sm" value="Cancelar" onclick="cancelar(modaleditar<%= pregunta_frecuentes.id %>, <%= pregunta_frecuentes.id %>, pregunta<%= pregunta_frecuentes.id %>, respuesta<%= pregunta_frecuentes.id %> )">
+                      </div>
+                    </div>
+
+                 </div>
+          </div>                
+        </div>
+
+    <% end %>
+  <% end %>
+
+</div>
+
+<% content_for :javascript_personalizado do %>
+  <%= javascript_include_tag 'maestros/pregunta_frecuentes' %>
+  <%= javascript_include_tag 'jquery.dataTables.min' %>
+  <script type="text/javascript">
+    $(document).ready(function(){
+      $('#pregunta_frecuentes').dataTable({
+        "select": false, 
+        "pageLength": 4,
+        "lengthChange": false,
+        "language": {
+                "zeroRecords": "No hay datos disponibles en la tabla",
+        }
+      });
+    });
+
+  </script>
+<% end %>

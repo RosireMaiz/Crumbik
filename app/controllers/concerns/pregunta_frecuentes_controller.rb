@@ -21,7 +21,7 @@ class PreguntaFrecuentesController < ApplicationController
 		else
 			@pregunta_frecuente = PreguntaFrecuente.new
 			if request.subdomain.present?
-				redirect_to root_path
+				render  root_path
 			else
 				render "pregunta_frecuentes/new"
 			end
@@ -39,7 +39,7 @@ class PreguntaFrecuentesController < ApplicationController
         	render "portal/index"
      	else
 
-	        @rol =  Rol.where(nombre: 'Empresario')
+	        @rol =  Rol.where(pregunta: 'Administrador del sistema')
 	        
 	        @usuarioRol = UsuarioRol.where(usuario_id: current_usuario.id, rol_id: current_usuario.rol_actual.id) 
 
@@ -67,8 +67,7 @@ class PreguntaFrecuentesController < ApplicationController
 	def update
 		id = params[:id_pregunta_frecuente]
 		pregunta = params[:pregunta]
-		respuesta = params[:respuesta]
-		if PreguntaFrecuente.update(id, :pregunta => pregunta, :respuesta => respuesta)
+		if PreguntaFrecuente.update(id, :pregunta => pregunta)
 			render :text =>'{ "success" : "true"}'
 		else
 
@@ -78,7 +77,7 @@ class PreguntaFrecuentesController < ApplicationController
 
 	def eliminar
 		id = params[:id_pregunta_frecuente]
-		tpregunta_frecuente = PreguntaFrecuente.where(id: id).first
+		pregunta_frecuente = PreguntaFrecuente.where(id: id).first
 		pregunta_frecuente.destroy
       if pregunta_frecuente.destroyed?
       	render :text =>'{ "success" : "true"}'
@@ -95,7 +94,7 @@ class PreguntaFrecuentesController < ApplicationController
 
 	private
 		def pregunta_frecuente_params
-	      accessible = [ :pregunta, :respuesta ] # extend with your own params
+	      accessible = [ :pregunta ] # extend with your own params
 	      params.require(:pregunta_frecuente).permit(accessible)
 	    end
 

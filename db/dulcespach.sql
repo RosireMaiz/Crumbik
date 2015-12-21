@@ -259,8 +259,8 @@ CREATE TABLE IF NOT EXISTS `plan_servicios` (
 
 CREATE TABLE IF NOT EXISTS `pregunta_frecuentes` (
 `id` int(11) NOT NULL,
-  `titulo` varchar(255) DEFAULT NULL,
-  `contenido` varchar(255) DEFAULT NULL,
+  `pregunta` varchar(255) DEFAULT NULL,
+  `respuesta` varchar(255) DEFAULT NULL,
   `estatus` varchar(1) DEFAULT 'A',
   `organizacion_id` int(11) DEFAULT NULL,
   `created_at` datetime NOT NULL,
