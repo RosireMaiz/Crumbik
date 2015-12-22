@@ -161,8 +161,8 @@ ActiveRecord::Schema.define(version: 20151212191759) do
   add_index "plans", ["frecuencia_pago_id"], name: "index_plans_on_frecuencia_pago_id", using: :btree
 
   create_table "pregunta_frecuentes", force: :cascade do |t|
-    t.string   "titulo",          limit: 255
-    t.string   "contenido",       limit: 255
+    t.string   "pregunta",          limit: 255
+    t.string   "descripcion",       limit: 255
     t.string   "estatus",         limit: 1,   default: "A"
     t.integer  "organizacion_id", limit: 4
     t.datetime "created_at",                                null: false

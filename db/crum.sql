@@ -679,8 +679,8 @@ INSERT INTO `plan_servicios` (`id`, `descripcion`, `plan_id`, `servicio_id`) VAL
 
 CREATE TABLE IF NOT EXISTS `pregunta_frecuentes` (
 `id` int(11) NOT NULL,
-  `titulo` varchar(255) COLLATE utf8_unicode_ci DEFAULT NULL,
-  `contenido` varchar(255) COLLATE utf8_unicode_ci DEFAULT NULL,
+  `pregunta` varchar(255) COLLATE utf8_unicode_ci DEFAULT NULL,
+  `respuesta` varchar(255) COLLATE utf8_unicode_ci DEFAULT NULL,
   `estatus` varchar(1) COLLATE utf8_unicode_ci DEFAULT 'A',
   `organizacion_id` int(11) DEFAULT NULL,
   `created_at` datetime NOT NULL,
