@@ -2,7 +2,7 @@ class CreatePreguntaFrecuentes < ActiveRecord::Migration
   def change
     create_table :pregunta_frecuentes do |t|
       t.string :pregunta
-      t.string :descripcion
+      t.string :respuesta
       t.string :estatus, default: "A", :limit => 1
       t.references :organizacion
 

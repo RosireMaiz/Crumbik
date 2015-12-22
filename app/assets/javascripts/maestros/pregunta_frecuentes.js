@@ -40,7 +40,7 @@ function update_estatus(idpregunta, estatus){
                                     errorElement: 'span', //default input error message container
                                     errorClass: 'msj-error', // default input error message class
                                     rules: {
-                                      "pregunta[pregunta]":{
+                                      "pregunta_frecuente[pregunta]":{
                                           remote: {
                                               url: "/validar_pregunta_frecuente_update?idpregunta="+ idpregunta ,
                                               type: "post"
@@ -48,12 +48,22 @@ function update_estatus(idpregunta, estatus){
                                           required:true,
                                           
                                       },
-                                      
+
+                                      "pregunta_frecuente[respuesta]":{
+                                         
+                                          required:true,
+                                      },
+  
                                     },
                                     messages:{
                                       "pregunta_frecuente[pregunta]":{
                                         required:"Indica la pregunta.",
                                         remote:"Ya existe la misma pregunta."
+                                      },
+                                       "pregunta_frecuente[respuesta]":{
+                                         
+                                          required:"Indica la respuesta.",
+                                          
                                       },
                                                
                                     },
@@ -65,15 +75,17 @@ function update_estatus(idpregunta, estatus){
 
   };
 
-  function update(pregunta_frecuente, idpregunta, pregunta){
+  function update(pregunta_frecuente, idpregunta, pregunta, respuesta){
 
     if ($(pregunta_frecuente).valid()) {
           var preguntaval = $(pregunta).val();
+          var respuestaval = $(respuesta).val();
           var request = $.ajax({
                                 url: '/pregunta_frecuentes/update',
                                 method: "POST",
                                 data: { idpregunta: idpregunta, 
-                                        pregunta: preguntaval
+                                        pregunta: preguntaval,
+                                        respuesta: respuestaval
                                       },
                                 dataType: "JSON",
                                 success: function( data ) {
@@ -88,7 +100,7 @@ function update_estatus(idpregunta, estatus){
 
   };
 
-function cancelar(modal, idpregunta, pregunta){
+function cancelar(modal, idpregunta, pregunta, respuesta){
   $(modal).closeModal();
    var request = $.ajax({
                           url: '/pregunta_frecuentes/consultar_pregunta_frecuente',
@@ -98,14 +110,22 @@ function cancelar(modal, idpregunta, pregunta){
                           success: function( data ) {
 
                                     var preguntaval = data.pregunta ;
+
+                                    var respuestaval = data.respuesta ;
                                                
                                     $(pregunta).val(preguntaval);
+
+                                    $(respuesta).val(respuestaval);
                                    
                                     $('.input-field > label').attr("class", 'active');
 
                                     $(pregunta).removeClass('msj-error');
                                     
-                                    $(pregunta).removeClass('valid');                  
+                                    $(pregunta).removeClass('valid');  
+
+                                    $(respuesta).removeClass('msj-error');
+                                    
+                                    $(respuesta).removeClass('valid');                
                                    
                                     $( "span.msj-error" ).remove();
 

@@ -20,7 +20,7 @@ class PreguntaFrecuentesController < ApplicationController
 			redirect_to root_path
 		else
 			@pregunta_frecuente = PreguntaFrecuente.new
-			if request.subdomain.present?
+			if !request.subdomain.present?
 				redirect_to root_path
 			else
 				render "pregunta_frecuentes/new"
@@ -55,7 +55,7 @@ class PreguntaFrecuentesController < ApplicationController
 	end
 	
 	def update_estatus
-		id = params[:id_pregunta_frecuente]
+		id = params[:idpregunta]
 		estatus = params[:estatus]
 		if PreguntaFrecuente.update(id, :estatus => estatus)
 			render :text =>'{ "success" : "true"}'
@@ -65,7 +65,7 @@ class PreguntaFrecuentesController < ApplicationController
 	end
 
 	def update
-		id = params[:id_pregunta_frecuente]
+		id = params[:idpregunta]
 		pregunta = params[:pregunta]
 		respuesta = params[:respuesta]
 		if PreguntaFrecuente.update(id, :pregunta => pregunta, :respuesta => respuesta)
@@ -77,8 +77,8 @@ class PreguntaFrecuentesController < ApplicationController
 	end
 
 	def eliminar
-		id = params[:id_pregunta_frecuente]
-		tpregunta_frecuente = PreguntaFrecuente.where(id: id).first
+		id = params[:idpregunta]
+		pregunta_frecuente = PreguntaFrecuente.where(id: id).first
 		pregunta_frecuente.destroy
       if pregunta_frecuente.destroyed?
       	render :text =>'{ "success" : "true"}'
@@ -88,7 +88,7 @@ class PreguntaFrecuentesController < ApplicationController
 	end
 
 	def consultar_pregunta_frecuente
-		id = params[:id_pregunta_frecuente]
+		id = params[:idpregunta]
 		@pregunta_frecuente = PreguntaFrecuente.where(id: id).first
 		render :json => @pregunta_frecuente
 	end

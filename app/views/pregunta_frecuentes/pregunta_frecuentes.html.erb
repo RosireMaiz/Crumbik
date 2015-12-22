@@ -30,9 +30,6 @@
           <th>Estatus</th>
           <th>
             Acciones
-            <a href="/preguntas_frecuentes/agregar"  class="white-text red lighten-1 btn-sm btn-table-action tooltipped waves-effect" data-position="bottom" data-tooltip="Agregar Pregunta Frecuente" data-delay="20">
-              <i class="fa fa-plus"></i>
-            </a>
           </th>
       </tr>
     </thead>
@@ -53,10 +50,11 @@
                 </td> 
                 <td> 
                 <% if !(pregunta_frecuente.estatus == 'A') %>
-                  <a  href="#modal<%= pregunta_frecuente.id %>" class="modal-trigger btn-primary btn-sm"> Habilitar</a>
+                  <a  href="#modal<%= pregunta_frecuente.id %>" class="modal-trigger btn-success btn-sm"> Habilitar</a>
                 <% else %>
                    <a  href="#modal<%= pregunta_frecuente.id %>" class=" modal-trigger btn-warning btn-sm">Deshabilitar</a>
                 <% end %>
+                 <a href="#modalver<%= pregunta_frecuente.id %>" class="modal-trigger purple btn-primary btn-sm">Ver</a>
                   <a  href="#modaleditar<%= pregunta_frecuente.id %>" class="modal-trigger btn-primary btn-sm" onclick="validar(modaleditar<%= pregunta_frecuente.id %>, <%= pregunta_frecuente.id %>)"> Editar</a>
                   <a  href="#modaleliminar<%= pregunta_frecuente.id %>" class="modal-trigger btn-danger btn-sm">Eliminar</a>
                   
@@ -126,6 +124,26 @@
           </div>
         </div> 
 
+
+        <div id="modalver<%= pregunta_frecuentes.id %>" class="modal modal-45">
+          <div class="modal-content">
+            <a href="#" style="float:right;" class="waves-effect btn-flat modal-close"><i class="mdi-content-clear"></i></a>
+            <h5>Pregunta Frecuente</h5>
+
+            <div class="row" style="padding-top: 35px;">
+              <div class="col s10 offset-s1" align="justify">
+                <div class="row">
+                 <p><b style="color: #9E9E9E"><%= pregunta_frecuentes.pregunta %></b></p>
+
+                   <p><%= pregunta_frecuentes.respuesta %></p> 
+                 </div>
+               </div>
+
+             </div>
+           </div>                
+        </div>
+
+
         <div id="modaleditar<%= pregunta_frecuentes.id %>" class="modal modal-45" form="true">
           <div class="modal-content">
                 <a style="float:right;" class="waves-effect btn-flat modal-close" onclick="cancelar(modaleditar<%= pregunta_frecuentes.id %>, <%= pregunta_frecuentes.id %>, pregunta<%= pregunta_frecuentes.id %>, respuesta<%= pregunta_frecuentes.id %> )"><i class="mdi-content-clear"></i></a>
@@ -134,14 +152,14 @@
                 <div class="row" style="padding-top: 35px;">
                     <div class="col s12">
                       <div class="row">
-                        <div class=" input-field col s8 offset-s2 ">
+                        <div class=" input-field col s10 offset-s1 ">
                           <input id="pregunta<%= pregunta_frecuentes.id %>" type="text" class="validate" value="<%= pregunta_frecuentes.pregunta %>" name="pregunta_frecuente[pregunta]"> 
                           <label for="pregunta<%= pregunta_frecuentes.id %>" >Pregunta:</label>
 
                         </div>
 
-                        <div class=" input-field col s8 offset-s2 ">
-                          <textarea id="respuesta<%= pregunta_frecuentes.id %>" class="validate materialize-textarea active" length= "200"  name="pregunta_frecuente[respuesta]"><%= pregunta_frecuentes.respuesta %></textarea>  
+                        <div class=" input-field col s10 offset-s1 ">
+                          <textarea id="respuesta<%= pregunta_frecuentes.id %>" class="validate materialize-textarea active" length= "255"  name="pregunta_frecuente[respuesta]"><%= pregunta_frecuentes.respuesta %></textarea>  
                           <label for="respuesta<%= pregunta_frecuentes.id %>" >Respuesta:</label>
 
                         </div>

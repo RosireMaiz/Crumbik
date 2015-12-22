@@ -161,8 +161,8 @@ ActiveRecord::Schema.define(version: 20151212191759) do
   add_index "plans", ["frecuencia_pago_id"], name: "index_plans_on_frecuencia_pago_id", using: :btree
 
   create_table "pregunta_frecuentes", force: :cascade do |t|
-    t.string   "pregunta",          limit: 255
-    t.string   "descripcion",       limit: 255
+    t.string   "pregunta",        limit: 255
+    t.string   "respuesta",       limit: 255
     t.string   "estatus",         limit: 1,   default: "A"
     t.integer  "organizacion_id", limit: 4
     t.datetime "created_at",                                null: false
@@ -170,20 +170,23 @@ ActiveRecord::Schema.define(version: 20151212191759) do
   end
 
   create_table "productos", force: :cascade do |t|
-    t.string "nombre",         limit: 255
-    t.text   "descripcion",    limit: 65535
-    t.float  "precio",         limit: 24
-    t.binary "imagen",         limit: 65535
-    t.string "formato_imagen", limit: 255
-    t.string "estatus",        limit: 1,     default: "A"
+    t.string  "nombre",         limit: 255
+    t.text    "descripcion",    limit: 65535
+    t.float   "precio",         limit: 24
+    t.binary  "imagen",         limit: 4294967295
+    t.string  "formato_imagen", limit: 255
+    t.integer "categoria_id",   limit: 4
+    t.string  "estatus",        limit: 1,          default: "A"
   end
+
+  add_index "productos", ["categoria_id"], name: "index_productos_on_categoria_id", using: :btree
 
   create_table "publicidads", force: :cascade do |t|
     t.text    "descripcion",       limit: 65535
     t.date    "fecha_inicio"
     t.date    "fecha_vencimiento"
-    t.string  "estatus",           limit: 1,     default: "A"
-    t.binary  "imagen",            limit: 65535
+    t.string  "estatus",           limit: 1,          default: "A"
+    t.binary  "imagen",            limit: 4294967295
     t.string  "formato_imagen",    limit: 255
     t.integer "producto_id",       limit: 4
   end

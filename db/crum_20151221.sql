@@ -3,7 +3,7 @@
 -- http://www.phpmyadmin.net
 --
 -- Servidor: 127.0.0.1
--- Tiempo de generación: 21-12-2015 a las 02:47:18
+-- Tiempo de generación: 22-12-2015 a las 02:42:51
 -- Versión del servidor: 5.6.21-log
 -- Versión de PHP: 5.6.3
 
@@ -686,7 +686,7 @@ INSERT INTO `plan_servicios` (`id`, `descripcion`, `plan_id`, `servicio_id`) VAL
 CREATE TABLE IF NOT EXISTS `pregunta_frecuentes` (
 `id` int(11) NOT NULL,
   `pregunta` varchar(255) COLLATE utf8_unicode_ci DEFAULT NULL,
-  `contenido` varchar(255) COLLATE utf8_unicode_ci DEFAULT NULL,
+  `respuesta` varchar(255) COLLATE utf8_unicode_ci DEFAULT NULL,
   `estatus` varchar(1) COLLATE utf8_unicode_ci DEFAULT 'A',
   `organizacion_id` int(11) DEFAULT NULL,
   `created_at` datetime NOT NULL,
@@ -706,7 +706,7 @@ CREATE TABLE IF NOT EXISTS `productos` (
   `precio` float DEFAULT NULL,
   `imagen` longblob,
   `formato_imagen` varchar(255) COLLATE utf8_unicode_ci DEFAULT NULL,
-  `categoria_id` int(11) NOT NULL,
+  `categoria_id` int(11) DEFAULT NULL,
   `estatus` varchar(1) COLLATE utf8_unicode_ci DEFAULT 'A'
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 
@@ -722,7 +722,7 @@ CREATE TABLE IF NOT EXISTS `publicidads` (
   `fecha_inicio` date DEFAULT NULL,
   `fecha_vencimiento` date DEFAULT NULL,
   `estatus` varchar(1) COLLATE utf8_unicode_ci DEFAULT 'A',
-  `imagen` blob,
+  `imagen` longblob,
   `formato_imagen` varchar(255) COLLATE utf8_unicode_ci DEFAULT NULL,
   `producto_id` int(11) DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
@@ -905,7 +905,7 @@ CREATE TABLE IF NOT EXISTS `tipo_organizacions` (
 INSERT INTO `tipo_organizacions` (`id`, `nombre`, `descripcion`, `estatus`) VALUES
 (1, 'Servicios', 'Empresa dedicada a la promoción de servicios a sus clientes', 'A'),
 (2, 'Productos', 'Empresa dedidacada a la comercialización y/o promoción de productos a sus clientes', 'A'),
-(3, 'Planes', 'Empresa de comercialización de planes a sus clientes', 'A');
+(3, 'Planes', 'Empresa de comercialización de planes a sus clientes', 'I');
 
 -- --------------------------------------------------------
 
@@ -937,7 +937,7 @@ CREATE TABLE IF NOT EXISTS `usuarios` (
 --
 
 INSERT INTO `usuarios` (`id`, `email`, `encrypted_password`, `username`, `confirmacion_email`, `pais_id`, `reset_password_token`, `reset_password_sent_at`, `remember_created_at`, `sign_in_count`, `current_sign_in_at`, `last_sign_in_at`, `current_sign_in_ip`, `last_sign_in_ip`, `created_at`, `updated_at`) VALUES
-(1, 'rosire08@gmail.com', '$2a$10$VtE0lZB2.FwEIKLSZve8qegLsDvkjK/L4ga9ySaaG5F8OSB/uQ/wO', 'Rosiré Maiz*', 1, 232, '7e4f6a91a8f96feeea96efb55170e89c4e2ac02d2b12dd6c39c90dd75d50dc3e', '2015-10-11 22:23:28', NULL, 118, '2015-12-20 19:32:14', '2015-12-15 23:17:33', '127.0.0.1', '127.0.0.1', '2015-08-26 01:38:48', '2015-12-20 19:32:14'),
+(1, 'rosire08@gmail.com', '$2a$10$VtE0lZB2.FwEIKLSZve8qegLsDvkjK/L4ga9ySaaG5F8OSB/uQ/wO', 'Rosiré Maiz*', 1, 232, '7e4f6a91a8f96feeea96efb55170e89c4e2ac02d2b12dd6c39c90dd75d50dc3e', '2015-10-11 22:23:28', NULL, 119, '2015-12-22 01:24:35', '2015-12-20 19:32:14', '127.0.0.1', '127.0.0.1', '2015-08-26 01:38:48', '2015-12-22 01:24:35'),
 (2, 'ahewstone@gmail.com', '$2a$10$L48RaJMTsUbLRJfygDViF.9x6Qs4yAKGrscJFDbkIjqfM9MlfIDKi', 'Ale', 0, 1, NULL, NULL, NULL, 5, '2015-12-15 23:33:48', '2015-12-12 19:45:25', '127.0.0.1', '127.0.0.1', '2015-11-03 03:51:01', '2015-12-15 23:33:48'),
 (3, 'danolex51@gmail.com', '$2a$10$ObvIUa7GrKL3JpBqyAF23eRlypE7fssQuo0IKmUW/jbxKWWzjK6ua', 'Daniel', 0, 1, NULL, NULL, NULL, 1, '2015-12-08 01:18:12', '2015-12-08 01:18:12', '127.0.0.1', '127.0.0.1', '2015-12-07 23:04:08', '2015-12-08 01:18:12'),
 (4, 'h@gmail.com', '$2a$10$5h9Ox0kbxK9B45WMDi8slu7KJROTQH4mj5uZaAdK5IiZUCt20Jz1K', 'hola', 0, 232, NULL, NULL, NULL, 0, NULL, NULL, NULL, NULL, '2015-12-13 01:55:58', '2015-12-13 01:55:58');
@@ -1101,7 +1101,7 @@ ALTER TABLE `pregunta_frecuentes`
 -- Indices de la tabla `productos`
 --
 ALTER TABLE `productos`
- ADD PRIMARY KEY (`id`);
+ ADD PRIMARY KEY (`id`), ADD KEY `index_productos_on_categoria_id` (`categoria_id`);
 
 --
 -- Indices de la tabla `publicidads`
