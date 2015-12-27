@@ -174,6 +174,30 @@ jQuery(function ($) {
 		                    		},
 								});
 
+		$("#add_comentario").validate({
+			                   		doNotHideMessage: true, //this option enables to show the error/success messages on tab switch.
+				                    errorElement: 'span', //default input error message container
+				                    errorClass: 'msj-error', // default input error message class
+				                    focusInvalid: false, // do not focus the last invalid input
+									rules: {
+										"comentario[comentario]":{
+											required:true,
+											minlength: 8,
+											maxlength: 255
+										}
+										
+									},
+									messages:{
+										"comentario[comentario]":{
+											
+											required:"Indica tu ccomentario",
+											minlength:"Tu comentario debe tener mínimo 50 caracteres",
+											maxlength:"Tu comentario debe tener máximo 255 caracteres"
+										},
+										
+									}
+								});
+
 	var formRol = $('#add_rol');
 	var errorRol = $('.alert-danger', formRol);
 	var successRol = $('.alert-success', formRol);

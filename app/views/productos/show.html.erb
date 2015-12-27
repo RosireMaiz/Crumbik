@@ -1,0 +1,169 @@
+<% content_for :css_personalizado do %>
+   <%= stylesheet_link_tag    "plugins/star-rating.min" %> 
+   <%= stylesheet_link_tag    "star-product" %> 
+
+	<style type="text/css">
+		.font-span-title{
+			font-size: 24px;
+	    	font-weight: 300;
+	    	line-height: 25px;
+		}
+
+		.panel {
+    		margin-bottom: 10px;
+		}
+
+	</style>
+<% end %>
+
+<div  class="pad15"></div>
+
+<div class="row pad60-h white">
+	<div  class="pad15"></div>
+	<div class="col s12">
+		<div class="row align-center">
+	      <div class="input-field col s6 offset-s3">
+	        <input id="BuscarNombre" type="text" class="validate">
+	        <label for="BuscarNombre" >Buscar</label>
+	      </div>
+    	</div> 
+
+    	<div class="row " style="padding: 0px 100px;"> 
+    		<div class="col s5 align-right">
+    			<img src="<%= @producto.formato_imagen %><%= @producto.imagen %>" class="img-responsive">
+    		</div>
+    		<div class="col s7 " style=" padding-left: 80px;">
+				<div class="row">
+	    			<span class="font-span-title" ><%= @producto.nombre %> </span>
+	    			<input id="input-id"class="rating" data-symbol="&#xf005; " data-glyphicon="false" 
+	    				value="<% if !@puntuacion.nil? %> <%= @puntuacion.puntuacion %> <% end %>" 
+						data-rating-class="rating-fa" <% if !usuario_signed_in? %> disabled <%  end %> >
+					</div>
+    			<p class="row"> <%= @producto.descripcion %> </p>
+    			<h6> Precio: <b>$<%= @producto.precio %></b> </h6>
+    			<button class="btn">Ordenar</button>
+    			
+    		</div>
+		</div>
+		<div  class="pad15"></div>
+	</div>
+</div>
+
+
+<div  style="padding: 0px 160px;">
+	<span><strong>Puntuación Promedio</strong></span>
+</div>
+
+<div class="row valign-wrapper " style="padding: 0px 160px;">
+	<div class="col s6 no-padding">
+		<input id="puntuacion"class="rating" data-symbol="&#xf005; " data-glyphicon="false" value="<% if !@promedio.nil? %> <%= @promedio %> <% end %>" data-rating-class="rating-fa" data-disables=true>
+	</div>
+</div>
+
+<div class="row" style="padding: 0px 160px;">
+	<span><strong>Comentarios</strong></span>
+	<br>
+
+	<% if !@comentarios.blank? %>
+	  
+	  <% for comentario in @comentarios %>
+	    <div class="panel z-depth-1 valign-wrapper" >
+			<div class="col s2 " style="margin:15px; " align="center">
+				<img src="<%= comentario.usuario.perfil.formato_foto %><%= comentario.usuario.perfil.foto %>" 
+					class="img-responsive circle z-depth-1" style=" max-width: 100px; max-height: 100px;">
+			</div>
+			
+			<div class="col s10">
+				<div class="row">
+					<% if comentario.usuario.perfil.nombres.nil? %>
+						<b> <%= comentario.usuario.username %> </b>    
+					<% else %>
+						<b> <%= comentario.usuario.perfil.nombres %>  <%= comentario.usuario.perfil.apellidos %> </b>  
+					<% end %>
+					<span>  <%= comentario.created_at.strftime("%d %b  %Y ") %></span>
+				</div>
+				<p><%= comentario.comentario %></p>
+			</div> 
+		</div>
+	  <% end %>
+	  
+	<% end %>
+
+</div>
+
+	<%= form_for @comentario, :url => comentarios_crear_comentario_path, html:{id: "add_comentario", class: "form-horizontal", :method => :post } do |f| %>
+		<div class="row "style="padding: 0px 160px;">
+			<div class="row">
+				<input id="comentario_producto_id" name="comentario[producto_id]" value="<%= @producto.id %>" hidden>
+				<div class="col s12 white">
+
+					<textarea id="comentario_comentario" name="comentario[comentario]" placeholder=" <% if !usuario_signed_in? %> Inicia Sesión para ingresar tu comentario <% else %> Tu Comentario* <%  end %> " id="first_name" type="text" length="255" class="materialize-textarea"  <% if !usuario_signed_in? %> disabled <%  end %> ></textarea>
+				</div>
+			</div>
+
+			<div class="row right-align ">
+				<button type="submit" class="waves-effect btn-flat blue-text <% if !usuario_signed_in? %> disabled <%  end %>" <% if !usuario_signed_in? %> disabled <%  end %>><strong>Enviar Comentario</strong></button>
+			</div>
+				 
+		</div>
+
+	<% end %>
+	
+<div  class="pad15"></div>
+
+
+<% content_for :javascript_personalizado do %>
+  <%= javascript_include_tag "plugins/star-rating.min" %>
+  <script type="text/javascript">
+  	$("#input-id").rating({
+  		size:"xs",
+	    glyphicon: false,
+	    ratingClass: "rating-fa", // the rating class will ensure font awesome icon rendering
+	    showCaption: true,
+	    showClear:false,
+	    clearButtonTitle: "Limpiar",
+	    clearButton:'<i class="mdi-content-remove"></i>',
+	    clearCaption: "",
+	    clearCaptionClass: "transparent",
+	    starCaptions: function(val) { return val;},
+	    starCaptionClasses: function(val) { return 'label transparent';},
+	});
+
+
+  	 $("#puntuacion").rating({
+  		size:"sm",
+	    glyphicon: false,
+	    ratingClass: "rating-fa", // the rating class will ensure font awesome icon rendering
+	    showCaption: true,
+	    showClear:false,
+	    clearButtonTitle: "Limpiar",
+	    clearButton:'<i class="mdi-content-remove"></i>',
+	    disabled:true,
+	    hoverEnabled: false,
+	    clearCaption: "",
+	    clearCaptionClass: "transparent",
+	    starCaptions: function(val) { return Math.round(val * 100) / 100;},
+	    starCaptionClasses: function(val) { return 'label transparent';},
+  	});
+
+  	$("#input-id").on("rating.change", function(event, value, caption) {
+  		var id_producto = <%= @producto.id %>;
+  		var puntuacion = value;
+  		var request = $.ajax({
+                            url: '/productos/puntuacion',
+                            method: "POST",
+                            data: { idproducto: id_producto, puntuacion: puntuacion},
+                            dataType: "JSON",
+                            success: function( data ) {
+	                                    var promedio = data.promedio ;          
+	                                    $('#puntuacion').rating('update', promedio);
+                                   	}
+                          });
+                     
+        request.fail(function( jqXHR, textStatus ) {
+                                                    alert( "Request failed: " + textStatus );
+                                                   });
+   			
+	});
+  </script>
+<% end %>

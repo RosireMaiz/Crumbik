@@ -1,5 +1,6 @@
 require "base64"
 $IMAGEN_DEFAULT = "app/assets/images/producto.png";
+
 class ProductosController < ApplicationController
 
 	def new
@@ -91,6 +92,62 @@ class ProductosController < ApplicationController
 		render :text => '{ "success" : "false"}'
 	   end
 	end
+
+	def catalogo
+       @productos = Producto.order('id ASC').page(params[:page]).per(9)
+       @categorias = Categorium.order('id ASC')
+       @valor = true;
+       render "productos/catalogo"	
+	end
+
+	def show
+		id_producto = params[:id_producto]
+		
+		if usuario_signed_in?
+			usuario_id = current_usuario.id
+			@puntuacion = Puntuacion.where( ["producto_id = ? AND usuario_id = ? ", id_producto, usuario_id] ).first
+		end
+
+		if @puntuacion.nil?
+			@puntuacion =  Puntuacion.new
+			@puntuacion.puntuacion = 0
+		end
+
+		@promedio = Puntuacion.where("producto_id = ? ", id_producto).average(:puntuacion)
+
+		@producto = Producto.where("id = ?", id_producto).first	
+		@comentarios = Comentario.includes(:usuario).where("producto_id = ?", id_producto).order("created_at ASC")
+		@comentario = Comentario.new
+		
+		render "productos/show"
+	end
+
+	def puntuacion
+		id_producto = params[:idproducto]
+		puntuacion = params[:puntuacion]
+		usuario_id = current_usuario.id
+		@puntuacion = Puntuacion.where( ["producto_id = ? AND usuario_id = ? ", id_producto, usuario_id] ).first
+		
+		if @puntuacion.nil?
+			@puntuacion = Puntuacion.new
+			@puntuacion.producto_id = id_producto
+			@puntuacion.usuario_id = usuario_id
+			@puntuacion.puntuacion = puntuacion
+		else
+			@puntuacion.puntuacion = puntuacion	
+		end
+		
+		
+		if @puntuacion.save
+			@promedio = Puntuacion.where("producto_id = ? ", id_producto).average(:puntuacion)
+      		render :text =>'{ "success" : "true", "promedio" : ' + @promedio.to_s + '}'
+		else
+			render :text => '{ "success" : "false"}'
+		end
+
+		
+	end
+
 
 	private
 	 def producto_params

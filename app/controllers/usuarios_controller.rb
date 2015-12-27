@@ -171,38 +171,44 @@ class UsuariosController < ApplicationController
 		 @perfil.save
 
 		 id_usuario = @usuario.id
-		 redes_sociales = params[:usuario][:red_social_attributes][:actual]
+		 
+		 if ! params[:usuario][:red_social_attributes].blank?
+		 	redes_sociales = params[:usuario][:red_social_attributes][:actual]
 
-		if ! redes_sociales.nil?
-			redes_sociales.each do |red_social|
-			 	id = red_social[0]
-			 	url = red_social[1]
-			 	red_social_org = UsuarioRedSocial.where("id = ?", id).first
-			 	if url.nil? || url == ""
-					red_social_org.destroy
-			 	else
-			 		red_social_org.update(:url => url)
-			 	end
+			if ! redes_sociales.nil?
+				redes_sociales.each do |red_social|
+				 	id = red_social[0]
+				 	url = red_social[1]
+				 	red_social_org = UsuarioRedSocial.where("id = ?", id).first
+				 	if url.nil? || url == ""
+						red_social_org.destroy
+				 	else
+				 		red_social_org.update(:url => url)
+				 	end
+				end
 			end
-		end
 
-		redes_sociales_nuevas = params[:usuario][:red_social_attributes][:nueva]
+			redes_sociales_nuevas = params[:usuario][:red_social_attributes][:nueva]
 
-		if ! redes_sociales_nuevas.nil?
+			if ! redes_sociales_nuevas.nil?
 
-			redes_sociales_nuevas.each do |red_social_nueva|
-				id = red_social_nueva[0]
-		 		url = red_social_nueva[1]
-		 		
-		 		if ! url.nil?
-		 			red_social_org = UsuarioRedSocial.new
-		 			red_social_org.url = url
-		 			red_social_org.red_social_id = id
-		 			red_social_org.usuario_id = id_usuario
-		 			red_social_org.save
-		 		end
-		  	end
-		end
+				redes_sociales_nuevas.each do |red_social_nueva|
+					id = red_social_nueva[0]
+			 		url = red_social_nueva[1]
+			 		
+			 		if ! url.nil?
+			 			red_social_org = UsuarioRedSocial.new
+			 			red_social_org.url = url
+			 			red_social_org.red_social_id = id
+			 			red_social_org.usuario_id = id_usuario
+			 			red_social_org.save
+			 		end
+			  	end
+			end
+
+		 end
+
+		
 
 		 @usuario = Usuario.find_by(id: current_usuario.id)
 		 @usuredes = UsuarioRedSocial.includes(:red_social).where("usuario_id = ?", @usuario.id)

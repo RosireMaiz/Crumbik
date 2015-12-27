@@ -1,0 +1,51 @@
+    .rating-xs {
+        font-size: 1em;
+    }
+
+    .rating-container {
+        position: relative;
+        color: #cecece;
+        overflow: hidden;
+    }
+    .rating-disabled {
+        cursor: default;
+    }
+
+    .star-rating .caption, .star-rating-rtl .caption {
+        color: #999;
+        display: inline-block;
+        vertical-align: middle;
+        font-size: 105%;
+    }
+
+    .label {
+        display: inline;
+        padding: 0px; 
+        font-size: 100%;
+        font-weight: bold;
+        line-height: 1;
+        color: #777777;
+        text-align: center;
+        white-space: nowrap;
+        vertical-align: middle;
+        border-radius: .25em;
+    } 
+
+    .star-rating .caption {
+        padding-left: 0px;
+        padding-right: 5px;
+        float: left;
+    }
+
+    .rating-container {
+        position: relative;
+        color: #cecece;
+        overflow: hidden;
+    }
+
+    .rating-xs {
+        font-size: 1em;
+    }
+    .rating-sm .caption{
+        padding-right: 20px;
+    }

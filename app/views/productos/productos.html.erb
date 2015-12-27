@@ -3,6 +3,19 @@
     .tabs .indicator {
       background-color: #616161;
     }
+
+    .card .card-content .card-title {
+        line-height: 25px;
+    }
+
+    .card .card-title {
+        color: #fff;
+        font-size: 18px;
+        font-weight: 300;
+    }
+    .card .card-reveal {
+      padding: 12px;
+    }
   </style>
 <% end %>
 
@@ -28,11 +41,11 @@
 
 <div class="row pad30-h">
 
-<div class="fixed-action-btn " style="top: 250px; bottom: 0px">
-  <a href="/productos/agregar" class="btn-floating btn-sm waves-effect waves-light red left absolute tooltipped" style="margin-bottom: 60px;" data-position="left" data-delay="50" data-tooltip="Agregar Producto/Servicio">
-    <i class=" mdi-av-playlist-add"></i>
-  </a>
- </div>
+  <div class="fixed-action-btn " style="top: 250px; bottom: 0px">
+    <a href="/productos/agregar" class="btn-floating btn-sm waves-effect waves-light red left absolute tooltipped" style="margin-bottom: 60px;" data-position="left" data-delay="50" data-tooltip="Agregar Producto/Servicio">
+      <i class=" mdi-av-playlist-add"></i>
+    </a>
+  </div>
 
   <div class = "col s3 ">
 
@@ -106,10 +119,19 @@
             <div class = "col s3 " style="width: 33%;">
               <div class="card hoverable">
                 <div class="card-image">
-                  <img src="<%= producto.formato_imagen %><%= producto.imagen %>">
+                  <img src="<%= producto.formato_imagen %><%= producto.imagen %>" class="activator img-responsive">
                 </div>
                 <div class="card-content  pad5-hv left-align">
-                  <h6><%= producto.nombre %></h6>
+                <div class="row no-margin-v">
+                 <span class="card-title activator grey-text text-darken-4">
+                    <div class="col s10">
+                      <%= producto.nombre %>
+                    </div>
+                    <div class="col s2"> 
+                      <i class="material-icons right  mdi-navigation-more-vert waves-effect"></i>
+                    </div>
+                  </span>
+                  </div>
                 </div>
                 <div class="card-action pad5-15">
                   <p class = "blue-text right"> $<%= producto.precio %></p>
@@ -121,6 +143,26 @@
                     <a href="#modal<%= producto.id %>" class=" modal-trigger waves-effect left"> Habilitar</a>
                   <%  end %>
                  
+                </div>
+
+                <div class="card-reveal left-align">
+
+                  <div class="row" style="    margin-bottom: 12px;">
+                    <span class="card-title grey-text text-darken-4">
+                      <div class="col s10">
+                        <%= producto.nombre %>
+                      </div>
+                      <div class="col s2"> 
+                        <i class="material-icons right mdi-navigation-close waves-effect"></i>
+                      </div>
+                    </span>
+                  </div>
+                  <div class="col s12">
+                    <p><%= producto.descripcion %></p>
+                    <span class="blue-text right">
+                      $<%= producto.precio %>
+                    </span>
+                  </div>
                 </div>
                 
               </div>

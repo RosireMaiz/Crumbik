@@ -40,7 +40,6 @@ Rails.application.routes.draw do
 	match "/registro" => "usuarios#new", via: :get
 	get 'current_rol' => "usuarios#current_rol"
 
-	get '/catalogo', to: 'paginas#catalogo'
 	match "/inicio" => "portal#index", via: :get
 
 	match '/menu/ajax' => "menu#ajax", via: :post
@@ -174,12 +173,11 @@ Rails.application.routes.draw do
 		match "/organizacion/save_banner" => "organizacions#save_banner", via: :post
 		match "/organizacion/editar_ubicacion" => "organizacions#editar_ubicacion_iframe", via: :post
 		match "/organizacion/eliminar_ubicacion_iframe" => "organizacions#eliminar_ubicacion_iframe", via: :post
-		
-		match "/sugerencia/agregar"=> "sugerencias#new", via: :get
-		match "/sugerencias/crear_sugerencia" => "sugerencias#create", via: :post
-
 		match "/organizacion/apariencia/tema"=> "organizacions#apariencia_tema", via: :get
 
+		match "/sugerencia/agregar"=> "sugerencias#new", via: :get
+		match "/sugerencias/crear_sugerencia" => "sugerencias#create", via: :post
+		
 		match "/productos/consultar" => "productos#consultar", via: :get
 	    match "/productos/agregar" => "productos#new", via: :get
 	    match "/productos/crear_producto" => "productos#create", via: :post
@@ -187,8 +185,13 @@ Rails.application.routes.draw do
 	    match "/producto/editar" => "productos#save_edit", via: :post
 	    match "/productos/update_estatus" => "productos#update_estatus", via: :post
 		match "/productos/eliminar" => "productos#eliminar", via: :post
-		
 
+		match "/productos/puntuacion" => "productos#puntuacion", via: :post
+		
+		match "/catalogo" => "productos#catalogo", via: :get
+		match "/catalogo/:id_producto" => "productos#show", via: :get
+		match "/comentarios/crear_comentario" => "comentarios#create", via: :post
+		
 		match "/productos/publicidad/consultar" => "publicidads#consultar", via: :get
 	    match "/productos/publicidad/agregar" => "publicidads#new", via: :get
 	    match "/publicidad/crear_publicidad" => "publicidads#create", via: :post

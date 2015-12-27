@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20151212191759) do
+ActiveRecord::Schema.define(version: 20151225221008) do
 
   create_table "autenticacions", force: :cascade do |t|
     t.integer "usuario_id", limit: 4
@@ -26,6 +26,18 @@ ActiveRecord::Schema.define(version: 20151212191759) do
     t.string "descripcion", limit: 255
     t.string "estatus",     limit: 1,   default: "A"
   end
+
+  create_table "comentarios", force: :cascade do |t|
+    t.string   "comentario",  limit: 255
+    t.string   "estatus",     limit: 1,   default: "A"
+    t.integer  "usuario_id",  limit: 4
+    t.integer  "producto_id", limit: 4
+    t.datetime "created_at",                            null: false
+    t.datetime "updated_at",                            null: false
+  end
+
+  add_index "comentarios", ["producto_id"], name: "index_comentarios_on_producto_id", using: :btree
+  add_index "comentarios", ["usuario_id"], name: "index_comentarios_on_usuario_id", using: :btree
 
   create_table "contratos", force: :cascade do |t|
     t.datetime "fecha_creacion"
@@ -192,6 +204,17 @@ ActiveRecord::Schema.define(version: 20151212191759) do
   end
 
   add_index "publicidads", ["producto_id"], name: "index_publicidads_on_producto_id", using: :btree
+
+  create_table "puntuacions", force: :cascade do |t|
+    t.float    "puntuacion",  limit: 24
+    t.integer  "usuario_id",  limit: 4
+    t.integer  "producto_id", limit: 4
+    t.datetime "created_at",             null: false
+    t.datetime "updated_at",             null: false
+  end
+
+  add_index "puntuacions", ["producto_id"], name: "index_puntuacions_on_producto_id", using: :btree
+  add_index "puntuacions", ["usuario_id"], name: "index_puntuacions_on_usuario_id", using: :btree
 
   create_table "red_socials", force: :cascade do |t|
     t.string "icono",   limit: 255

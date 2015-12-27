@@ -1,0 +1,203 @@
+
+<!--/productos -->
+<% content_for :css_personalizado do %>
+  <%= stylesheet_link_tag    "plugins/star-rating.min" %> 
+  <%= stylesheet_link_tag    "star-product" %> 
+
+  <style type="text/css">
+    .tabs .indicator {
+      background-color: #616161;
+    }
+
+    .card .card-content .card-title {
+        line-height: 25px;
+    }
+
+    .card .card-title {
+        color: #fff;
+        font-size: 18px;
+        font-weight: 300;
+    }
+    
+    .card .card-reveal {
+      padding: 12px;
+    }
+  </style>
+<% end %>
+
+<script type="text/javascript" src="http://lvh.me:3000/jquery/jquery-1.10.2.min.js"></script>
+
+<% if !@productos.blank? %>
+  <div  class="pad15"></div>
+
+  <div class="row pad30-h">
+
+    <div class = "col s3 ">
+
+      <ul class="collapsible filtro" data-collapsible="expandable">
+        <li>
+          <div class="collapsible-header active  grey lighten-4">
+            <i class="fa fa-usd fa-2x deep-purple-text text-darken-1"></i>
+            <span class="deep-purple-text text-darken-1">Precio</span>
+          </div>
+          <div class="collapsible-body white">
+            <div style = " display: table; width : 100%;">
+
+              <div class="input-field col s6">
+                <input id="Desde" type="text" class="validate">
+                <label for="Desde" class = "morado">Desde</label>
+
+              </div>
+
+              <div class="input-field col s6">
+                <input id="Hasta" type="text" class="validate">
+                <label for="Hasta" class = "morado">Hasta</label>
+              </div>
+
+            </div>
+            <a class="waves-effect waves-light btn z-depth-1 espacio pink accent-3" style = " margin-left: 27px;">Buscar     </a>
+          </div>
+        </li>
+        <% if !@categorias.blank? %>
+          <li class="white">
+            <div class="collapsible-header active  grey lighten-4">
+              <i class="small mdi-social-cake deep-purple-text text-darken-1"></i>Categorías
+            </div>
+            <div class="collapsible-body white" style="display: inline-block; border-bottom: 0px solid #ddd;">
+              <% for item in @categorias %>
+                <div class="input-field col s12 left">
+                  <input type="checkbox" id="<%= item.nombre %>" />
+                  <label for="<%= item.nombre %>"><%= item.nombre %></label>
+                </div>
+              <% end %>
+            </div>
+          </li>
+        <% end %>
+      </ul> 
+    </div>
+
+    <div class="col s9 ">
+      
+      <div class="row">
+        <div class="input-field col m6 s12">
+          <input id="BuscarNombre" type="text" class="validate">
+          <label for="BuscarNombre" >Buscar</label>
+        </div>
+      </div> 
+      
+      <div class="row valign-wrapper">
+        
+       
+
+          <div id="todos">
+
+            <% for producto in @productos %>
+
+              <div class = "col s3 " style="width: 33%;">
+                <div class="card hoverable">
+
+                  <div class="card-image">
+                    <img src="<%= producto.formato_imagen %><%= producto.imagen %>" class="activator img-responsive">
+                  </div>
+
+                  <div class="card-content  pad5-hv left-align">
+                   <div class="row no-margin-v">
+                     <span class="card-title activator grey-text text-darken-4">
+                        <div class="col s10">
+                          <%= producto.nombre %>
+                        </div>
+                        <div class="col s2"> 
+                          <i class="material-icons right  mdi-navigation-more-vert waves-effect"></i>
+                        </div>
+                      </span>
+                    </div>
+                  </div>
+
+                  <% promedio = Puntuacion.where("producto_id = ?", producto.id).average(:puntuacion) %>
+
+                  <div class="card-action pad5-15">
+                    <div class="row no-margin-v">
+                      <div class="col s6 no-padding">
+                        <input id="input_star_<%= producto.id %>" class="rating left" data-symbol="&#xf005; " value="<% if !promedio.nil? %> <%= promedio %> <% end %>">
+                      </div>
+                      <div class="col s6 no-padding">
+                        <span class = "blue-text right"> $<%= producto.precio %></span>
+                      </div>
+                    </div>
+                    <a href="/catalogo/<%= producto.id %>" class="waves-effect"> Ver </a>
+                  </div>
+
+                  <div class="card-reveal left-align">
+                    <div class="row" style="    margin-bottom: 12px;">
+                      <span class="card-title grey-text text-darken-4">
+                        <div class="col s10">
+                          <%= producto.nombre %>
+                        </div>
+                        <div class="col s2"> 
+                          <i class="material-icons right mdi-navigation-close waves-effect"></i>
+                        </div>
+                      </span>
+                    </div>
+                    <div class="col s12">
+                      <p><%= producto.descripcion %></p>
+                      <span class="blue-text right">
+                        $<%= producto.precio %>
+                      </span>
+                    </div>
+                  </div>
+                  
+                </div>
+            
+              </div>
+
+               <script type="text/javascript">
+                $(document).ready(function(){
+                  var star_input = '#input_star_' + <%= producto.id %>;
+
+                  $(star_input).rating({
+                        size:"xs",
+                        glyphicon: false,
+                        disabled:true,
+                        hoverEnabled: false,
+                        showCaption: true,
+                        showClear:false,
+                        ratingClass: "rating-fa", // the rating class will ensure font awesome icon rendering
+                        clearButtonTitle: "Limpiar",
+                        clearButton:'<i class="mdi-content-remove"></i>',
+                        clearCaption: "",
+                        clearCaptionClass: "transparent",
+                        starCaptions: function(val) { return Math.round(val * 100) / 100;},
+                        starCaptionClasses: function(val) { return 'label transparent';},
+                   });
+
+                });
+              </script>
+
+            <% end %>
+          </div>
+
+      </div>
+
+      <div class="row valign-wrapper">
+        <%= paginate(@productos) %>
+      </div>
+    
+    </div>
+
+  </div>
+<% else %>
+
+  <div class="org-contenedor-banner banner-organizacion">
+    <div>
+      <div class="org-contenedor-banner org-contenedor-banner-img">
+        <img src="<%= asset_path( 'org-banner-construccion.png' ) %>" />
+      </div>
+       
+    </div>
+  </div>
+  <br/>
+<% end %>
+
+<% content_for :javascript_personalizado do %>
+  <%= javascript_include_tag "plugins/star-rating.min" %>    
+<% end -%>
