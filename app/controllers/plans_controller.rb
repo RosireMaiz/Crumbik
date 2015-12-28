@@ -149,6 +149,12 @@ class PlansController < ApplicationController
 	   end
 	end
 
+	def consultar_plan
+		id = params[:idplan]
+		plan = Plan.includes(:frecuencia_pago).where(id: id).first
+		render :json => plan.frecuencia_pago
+	end
+
 
 	private
 		def plan_params

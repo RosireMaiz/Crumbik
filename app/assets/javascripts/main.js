@@ -8,6 +8,7 @@ $("#cambiar-rol").click(function(){
 		);
 		$("#form-cambio-roles").openModal();
 	});
+ 	$(".button-collapse").sideNav({edge: 'left', });
 	$('ul.tabs').tabs();
 	$('select').not('.disabled').material_select();
 

@@ -97,12 +97,13 @@ class ProductosController < ApplicationController
        @productos = Producto.order('id ASC').page(params[:page]).per(9)
        @categorias = Categorium.order('id ASC')
        @valor = true;
+       $administrable = false
        render "productos/catalogo"	
 	end
 
 	def show
 		id_producto = params[:id_producto]
-		
+		$administrable = false
 		if usuario_signed_in?
 			usuario_id = current_usuario.id
 			@puntuacion = Puntuacion.where( ["producto_id = ? AND usuario_id = ? ", id_producto, usuario_id] ).first

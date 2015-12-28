@@ -95,13 +95,24 @@ $(document).ready(function(){
 
 
     //Mostrar el mensaje de cuando se vence el contrato actual
-    $(".tab-pane").on("change","#usuario_organizacion_attributes_contratos_attributes_0_frecuencia_pago_id",
+    $(".tab-pane").on("change","#usuario_organizacion_attributes_contratos_attributes_0_plan_id",
         function(){
-            //alert("elegiste otra frecuencia");
-            var meses = [1,3,6,12,18];
-            var f = new Date().addMonths(meses[$(this).val()-1]);
-            $("#msj-frecuencia").html("El plan se renovará el "+f.getDate()+"/"+(f.getMonth()+1)
-                 +"/"+f.getFullYear());
+          // alert("elegiste otro plan" + $(this).val());
+            var idplan = $(this).val();
+            var meses;
+            var request = $.ajax({
+                                  url: '/planes/consultar_plan',
+                                  method: "POST",
+                                  data: { idplan: idplan },
+                                          dataType: "JSON",
+                                  success: function( data ) {
+                                            meses = data.meses;
+                                            var f = new Date().addMonths(meses);
+                                            $("#msj-frecuencia").html("El plan se renovará el "+f.getDate()+"/"+(f.getMonth()+1)
+                                                 +"/"+f.getFullYear());
+                                          }
+                            });   
+             
     });
 
     //Mostrar campos para pagar con la tarjeta de crédito o paypal

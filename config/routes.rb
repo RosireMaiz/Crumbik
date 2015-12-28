@@ -9,6 +9,10 @@ Rails.application.routes.draw do
 
 	root 'portal#index'
 
+	match "/inicio_administrable" => "portal#index_administrable", via: :get
+	
+	match "/inicio" => "portal#index_inicio", via: :get
+
 	match "/validar_email" => "usuarios#validar_email", via: :post
 	match "/validar_email_update" => "usuarios#validar_email_update", via: :post
 	match "/validar_subdominio" => "organizacions#validar_subdominio", via: :post
@@ -39,8 +43,6 @@ Rails.application.routes.draw do
   	match '/usuarios/:id/confirmar_registro' => 'usuarios#finish_signup', via: [:get, :patch], as: :finish_signup
 	match "/registro" => "usuarios#new", via: :get
 	get 'current_rol' => "usuarios#current_rol"
-
-	match "/inicio" => "portal#index", via: :get
 
 	match '/menu/ajax' => "menu#ajax", via: :post
 	match '/menu/ajax' => "menu#ajax", via: :get
@@ -148,7 +150,7 @@ Rails.application.routes.draw do
   	match "/plan/editar/:id_plan" => "plans#edit", via: :get
 	match "/plan/editar" => "plans#save_edit", via: :post
 	match "/plan/guardar_imagen" => "plans#save_imagen", via: :post
-
+	match "/planes/consultar_plan" => "plans#consultar_plan", via: :post
 
 	match "/organizaciones" => "organizacions#consultar", via: :get
 	match "/organizacion/consultar/:subdominio" => "organizacions#show", via: :get
@@ -163,9 +165,10 @@ Rails.application.routes.draw do
 	end
 
 	devise_for :usuarios,  controllers: { :omniauth_callbacks => 'omniauth_callbacks',
-             :registrations => 'registrations'}, via: :post
+             :registrations => 'registrations', :sessions => 'usuarios/sessions'}, via: :post
 
 	constraints(SubdomainPresent) do
+
 		match "/organizacion/consultar" => "organizacions#show", via: :get
 		match "/organizacion/apariencia/portal" => "organizacions#apariencia_index", via: :get
 		match "/organizacion/apariencia/editar_ubicacion" => "organizacions#editar_ubicacion", via: :get

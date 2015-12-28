@@ -1,0 +1,101 @@
+<% content_for :css_personalizado do %>
+	<style type="text/css">
+	ul.side-li li{
+		height: 44px; 
+		line-height: 44px;
+	}
+	</style>
+<% end %>
+<nav style="height: 0px;  line-height: 1px;">
+	
+	<div id="slide-out" class="side-nav">
+		<div>
+			<% if usuario_signed_in? %>
+					   
+		      	<div id="bannerdiv" align="center" class="bannerdiv" style="height: auto;">
+				    <div class="banner banner-sidebar  center" style="height: auto;" >
+						<div class="col s3  div-foto-sidebar" style="height: auto; line-height: 1px;">
+				          	<img src="<%= @foto %>" >
+				   		</div>
+				   		<div class="bold pad15 contenedor" style="line-height: normal;" >
+				   			<span style="white-space: pre;"><%= current_usuario.username%></span>
+				   		</div>
+
+					</div>
+		 		</div>
+		 		<div class="divider center"></div>
+		      	
+		    
+		    <% end %>
+		</div>
+		<div>
+			<ul class="side-li">
+				
+			    <li>
+			    	<a href="/preguntas_Frecuentes" role="link" class="x-tree-node-text">
+			    		<i class=" fa fa-question"></i> 
+			    		<span>Preguntas Frecuentes </span> 
+			    	</a>
+			    </li>
+			    <li>
+			    	<a href="/chat" role="link" class="x-tree-node-text">
+			    		<i class=" fa fa-comments"></i> 
+			    		<span>Chat en Vivo </span> 
+			    	</a>
+			    </li>
+			     <li>
+			    	<a href="/contactanos" role="link" class="x-tree-node-text">
+			    		<i class=" fa fa-exchange"></i> 
+			    		<span>Contáctanos</span> 
+			    	</a>
+			    </li>
+
+
+
+			    <li class="no-padding">
+			    	<ul class="collapsible collapsible-accordion">
+			    		<li>
+				            <a class="collapsible-header x-tree-node-text">
+				            	Mi Cuenta
+				            </a>
+				            <div class="collapsible-body">
+				              <ul>
+				              	<li role="presentation">
+				              		<a id="cambiar-rol" role="menuitem" class="x-tree-node-text" href="javascript:void(0)">
+				              			Cambiar rol
+				              		</a>
+				              	</li>
+				              	<% if current_usuario.rol_actual.acceso_administrable %>
+					              	
+					              	<% if !$administrable %>
+						              	<li role="presentation">
+						              		<a id="administrar" role="menuitem" class="x-tree-node-text" href="/inicio_administrable">
+						              			Administrar Mi Portal
+						              		</a>
+						              	</li>
+					              	<% else %>
+						              	<li role="presentation">
+						              		<a id="administrar" role="menuitem" class="x-tree-node-text" href="/inicio">
+						              			Regresar al Portal
+						              		</a>
+						              	</li>
+					              	<% end %>
+				              	<% end -%>
+				              	
+				              	<li>
+				              		<%= link_to 'Editar Perfil', {controller: "usuarios", action: "edit"}, :class => "x-tree-node-text" %>
+				              	</li>
+				              	
+				              	<li role="presentation">
+				              		<%= link_to "Salir", destroy_usuario_session_url, method: :delete, :class => "x-tree-node-text" %>
+				              	</li>
+				              </ul>
+				            </div>
+			          	</li>
+			    	</ul>
+			    </li>
+			    
+			</ul>
+		</div>
+	</div>
+</nav>

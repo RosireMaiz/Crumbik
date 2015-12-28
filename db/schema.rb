@@ -224,8 +224,9 @@ ActiveRecord::Schema.define(version: 20151225221008) do
   end
 
   create_table "rols", force: :cascade do |t|
-    t.string "nombre",  limit: 255
-    t.string "estatus", limit: 1,   default: "A"
+    t.string  "nombre",               limit: 255
+    t.boolean "acceso_administrable", limit: 1,   default: false, null: false
+    t.string  "estatus",              limit: 1,   default: "A"
   end
 
   create_table "servicios", force: :cascade do |t|

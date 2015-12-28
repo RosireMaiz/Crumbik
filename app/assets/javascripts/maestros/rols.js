@@ -61,14 +61,15 @@
                         });
   };
 
-  function update(rol, idrol, nombre){
+  function update(rol, idrol, nombre, acceso){
 
     if ($(rol).valid()) {
        var nombreval = $(nombre).val();
+       var accesoval = $(acceso).prop("checked");
        var request = $.ajax({
                               url: '/roles/update',
                               method: "POST",
-                              data: { idRol: idrol, nombre: nombreval},
+                              data: { idRol: idrol, nombre: nombreval, acceso: accesoval},
                               dataType: "JSON"
                             });
 
@@ -83,7 +84,7 @@
       }
   };
 
-  function cancelar(modal,idrol, nombre){
+  function cancelar(modal,idrol, nombre, acceso){
     $(modal).closeModal();
     var request = $.ajax({
                           url: '/roles/consultar_rol',
@@ -92,14 +93,22 @@
                                   dataType: "JSON",
                                   success: function( data ) {
 
-                                    var nombreval = data.nombre ;            
+                                    var nombreval = data.nombre ;  
+
+                                    var accesoval = data.acceso_administrable          
                                     $(nombre).val(nombreval);
+
+                                    $(acceso).val(nombreval);
                                     
                                     $('.input-field > label').attr("class", 'active');
 
                                     $(nombre).removeClass('msj-error');
                                     
                                     $(nombre).removeClass('valid');                  
+                                    
+                                    $(acceso).removeClass('msj-error');
+                                    
+                                    $(acceso).removeClass('valid');                  
                                     
                                     $( "span.msj-error" ).remove();
 

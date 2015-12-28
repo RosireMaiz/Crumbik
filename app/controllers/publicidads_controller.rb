@@ -92,7 +92,7 @@ class PublicidadsController < ApplicationController
 
 	private
 	 def publicidad_params
-      accessible = [ :descripcion,  :formato_imagen, :imagen, :producto_id  ] # extend with your own params
+      accessible = [ :descripcion,  :formato_imagen, :imagen, :producto_id, :fecha_inicio , :fecha_vencimiento ] # extend with your own params
       params.require(:publicidad).permit(accessible)
     end
 end

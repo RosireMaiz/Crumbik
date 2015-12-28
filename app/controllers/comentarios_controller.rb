@@ -4,7 +4,8 @@ def create
 	@comentario = Comentario.new(comentario_params)
 	@comentario.usuario_id =  current_usuario.id
 	@comentario.save
-	redirect_to :controller => 'productos', :action => 'catalogo'
+	id_producto = params[:comentario][:producto_id]
+	redirect_to :controller => 'productos', :action => 'show', :id_producto  => id_producto
 end
 
 private

@@ -2,13 +2,10 @@
    <%= stylesheet_link_tag    "organizacion" %>
    <style type="text/css">
 	   .dropdown-content {
-	    
-	    max-height: 200px; 
-	    
+	    	max-height: 200px; 
 		}
 	</style>
 <% end %>
-
 
 <div class="row titulo-seccion">
 	<div  class="banner div-registro-banner" >
@@ -172,14 +169,6 @@
 											<abbr>Detalles</abbr>
 											</a>
 										</div>
-										<!--<select name="organizacion[contratos][plan]">
-											<option value="-1" disabled selected>Elije tu plan</option>
-											<%#= options_from_collection_for_select(Plan.all, :id, :nombre) %>
-										</select>-->
-										<!--<select id="frecuencia" name="organizacion[contratos][frecuencia]">
-											<option value="-1" disabled selected>Elije una frecuencia</option>
-											<%= options_from_collection_for_select(FrecuenciaPago.all, :id, :nombre) %>
-										</select>-->
 										<div id="msj-frecuencia"></div>
 									<% end %> <%# Fin del subformulario de contrato %>
 									

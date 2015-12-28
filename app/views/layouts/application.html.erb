@@ -23,14 +23,23 @@
 	<body>
 		
 		<% if usuario_signed_in? %>
-			<main class="sesion" >
-	        	<%= render "partials/menu" %>
-	       		<div id ="contenedor" class="container-fluid no-padding logged-in">
+			<main class="<% if $administrable %>sesion<% end %>" >
+				<% if $administrable %>
+	        		<%= render "partials/menu" %>
+	        	<% else %>
+	        		<%= render "partials/sidebar" %>
+	        	<% end %>
+	       		<div id ="<% if $administrable %>contenedor<% end %>" class="container-fluid no-padding logged-in">
 	          		<div class="col s12">
 	          			<% if request.subdomain.present? %>
 	          				<header>
 								<%= render "partials/header_organizacion" %>
 							</header>
+							<% if ! $administrable %>
+								<div class="fixed-action-btn">
+									<a data-activates="slide-out" class="button-collapse btn-floating btn-large waves-effect waves-light pink accent-3 right absolute" ><i class="mdi-communication-chat"></i></a>
+								</div>
+							<% end %>  
 						<% else %>
 							<header>
 								<%= render "partials/header" %>

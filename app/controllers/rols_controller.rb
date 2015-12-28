@@ -68,10 +68,11 @@ class RolsController < ApplicationController
 	def update
 		id = params[:idRol]
 		nombre = params[:nombre]
-		if Rol.update(id, :nombre => nombre)
+		acceso_administrable = params[:acceso]
+		
+		if Rol.update(id, :nombre => nombre, :acceso_administrable => acceso_administrable)
 			render :text =>'{ "success" : "true"}'
 		else
-
 			render :text => '{ "success" : "false"}'
 		end
 	end
@@ -95,7 +96,7 @@ class RolsController < ApplicationController
 
 private
 	 def rol_params
-      accessible = [ :nombre ] # extend with your own params
+      accessible = [ :nombre, :acceso_administrable] # extend with your own params
       params.require(:rol).permit(accessible)
     end
 

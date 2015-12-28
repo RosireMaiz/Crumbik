@@ -28,7 +28,8 @@
     <thead>
       <tr>
           <th>Nombre</th>
-          <th>Estatus</th>
+          <th class="center">Acceso al Administrable</th>
+          <th class="center">Estatus</th>
           <th>Acciones</th>
       </tr>
     </thead>
@@ -39,8 +40,11 @@
             <tr>
                 <td data-search="<%= rol.nombre %>"> 
                     <%= rol.nombre %> 
-                </td>                  
-                <td> 
+                </td>   
+                <td class="center"> 
+                    <span class="text-capitalize"><%= rol.acceso_administrable %> </span>
+                </td>               
+                <td class="center"> 
                 <% if (rol.estatus == 'A') %>
                     Activo 
                 <% else %>
@@ -100,7 +104,9 @@
 
         <div id="modaleditar<%= rols.id %>" class="modal modal-45" form="true">
           <div class="modal-content">
-            <a style="float:right;" class="waves-effect btn-flat modal-close" onclick="cancelar(modaleditar<%= rols.id %>, <%= rols.id %>, nombre<%= rols.id %> )"><i class="mdi-content-clear"></i></a>
+            <a style="float:right;" class="waves-effect btn-flat modal-close" onclick="cancelar(modaleditar<%= rols.id %>, <%= rols.id %>, nombre<%= rols.id %>, acceso_administrable<%= rols.id %> )">
+              <i class="mdi-content-clear"></i>
+            </a>
             <h5>Editar Rol</h5>
 
             <div class="row" style="padding-top: 35px;">
@@ -109,13 +115,16 @@
                   <div class=" input-field col s8 offset-s2 ">
                     <input id="nombre<%= rols.id %>" type="text" class="validate" value="<%= rols.nombre %>" name="rol[nombre]"> 
                     <label for="nombre<%= rols.id %>" >Nombre:</label>
-
+                  </div>
+                  <div class="col s8 offset-s2 ">
+                    <input id="acceso_administrable<%= rols.id %>" type="checkbox" class="validate" value="<%= rols.acceso_administrable %>" name="rol[acceso_administrable]" <% if rols.acceso_administrable %> checked <% end -%> > 
+                    <label for="acceso_administrable<%= rols.id %>" >Acceso al Administrable</label>
                   </div>
                 </div>
                 <div class="text-center">
-                  <input type="button" class="btn btn-success btn-sm" value="Guardar" onclick="update(modaleditar<%= rols.id %>, <%= rols.id %>, nombre<%= rols.id %> )">
+                  <input type="button" class="btn btn-success btn-sm" value="Guardar" onclick="update(modaleditar<%= rols.id %>, <%= rols.id %>, nombre<%= rols.id %>, acceso_administrable<%= rols.id %> )">
 
-                  <input type="button" class="btn btn-danger btn-sm" value="Cancelar" onclick="cancelar(modaleditar<%= rols.id %>, <%= rols.id %>, nombre<%= rols.id %> )">
+                  <input type="button" class="btn btn-danger btn-sm" value="Cancelar" onclick="cancelar(modaleditar<%= rols.id %>, <%= rols.id %>, nombre<%= rols.id %>, acceso_administrable<%= rols.id %> )">
                 </div>
               </div>
 
