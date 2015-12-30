@@ -55,24 +55,16 @@
           <label for="organizacion_descripcion">Descripción</label>
           <%= o.text_area :descripcion, :class=>"materialize-textarea"  %>
         </div>
-        <div class="input-field input-group">
-          <i class="mdi-social-public prefix input-group-addon"></i>
-          <%= o.text_field :subdominio, :required=>true  %>
-          <span class="input-group-addon no-padding" id="basic-addon2">.crumbik.com</span>
-          <label for="organizacion_subdominio">Subdominio <span class="required">
-          * </span>
-          </label>
-        </div>
 
         <div class="row">
-          <div class="col s12">
+          <div class="col s12 no-padding">
             <label >Pais <span class="required">*</span></label>
               <%= o.collection_select(:pais_id, Pais.all, :id, :nombre) %>  
           </div>
           
         </div>
         <div class="row">
-          <div class="col s12">
+          <div class="col s12 no-padding">
               <label >Tipo de Organizacion <span class="required">*</span></label>
               <%= o.collection_select(:tipo_organizacion_id, TipoOrganizacion.all, :id, :nombre) %>  
             </div>
@@ -145,39 +137,38 @@
     <div class="row">
       <div class="col s12">
 
-            <div class="row">
-              <h5>Datos Generales</h5>
-            </div>
-              <div class="input-field ">
-                
-                <%= o.text_field  :telefono, :required=>true  %>
-              
-                <label for="organizacion_telefono">Telefono
-                </label>
-              </div>
-                    <div class="input-field ">
-                
-                <%= o.text_field :slogan, :required=>true  %>
-              
-                <label for="organizacion_slogan">Slogan
-                </label>
-              </div>
-              <div class="input-field ">
-                
-                <%= o.text_area  :direccion, :required=>true, :class=>"materialize-textarea"  %>
-              
-                <label for="organizacion_direccionn">Direccion
-                </label>
-              </div>
+        <div class="row">
+          <h5>Datos Generales</h5>
+        </div>
+        <div class="input-field ">
+          <%= o.text_area  :direccion, :required=>true, :class=>"materialize-textarea"  %>
+          <label for="organizacion_direccionn">Direccion
+          </label>
+        </div>
+        <div class="input-field ">
+          <%= o.text_field  :telefono, :required=>true  %>
+          <label for="organizacion_telefono">Telefono
+          </label>
+        </div>
+        <div class="input-field ">
+          <%= o.text_field  :email, :required=>true  %>
+          <label for="organizacion_telefono">Telefono
+          </label>
+        </div>
+        <div class="input-field ">
+          <%= o.text_field :slogan, :required=>true  %>
+          <label for="organizacion_slogan">Slogan
+          </label>
+        </div>
 
-              <div class="input-field">
-                <label for="organizacion_mision">Misión</label>
-                <%= o.text_area  :mision, :required=>true, :class=>"materialize-textarea"  %>
-              </div>
-              <div class="input-field">
-                <label for="organizacion_vision">Visión</label>
-                <%= o.text_area :vision, :class=>"materialize-textarea"  %>
-              </div>
+        <div class="input-field">
+          <label for="organizacion_mision">Misión</label>
+          <%= o.text_area  :mision, :required=>true, :class=>"materialize-textarea"  %>
+        </div>
+        <div class="input-field">
+          <label for="organizacion_vision">Visión</label>
+          <%= o.text_area :vision, :class=>"materialize-textarea"  %>
+        </div>
 
       </div>
     </div>

@@ -152,7 +152,10 @@ class PlansController < ApplicationController
 	def consultar_plan
 		id = params[:idplan]
 		plan = Plan.includes(:frecuencia_pago).where(id: id).first
-		render :json => plan.frecuencia_pago
+		monto = plan.costo.to_s
+		meses = plan.frecuencia_pago.meses.to_s
+		@tira ='{ "success" : "true", "meses" : "' + meses  + '", "monto" : "' + monto +'"}'
+		render :text => @tira
 	end
 
 

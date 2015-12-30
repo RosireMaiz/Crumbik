@@ -40,8 +40,8 @@ ActiveRecord::Schema.define(version: 20151225221008) do
   add_index "comentarios", ["usuario_id"], name: "index_comentarios_on_usuario_id", using: :btree
 
   create_table "contratos", force: :cascade do |t|
-    t.datetime "fecha_creacion"
-    t.datetime "fecha_vencimiento"
+    t.datetime "fecha_creacion",                null: false
+    t.date     "fecha_vencimiento"
     t.string   "estatus",           limit: 255
     t.string   "observacion",       limit: 255
     t.integer  "organizacion_id",   limit: 4
@@ -123,7 +123,7 @@ ActiveRecord::Schema.define(version: 20151225221008) do
 
   create_table "pago_contratos", force: :cascade do |t|
     t.float    "monto",        limit: 24
-    t.datetime "fecha"
+    t.datetime "fecha",                   null: false
     t.integer  "usuario_id",   limit: 4
     t.integer  "contrato_id",  limit: 4
     t.integer  "modo_pago_id", limit: 4

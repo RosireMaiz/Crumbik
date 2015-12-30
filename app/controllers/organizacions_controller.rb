@@ -227,7 +227,7 @@ class OrganizacionsController < ApplicationController
     	end
 
     	def organizacion_edit_params
-	      accessible = [ :nombre, :descripcion, :subdominio, :pais_id, :tipo_organizacion_id, :telefono, :slogan, :direccion, :mision, :vision, :logo, :formato_logo] # extend with your own params
+	      accessible = [ :nombre, :descripcion, :pais_id, :tipo_organizacion_id, :telefono, :slogan, :direccion, :slogan, :mision, :vision, :logo, :formato_logo] # extend with your own params
 	      params.require(:organizacion).permit(accessible)
     	end
 

@@ -32,6 +32,43 @@ $(document).ready(function(){
     $('#form_wizard_1 .alert-success').hide();
     $('#form_wizard_1').find('.button-previous').hide();
     $('#form_wizard_1 .button-submit').hide();
+    $("#campos-paypal").hide();
+    $("#campos-tarjeta-credito").show();
+    $("#form-payment").hide();
+    $("#form-tarjeta").show();
+    $("#usuario_organizacion_attributes_contratos_attributes_0_pagos_attributes_0_modo_pago_id").attr('value',1);
+
+    var idtipo = $("#usuario_organizacion_attributes_tipo_organizacion_id").val();
+    var href_tipo_organizacion = "#detalle_tipo_organizacion_" + idtipo;
+    $('#basic_addo_tipo_organizacion').attr("href", href_tipo_organizacion);
+
+    var idplan = $("#usuario_organizacion_attributes_contratos_attributes_0_plan_id").val();
+    var href_plan = "#detalle_plan_" + idplan;
+    $('#basic_addo_plan').attr("href", href_plan);
+    var request = $.ajax({
+                                  url: '/planes/consultar_plan',
+                                  method: "POST",
+                                  data: { idplan: idplan },
+                                          dataType: "JSON",
+                                  success: function( data ) {
+
+                                            var mes = data.meses;
+                                            var monto = data.monto; 
+                                            var f = new Date().addMonths(parseInt(mes));
+                                            var date = f.getFullYear()+"-"+(f.getMonth()+1)
+                                                 +"-" + f.getDate();
+                                            $("#usuario_organizacion_attributes_contratos_attributes_0_fecha_vencimiento").attr('value',date);
+                                            $("#usuario_organizacion_attributes_contratos_attributes_0_fecha_vencimiento").val(date);
+                                            $("#usuario_organizacion_attributes_contratos_attributes_0_pagos_attributes_0_monto").attr('value',monto);
+                                            $("#usuario_organizacion_attributes_contratos_attributes_0_pagos_attributes_0_monto").val(monto);
+                                            $("#msj-frecuencia").html("El plan se renovará el "+f.getDate()+"/"+(f.getMonth()+1)
+                                                 +"/"+f.getFullYear());
+                                            $("#monto_plan").html(monto);
+                                            $("#monto_display").html(monto);
+                                            $('#fecha_display').html(f.getDate()+"/"+(f.getMonth()+1) +"/"+f.getFullYear());
+                                          }
+                            });   
+
      $('#usuario_password').pwstrength({
          common: {
              minChar:8,
@@ -94,35 +131,65 @@ $(document).ready(function(){
     });
 
 
+
     //Mostrar el mensaje de cuando se vence el contrato actual
     $(".tab-pane").on("change","#usuario_organizacion_attributes_contratos_attributes_0_plan_id",
         function(){
           // alert("elegiste otro plan" + $(this).val());
-            var idplan = $(this).val();
-            var meses;
+            var id_plan = $(this).val();
+            var href = "#detalle_plan_" + id_plan;
+            $('#basic_addo_plan').attr("href", href);
+
             var request = $.ajax({
                                   url: '/planes/consultar_plan',
                                   method: "POST",
-                                  data: { idplan: idplan },
+                                  data: { idplan: id_plan },
                                           dataType: "JSON",
                                   success: function( data ) {
-                                            meses = data.meses;
-                                            var f = new Date().addMonths(meses);
-                                            $("#msj-frecuencia").html("El plan se renovará el "+f.getDate()+"/"+(f.getMonth()+1)
-                                                 +"/"+f.getFullYear());
+                                            var monto = data.monto;
+                                            var meses = data.meses;
+                                            var f = new Date().addMonths(parseInt(meses));
+                                            var date = f.getDate()+"-"+(f.getMonth()+1)
+                                                 +"-"+f.getFullYear();
+                                            $("#usuario_organizacion_attributes_contratos_attributes_0_fecha_vencimiento").attr('value',date);
+                                            $("#usuario_organizacion_attributes_contratos_attributes_0_fecha_vencimiento").val(date);
+                                            $("#usuario_organizacion_attributes_contratos_attributes_0_pago_atributes_0_monto").attr('value',monto);
+                                            $("#msj-frecuencia").html("El plan se renovará el "+f.getDate()+"/"+(f.getMonth()+1)+"/"+f.getFullYear());
+                                            $("#monto_plan").html(monto);
+                                            $("#monto_display").html(monto);
+                                            $('#fecha_display').html(f.getDate()+"/"+(f.getMonth()+1) +"/"+f.getFullYear());
                                           }
                             });   
              
     });
 
+    //Modificar el href del detalle de tipo de organizacion
+
+        //Mostrar el mensaje de cuando se vence el contrato actual
+    $(".tab-pane").on("change","#usuario_organizacion_attributes_tipo_organizacion_id",
+        function(){
+
+            var id_tipo = $(this).val();
+            var href = "#detalle_tipo_organizacion_" + id_tipo;
+            $('#basic_addo_tipo_organizacion').attr("href", href);
+
+    });
+
+
     //Mostrar campos para pagar con la tarjeta de crédito o paypal
     $("#usar_tarjeta, #usar_paypal").click(function(){
         if($(this).attr("id") == "usar_tarjeta"){
             $("#campos-paypal").hide();
+            $("#form-payment").hide();
             $("#campos-tarjeta-credito").show();
+            $("#form-tarjeta").show();
+            $("#usuario_organizacion_attributes_contratos_attributes_0_pagos_attributes_0_modo_pago_id").attr('value',1);
         }else{
             $("#campos-tarjeta-credito").hide();
+            $("#form-tarjeta").hide();
+            $("#form-payment").show();
             $("#campos-paypal").show();
+            $("#usuario_organizacion_attributes_contratos_attributes_0_pagos_atrributes_0_modo_pago_id").attr('value',2);
         }
     });
     var FormWizard = function () {
@@ -239,7 +306,8 @@ $(document).ready(function(){
                         "tarjeta[numero]": {
                             minlength: "El número de la tarjeta de crédito debe ser de 16.",
                             maxlength: "El número de la tarjeta de crédito debe ser de 16.",
-                            required: "Debes indicar el número de la tarjeta de crédito."
+                            required: "Debes indicar el número de la tarjeta de crédito.",
+                            creditcard: "Debe ingresar el número de tarjeta de crédito válida. "
                         },
                         "tarjeta[cvc]": {
                             digits: "Solo se permiten números.",

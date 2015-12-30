@@ -153,27 +153,14 @@
 									</div>
 									<div class="row input-group">
 										<label >Tipo de Organizacion <span class="required">*</span></label>
-										<%= o.collection_select(:tipo_organizacion_id, TipoOrganizacion.all, :id, :nombre) %>  
-										<a href="javascript:void(0)" class="input-group-addon" id="basic-addoe"  role="button" data-toggle="popover" data-trigger="hover" data-title="Descripción Tipo de Organización" data-content="hola" placement="right" data-container="body">
-											<i class="mdi-action-help"></i>
-											<abbr>Detalles</abbr>
-											</a>
+										<%= o.collection_select(:tipo_organizacion_id, TipoOrganizacion.where(estatus: "A"), :id, :nombre) %>  
+										<a href="#detalle_tipo_organizacion_<%= @usuario.organizacion.tipo_organizacion_id %>" class="modal-trigger input-group-addon" id="basic_addo_tipo_organizacion">
+												<i class="mdi-action-help"></i>
+												<abbr>Detalles</abbr>
+										</a>
 									</div>
 		
-									<%= o.fields_for :contratos do |c| %>
-										<div class="row input-group">
-											<label>Plan <span class="required">*</span></label>
-											<%= c.collection_select(:plan_id, Plan.all, :id, :nombre) %>
-											<a href="javascript:void(0)" class="input-group-addon" id="basic-addo"  role="button" data-toggle="popover" data-trigger="hover" data-title="Descripción Tipo de Organización" data-content="hola" placement="right" data-container="body">
-											<i class="mdi-action-help"></i>
-											<abbr>Detalles</abbr>
-											</a>
-										</div>
-										<div id="msj-frecuencia"></div>
-									<% end %> <%# Fin del subformulario de contrato %>
 									
-									<% end %> <%# Fin del subfomulario de organizacion %>
-									<input type="hidden" value="" id="monto" name="pago[monto]"/>
 								</div>
 							</div>
 						</div>
@@ -181,6 +168,37 @@
 					<div class="tab-pane " id="tab3">
 						<div class="row">
 							<div class="col s8 offset-s2">
+								<h5 class="block">Información del Plan</h5>
+									<%= o.fields_for :contratos do |c| %>
+										<div class="row input-group">
+											<%= c.date_field :fecha_vencimiento, :class => "hidden"  %>
+											<label>Plan <span class="required">*</span></label>
+											<%= c.fields_for :pagos do |pa| %>
+												<%= pa.number_field :monto, :class => "hidden"  %>
+												<%= pa.number_field :modo_pago_id, :class => "hidden"  %>
+											<% end %>
+											<%= c.collection_select(:plan_id, Plan.where(estatus: "A"), :id, :nombre) %>
+											<a href="#detalle_plan_<%= @usuario.organizacion.contratos[0].plan_id %>" class="modal-trigger input-group-addon" id="basic_addo_plan">
+												<i class="mdi-action-help"></i>
+												<abbr>Detalles</abbr>
+											</a>
+										</div>
+										<div class="row">
+											<div class="form-group">
+												<div class="col-md-6">
+													Monto del Plan:  <b><span id="monto_plan" class="form-control-static"></span></b>
+												</div>
+												<div class="col-md-6">
+													<div id="msj-frecuencia"></div>
+												</div>
+											</div>
+										</div>
+										
+									<% end %> <%# Fin del subformulario de contrato %>
+									
+								<% end %> <%# Fin del subfomulario de organizacion %>
+								<input type="hidden" value="" id="monto" name="pago[monto]"/>
+
 								<h5 class="block">Métodos de Pago</h5>
 								<div>
 									Pagar con <br/>
@@ -218,118 +236,184 @@
 								</div>
 								<div id="campos-paypal" class="campos">
 									Formulario para pagar con paypal
+									<div class="form-group">
+										<label class="control-label col-md-3">Payment Options <span class="required">
+										* </span>
+										</label>
+										<div class="col-md-4">
+											<div class="checkbox-list">
+												<label>
+												<input type="checkbox" name="payment[]" value="1" data-title="Auto-Pay with this Credit Card."/> Auto-Pay with this Credit Card </label>
+												<label>
+												<input type="checkbox" name="payment[]" value="2" data-title="Email me monthly billing."/> Email me monthly billing </label>
+											</div>
+											<div id="form_payment_error">
+											</div>
+										</div>
+									</div> 
 								</div>
-								 <div class="form-group">
-									<label class="control-label col-md-3">Payment Options <span class="required">
-									* </span>
-									</label>
-									<div class="col-md-4">
-										<div class="checkbox-list">
-											<label>
-											<input type="checkbox" name="payment[]" value="1" data-title="Auto-Pay with this Credit Card."/> Auto-Pay with this Credit Card </label>
-											<label>
-											<input type="checkbox" name="payment[]" value="2" data-title="Email me monthly billing."/> Email me monthly billing </label>
-										</div>
-										<div id="form_payment_error">
-										</div>
-									</div>
-								</div> 
 							</div>
 						</div>
 					</div>
 					<div class="tab-pane" id="tab4">
 						<div class="row">
-							<div class="col s8 offset-s2">
+							<div class="col s8 offset-s2 ">
 								<h5 class="block">Confirma tu cuenta</h5>
 								<h6 class="form-section">Datos de la cuenta</h6>
 								<div class="form-group">
-									<label class="control-label col-md-3">Nombre</label>
+									<div class="col-md-3 right-align">
+										<label>Nombre:</label>
+									</div>
 									<div class="col-md-4">
 										<span class="form-control-static" data-display="usuario[perfil_attributes][nombres]"></span>
 										<span class="form-control-static" data-display="usuario[perfil_attributes][apellidos]"></span>
 									</div>
 								</div>
 								<div class="form-group">
-									<label class="control-label col-md-3">Email</label>
+									<div class="col-md-3 right-align">
+										<label>Email:</label>
+									</div>
 									<div class="col-md-4">
-										<p class="form-control-static" data-display="usuario[email]">
-										</p>
+										<span class="form-control-static" data-display="usuario[email]">
+										</span>
+									</div>
+								</div>
+								<div class="form-group">
+									<div class="col-md-3 right-align">
+										<label>Username:</label>
+									</div>
+									<div class="col-md-4">
+										<span class="form-control-static" data-display="usuario[username]">
+										</span>
 									</div>
 								</div>
 								<h6 class="form-section">Datos de la organización</h6>
 								<div class="form-group">
-									<label class="control-label col-md-3">Plan</label>
+									<div class="col-md-3 right-align">
+										<label>Nombre de la organización:</label>
+									</div>
+									
 									<div class="col-md-4">
-										<p class="form-control-static" data-display="usuario[organizacion_attributes][contratos_attributes][0][plan_id]">
-										</p>
+										<span class="form-control-static" data-display="usuario[organizacion_attributes][nombre]">
+										</span>
 									</div>
 								</div>
 								<div class="form-group">
-									<label class="control-label col-md-3">Frecuencia de pago</label>
+									<div class="col-md-3 right-align">
+										<label>Descripción:</label>
+									</div>
+									
 									<div class="col-md-4">
-										<p class="form-control-static" data-display="usuario[organizacion_attributes][contratos_attributes][0][frecuencia_pago_id]">
-										</p>
+										<span class="form-control-static" data-display="usuario[organizacion_attributes][descripcion]">
+										</span>
 									</div>
 								</div>
 								<div class="form-group">
-									<label class="control-label col-md-3">Nombre de la organización</label>
+									<div class="col-md-3 right-align">
+										<label>Subdominio:</label>
+									</div>
 									<div class="col-md-4">
-										<p class="form-control-static" data-display="usuario[organizacion_attributes][nombre]">
-										</p>
+										<span class="form-control-static" data-display="usuario[organizacion_attributes][subdominio]">
+										</span>
 									</div>
 								</div>
 								<div class="form-group">
-									<label class="control-label col-md-3">Descripción</label>
+									<div class="col-md-3 right-align">
+										<label>Tipo de Organización:</label>
+									</div>
 									<div class="col-md-4">
-										<p class="form-control-static" data-display="usuario[organizacion_attributes][descripcion]">
-										</p>
+										<span class="form-control-static" data-display="usuario[organizacion_attributes][tipo_organizacion_id]">
+										</span>
 									</div>
 								</div>
 								<div class="form-group">
-									<label class="control-label col-md-3">Subdominio</label>
+									<div class="col-md-3 right-align">
+										<label>País:</label>
+									</div>
 									<div class="col-md-4">
-										<p class="form-control-static" data-display="usuario[organizacion_attributes][subdominio]">
-										</p>
+										<span class="form-control-static" data-display="usuario[organizacion_attributes][pais_id]">
+										</span>
 									</div>
 								</div>
+								<h6 class="form-section">Plan</h6>
+								<div class="form-group">
+									<div class="col-md-3 right-align">
+										<label>Plan:</label>
+									</div>
+									<div class="col-md-4">
+										<span class="form-control-static" data-display="usuario[organizacion_attributes][contratos_attributes][0][plan_id]">
+										</span>
+									</div>
+								</div>
+								<div class="form-group">
+									<div class="col-md-3 right-align">
+										<label>Costo del Plan:</label>
+									</div>
+									<div class="col-md-4">
+										$<span class="form-control-static" id="monto_display" data-display="usuario[organizacion_attributes][contratos_attributes][0][pagos][0][monto]">
+										</span>
+									</div>
+								</div>
+								<div class="form-group">
+									<div class="col-md-3 right-align">
+										<label>Renovación del Plan:</label>
+									</div>
+									<div class="col-md-4">
+										<span class="form-control-static" id="fecha_display" data-display="usuario[organizacion_attributes][contratos_attributes][0][fecha_vencimiento]">
+										</span>
+									</div>
+								</div>
+								
+								
 								<h6 class="form-section">Pago</h6>
-								<div class="form-group">
-									<label class="control-label col-md-3">Nombre del tarjeta habiente</label>
-									<div class="col-md-4">
-										<p class="form-control-static" data-display="tarjeta[nombre]">
-										</p>
+								<div id="form-tarjeta">
+									<div class="form-group">
+										<div class="col-md-3 right-align">
+											<label>Nombre del Tarjeta Habiente:</label>
+										</div>
+										<div class="col-md-4">
+											<span class="form-control-static" data-display="tarjeta[nombre]">
+											</span>
+										</div>
 									</div>
-								</div>
-								<div class="form-group">
-									<label class="control-label col-md-3">Número de tarjeta de crédito</label>
-									<div class="col-md-4">
-										<p class="form-control-static" data-display="tarjeta[numero]">
-										</p>
+									<div class="form-group">
+										<div class="col-md-3 right-align">
+											<label>Número de Tarjeta de Crédito:</label>
+										</div>
+										<div class="col-md-4">
+											<span class="form-control-static" data-display="tarjeta[numero]">
+											</span>
+										</div>
 									</div>
-								</div>
-								<div class="form-group">
-									<label class="control-label col-md-3">CVC:</label>
-									<div class="col-md-4">
-										<p class="form-control-static" data-display="tarjeta[cvc]">
-										</p>
+									<div class="form-group">
+										<div class="col-md-3 right-align">
+											<label>CVC:</label>
+										</div>
+										<div class="col-md-4">
+											<span class="form-control-static" data-display="tarjeta[cvc]">
+											</span>
+										</div>
 									</div>
+									<!--<div class="form-group">
+										<label class="control-label col-md-3">Fecha de expiración</label>
+										<div class="col-md-4">
+											<span class="form-control-static" data-display="tarjeta[fecha_expiracion]">
+											</span>
+										</div>
+									</div>-->
 								</div>
-								<div class="form-group">
-									<label class="control-label col-md-3">Fecha de expiración</label>
-									<div class="col-md-4">
-										<p class="form-control-static" data-display="tarjeta[fecha_expiracion]">
-										</p>
+								<div id="form-payment">
+									<div class="form-group">
+										<label class="control-label col-md-3">Payment Options:</label>
+										<div class="col-md-4">
+											<span class="form-control-static" data-display="payment">
+											</span>
+										</div>  
 									</div>
 								</div>
 							</div>
 						</div>
-						<!-- <div class="form-group">
-							<label class="control-label col-md-3">Payment Options:</label>
-							<div class="col-md-4">
-								<p class="form-control-static" data-display="payment">
-								</p>
-							</div>  
-						</div> -->
+						 
 					</div>
 				</div>
 			</div>
@@ -350,7 +434,92 @@
 </div>
 <div id="notificacion" class="modal text-center">
 </div>
-          
+
+
+<% if !@planes.blank? %>
+	<% for plan in @planes %>
+	    <div id="detalle_plan_<%= plan.id %>" class="modal ">
+          <div class="modal-content">
+            <a href="#" style="float:right;" class="waves-effect btn-flat modal-close"><i class="mdi-content-clear"></i></a>
+            <h5 class="text-capitalize"><%= plan.nombre %></h5>
+
+            	<div class="pad10-t" >
+			      <div class="row">
+			         <div class="col s4">
+			           <img class="responsive-img" src="<%= plan.formato_imagen %><%= plan.imagen %>">
+			         </div>
+			         <div class="col s8 ">
+			           
+			           <div class="row no-margin-v">
+			              <div class="col s3"><p><strong>Descripción:</strong></p></div>
+			              <div class="col s9 justify"> 
+			               <p><%= plan.descripcion %></p>
+			              </div>
+			           </div>
+			            <div class="row no-margin-v">
+			              <div class="col s3"><p><strong>Costo:</strong></p></div>
+			              <div class="col s8 justify"> 
+			               <p>$<%= plan.costo %></p>
+			              </div>
+			           </div>
+			            <div class="row no-margin-v valign-wrapper">
+			              <div class="col s3"><p><strong>Frecuencia de Pagos:</strong></p></div>
+			              <div class="col s9 justify"> 
+			               <p><%= plan.frecuencia_pago.nombre %> 
+			               - Renovación cada <%= plan.frecuencia_pago.meses %> 
+			               <% if (plan.frecuencia_pago.meses>1) %>meses
+			               <% else %>mes
+			               <% end -%>
+			                </p>
+			              </div>
+			           </div>
+			            <div class="row no-margin-v ">
+			              <div class="col s3"><p><strong>Servicios:</strong></p></div>
+			              <div class="col s9 justify"> 
+			                <ul class="index-vinnetas">
+			                  <% plan.plan_servicio.each do |plan_servicio| %>
+			                  
+			                    <li><%=plan_servicio.servicio.nombre %>: <%=plan_servicio.descripcion %> </li>
+			                  
+			                  <% end %>
+			                </ul>
+			              </div>
+			           </div>
+			         </div>
+			      </div>
+			    </div>
+           </div>                
+        </div>
+	<% end %>
+<% end %>
+
+<% if !@tipo_organizacions.blank? %>
+	<% for tipo_organizacion in @tipo_organizacions %>
+	    <div id="detalle_tipo_organizacion_<%= tipo_organizacion.id %>" class="modal modal-45">
+          <div class="modal-content">
+            <a href="#" style="float:right;" class="waves-effect btn-flat modal-close"><i class="mdi-content-clear"></i></a>
+            <h5 class="text-capitalize"><%= tipo_organizacion.nombre %></h5>
+
+            	<div class="pad10-t">
+			      <div class="row">
+			         <div class="col s8 offset-s1 ">
+			           
+			           <div class="row no-margin-v">
+			              <div class="col s12 justify"> 
+			               <p><%= tipo_organizacion.descripcion %></p>
+			              </div>
+			           </div>
+			           
+			         </div>
+			      </div>
+			    </div>
+           </div>                
+        </div>
+	<% end %>
+<% end %>
+
+
+
 <% content_for :javascript_personalizado do %>
 	<%= javascript_include_tag "usuarios" %>
 	<%= javascript_include_tag "plugins/jquery.bootstrap.wizard.min" %>

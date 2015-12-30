@@ -32,6 +32,9 @@ class UsuariosController < ApplicationController
 				@usuario.build_organizacion
 				@usuario.build_perfil				
 				@usuario.organizacion.contratos.build
+				@usuario.organizacion.contratos[0].pagos.build
+				@planes = Plan.where(estatus: "A")
+				@tipo_organizacions = TipoOrganizacion.where(estatus: "A")
 				render "usuarios/new"
 			end
 		end
@@ -62,28 +65,31 @@ class UsuariosController < ApplicationController
     	logo_organizacion = Base64.encode64(File.open($LOGO_DEFAULT, "rb").read)
     	banner_organizacion = Base64.encode64(File.open($BANNER_DEFAULT, "rb").read)
 
-		@rol = Rol.where("nombre = ?", "Empresario").first 
+ 		@rol = Rol.where("nombre = ?", "Empresario").first 
 		@usuario = Usuario.new(usuario_params_organizacion)
+
+		id_pais = @usuario.organizacion.pais_id
 
 		@usuario.perfil.attributes  = {:foto => foto_perfil, :formato_foto => formato}
 		@usuario.organizacion.attributes  = {:logo => logo_organizacion, :formato_logo => formato_logo, :formato_banner => formato_banner, :banner => banner_organizacion}
-		# @pago = Pago.new
-		# @pago.monto =  params[:pago][:monto]
-		# @pago.modo_pago = ModoPago.find(params[:modo_pago])
-		# @usuario
+		@usuario.attributes = {:pais_id => id_pais}
+
 		@respuesta = Hash.new
 	    if @usuario.save
+	    	pago_id = @usuario.organizacion.contratos[0].pagos[0].id
+	    	PagoContrato.update( pago_id, :usuario_id => @usuario.id)
 
-	    	@nuevo = @usuario.usuario_rols.build(:rol => @rol)
-    		@nuevo.save 	
+	    	@rol_nuevo = @usuario.usuario_rols.build(:rol => @rol)
+    		@rol_nuevo.save 	
 
 			@respuesta["codigo"] = 200
 	       	@respuesta["url"] = entrar_url(:subdomain => @usuario.organizacion.subdominio)
 	       	
 	       	Apartment::Tenant.switch!(@usuario.organizacion.subdominio )
 			
-			@usuarionuevo = Usuario.new(usuario_params)
+			@usuarionuevo = Usuario.new(usuario_perfil_params)
 			@usuarionuevo.perfil.attributes  = {:foto => foto_perfil, :formato_foto => formato}
+			@usuarionuevo.attributes = {:pais_id => id_pais}
 			@usuarionuevo.save
 
 			@nuevo_rol = @usuarionuevo.usuario_rols.build(:rol => @rol) 
@@ -286,8 +292,14 @@ class UsuariosController < ApplicationController
       params.require(:usuario).permit(accessible)
     end
 
+    def usuario_perfil_params
+      accessible = [ :email, :username, :perfil_attributes =>[ :nombres, :apellidos] ] # extend with your own params
+      accessible << [ :password, :password_confirmation ] unless params[:usuario][:password].blank?
+      params.require(:usuario).permit(accessible)
+    end
+
    	def usuario_params_organizacion
-	    accessible = [ :email, :username, :perfil_attributes =>[ :nombres, :apellidos], :organizacion_attributes => [ :id, :nombre, :descripcion, :subdominio, :pais_id, :tipo_organizacion_id ] ] # extend with your own params
+	    accessible = [ :email, :username, :perfil_attributes =>[ :nombres, :apellidos], :organizacion_attributes => [ :id, :nombre, :descripcion, :subdominio, :pais_id, :tipo_organizacion_id, :contratos_attributes => [ [:plan_id, :fecha_vencimiento, :pagos_attributes => [ :modo_pago_id, :monto] ] ] ] ] # extend with your own params
 	    accessible << [ :password, :password_confirmation ] unless params[:usuario][:password].blank?
 	    params.require(:usuario).permit(accessible)
 	end
