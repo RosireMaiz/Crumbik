@@ -49,7 +49,7 @@ Rails.application.config.assets.precompile += %w( maestros/frecuencia_pagos.js )
 Rails.application.config.assets.precompile += %w( maestros/modo_pagos.js )
 Rails.application.config.assets.precompile += %w( maestros/tipo_organizacions.js )
 Rails.application.config.assets.precompile += %w( maestros/pregunta_frecuentes.js )
-
+Rails.application.config.assets.precompile += %w( maestros/categorias.js )
 
 
 

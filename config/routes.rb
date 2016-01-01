@@ -36,6 +36,8 @@ Rails.application.routes.draw do
 	match "/validar_tipo_organizacion" => "tipo_organizacions#validar_tipo_organizacion", via: :post
 	match "/validar_pregunta_frecuente_update" => "pregunta_frecuentes#validar_pregunta_frecuente_update", via: :post
 	match "/validar_pregunta_frecuente" => "pregunta_frecuentes#validar_pregunta_frecuente", via: :post
+	match "/validar_categoria_update" => "categorias#validar_categoria_update", via: :post
+	match "/validar_categoria" => "categorias#validar_categoria", via: :post
 
 	match "/validar_opcion" => "menu#validar_opcion", via: :post		
 
@@ -188,6 +190,14 @@ Rails.application.routes.draw do
 	    match "/producto/editar" => "productos#save_edit", via: :post
 	    match "/productos/update_estatus" => "productos#update_estatus", via: :post
 		match "/productos/eliminar" => "productos#eliminar", via: :post
+
+		match "/productos/categorias/consultar" => "categorias#consultar", via: :get
+    	match "/productos/categorias/agregar" => "categorias#new", via: :get
+    	match "/categoria/crear_categoria" => "categorias#create", via: :post
+    	match "/categorias/update_estatus" => "categorias#update_estatus", via: :post
+		match "/categorias/update" => "categorias#update", via: :post
+		match "/categorias/consultar_categoria" => "categorias#consultar_categoria", via: :post
+		match "/categorias/eliminar" => "categorias#eliminar", via: :post
 
 		match "/productos/puntuacion" => "productos#puntuacion", via: :post
 		

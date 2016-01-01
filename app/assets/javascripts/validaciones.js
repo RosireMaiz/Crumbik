@@ -1055,38 +1055,38 @@ jQuery(function ($) {
 							});
 	
 
-	var formPreguntaFrecuente = $('#add_pregunta_frecuente');
-	var errorPreguntaFrecuente = $('.alert-danger', formPreguntaFrecuente);
-	var successPreguntaFrecuente = $('.alert-success', formPreguntaFrecuente);
-	formPreguntaFrecuente.validate({
+	var formCategoria = $('#add_categoria');
+	var errorCategoria = $('.alert-danger', formCategoria);
+	var successCategoria = $('.alert-success', formCategoria);
+	formCategoria.validate({
 						        doNotHideMessage: true, //this option enables to show the error/success messages on tab switch.
 			                    errorElement: 'span', //default input error message container
 			                    errorClass: 'msj-error', // default input error message class
 			                    focusInvalid: false, // do not focus the last invalid input
 								rules: {
-									"pregunta_frecuente[pregunta]":{
+									"categoria[nombre]":{
 										
 										required:true,
 										remote: {
-									       	url: "/validar_pregunta_frecuente",
+									       	url: "/validar_categoria",
 									       	type: "post"
 						        		}
 									    
 									},
 									
-									"pregunta_frecuente[respuesta]":{
+									"categoria[descripcion]":{
 										required:true,
 									},
 									
 								},
 								messages:{
-									"pregunta_frecuente[pregunta]":{
-										required:"Indica la pregunta.",
-										remote:"Ya existe una pregunta igual."
+									"categoria[nombre]":{
+										required:"Indica el nombre.",
+										remote:"Ya existe una categoría igual."
 									},
 									
-									"pregunta_frecuente[respuesta]":{
-										required:"Indica la respuesta.",
+									"categoria[descripcion]":{
+										required:"Indica la descripción.",
 									},
 
 								},
@@ -1098,8 +1098,8 @@ jQuery(function ($) {
 					                    },
 
 					             invalidHandler: function (event, validator) { //display error alert on formServicio submit   
-					                        successPreguntaFrecuente.hide();
-					                        errorPreguntaFrecuente.show();
+					                        successCategoria.hide();
+					                        errorCategoria.show();
 					                        $('html,body').animate({
 					                            scrollTop: $(".steps").offset().top-350
 					                        }, 'slow');
@@ -1120,9 +1120,7 @@ jQuery(function ($) {
 					                            .closest('.form-group').removeClass('has-error').addClass('has-success'); // set success class to the control group
 					                    }
 							});
-
-
-
+	
 
 	});
 
