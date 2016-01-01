@@ -1,0 +1,175 @@
+<% content_for :css_personalizado do %>
+ <%= stylesheet_link_tag    "jquery.dataTables" %> 
+<% end %>
+
+<div class="row titulo-seccion">
+  <div class="banner banner-perfil">
+    <div class="contenedor">
+      <div class="col s6">
+        <h5 class="text-uppercase ">
+         Categorías
+        </h5>
+      </div>
+      <div class="col s6 text-right ">
+        <ol class="breadcrumb">
+          <li><a href="/">Inicio</a></li>
+          <li><a href="/productos/consultar"> Productos/Servicios</a></li>
+          <li class="active">Categorías</li>
+        </ol>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="row pad30-h">
+  <table id="categorias" class="display" cellspacing="0" width="100%" >
+    <thead>
+      <tr>
+          <th>Nombre</th>
+          <th>Estatus</th>
+          <th>Acciones</th>
+      </tr>
+    </thead>
+    <tbody>
+      <% @categorias.each do |categoria| %>
+
+         <% if ! categoria.nil? %>
+            <tr>
+                <td data-search="<%= categoria.nombre %>"> 
+                    <%= categoria.nombre %> 
+                </td>                  
+                <td> 
+                <% if (categoria.estatus == 'A') %>
+                    Activo 
+                <% else %>
+                    Deshabilitado
+                <% end %>
+                </td> 
+                <td> 
+                <% if !(categoria.estatus == 'A') %>
+                  <a  href="#modal<%= categoria.id %>" class="modal-trigger btn-success btn-sm"> Habilitar</a>
+                <% else %>
+                   <a  href="#modal<%= categoria.id %>" class=" modal-trigger btn-warning btn-sm">Deshabilitar</a>
+                <% end %>
+                  <a  href="#modaleditar<%= categoria.id %>" class="modal-trigger btn-primary btn-sm" onclick="validar(modaleditar<%= categoria.id %>, <%= categoria.id %>)"> Editar</a>
+                  <a  href="#modaleliminar<%= categoria.id %>" class="modal-trigger btn-danger btn-sm">Eliminar</a>
+                  
+                </td>  
+                    
+            </tr>
+          <% end %>
+        <% end %>
+            
+     </tbody>
+  </table>
+
+  <% @categorias.each do |categorias| %>
+    <% if ! categorias.nil? %>
+        <!-- Modal Structure -->
+        <div id="modal<%= categorias.id %>" class="modal">
+          <div class="modal-content">
+                <a style="float:right;" class="waves-effect btn-flat modal-close"><i class="mdi-content-clear"></i></a>
+                <% if (categorias.estatus == 'A') %>
+                  <h5>Deshabilitar Categor&iacute;a</h5>
+                <% else %>
+                  <h5>Habilitar Categor&iacute;a</h5>
+                <% end %>
+                <div class="row pad30-t" >
+                    <div class="col s12 text-center">
+                      <% if (categorias.estatus == 'A') %>
+                        <h6 style=" font-size: 20px;">¿Seguro que desea Deshabilitar la categor&iacute;a seleccionada? 
+                        </h6>
+                      <% else %>
+                        <h6 style=" font-size: 20px;">¿Seguro que desea Habilitar la categor&iacute;a seleccionada?</h6>
+                      <% end %>
+                      <div style="padding-top: 35px;" class="right">
+                      <% if (categorias.estatus == 'A') %>
+                         <input type="button" class="btn btn-success btn-sm" value="Aceptar" onclick="update_estatus(<%= categorias.id %>,'I')">
+                      <% else %>
+                        <input type="button" class="btn btn-success btn-sm" value="Aceptar" onclick="update_estatus(<%= categorias.id %>,'A')">
+                      <% end %>
+                       
+                        <input type="button" class="btn btn-danger btn-sm modal-close" value="Cancelar">
+                      </div>
+
+                    </div>
+                </div>                
+          </div>
+        </div> 
+
+        <div id="modaleliminar<%= categorias.id %>" class="modal">
+          <div class="modal-content">
+                <a style="float:right;" class="waves-effect btn-flat modal-close"><i class="mdi-content-clear"></i></a>
+               
+                  <h5>Eliminar Categor&iacute;a</h5>
+               
+                <div class="row pad30-t" >
+                    <div class="col s12 text-center">
+                     
+                        <h6 style=" font-size: 20px;"> ¿Seguro que desea eliminar la categor&iacute;a seleccionada? </h6>
+                      
+                      <div style="padding-top: 35px;" class="right">
+                      
+                        <input type="button" class="btn btn-success btn-sm" value="Aceptar" onclick="eliminar(<%= categorias.id %>)">
+                      
+                        <input type="button" class="btn btn-danger btn-sm modal-close" value="Cancelar">
+                      </div>
+
+                    </div>
+                </div>                
+          </div>
+        </div> 
+
+        <div id="modaleditar<%= categorias.id %>" class="modal modal-45" form="true">
+          <div class="modal-content">
+                <a style="float:right;" class="waves-effect btn-flat modal-close" onclick="cancelar(modaleditar<%= categorias.id %>, <%= categorias.id %>, nombre<%= categorias.id %>, descripcion<%= categorias.id %> )"><i class="mdi-content-clear"></i></a>
+                <h5>Editar Categor&iacute;a</h5>
+                
+                <div class="row" style="padding-top: 35px;">
+                    <div class="col s12">
+                      <div class="row">
+                        <div class=" input-field col s8 offset-s2 ">
+                          <input id="nombre<%= categorias.id %>" type="text" class="validate" value="<%= categorias.nombre %>" name="categoria[nombre]"> 
+                          <label for="nombre<%= categorias.id %>" >Nombre:</label>
+
+                        </div>
+
+                        <div class=" input-field col s8 offset-s2 ">
+                          <textarea id="descripcion<%= categorias.id %>" class="validate materialize-textarea active" length= "200"  name="categoria[descripcion]"><%= categorias.descripcion %></textarea>  
+                          <label for="descripcion<%= categorias.id %>" >Descripci&oacute;n:</label>
+
+                        </div>
+                      </div>
+                      <div class="text-center">
+                        <input type="button" class="btn btn-success btn-sm" value="Guardar" onclick="update(modaleditar<%= categorias.id %>, <%= categorias.id %>, nombre<%= categorias.id %>, descripcion<%= categorias.id %> )">
+                      
+                        <input type="button" class="btn btn-danger btn-sm" value="Cancelar" onclick="cancelar(modaleditar<%= categorias.id %>, <%= categorias.id %>, nombre<%= categorias.id %>, descripcion<%= categorias.id %> )">
+                      </div>
+                    </div>
+
+                 </div>
+          </div>                
+        </div>
+
+    <% end %>
+  <% end %>
+
+</div>
+
+<% content_for :javascript_personalizado do %>
+  <%= javascript_include_tag 'maestros/categorias' %>
+  <%= javascript_include_tag 'jquery.dataTables.min' %>
+  <script type="text/javascript">
+    $(document).ready(function(){
+      $('#categorias').dataTable({
+        "select": false, 
+        "pageLength": 4,
+        "lengthChange": false,
+        "language": {
+                "zeroRecords": "No hay datos disponibles en la tabla",
+        }
+      });
+    });
+
+  </script>
+<% end %>
