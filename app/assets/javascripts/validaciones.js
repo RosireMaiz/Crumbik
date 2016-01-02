@@ -1055,6 +1055,138 @@ jQuery(function ($) {
 							});
 	
 
+	var formTipoCliente = $('#add_tipo_cliente');
+	var errorTipoCliente = $('.alert-danger', formTipoCliente);
+	var successTipoCliente = $('.alert-success', formTipoCliente);
+	formTipoCliente.validate({
+						        doNotHideMessage: true, //this option enables to show the error/success messages on tab switch.
+			                    errorElement: 'span', //default input error message container
+			                    errorClass: 'msj-error', // default input error message class
+			                    focusInvalid: false, // do not focus the last invalid input
+								rules: {
+									"tipo_cliente[nombre]":{
+										
+										required:true,
+										remote: {
+									       	url: "/validar_tipo_cliente",
+									       	type: "post"
+						        		}
+									    
+									},
+									
+									"tipo_cliente[descripcion]":{
+										required:true,
+									},
+									
+								},
+								messages:{
+									"tipo_cliente[nombre]":{
+										required:"Indica el nombre.",
+										remote:"Ya existe un tipo cliente igual."
+									},
+									
+									"tipo_cliente[descripcion]":{
+										required:"Indica la descripción.",
+									},
+
+								},
+
+								 errorPlacement: function (error, element) { // render error placement for each input type
+					                     
+					                            error.insertAfter(element); // for other inputs, just performServicio default behavior
+					                        
+					                    },
+
+					             invalidHandler: function (event, validator) { //display error alert on formServicio submit   
+					                        successCategoria.hide();
+					                        errorCategoria.show();
+					                        $('html,body').animate({
+					                            scrollTop: $(".steps").offset().top-350
+					                        }, 'slow');
+					                    },
+
+					         	 highlight: function (element) { // hightlight error inputs
+					                        $(element)
+					                            .closest('.form-group').removeClass('has-success').addClass('has-error'); // set error class to the control group
+					                    },
+
+					         	 unhighlight: function (element) { // revert the change done by hightlight
+					                        $(element)
+					                            .closest('.form-group').removeClass('has-error'); // set error class to the control group
+					                    },
+
+					             success: function (label) {
+					                            label.addClass('valid') // mark the current input as valid and display OK icon
+					                            .closest('.form-group').removeClass('has-error').addClass('has-success'); // set success class to the control group
+					                    }
+							});
+
+	var formPreguntaFrecuente = $('#add_pregunta_frecuente');
+	var errorPreguntaFrecuente = $('.alert-danger', formPreguntaFrecuente);
+	var successPreguntaFrecuente = $('.alert-success', formPreguntaFrecuente);
+	formPreguntaFrecuente.validate({
+						        doNotHideMessage: true, //this option enables to show the error/success messages on tab switch.
+			                    errorElement: 'span', //default input error message container
+			                    errorClass: 'msj-error', // default input error message class
+			                    focusInvalid: false, // do not focus the last invalid input
+								rules: {
+									"pregunta_frecuente[pregunta]":{
+										
+										required:true,
+										remote: {
+									       	url: "/validar_pregunta_frecuente",
+									       	type: "post"
+						        		}
+									    
+									},
+									
+									"pregunta_frecuente[respuesta]":{
+										required:true,
+									},
+									
+								},
+								messages:{
+									"pregunta_frecuente[pregunta]":{
+										required:"Indica la pregunta.",
+										remote:"Ya existe una pregunta igual."
+									},
+									
+									"pregunta_frecuente[respuesta]":{
+										required:"Indica la respuesta.",
+									},
+
+								},
+
+								 errorPlacement: function (error, element) { // render error placement for each input type
+					                     
+					                            error.insertAfter(element); // for other inputs, just performServicio default behavior
+					                        
+					                    },
+
+					             invalidHandler: function (event, validator) { //display error alert on formServicio submit   
+					                        successPreguntaFrecuente.hide();
+					                        errorPreguntaFrecuente.show();
+					                        $('html,body').animate({
+					                            scrollTop: $(".steps").offset().top-350
+					                        }, 'slow');
+					                    },
+
+					         	 highlight: function (element) { // hightlight error inputs
+					                        $(element)
+					                            .closest('.form-group').removeClass('has-success').addClass('has-error'); // set error class to the control group
+					                    },
+
+					         	 unhighlight: function (element) { // revert the change done by hightlight
+					                        $(element)
+					                            .closest('.form-group').removeClass('has-error'); // set error class to the control group
+					                    },
+
+					             success: function (label) {
+					                            label.addClass('valid') // mark the current input as valid and display OK icon
+					                            .closest('.form-group').removeClass('has-error').addClass('has-success'); // set success class to the control group
+					                    }
+							});
+
 	var formCategoria = $('#add_categoria');
 	var errorCategoria = $('.alert-danger', formCategoria);
 	var successCategoria = $('.alert-success', formCategoria);
