@@ -8,7 +8,7 @@ class PreguntaFrecuentesController < ApplicationController
   	end
 
 	def validar_pregunta_frecuente_update
-	    if PreguntaFrecuente.exists?(  ["pregunta = ? AND  id <> ? ", params[:pregunta_frecuente][:pregunta], params[:id_pregunta_frecuente] ])  
+	    if PreguntaFrecuente.exists?(  ["pregunta = ? AND  id <> ? ", params[:pregunta_frecuente][:pregunta], params[:idpregunta] ])  
 	    	render json: false
 	    else
 	    	render json: true

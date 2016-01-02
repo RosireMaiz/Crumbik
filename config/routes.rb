@@ -38,6 +38,8 @@ Rails.application.routes.draw do
 	match "/validar_pregunta_frecuente" => "pregunta_frecuentes#validar_pregunta_frecuente", via: :post
 	match "/validar_categoria_update" => "categorias#validar_categoria_update", via: :post
 	match "/validar_categoria" => "categorias#validar_categoria", via: :post
+	match "/validar_tipo_cliente_update" => "tipo_clientes#validar_tipo_cliente_update", via: :post
+	match "/validar_tipo_cliente" => "tipo_clientes#validar_tipo_cliente", via: :post
 
 	match "/validar_opcion" => "menu#validar_opcion", via: :post		
 
@@ -143,6 +145,14 @@ Rails.application.routes.draw do
 	match "/pregunta_frecuentes/update" => "pregunta_frecuentes#update", via: :post
 	match "/pregunta_frecuentes/consultar_pregunta_frecuente" => "pregunta_frecuentes#consultar_pregunta_frecuente", via: :post
 	match "/pregunta_frecuentes/eliminar" => "pregunta_frecuentes#eliminar", via: :post
+
+	match "/tipos_clientes/consultar" => "tipo_clientes#consultar", via: :get
+    match "/tipo_cliente/agregar" => "tipo_clientes#new", via: :get
+    match "/tipo_cliente/crear_tipo_cliente" => "tipo_clientes#create", via: :post
+    match "/tipo_clientes/update_estatus" => "tipo_clientes#update_estatus", via: :post
+	match "/tipo_clientes/update" => "tipo_clientes#update", via: :post
+	match "/tipo_clientes/consultar_tipo_cliente" => "tipo_clientes#consultar_tipo_cliente", via: :post
+	match "/tipo_clientes/eliminar" => "tipo_clientes#eliminar", via: :post
 
 	match "/planes" => "plans#consultar", via: :get
     match "/planes/agregar" => "plans#new", via: :get

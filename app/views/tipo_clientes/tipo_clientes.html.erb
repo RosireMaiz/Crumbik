@@ -1,0 +1,198 @@
+<% content_for :css_personalizado do %>
+ <%= stylesheet_link_tag    "jquery.dataTables" %> 
+<% end %>
+
+<div class="row titulo-seccion">
+  <div class="banner banner-perfil">
+    <div class="contenedor">
+      <div class="col s6">
+        <h5 class="text-uppercase ">
+         Tipos de Clientes
+        </h5>
+      </div>
+      <div class="col s6 text-right ">
+        <ol class="breadcrumb">
+          <li>
+            <a href="/">Inicio</a>
+          </li>
+          <li class="active">Tipos de Clientes</li>
+        </ol>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="row pad30-h">
+  <table id="tipo_clientes" class="display" cellspacing="0" width="100%" >
+    <thead>
+      <tr>
+          <th>Nombre</th>
+          <th>Estatus</th>
+          <th>Acciones</th>
+      </tr>
+    </thead>
+    <tbody>
+      <% @tipo_clientes.each do |tipo_cliente| %>
+
+         <% if ! tipo_cliente.nil? %>
+            <tr>
+                <td data-search="<%= tipo_cliente.nombre %>"> 
+                    <%= tipo_cliente.nombre %> 
+                </td>                  
+                <td> 
+                <% if (tipo_cliente.estatus == 'A') %>
+                    Activo 
+                <% else %>
+                    Deshabilitado
+                <% end %>
+                </td> 
+                <td> 
+                <% if !(tipo_cliente.estatus == 'A') %>
+                  <a  href="#modal<%= tipo_cliente.id %>" class="modal-trigger btn-success btn-sm"> Habilitar</a>
+                <% else %>
+                   <a  href="#modal<%= tipo_cliente.id %>" class=" modal-trigger btn-warning btn-sm">Deshabilitar</a>
+                <% end %>
+                 <a href="#modalver<%= tipo_cliente.id %>" class="modal-trigger purple btn-primary btn-sm">Ver</a>                
+
+                  <a  href="#modaleditar<%= tipo_cliente.id %>" class="modal-trigger btn-primary btn-sm" onclick="validar(modaleditar<%= tipo_cliente.id %>, <%= tipo_cliente.id %>)"> Editar</a>
+                  <a  href="#modaleliminar<%= tipo_cliente.id %>" class="modal-trigger btn-danger btn-sm">Eliminar</a>
+                  
+                </td>  
+                    
+            </tr>
+          <% end %>
+        <% end %>
+            
+     </tbody>
+  </table>
+
+  <% @tipo_clientes.each do |tipo_clientes| %>
+    <% if ! tipo_clientes.nil? %>
+        <!-- Modal Structure -->
+        <div id="modal<%= tipo_clientes.id %>" class="modal">
+          <div class="modal-content">
+                <a style="float:right;" class="waves-effect btn-flat modal-close"><i class="mdi-content-clear"></i></a>
+                <% if (tipo_clientes.estatus == 'A') %>
+                  <h5>Deshabilitar Tipo de Cliente</h5>
+                <% else %>
+                  <h5>Habilitar Tipo de Cliente</h5>
+                <% end %>
+                <div class="row pad30-t" >
+                    <div class="col s12 text-center">
+                      <% if (tipo_clientes.estatus == 'A') %>
+                        <h6 style=" font-size: 20px;">¿Seguro que desea Deshabilitar el tipo de cliente seleccionado? 
+                        </h6>
+                      <% else %>
+                        <h6 style=" font-size: 20px;">¿Seguro que desea Habilitar el tipo de cliente seleccionado?</h6>
+                      <% end %>
+                      <div style="padding-top: 35px;" class="right">
+                      <% if (tipo_clientes.estatus == 'A') %>
+                         <input type="button" class="btn btn-success btn-sm" value="Aceptar" onclick="update_estatus(<%= tipo_clientes.id %>,'I')">
+                      <% else %>
+                        <input type="button" class="btn btn-success btn-sm" value="Aceptar" onclick="update_estatus(<%= tipo_clientes.id %>,'A')">
+                      <% end %>
+                       
+                        <input type="button" class="btn btn-danger btn-sm modal-close" value="Cancelar">
+                      </div>
+
+                    </div>
+                </div>                
+          </div>
+        </div> 
+
+        <div id="modaleliminar<%= tipo_clientes.id %>" class="modal">
+          <div class="modal-content">
+                <a style="float:right;" class="waves-effect btn-flat modal-close"><i class="mdi-content-clear"></i></a>
+               
+                  <h5>Eliminar Tipo de Cliente</h5>
+               
+                <div class="row pad30-t" >
+                    <div class="col s12 text-center">
+                     
+                        <h6 style=" font-size: 20px;"> ¿Seguro que desea eliminar el tipo de cliente seleccionado? </h6>
+                      
+                      <div style="padding-top: 35px;" class="right">
+                      
+                        <input type="button" class="btn btn-success btn-sm" value="Aceptar" onclick="eliminar(<%= tipo_clientes.id %>)">
+                      
+                        <input type="button" class="btn btn-danger btn-sm modal-close" value="Cancelar">
+                      </div>
+
+                    </div>
+                </div>                
+          </div>
+        </div> 
+
+
+        <div id="modalver<%= tipo_clientes.id %>" class="modal modal-45">
+          <div class="modal-content">
+            <a href="#" style="float:right;" class="waves-effect btn-flat modal-close"><i class="mdi-content-clear"></i></a>
+            <h5>Tipo de Cliente</h5>
+
+            <div class="row" style="padding-top: 35px;">
+              <div class="col s10 offset-s1" align="justify">
+                <div class="row">
+                 <p><b style="color: #9E9E9E"><%= tipo_clientes.nombre %></b></p>
+
+                   <p><%= tipo_clientes.descripcion %></p> 
+                 </div>
+               </div>
+
+             </div>
+           </div>                
+        </div>
+
+
+        <div id="modaleditar<%= tipo_clientes.id %>" class="modal modal-45" form="true">
+          <div class="modal-content">
+                <a style="float:right;" class="waves-effect btn-flat modal-close" onclick="cancelar(modaleditar<%= tipo_clientes.id %>, <%= tipo_clientes.id %>, nombre<%= tipo_clientes.id %>, descripcion<%= tipo_clientes.id %> )"><i class="mdi-content-clear"></i></a>
+                <h5>Editar Tipo de Cliente</h5>
+                
+                <div class="row" style="padding-top: 35px;">
+                    <div class="col s12">
+                      <div class="row">
+                        <div class=" input-field col s10 offset-s1 ">
+                          <input id="nombre<%= tipo_clientes.id %>" type="text" class="validate" value="<%= tipo_clientes.nombre %>" name="tipo_cliente[nombre]"> 
+                          <label for="nombre<%= tipo_clientes.id %>" >Nombre:</label>
+
+                        </div>
+
+                        <div class=" input-field col s10 offset-s1 ">
+                          <textarea id="descripcion<%= tipo_clientes.id %>" class="validate materialize-textarea active" length= "255"  name="tipo_cliente[descripcion]"><%= tipo_clientes.descripcion %></textarea>  
+                          <label for="descripcion<%= tipo_clientes.id %>" >Descripción:</label>
+
+                        </div>
+                      </div>
+                      <div class="text-center">
+                        <input type="button" class="btn btn-success btn-sm" value="Guardar" onclick="update(modaleditar<%= tipo_clientes.id %>, <%= tipo_clientes.id %>, nombre<%= tipo_clientes.id %>, descripcion<%= tipo_clientes.id %> )">
+                      
+                        <input type="button" class="btn btn-danger btn-sm" value="Cancelar" onclick="cancelar(modaleditar<%= tipo_clientes.id %>, <%= tipo_clientes.id %>, nombre<%= tipo_clientes.id %>, descripcion<%= tipo_clientes.id %> )">
+                      </div>
+                    </div>
+
+                 </div>
+          </div>                
+        </div>
+
+    <% end %>
+  <% end %>
+
+</div>
+
+<% content_for :javascript_personalizado do %>
+  <%= javascript_include_tag 'maestros/tipo_clientes' %>
+  <%= javascript_include_tag 'jquery.dataTables.min' %>
+  <script type="text/javascript">
+    $(document).ready(function(){
+      $('#tipo_clientes').dataTable({
+        "select": false, 
+        "pageLength": 4,
+        "lengthChange": false,
+        "language": {
+                "zeroRecords": "No hay datos disponibles en la tabla",
+        }
+      });
+    });
+
+  </script>
+<% end %>

@@ -1,0 +1,79 @@
+<div class="row titulo-seccion">
+  <div class="banner banner-perfil">
+    <div class="contenedor">
+      <div class="col s6">
+        <h5 class="text-uppercase">
+         Crear Tipo Cliente
+      </div>
+      <div class="col s6 text-right ">
+        <ol class="breadcrumb">
+          <li>
+            <a href="/">Inicio</a>
+          </li>
+          <li class="active">Crear Tipo Cliente</li>
+        </ol>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div id="form_wizard_1" class="center-block">
+  <%= form_for @tipo_cliente, :url => tipo_cliente_crear_tipo_cliente_path, html:{id: "add_tipo_cliente", class: "form-horizontal"} do |f| %>
+    <div class="form-wizard">
+      <div class="form-body steps">
+        <div class="tab-content">
+          <div class="feedback alert alert-danger display-none">
+            <button class="close" data-dismiss="alert"></button>
+            Algunos campos tienen errores. Por favor revisa abajo.
+          </div>
+          <div class="feedback alert-success display-none">
+            <button class="close" data-dismiss="alert"></button>
+            La validación fue exitosa.
+          </div>
+          <div class="tab-pane active" id="tab1">
+            <div class="row">
+              <div class="col s9 offset-s1 left">
+                <h5>Datos del Tipo de Cliente</h5>
+    
+                <div class="input-field col s12">
+                  <label for="tipo_cliente_nombre">Nombre <span class="required">
+                  * </span>
+                  </label>
+                  <%= f.text_field :nombre, :required=>true, autocomplete: "off" %>
+                </div>
+
+                <div class="input-field col s12">
+                  <label for="tipo_cliente_descripcion">Descripción <span class="required">
+                  * </span>
+                  </label>
+                  <%= f.text_area :descripcion, :required=>true, autocomplete: "off", class: "materialize-textarea", length: "255" %>
+
+                </div>
+
+              </div>
+            </div>
+          </div>
+
+        </div>
+      </div>
+      <div class="form-actions">
+        <div class="row">
+          <div class="col-md-offset-3 col-md-9">
+            
+            <input type="submit" class="btn btn-success " value="Guardar">
+            <button type="button" onclick="window.location.href='/tipos_clientes/consultar'" class="btn btn-danger waves-effect">Cancelar</button>
+          </div>
+        </div>
+      </div>
+    </div>
+  <% end %>
+</div>
+
+<% content_for :javascript_personalizado do %>
+  <script type="text/javascript">
+    $(document).ready(function(){
+        $('#form_wizard_1 .alert-danger').hide();
+        $('#form_wizard_1 .alert-success').hide();
+    });
+  </script>
+<% end %>
