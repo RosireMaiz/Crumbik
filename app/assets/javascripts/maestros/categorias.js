@@ -40,7 +40,7 @@ function update_estatus(idcategoria, estatus){
                                     errorElement: 'span', //default input error message container
                                     errorClass: 'msj-error', // default input error message class
                                     rules: {
-                                      "categoria[categoria]":{
+                                      "categoria[nombre]":{
                                           remote: {
                                               url: "/validar_categoria_update?idcategoria="+ idcategoria ,
                                               type: "post"
@@ -56,7 +56,7 @@ function update_estatus(idcategoria, estatus){
   
                                     },
                                     messages:{
-                                      "categoria[categoria]":{
+                                      "categoria[nombre]":{
                                         required:"Indica la categoría.",
                                         remote:"Ya existe la misma categoría."
                                       },

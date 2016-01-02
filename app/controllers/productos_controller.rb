@@ -38,8 +38,8 @@ class ProductosController < ApplicationController
 	        if @usuarioRol[0] == nil or @rol[0].id != current_usuario.rol_actual.id
 	          render root_path
 	        else
-	           @productos = Producto.order('id ASC').page(params[:page]).per(9)
-	           @categorias = Categorium.order('id ASC')
+	           @productos = Producto.order('nombre ASC').page(params[:page]).per(9)
+	           @categorias = Categorium.order('nombre ASC')
 	           @valor = true;
 	           render "productos/productos"	
 	        end
@@ -94,8 +94,8 @@ class ProductosController < ApplicationController
 	end
 
 	def catalogo
-       @productos = Producto.order('id ASC').page(params[:page]).per(9)
-       @categorias = Categorium.order('id ASC')
+       @productos = Producto.order('nombre ASC').page(params[:page]).per(9)
+       @categorias = Categorium.order('nombre ASC')
        @valor = true;
        $administrable = false
        render "productos/catalogo"	

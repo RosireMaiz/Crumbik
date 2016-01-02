@@ -1064,7 +1064,7 @@ jQuery(function ($) {
 			                    errorClass: 'msj-error', // default input error message class
 			                    focusInvalid: false, // do not focus the last invalid input
 								rules: {
-									"categoria[nombre]":{
+									"categorium[nombre]":{
 										
 										required:true,
 										remote: {
@@ -1074,18 +1074,18 @@ jQuery(function ($) {
 									    
 									},
 									
-									"categoria[descripcion]":{
+									"categorium[descripcion]":{
 										required:true,
 									},
 									
 								},
 								messages:{
-									"categoria[nombre]":{
+									"categorium[nombre]":{
 										required:"Indica el nombre.",
 										remote:"Ya existe una categoría igual."
 									},
 									
-									"categoria[descripcion]":{
+									"categorium[descripcion]":{
 										required:"Indica la descripción.",
 									},
 

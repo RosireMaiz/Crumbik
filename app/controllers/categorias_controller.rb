@@ -1,6 +1,6 @@
 class CategoriasController < ApplicationController
 	def validar_categoria
-	    if Categorium.exists?(nombre: params[:categoria][:nombre])
+	    if Categorium.exists?(nombre: params[:categorium][:nombre])
 	    	render json: false
 	    else
 	    	render json: true

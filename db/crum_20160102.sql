@@ -3,7 +3,7 @@
 -- http://www.phpmyadmin.net
 --
 -- Servidor: 127.0.0.1
--- Tiempo de generación: 30-12-2015 a las 01:57:10
+-- Tiempo de generación: 02-01-2016 a las 16:47:58
 -- Versión del servidor: 5.6.21-log
 -- Versión de PHP: 5.6.3
 
@@ -185,7 +185,7 @@ CREATE TABLE IF NOT EXISTS `opcion_menus` (
   `menu_id` int(11) DEFAULT NULL,
   `icono` varchar(255) COLLATE utf8_unicode_ci DEFAULT NULL,
   `orden` int(11) DEFAULT NULL
-) ENGINE=InnoDB AUTO_INCREMENT=96 DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=99 DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 
 --
 -- Volcado de datos para la tabla `opcion_menus`
@@ -221,7 +221,7 @@ INSERT INTO `opcion_menus` (`id`, `nombre`, `raiz`, `url`, `padre_id`, `menu_id`
 (27, 'Agregar', 0, '/productos/agregar', 26, 2, 'fa fa-plus-circle', 1),
 (28, 'consultar', 0, '/productos/consultar', 26, 2, 'fa fa-search', 2),
 (29, 'Categorias', 0, '/productos/categorias', 26, 2, 'fa fa-server', 3),
-(30, 'Agregar', 0, '/productos/categorías/agregar', 29, 2, 'fa fa-plus-square-o ', 1),
+(30, 'Agregar', 0, '/productos/categorias/agregar', 29, 2, 'fa fa-plus-square-o ', 1),
 (31, 'Consultar', 0, '/productos/categorias/consultar', 29, 2, 'fa fa-eye', 2),
 (32, 'Publicidad', 0, '/productos/publicidad', 26, 2, 'fa fa-exchange', 4),
 (33, 'agregar', 0, '/productos/publicidad/agregar', 32, 2, 'fa fa-plus', 1),
@@ -281,7 +281,10 @@ INSERT INTO `opcion_menus` (`id`, `nombre`, `raiz`, `url`, `padre_id`, `menu_id`
 (92, 'Sugerencias', 0, '/sugerencias', 0, 1, 'fa fa-thumb-tack', 8),
 (93, 'Preguntas Frecuentes', 0, '/organizacion/preguntas_frecuentes', 20, 2, 'fa fa-question-circle', 3),
 (94, 'Agregar', 0, '/preguntas_frecuentes/agregar', 93, 2, 'fa fa-plus-circle', 1),
-(95, 'consultar', 0, '/preguntas_frecuentes', 93, 2, 'fa fa-eye', 1);
+(95, 'consultar', 0, '/preguntas_frecuentes', 93, 2, 'fa fa-eye', 1),
+(96, 'Tipo De Clientes ', 0, '/usuarios/tipo_clientes', 35, 2, 'fa fa-user', 2),
+(97, 'Agregar', 0, '/tipo_cliente/agregar', 96, 2, 'fa fa-plus-circle', 1),
+(98, 'Consultar', 0, '/tipos_clientes/consultar', 96, 2, 'fa fa-eye', 1);
 
 -- --------------------------------------------------------
 
@@ -968,8 +971,8 @@ CREATE TABLE IF NOT EXISTS `usuarios` (
 --
 
 INSERT INTO `usuarios` (`id`, `email`, `encrypted_password`, `username`, `confirmacion_email`, `pais_id`, `reset_password_token`, `reset_password_sent_at`, `remember_created_at`, `sign_in_count`, `current_sign_in_at`, `last_sign_in_at`, `current_sign_in_ip`, `last_sign_in_ip`, `created_at`, `updated_at`) VALUES
-(1, 'rosire08@gmail.com', '$2a$10$VtE0lZB2.FwEIKLSZve8qegLsDvkjK/L4ga9ySaaG5F8OSB/uQ/wO', 'Rosiré Maiz*', 1, 232, '7e4f6a91a8f96feeea96efb55170e89c4e2ac02d2b12dd6c39c90dd75d50dc3e', '2015-10-11 22:23:28', NULL, 122, '2015-12-30 00:28:05', '2015-12-25 16:13:19', '127.0.0.1', '127.0.0.1', '2015-08-26 01:38:48', '2015-12-30 00:28:06'),
-(2, 'ahewstone@gmail.com', '$2a$10$4t56xvGXVSmErhCmRbPlE.P88pslAB5Cbv67ZHiYT4/GxPsmGpKae', 'Alejandra', 0, 232, NULL, NULL, NULL, 0, NULL, NULL, NULL, NULL, '2015-12-30 00:20:28', '2015-12-30 00:20:28');
+(1, 'rosire08@gmail.com', '$2a$10$VtE0lZB2.FwEIKLSZve8qegLsDvkjK/L4ga9ySaaG5F8OSB/uQ/wO', 'Rosiré Maiz*', 1, 232, '7e4f6a91a8f96feeea96efb55170e89c4e2ac02d2b12dd6c39c90dd75d50dc3e', '2015-10-11 22:23:28', NULL, 123, '2016-01-02 15:12:36', '2015-12-30 00:28:05', '127.0.0.1', '127.0.0.1', '2015-08-26 01:38:48', '2016-01-02 15:12:36'),
+(2, 'ahewstone@gmail.com', '$2a$10$4t56xvGXVSmErhCmRbPlE.P88pslAB5Cbv67ZHiYT4/GxPsmGpKae', 'Alejandra', 0, 232, NULL, NULL, NULL, 1, '2016-01-02 15:12:01', '2016-01-02 15:12:01', '127.0.0.1', '127.0.0.1', '2015-12-30 00:20:28', '2016-01-02 15:12:01');
 
 -- --------------------------------------------------------
 
@@ -1262,7 +1265,7 @@ MODIFY `id` int(11) NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=4;
 -- AUTO_INCREMENT de la tabla `opcion_menus`
 --
 ALTER TABLE `opcion_menus`
-MODIFY `id` int(11) NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=96;
+MODIFY `id` int(11) NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=99;
 --
 -- AUTO_INCREMENT de la tabla `organizacions`
 --
