@@ -1,3 +1,10 @@
+<% content_for :css_personalizado do %>
+    <style type="text/css">
+      .dropdown-content {
+        max-height: 250px;  
+      }
+    </style>
+<% end %>
 <div class="row titulo-seccion">
   <div class="banner banner-perfil">
     <div class="contenedor">
@@ -15,5 +22,119 @@
         </ol>
       </div>
     </div>
+  </div>
+</div>
+
+<div class="row pad30-h">
+  <div class="col s3">
+      <ul class="collapsible filtro" data-collapsible="expandable">
+        <li>
+          <div class="collapsible-header active  grey lighten-4">
+            <i class="fa fa-calendar fa-2x deep-purple-text text-darken-1"></i>
+            <span class="deep-purple-text text-darken-1">Fecha</span>
+          </div>
+          <div class="collapsible-body white">
+            <div style = " display: table; width : 100%;">
+
+              <div class="input-field col s6">
+                <input id="Desde" type="date" class="datepicker">
+                <label for="Desde" class = "morado">Inicio</label>
+
+              </div>
+
+              <div class="input-field col s6">
+                <input id="Hasta" type="date" class="datepicker">
+                <label for="Hasta" class = "morado">Fin</label>
+              </div>
+
+            </div>
+            <a class="waves-effect waves-light btn z-depth-1 espacio pink accent-3" style = " margin-left: 27px;">Buscar </a>
+          </div>
+        </li>
+      </ul>
+  </div>
+
+  <div class="col s9">
+    <div class="row no-margin-v">
+      <div class="input-field col m6 s12">
+       <select id="select" name="rol" >
+            <option value="-1" selected>Elija un Producto</option>
+            <%= options_from_collection_for_select(Producto.all, :id, :nombre) %>
+        </select>
+        <label>Producto</label>
+      </div>
+    </div>
+
+    <div class="row"> 
+      <div class="col s12" align="justify">
+        <% if !@publicidads.blank? %>
+          <ul class="collapsible popout" >
+            <% @publicidads.each do |publicidad| %>
+              <% if ! publicidad.nil? %>
+                <li>
+                  <div class="collapsible-header grey lighten-4 active ">
+                    <i class="fa fa-circle light-green-text text-accent-4 collapsible-header-org"></i>
+                    <b class="grey-text text-darken-1">
+                      <%= publicidad.titulo %>
+                    </b>
+                  </div>
+                  <div class="collapsible-body white">
+                    <div class="pad30-hv">
+                      <div class="row no-margin-v">
+                        <div class="row">
+                          <img class="img-responsive" src=" <%= publicidad.formato_imagen %> <%= publicidad.imagen %>">
+                        </div>
+
+                        <div class="col s12 ">
+
+                          
+                          <div class="col s6 no-padding">
+                            <p class="no-padding">
+                              <b class="grey-text text-darken-3">Fecha de inicio:</b>
+                              <%= publicidad.fecha_inicio.strftime("%d/%m/%Y ") %>
+                            </p>
+                          </div>
+                          <div class="col s6 no-padding">
+                            <p class="no-padding">
+                              <b class="grey-text text-darken-3">Fecha de vencimiento:</b>
+                              <%= publicidad.fecha_finalizacion.strftime("%d/%m/%Y ") %>
+                            </p>
+                          </div>
+                          <p class="no-padding">
+                            <b class="grey-text text-darken-3">Producto:</b>
+                            <%= publicidad.producto.nombre %>
+                          </p>
+                          <p class="no-padding">
+                            <b class="grey-text text-darken-3">Descripción:</b>
+                            <%= publicidad.descripcion %>
+                          </p>
+                          
+                          <div class="right">
+                            <a href="/publicidad/editar/<%= publicidad.id %>" >
+                              Editar
+                            </a>
+                            <a href="#modal_deshabilitar<%= publicidad.id %>" >
+                              Deshabilitar
+                            </a>
+                            <a href="modal_eliminar<%= publicidad.id %>" >
+                              Eliminar
+                            </a>
+                          </div>
+                        </div>
+                        
+                      </div>
+
+                    </div>
+                  </div>
+                </li>
+              <% end %>
+            <% end %>
+          </ul>
+          <div class="row valign-wrapper">
+            <%= paginate(@publicidads) %>
+          </div>
+        <% end %>
+      </div>
+    </div>  
   </div>
 </div>

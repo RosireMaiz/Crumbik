@@ -112,125 +112,185 @@
     <div class="row center-align valign-wrappe">
       
       <% if !@productos.blank? %>
-
+        
         <div id="todos">
-          <% for producto in @productos %>
-
-            <div class = "col s3 " style="width: 33%;">
-              <div class="card hoverable">
-                <div class="card-image">
-                  <img src="<%= producto.formato_imagen %><%= producto.imagen %>" class="activator img-responsive">
-                </div>
-                <div class="card-content  pad5-hv left-align">
-                <div class="row no-margin-v">
-                 <span class="card-title activator grey-text text-darken-4">
-                    <div class="col s10">
-                      <%= producto.nombre %>
-                    </div>
-                    <div class="col s2"> 
-                      <i class="material-icons right  mdi-navigation-more-vert waves-effect"></i>
-                    </div>
-                  </span>
+          <% @productos.each_with_index do |producto, index| %>
+            <div class="<% if (index.to_i+1) % 3 == 0 %> row <% end %>">
+              <div class = "col s3 " style="width: 33%;">
+                <div class="card hoverable">
+                  <div class="card-image">
+                    <img src="<%= producto.formato_imagen %><%= producto.imagen %>" class="activator img-responsive">
                   </div>
-                </div>
-                <div class="card-action pad5-15">
-                  <p class = "blue-text right"> $<%= producto.precio %></p>
-                  <a href="/productos/editar/<%= producto.id %>" class="left"> Editar</a>
-                  <a href="#modaleliminar<%= producto.id %>" class="modal-trigger waves-effect left"> Eliminar</a>
-                  <% if producto.estatus == 'A' %>
-                     <a href="#modal<%= producto.id %>" class=" modal-trigger waves-effect left"> Deshabilitar</a>
-                  <% else %>
-                    <a href="#modal<%= producto.id %>" class=" modal-trigger waves-effect left"> Habilitar</a>
-                  <%  end %>
-                 
-                </div>
-
-                <div class="card-reveal left-align">
-
-                  <div class="row" style="    margin-bottom: 12px;">
-                    <span class="card-title grey-text text-darken-4">
+                  <div class="card-content  pad5-hv left-align">
+                  <div class="row no-margin-v">
+                   <span class="card-title activator grey-text text-darken-4">
                       <div class="col s10">
-                        <%= producto.nombre %>
+                        <h6 class="grey-text"><%= producto.nombre %></h6>
                       </div>
                       <div class="col s2"> 
-                        <i class="material-icons right mdi-navigation-close waves-effect"></i>
+                        <i class="material-icons right  mdi-navigation-more-vert waves-effect"></i>
                       </div>
                     </span>
+                    </div>
                   </div>
-                  <div class="col s12">
-                    <p><%= producto.descripcion %></p>
-                    <span class="blue-text right">
-                      $<%= producto.precio %>
-                    </span>
+                  <div class="card-action pad5-15">
+                    <p class = "blue-text right"> $<%= producto.precio %></p>
+                    <a href="/productos/editar/<%= producto.id %>" class="left"> Editar</a>
+                    <a href="#modaleliminar<%= producto.id %>" class="modal-trigger waves-effect left"> Eliminar</a>
+                    <% if producto.estatus == 'A' %>
+                       <a href="#modal<%= producto.id %>" class=" modal-trigger waves-effect left"> Deshabilitar</a>
+                    <% else %>
+                      <a href="#modal<%= producto.id %>" class=" modal-trigger waves-effect left"> Habilitar</a>
+                    <%  end %>
+                   
                   </div>
+
+                  <div class="card-reveal left-align">
+
+                    <div class="row" style="    margin-bottom: 12px;">
+                      <span class="card-title grey-text text-darken-4">
+                        <div class="col s10">
+                          <%= producto.nombre %>
+                        </div>
+                        <div class="col s2"> 
+                          <i class="material-icons right mdi-navigation-close waves-effect"></i>
+                        </div>
+                      </span>
+                    </div>
+                    <div class="col s12">
+                      <p><%= producto.descripcion %></p>
+                      <span class="blue-text right">
+                        $<%= producto.precio %>
+                      </span>
+                    </div>
+                  </div>
+                  
                 </div>
-                
-              </div>
-          
-            </div>
             
+              </div>
+            </div>
           <% end %>
         </div>
 
         <div id="habilitados">
-          <% for producto in @productos %>
+          <% @productos.each_with_index do |producto, index| %>
             <% if producto.estatus == 'A' %>
-              <div class = "col s3 " style="width: 33%;">
-                <div class="card hoverable">
-                  <div class="card-image">
-                    <img src="<%= producto.formato_imagen %><%= producto.imagen %>">
+              <div class="<% if (index.to_i+1) % 3 == 0 %> row <% end %>">
+                <div class = "col s3 " style="width: 33%;">
+                  <div class="card hoverable">
+                    <div class="card-image">
+                      <img src="<%= producto.formato_imagen %><%= producto.imagen %>" class="activator img-responsive">
+                    </div>
+                    <div class="card-content  pad5-hv left-align">
+                    <div class="row no-margin-v">
+                     <span class="card-title activator grey-text text-darken-4">
+                        <div class="col s10">
+                          <h6 class="grey-text"><%= producto.nombre %></h6>
+                        </div>
+                        <div class="col s2"> 
+                          <i class="material-icons right  mdi-navigation-more-vert waves-effect"></i>
+                        </div>
+                      </span>
+                      </div>
+                    </div>
+                    <div class="card-action pad5-15">
+                      <p class = "blue-text right"> $<%= producto.precio %></p>
+                      <a href="/productos/editar/<%= producto.id %>" class="left"> Editar</a>
+                      <a href="#modaleliminar<%= producto.id %>" class="modal-trigger waves-effect left"> Eliminar</a>
+                      <% if producto.estatus == 'A' %>
+                         <a href="#modal<%= producto.id %>" class=" modal-trigger waves-effect left"> Deshabilitar</a>
+                      <% else %>
+                        <a href="#modal<%= producto.id %>" class=" modal-trigger waves-effect left"> Habilitar</a>
+                      <%  end %>
+                     
+                    </div>
+
+                    <div class="card-reveal left-align">
+
+                      <div class="row" style="    margin-bottom: 12px;">
+                        <span class="card-title grey-text text-darken-4">
+                          <div class="col s10">
+                            <%= producto.nombre %>
+                          </div>
+                          <div class="col s2"> 
+                            <i class="material-icons right mdi-navigation-close waves-effect"></i>
+                          </div>
+                        </span>
+                      </div>
+                      <div class="col s12">
+                        <p><%= producto.descripcion %></p>
+                        <span class="blue-text right">
+                          $<%= producto.precio %>
+                        </span>
+                      </div>
+                    </div>
+                    
                   </div>
-                  <div class="card-content  pad5-hv left-align">
-                    <h6><%= producto.nombre %></h6>
-                  </div>
-                  <div class="card-action pad5-15">
-                    <p class = "blue-text right"> $<%= producto.precio %></p>
-                    <a href="/productos/editar/<%= producto.id %>" class="left"> Editar</a>
-                    <a href="#modaleliminar<%= producto.id %>" class="modal-trigger waves-effect left"> Eliminar</a>
-                    <% if producto.estatus == 'A' %>
-                       <a href="#modal<%= producto.id %>" class=" modal-trigger waves-effect left"> Deshabilitar</a>
-                    <% else %>
-                      <a href="#modal<%= producto.id %>" class=" modal-trigger waves-effect left"> Habilitar</a>
-                    <%  end %>
-                   
-                  </div>
-                  
+              
                 </div>
-            
               </div>
-             <% end %>
-            
+            <% end %>
           <% end %>
         </div>
 
         <div id="deshabilitados">
-          <% for producto in @productos %>
+          <% @productos.each_with_index do |producto, index| %>
             <% if producto.estatus == 'I' %>
-              <div class = "col s3 " style="width: 33%;">
-                <div class="card hoverable">
-                  <div class="card-image">
-                    <img src="<%= producto.formato_imagen %><%= producto.imagen %>">
+              <div class="<% if (index.to_i+1) % 3 == 0 %> row <% end %>">
+                <div class = "col s3 " style="width: 33%;">
+                  <div class="card hoverable">
+                    <div class="card-image">
+                      <img src="<%= producto.formato_imagen %><%= producto.imagen %>" class="activator img-responsive">
+                    </div>
+                    <div class="card-content  pad5-hv left-align">
+                    <div class="row no-margin-v">
+                     <span class="card-title activator grey-text text-darken-4">
+                        <div class="col s10">
+                          <h6 class="grey-text"><%= producto.nombre %></h6>
+                        </div>
+                        <div class="col s2"> 
+                          <i class="material-icons right  mdi-navigation-more-vert waves-effect"></i>
+                        </div>
+                      </span>
+                      </div>
+                    </div>
+                    <div class="card-action pad5-15">
+                      <p class = "blue-text right"> $<%= producto.precio %></p>
+                      <a href="/productos/editar/<%= producto.id %>" class="left"> Editar</a>
+                      <a href="#modaleliminar<%= producto.id %>" class="modal-trigger waves-effect left"> Eliminar</a>
+                      <% if producto.estatus == 'A' %>
+                         <a href="#modal<%= producto.id %>" class=" modal-trigger waves-effect left"> Deshabilitar</a>
+                      <% else %>
+                        <a href="#modal<%= producto.id %>" class=" modal-trigger waves-effect left"> Habilitar</a>
+                      <%  end %>
+                     
+                    </div>
+
+                    <div class="card-reveal left-align">
+
+                      <div class="row" style=" margin-bottom: 12px;">
+                        <span class="card-title grey-text text-darken-4">
+                          <div class="col s10">
+                            <%= producto.nombre %>
+                          </div>
+                          <div class="col s2"> 
+                            <i class="material-icons right mdi-navigation-close waves-effect"></i>
+                          </div>
+                        </span>
+                      </div>
+                      <div class="col s12">
+                        <p><%= producto.descripcion %></p>
+                        <span class="blue-text right">
+                          $<%= producto.precio %>
+                        </span>
+                      </div>
+                    </div>
+                    
                   </div>
-                  <div class="card-content  pad5-hv left-align">
-                    <h6><%= producto.nombre %></h6>
-                  </div>
-                  <div class="card-action pad5-15">
-                    <p class = "blue-text right"> $<%= producto.precio %></p>
-                    <a href="/productos/editar/<%= producto.id %>" class="left"> Editar</a>
-                    <a href="#modaleliminar<%= producto.id %>" class="modal-trigger waves-effect left"> Eliminar</a>
-                    <% if producto.estatus == 'A' %>
-                       <a href="#modal<%= producto.id %>" class=" modal-trigger waves-effect left"> Deshabilitar</a>
-                    <% else %>
-                      <a href="#modal<%= producto.id %>" class=" modal-trigger waves-effect left"> Habilitar</a>
-                    <%  end %>
-                   
-                  </div>
-                  
+              
                 </div>
-            
               </div>
-             <% end %>
-            
+            <% end %>
           <% end %>
         </div>
       

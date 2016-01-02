@@ -37,7 +37,7 @@ class PublicidadsController < ApplicationController
 	        if @usuarioRol[0] == nil or @rol[0].id != current_usuario.rol_actual.id
 	          render root_path
 	        else
-	           publicidads = Publicidad.order('id ASC').page(params[:page]).per(9)
+	           @publicidads = Publicidad.order('id ASC').page(params[:page]).per(9)
 	           render "publicidads/publicidads"	
 	        end
          
@@ -59,7 +59,7 @@ class PublicidadsController < ApplicationController
 	end
 
 	def save_edit
-		id = params[:publicidad_id]
+		id = params[:publicidad][:id]
 
 		publicidad_edit = Publicidadd.where(["id = ?", id]).first
 		
@@ -92,7 +92,7 @@ class PublicidadsController < ApplicationController
 
 	private
 	 def publicidad_params
-      accessible = [ :descripcion,  :formato_imagen, :imagen, :producto_id, :fecha_inicio , :fecha_vencimiento ] # extend with your own params
+      accessible = [ :titulo, :descripcion,  :formato_imagen, :imagen, :producto_id, :fecha_inicio , :fecha_finalizacion ] # extend with your own params
       params.require(:publicidad).permit(accessible)
     end
 end

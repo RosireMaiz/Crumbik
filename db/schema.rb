@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20151225221008) do
+ActiveRecord::Schema.define(version: 20160102204900) do
 
   create_table "autenticacions", force: :cascade do |t|
     t.integer "usuario_id", limit: 4
@@ -194,13 +194,14 @@ ActiveRecord::Schema.define(version: 20151225221008) do
   add_index "productos", ["categoria_id"], name: "index_productos_on_categoria_id", using: :btree
 
   create_table "publicidads", force: :cascade do |t|
-    t.text    "descripcion",       limit: 65535
+    t.string  "titulo",             limit: 255,                      null: false
+    t.text    "descripcion",        limit: 65535
     t.date    "fecha_inicio"
-    t.date    "fecha_vencimiento"
-    t.string  "estatus",           limit: 1,          default: "A"
-    t.binary  "imagen",            limit: 4294967295
-    t.string  "formato_imagen",    limit: 255
-    t.integer "producto_id",       limit: 4
+    t.date    "fecha_finalizacion"
+    t.string  "estatus",            limit: 1,          default: "A"
+    t.binary  "imagen",             limit: 4294967295
+    t.string  "formato_imagen",     limit: 255
+    t.integer "producto_id",        limit: 4
   end
 
   add_index "publicidads", ["producto_id"], name: "index_publicidads_on_producto_id", using: :btree
@@ -295,6 +296,14 @@ ActiveRecord::Schema.define(version: 20151225221008) do
   add_index "usuarios", ["email"], name: "index_usuarios_on_email", unique: true, using: :btree
   add_index "usuarios", ["pais_id"], name: "index_usuarios_on_pais_id", using: :btree
   add_index "usuarios", ["reset_password_token"], name: "index_usuarios_on_reset_password_token", unique: true, using: :btree
+
+  create_table "variable_categoria", force: :cascade do |t|
+    t.integer "categoria_id",             limit: 4
+    t.integer "variable_psicografica_id", limit: 4
+  end
+
+  add_index "variable_categoria", ["categoria_id"], name: "index_variable_categoria_on_categoria_id", using: :btree
+  add_index "variable_categoria", ["variable_psicografica_id"], name: "index_variable_categoria_on_variable_psicografica_id", using: :btree
 
   create_table "variable_psicograficas", force: :cascade do |t|
     t.string "nombre",  limit: 255

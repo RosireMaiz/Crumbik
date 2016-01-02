@@ -3,7 +3,7 @@
 -- http://www.phpmyadmin.net
 --
 -- Servidor: 127.0.0.1
--- Tiempo de generación: 02-01-2016 a las 16:47:58
+-- Tiempo de generación: 02-01-2016 a las 21:52:20
 -- Versión del servidor: 5.6.21-log
 -- Versión de PHP: 5.6.3
 
@@ -747,9 +747,10 @@ CREATE TABLE IF NOT EXISTS `productos` (
 
 CREATE TABLE IF NOT EXISTS `publicidads` (
 `id` int(11) NOT NULL,
+  `titulo` varchar(255) COLLATE utf8_unicode_ci NOT NULL,
   `descripcion` text COLLATE utf8_unicode_ci,
   `fecha_inicio` date DEFAULT NULL,
-  `fecha_vencimiento` date DEFAULT NULL,
+  `fecha_finalizacion` date DEFAULT NULL,
   `estatus` varchar(1) COLLATE utf8_unicode_ci DEFAULT 'A',
   `imagen` longblob,
   `formato_imagen` varchar(255) COLLATE utf8_unicode_ci DEFAULT NULL,
@@ -865,7 +866,8 @@ INSERT INTO `schema_migrations` (`version`) VALUES
 ('20151212185229'),
 ('20151212191759'),
 ('20151225220541'),
-('20151225221008');
+('20151225221008'),
+('20160102204900');
 
 -- --------------------------------------------------------
 
@@ -1014,6 +1016,18 @@ CREATE TABLE IF NOT EXISTS `usuario_rols` (
 INSERT INTO `usuario_rols` (`id`, `usuario_id`, `rol_id`) VALUES
 (1, 1, 1),
 (2, 2, 2);
+
+-- --------------------------------------------------------
+
+--
+-- Estructura de tabla para la tabla `variable_categoria`
+--
+
+CREATE TABLE IF NOT EXISTS `variable_categoria` (
+`id` int(11) NOT NULL,
+  `categoria_id` int(11) DEFAULT NULL,
+  `variable_psicografica_id` int(11) DEFAULT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 
 -- --------------------------------------------------------
 
@@ -1212,6 +1226,12 @@ ALTER TABLE `usuario_rols`
  ADD PRIMARY KEY (`id`), ADD KEY `index_usuario_rols_on_usuario_id` (`usuario_id`), ADD KEY `index_usuario_rols_on_rol_id` (`rol_id`);
 
 --
+-- Indices de la tabla `variable_categoria`
+--
+ALTER TABLE `variable_categoria`
+ ADD PRIMARY KEY (`id`), ADD KEY `index_variable_categoria_on_categoria_id` (`categoria_id`), ADD KEY `index_variable_categoria_on_variable_psicografica_id` (`variable_psicografica_id`);
+
+--
 -- Indices de la tabla `variable_psicograficas`
 --
 ALTER TABLE `variable_psicograficas`
@@ -1366,6 +1386,11 @@ MODIFY `id` int(11) NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=3;
 --
 ALTER TABLE `usuario_rols`
 MODIFY `id` int(11) NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=3;
+--
+-- AUTO_INCREMENT de la tabla `variable_categoria`
+--
+ALTER TABLE `variable_categoria`
+MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
 --
 -- AUTO_INCREMENT de la tabla `variable_psicograficas`
 --

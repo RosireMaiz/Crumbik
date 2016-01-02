@@ -4,12 +4,6 @@
       .dropdown-content {
         max-height: 250px;  
       }
-      .ui-datepicker-calendar {
-
-    display: none !important;
-
-}​
-
     </style>
 <% end %>
 <div class="row titulo-seccion">
@@ -17,7 +11,7 @@
     <div class="contenedor">
       <div class="col s6">
         <h5 class="text-uppercase">
-         Agregar Publicidad
+         Editar Publicidad
         </h5>
       </div>
       <div class="col s6 text-right ">
@@ -25,7 +19,7 @@
           <li>
             <a href="/">Inicio</a>
           </li>
-          <li class="active">Crear Publicidad</li>
+          <li class="active">Editar Publicidad</li>
         </ol>
       </div>
     </div>
@@ -51,34 +45,37 @@
           <div class="panel  hoverable pad30-h">
 
             <div class="row">
-              
               <div class="col s12">
                   <h5>Imagen de la Publicidad</h5>
-
                   
                   <div id="imagen" class="<%= @publicidad.formato_imagen %><%= @publicidad.imagen %>" > </div>
                   
-
                   <input id="imagen_id" name="imagen_id" type="file" class="file"  />
-
                   
                   <div class="pad15"></div>
               </div>
             </div>
+
             <div class="row pad15">
               <div class="col s12  left ">
-                <h5 >Datos de la Publicidad </h5>
-                
+                <h5>Datos de la Publicidad </h5>
+            
 
                 <%= f.hidden_field :imagen, :required=>true, autocomplete: "off" %>
                 <%= f.hidden_field :formato_imagen, :required=>true, autocomplete: "off" %>
             
-              
+                <div class="input-field col s12">
+                  <label for="publicidad_descripcion">Título <span class="required">
+                  * </span>
+                  </label>
+                  <%= f.text_field :titulo, :required=>true, autocomplete: "off", length: "50" %>
+                </div>
+
                 <div class="input-field col s12">
                   <label for="publicidad_descripcion">Descripción <span class="required">
                   * </span>
                   </label>
-                  <%= f.text_area :descripcion, :required=>true, autocomplete: "off", class: "materialize-textarea", length: "30" %>
+                  <%= f.text_area :descripcion, :required=>true, autocomplete: "off", class: "materialize-textarea", length: "300" %>
 
                 </div>
 
@@ -89,12 +86,12 @@
 
                 <div class="col s6">
                   <label>Fecha de Inicio <span class="required">*</span></label>
-                  <input type="date" class="datepicker">
+                  <input type="date" class="datepicker" id="publicidad_fecha_inicio" name="publicidad[fecha_inicio]">
                 </div>
 
                 <div class="col s6">
                   <label>Fecha de Finalización <span class="required">*</span></label>
-                  <input type="date" class="datepicker">
+                  <input type="date" class="datepicker" id="publicidad_fecha_finalizacion" name="publicidad[fecha_finalizacion]">
                 </div>
               
               </div>
@@ -146,20 +143,20 @@
       'showClose':false
     });
 
-function readImage() {
-    if ( this.files && this.files[0] ) {
-        var FR = new FileReader();
-        FR.onload = function(e) {
-          var formato = e.target.result.split(";base64,")[0] + ";base64,";
-          var base64 = e.target.result.split( formato)[1];
-          $("#publicidad_imagen").val(base64);
-          $("#publicidad_formato_imagen").val(formato);
-        };       
-        FR.readAsDataURL( this.files[0] );
-    }
-}
+  function readImage() {
+      if ( this.files && this.files[0] ) {
+          var FR = new FileReader();
+          FR.onload = function(e) {
+            var formato = e.target.result.split(";base64,")[0] + ";base64,";
+            var base64 = e.target.result.split( formato)[1];
+            $("#publicidad_imagen").val(base64);
+            $("#publicidad_formato_imagen").val(formato);
+          };       
+          FR.readAsDataURL( this.files[0] );
+      }
+  }
 
-$("#imagen_id").change( readImage );
+  $("#imagen_id").change( readImage );
 
 </script>
 <% end %>
