@@ -4,6 +4,14 @@
       .dropdown-content {
         max-height: 250px;  
       }
+
+      .msj-rojo{
+        text-transform: uppercase;
+        font-size: 11px;
+        margin-bottom: 15px;
+        color: #d34836;
+        font-weight: 400;
+      }
     </style>
 <% end %>
 <div class="row titulo-seccion">
@@ -87,11 +95,13 @@
                 <div class="col s6">
                   <label>Fecha de Inicio <span class="required">*</span></label>
                   <input type="date" class="datepicker" id="publicidad_fecha_inicio" name="publicidad[fecha_inicio]">
+                  <span id="publicidad_fecha_inicio-error_local" class="hiden msj-rojo"></span>
                 </div>
 
                 <div class="col s6">
                   <label>Fecha de Finalización <span class="required">*</span></label>
                   <input type="date" class="datepicker" id="publicidad_fecha_finalizacion" name="publicidad[fecha_finalizacion]">
+                  <span id="publicidad_fecha_finalizacion-error_local" class="hiden msj-rojo"></span>
                 </div>
               
               </div>
@@ -105,6 +115,7 @@
                   
                   <input type="submit" class="btn btn-success " value="Guardar">
                   <button type="button" onclick="window.location.href='/productos/publicidad/consultar'" class="btn btn-danger waves-effect">Cancelar</button>
+
                 </div>
               </div>
             </div>
@@ -128,7 +139,7 @@
     $("#imagen_id").fileinput({
       'browseLabel':'cambiar',
       'showCaption':false,
-      'initialPreview': [ "<img src='" + $("#imagen").attr("class") +"' class='file-preview-image' alt='Avatar' title='Imagen de publicidad'>"],
+      'initialPreview': [ "<img src='" + $("#imagen").attr("class") +"' class='file-preview-image ' alt='Avatar' title='Imagen de publicidad'>"],
       'initialPreviewShowDelete':false,
       'initialCaption':'archivo(s) seleccionado(s)',
       'allowedFileTypes':['image'],
@@ -158,5 +169,114 @@
 
   $("#imagen_id").change( readImage );
 
-</script>
+
+  $('#publicidad_fecha_inicio').pickadate({
+        selectMonths: true, // Creates a dropdown to control month
+        selectYears: true, // Creates a dropdown of 15 years to control year
+        labelMonthNext: 'Próximo Mes',
+        labelMonthPrev: 'Mes Anterior',
+        labelMonthSelect: 'Selecione Mes',
+        labelYearSelect: 'Selecione Año',
+        monthsFull: [ 'Enero', 'Febrero', 'MArzo', 'Abril', 'Mayo', 'Junio', 'Julio', 'Agosto', 'Septiembre', 'Octubre', 'Noviembre', 'Diciembre' ],
+        monthsShort: [ 'Ene', 'Feb', 'Mar', 'Abr', 'May', 'Jun', 'Jul', 'Ago', 'Sep', 'Oct', 'Nov', 'Dic' ],
+        weekdaysFull: [ 'Domingo', 'Lunes', 'Martes', 'Miercoles', 'Jueves', 'Viernes', 'Sábado' ],
+        weekdaysShort: [ 'Dom', 'Lun', 'Mar', 'Mier', 'Jue', 'Vie', 'Sab' ],
+        weekdaysLetter: [ 'D', 'L', 'M', 'X', 'J', 'V', 'S' ],
+        today: 'Hoy',
+        clear: 'Limpiar',
+        close: 'Cerrar',
+        format: 'dd/mm/yyyy',
+        closeOnSelect: true,
+        closeOnClear: false,
+        onSet: function () {
+          this.close();
+          },
+
+        onClose:function(){
+
+                  var fecha_inicio = $("#publicidad_fecha_inicio").val();
+                  var  fecha_finalizacion = $("#publicidad_fecha_finalizacion").val();
+                  if (fecha_inicio != "" && fecha_inicio != null && fecha_finalizacion != "" 
+                      && fecha_finalizacion != null) {
+                      
+                      if (fecha_inicio > fecha_finalizacion) {
+                          $("#publicidad_fecha_inicio-error").addClass("valid").html("");;
+                          $("#publicidad_fecha_inicio-error_local").removeClass("hiden").html("Ingrese una fecha menor que la fecha de finalización");
+                          $("#publicidad_fecha_finalizacion-error_local").addClass("hiden").html("");
+                      } else {
+                          $("#publicidad_fecha_inicio-error").addClass("valid").html("");
+                          $("#publicidad_fecha_inicio-error_local").addClass("hiden").html("");
+                          $("#publicidad_fecha_finalizacion-error_local").addClass("hiden").html("");
+                      };
+                  }
+
+                }           
+      });
+
+
+  $('#publicidad_fecha_finalizacion').pickadate({
+        selectMonths: true, // Creates a dropdown to control month
+        selectYears: true, // Creates a dropdown of 15 years to control year
+        labelMonthNext: 'Próximo Mes',
+        labelMonthPrev: 'Mes Anterior',
+        labelMonthSelect: 'Selecione Mes',
+        labelYearSelect: 'Selecione Año',
+        monthsFull: [ 'Enero', 'Febrero', 'MArzo', 'Abril', 'Mayo', 'Junio', 'Julio', 'Agosto', 'Septiembre', 'Octubre', 'Noviembre', 'Diciembre' ],
+        monthsShort: [ 'Ene', 'Feb', 'Mar', 'Abr', 'May', 'Jun', 'Jul', 'Ago', 'Sep', 'Oct', 'Nov', 'Dic' ],
+        weekdaysFull: [ 'Domingo', 'Lunes', 'Martes', 'Miercoles', 'Jueves', 'Viernes', 'Sábado' ],
+        weekdaysShort: [ 'Dom', 'Lun', 'Mar', 'Mier', 'Jue', 'Vie', 'Sab' ],
+        weekdaysLetter: [ 'D', 'L', 'M', 'X', 'J', 'V', 'S' ],
+        today: 'Hoy',
+        clear: 'Limpiar',
+        close: 'Cerrar',
+        format: 'dd/mm/yyyy',
+        closeOnSelect: true,
+        closeOnClear: false,
+        onSet: function () {
+          this.close();
+          },
+
+          onClose:function(){
+                    var fecha_inicio = $("#publicidad_fecha_inicio").val();
+                    var  fecha_finalizacion = $("#publicidad_fecha_finalizacion").val();
+                    if (fecha_inicio != "" && fecha_inicio != null && fecha_finalizacion != "" 
+                        && fecha_finalizacion != null) {
+                      if (fecha_inicio > fecha_finalizacion) {
+                          $("#publicidad_fecha_finalizacion-error").addClass("valid").html("");;
+                          $("#publicidad_fecha_finalizacion-error_local").removeClass("hiden").html("Ingrese una fecha mayor que la fecha de inicio");
+                          $("#publicidad_fecha_inicio-error_local").addClass("hiden").html("");
+                          
+                      }else{
+                          $("#publicidad_fecha_finalizacion-error").addClass("valid").html("");
+                          $("#publicidad_fecha_inicio-error_local").addClass("hiden").html("");
+                          $("#publicidad_fecha_finalizacion-error_local").addClass("hiden").html("");
+                      };
+                    }
+
+
+                  }           
+      });
+  
+      $('#add_publicidad').submit(function(event){
+         
+          var fecha_inicio = $("#publicidad_fecha_inicio").val();
+          var  fecha_finalizacion = $("#publicidad_fecha_finalizacion").val();
+         
+          if ( fecha_inicio != "" && fecha_inicio != null && fecha_finalizacion != "" && fecha_finalizacion != null   && fecha_inicio > fecha_finalizacion) {
+            $("#publicidad_fecha_finalizacion-error_local").removeClass("hiden").html("Ingrese una fecha mayor que la fecha de inicio");
+            $("#publicidad_fecha_inicio-error_local").addClass("hiden").html("");
+            $('.alert-danger').show();
+            $('.alert-success').hide();
+            $('html,body').animate({
+                scrollTop: $(".steps").offset().top-350
+            }, 'slow');
+            event.preventDefault();
+          } else {
+            $("#publicidad_fecha_inicio-error_local").addClass("hiden").html("");
+            $("#publicidad_fecha_finalizacion-error_local").addClass("hiden").html("");
+          };
+
+      });
+
+  </script>
 <% end %>

@@ -194,7 +194,7 @@ ActiveRecord::Schema.define(version: 20160102204900) do
   add_index "productos", ["categoria_id"], name: "index_productos_on_categoria_id", using: :btree
 
   create_table "publicidads", force: :cascade do |t|
-    t.string  "titulo",             limit: 255,                      null: false
+    t.string  "titulo",             limit: 255
     t.text    "descripcion",        limit: 65535
     t.date    "fecha_inicio"
     t.date    "fecha_finalizacion"
@@ -306,8 +306,9 @@ ActiveRecord::Schema.define(version: 20160102204900) do
   add_index "variable_categoria", ["variable_psicografica_id"], name: "index_variable_categoria_on_variable_psicografica_id", using: :btree
 
   create_table "variable_psicograficas", force: :cascade do |t|
-    t.string "nombre",  limit: 255
-    t.string "estatus", limit: 1,   default: "A"
+    t.string "nombre",      limit: 255
+    t.text   "descripcion", limit: 65535
+    t.string "estatus",     limit: 1,     default: "A"
   end
 
   add_foreign_key "autenticacions", "usuarios"

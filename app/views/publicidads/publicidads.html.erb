@@ -110,13 +110,17 @@
                           </p>
                           
                           <div class="right">
-                            <a href="/publicidad/editar/<%= publicidad.id %>" >
+                            <a href="/publicidad/editar/<%= publicidad.id %>">
                               Editar
                             </a>
-                            <a href="#modal_deshabilitar<%= publicidad.id %>" >
-                              Deshabilitar
+                            <a href="#modal_deshabilitar<%= publicidad.id %>" class="modal-trigger " >
+                              <% if (publicidad.estatus == 'A') %>
+                                Deshabilitar
+                              <% else %>
+                                Habilitar
+                              <%  end -%>
                             </a>
-                            <a href="modal_eliminar<%= publicidad.id %>" >
+                            <a href="#modal_eliminar<%= publicidad.id %>" class="modal-trigger " >
                               Eliminar
                             </a>
                           </div>
@@ -129,12 +133,116 @@
                 </li>
               <% end %>
             <% end %>
-          </ul>
+          </ul> <!-- Fin collapse publicidads -->
+
           <div class="row valign-wrapper">
             <%= paginate(@publicidads) %>
           </div>
+
+          <% @publicidads.each do |publicidad| %>
+            <% if ! publicidad.nil? %>
+
+              <div id="modal_deshabilitar<%= publicidad.id %>" class="modal">
+                <div class="modal-content">
+                  <a href="#" style="float:right;" class="waves-effect btn-flat modal-close"><i class="mdi-content-clear"></i></a>
+                  <% if (publicidad.estatus == 'A') %>
+                  <h5>Deshabilitar Publicidad</h5>
+                  <% else %>
+                  <h5>Habilitar Publicidad</h5>
+                  <% end %>
+
+
+                  <div class="row" style="padding-top: 35px;">
+                    <div class="col s12 text-center">
+                    <% if (publicidad.estatus == 'A') %>
+                      <h6 style=" font-size: 20px;"> ¿Seguro que desea Deshabilitar la publicidad seleccionada?</h6>
+                      <% else %>
+                      <h6 style=" font-size: 20px;"> ¿Seguro que desea Habilitar la publicidad seleccionada? </h6>
+                      <% end %>
+                      <div style="padding-top: 35px;" class="right">
+                        <% if (publicidad.estatus == 'A') %>
+                          <input type="button" class="btn btn-success btn-sm" value="Aceptar" onclick="update_estatus(<%= publicidad.id %>,'I')">
+                        <% else %>
+                          <input type="button" class="btn btn-success btn-sm" value="Aceptar" onclick="update_estatus(<%= publicidad.id %>,'A')">
+                        <% end %>
+                         <input type="button" class="btn btn-danger btn-sm modal-close" value="Cancelar">
+                      </div>
+
+                    </div>
+                  </div>                
+                </div>
+              </div> 
+
+              <div id="modal_eliminar<%= publicidad.id %>"class="modal">
+                <div class="modal-content">
+                  <a style="float:right;" class="waves-effect btn-flat modal-close"><i class="mdi-content-clear"></i></a>
+
+                  <h5>Eliminar Publicidad</h5>
+
+                  <div class="row pad30-t" >
+                    <div class="col s12 text-center">
+
+                      <h6 style=" font-size: 20px;"> ¿Seguro que desea eliminar la publicidad seleccionada? </h6>
+
+                      <div style="padding-top: 35px;" class="right">
+
+                        <input type="button" class="btn btn-success btn-sm" value="Aceptar" onclick="eliminar(<%= publicidad.id %>)">
+
+                        <input type="button" class="btn btn-danger btn-sm modal-close" value="Cancelar">
+                      </div>
+
+                    </div>
+                  </div>                
+                </div>
+              </div> 
+
+            <% end %>
+          <% end %> <!-- Fin collapse modals -->
+
         <% end %>
       </div>
     </div>  
   </div>
 </div>
+
+
+<% content_for :javascript_personalizado do %>
+  <script type="text/javascript">
+
+
+  function update_estatus(idpublicidad, estatus){
+    var request = $.ajax({
+                            url: '/publicidad/update_estatus',
+                            method: "POST",
+                            data: { idpublicidad: idpublicidad, estatus: estatus},
+                            dataType: "JSON"
+                          });
+
+        request.done(function( data ) {
+                                        location.reload(); 
+                                      });
+                     
+        request.fail(function( jqXHR, textStatus ) {
+                                                    alert( "Request failed: " + textStatus );
+                                                   });
+    };
+
+  function eliminar(idpublicidad){
+    var request = $.ajax({
+                            url: '/publicidad/eliminar',
+                            method: "POST",
+                            data: { idpublicidad: idpublicidad},
+                            dataType: "JSON"
+                          });
+
+        request.done(function( data ) {
+                                        location.reload(); 
+                                      });
+                     
+        request.fail(function( jqXHR, textStatus ) {
+                                                    alert( "Request failed: " + textStatus );
+                                                   });
+  }
+
+  </script>
+<% end %>

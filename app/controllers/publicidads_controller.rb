@@ -52,7 +52,7 @@ class PublicidadsController < ApplicationController
 				redirect_to root_path
 			else
 				id = params[:id_publicidad]
-				publicidad = Publicidad.where("id = ?", id).first	
+				@publicidad = Publicidad.where("id = ?", id).first	
 				render "publicidads/edit"
 			end
 		end
@@ -61,7 +61,7 @@ class PublicidadsController < ApplicationController
 	def save_edit
 		id = params[:publicidad][:id]
 
-		publicidad_edit = Publicidadd.where(["id = ?", id]).first
+		publicidad_edit = Publicidad.where(["id = ?", id]).first
 		
 		publicidad_edit.update(publicidad_params)
 
@@ -69,7 +69,9 @@ class PublicidadsController < ApplicationController
 	end
 
 	def update_estatus
+
 		id = params[:idpublicidad]
+		puts "id " + id.to_s
 		estatus = params[:estatus]
 		if Publicidad.update(id, :estatus => estatus)
 			render :text =>'{ "success" : "true"}'

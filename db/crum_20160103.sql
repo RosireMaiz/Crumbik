@@ -3,7 +3,7 @@
 -- http://www.phpmyadmin.net
 --
 -- Servidor: 127.0.0.1
--- Tiempo de generación: 02-01-2016 a las 21:52:20
+-- Tiempo de generación: 04-01-2016 a las 03:13:58
 -- Versión del servidor: 5.6.21-log
 -- Versión de PHP: 5.6.3
 
@@ -747,7 +747,7 @@ CREATE TABLE IF NOT EXISTS `productos` (
 
 CREATE TABLE IF NOT EXISTS `publicidads` (
 `id` int(11) NOT NULL,
-  `titulo` varchar(255) COLLATE utf8_unicode_ci NOT NULL,
+  `titulo` varchar(255) COLLATE utf8_unicode_ci DEFAULT NULL,
   `descripcion` text COLLATE utf8_unicode_ci,
   `fecha_inicio` date DEFAULT NULL,
   `fecha_finalizacion` date DEFAULT NULL,
@@ -1038,6 +1038,7 @@ CREATE TABLE IF NOT EXISTS `variable_categoria` (
 CREATE TABLE IF NOT EXISTS `variable_psicograficas` (
 `id` int(11) NOT NULL,
   `nombre` varchar(255) COLLATE utf8_unicode_ci DEFAULT NULL,
+  `descripcion` text COLLATE utf8_unicode_ci,
   `estatus` varchar(1) COLLATE utf8_unicode_ci DEFAULT 'A'
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 

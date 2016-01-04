@@ -210,7 +210,7 @@ Rails.application.routes.draw do
 		match "/productos/publicidad/consultar" => "publicidads#consultar", via: :get
 	    match "/productos/publicidad/agregar" => "publicidads#new", via: :get
 	    match "/publicidad/crear_publicidad" => "publicidads#create", via: :post
-	    match "/publicidad/editar/:id_producto" => "publicidads#edit", via: :get
+	    match "/publicidad/editar/:id_publicidad" => "publicidads#edit", via: :get
 	    match "/publicidad/editar" => "publicidads#save_edit", via: :post
 	    match "/publicidad/update_estatus" => "publicidads#update_estatus", via: :post
 		match "/publicidad/eliminar" => "publicidads#eliminar", via: :post
