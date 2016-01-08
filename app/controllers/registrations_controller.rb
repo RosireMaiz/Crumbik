@@ -1,6 +1,4 @@
  # app/controllers/registrations_controller.rb
-require "base64"
-$ADMIN_ICON = "app/assets/images/avatar/sinfoto.jpg";
 
 class RegistrationsController < Devise::RegistrationsController 
 
@@ -12,7 +10,7 @@ class RegistrationsController < Devise::RegistrationsController
   def create
     build_resource(sign_up_params)
     formato = "data:image/jpg;base64,"
-    foto_perfil = Base64.encode64(File.open($ADMIN_ICON, "rb").read)
+    foto_perfil = Base64.encode64(File.open($FOTO_DEFAULT, "rb").read)
     @rol = Rol.where("nombre = ?", "Cliente").first 
 	
     resource.build_perfil

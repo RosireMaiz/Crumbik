@@ -71,6 +71,8 @@ Rails.application.routes.draw do
     match "/usuarios_portal/agregarusuario" => "usuarios#new_user", via: :get
  
  	match "/usuarios/create_portal"=>"usuarios#create_portal", via: :post
+ 	
+ 	match "/usuario/usuario_actual"=>"usuarios#usuario_actual", via: :post
 
     match "/roles/consultar" => "rols#consultar", via: :get
     match "/roles/agregar" => "rols#new", via: :get
@@ -192,6 +194,8 @@ Rails.application.routes.draw do
 	    match "/producto/editar" => "productos#save_edit", via: :post
 	    match "/productos/update_estatus" => "productos#update_estatus", via: :post
 		match "/productos/eliminar" => "productos#eliminar", via: :post
+
+		match "/clientes" => "clientes#consultar", via: :get
 
 		match "/productos/categorias/consultar" => "categorias#consultar", via: :get
     	match "/productos/categorias/agregar" => "categorias#new", via: :get

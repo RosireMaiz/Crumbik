@@ -2,7 +2,7 @@
 <html>
 	<head>
 	  
-	  	<%= stylesheet_link_tag    'application', media: 'all', 'data-turbolinks-track' => true %>
+	  	<%= stylesheet_link_tag 'application', media: 'all', 'data-turbolinks-track' => true %>
 
 	  	<% if request.subdomain.present? %>
 	  		<title><%= @organizacion.nombre%></title>
@@ -40,6 +40,7 @@
 									<a data-activates="slide-out" class="button-collapse btn-floating btn-large waves-effect waves-light pink accent-3 right absolute" ><i class="mdi-communication-chat"></i></a>
 								</div>
 							<% end %>  
+							<%= render "partials/chat" %>
 						<% else %>
 							<header>
 								<%= render "partials/header" %>
@@ -48,6 +49,7 @@
 						
 						<%= yield %>
 
+						
 	           			<% if request.subdomain.present? %>
 				        	<footer >
 				        		<%= render "partials/footer_organizacion" %>
@@ -73,9 +75,7 @@
 						<%= render "partials/header" %>
 					</header>
 				<% end %>
-
 	        	<%= yield %>
-				
 				<% if request.subdomain.present? %>
 					<footer >
 				    	<%= render "partials/footer_organizacion" %>

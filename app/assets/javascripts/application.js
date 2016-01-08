@@ -25,3 +25,4 @@
 //= require validaciones
 //= require materialize-sprockets
 //= require main
+//= require chat

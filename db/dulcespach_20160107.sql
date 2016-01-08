@@ -3,7 +3,7 @@
 -- http://www.phpmyadmin.net
 --
 -- Servidor: 127.0.0.1
--- Tiempo de generación: 04-01-2016 a las 03:14:08
+-- Tiempo de generación: 08-01-2016 a las 03:36:29
 -- Versión del servidor: 5.6.21-log
 -- Versión de PHP: 5.6.3
 
@@ -70,6 +70,27 @@ INSERT INTO `categoria` (`id`, `nombre`, `descripcion`, `estatus`) VALUES
 (9, 'Cafés', 'Cafes', 'A'),
 (10, 'Canolis', 'Canolis', 'A'),
 (11, 'Categoria', 'descripcion', 'A');
+
+-- --------------------------------------------------------
+
+--
+-- Estructura de tabla para la tabla `clientes`
+--
+
+CREATE TABLE IF NOT EXISTS `clientes` (
+`id` int(11) NOT NULL,
+  `nombres` varchar(255) DEFAULT NULL,
+  `apellidos` varchar(255) DEFAULT NULL,
+  `direccion` text,
+  `email` varchar(255) DEFAULT NULL,
+  `telefono` varchar(255) DEFAULT NULL,
+  `telefono_movil` varchar(255) DEFAULT NULL,
+  `sexo` varchar(255) DEFAULT NULL,
+  `usuario_id` int(11) DEFAULT '0',
+  `estatus` varchar(1) DEFAULT 'A',
+  `created_at` datetime NOT NULL,
+  `updated_at` datetime NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 -- --------------------------------------------------------
 
@@ -472,7 +493,8 @@ INSERT INTO `schema_migrations` (`version`) VALUES
 ('20151212191759'),
 ('20151225220541'),
 ('20151225221008'),
-('20160102204900');
+('20160102204900'),
+('20160104031515');
 
 -- --------------------------------------------------------
 
@@ -558,7 +580,7 @@ CREATE TABLE IF NOT EXISTS `usuarios` (
 --
 
 INSERT INTO `usuarios` (`id`, `email`, `encrypted_password`, `username`, `confirmacion_email`, `pais_id`, `reset_password_token`, `reset_password_sent_at`, `remember_created_at`, `sign_in_count`, `current_sign_in_at`, `last_sign_in_at`, `current_sign_in_ip`, `last_sign_in_ip`, `created_at`, `updated_at`) VALUES
-(1, 'ahewstone@gmail.com', '$2a$10$wNEAjdxh/X5dMbSYrbOPfOohIGVeqewXaQG4X5TI8.sqlbKNnkIei', 'Alejandra', 0, 232, NULL, NULL, NULL, 6, '2016-01-04 01:46:24', '2016-01-04 00:10:26', '127.0.0.1', '127.0.0.1', '2015-12-30 00:20:56', '2016-01-04 01:46:24'),
+(1, 'ahewstone@gmail.com', '$2a$10$wNEAjdxh/X5dMbSYrbOPfOohIGVeqewXaQG4X5TI8.sqlbKNnkIei', 'Alejandra', 0, 232, NULL, NULL, NULL, 10, '2016-01-07 03:45:43', '2016-01-07 02:25:57', '127.0.0.1', '127.0.0.1', '2015-12-30 00:20:56', '2016-01-07 03:45:43'),
 (2, 'rosima_08@gmail.com', '$2a$10$hHueWJ5W9dQ6lpFpzkR75uhtMPCmsnOXdtlRvvxUZlgRVO7QQ2qXO', 'Rosiré Maiz*', 1, 232, NULL, NULL, NULL, 3, '2015-12-26 14:43:29', '2015-12-26 00:34:11', '127.0.0.1', '127.0.0.1', '2015-12-26 00:03:05', '2015-12-26 14:43:29'),
 (3, 'rosima_08@hotmail.com', '$2a$10$TD/B23x8B.95Eoci.POc3efsEbX0BjUE/5uw9gdtqUvLZwh51wEai', 'Rosiré Maiz R', 1, 232, NULL, NULL, NULL, 2, '2015-12-26 14:56:24', '2015-12-26 00:34:39', '127.0.0.1', '127.0.0.1', '2015-12-26 00:34:39', '2015-12-26 14:56:24');
 
@@ -636,6 +658,12 @@ ALTER TABLE `autenticacions`
 --
 ALTER TABLE `categoria`
  ADD PRIMARY KEY (`id`);
+
+--
+-- Indices de la tabla `clientes`
+--
+ALTER TABLE `clientes`
+ ADD PRIMARY KEY (`id`), ADD KEY `index_clientes_on_usuario_id` (`usuario_id`);
 
 --
 -- Indices de la tabla `comentarios`
@@ -831,6 +859,11 @@ MODIFY `id` int(11) NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=3;
 --
 ALTER TABLE `categoria`
 MODIFY `id` int(11) NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=12;
+--
+-- AUTO_INCREMENT de la tabla `clientes`
+--
+ALTER TABLE `clientes`
+MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
 --
 -- AUTO_INCREMENT de la tabla `comentarios`
 --

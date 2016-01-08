@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20160102204900) do
+ActiveRecord::Schema.define(version: 20160104031515) do
 
   create_table "autenticacions", force: :cascade do |t|
     t.integer "usuario_id", limit: 4
@@ -26,6 +26,22 @@ ActiveRecord::Schema.define(version: 20160102204900) do
     t.string "descripcion", limit: 255
     t.string "estatus",     limit: 1,   default: "A"
   end
+
+  create_table "clientes", force: :cascade do |t|
+    t.string   "nombres",        limit: 255
+    t.string   "apellidos",      limit: 255
+    t.text     "direccion",      limit: 65535
+    t.string   "email",          limit: 255
+    t.string   "telefono",       limit: 255
+    t.string   "telefono_movil", limit: 255
+    t.string   "sexo",           limit: 255
+    t.integer  "usuario_id",     limit: 4,     default: 0
+    t.string   "estatus",        limit: 1,     default: "A"
+    t.datetime "created_at",                                 null: false
+    t.datetime "updated_at",                                 null: false
+  end
+
+  add_index "clientes", ["usuario_id"], name: "index_clientes_on_usuario_id", using: :btree
 
   create_table "comentarios", force: :cascade do |t|
     t.string   "comentario",  limit: 255

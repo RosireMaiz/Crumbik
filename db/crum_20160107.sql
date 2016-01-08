@@ -3,7 +3,7 @@
 -- http://www.phpmyadmin.net
 --
 -- Servidor: 127.0.0.1
--- Tiempo de generación: 04-01-2016 a las 03:13:58
+-- Tiempo de generación: 08-01-2016 a las 03:27:05
 -- Versión del servidor: 5.6.21-log
 -- Versión de PHP: 5.6.3
 
@@ -44,6 +44,27 @@ CREATE TABLE IF NOT EXISTS `categoria` (
   `nombre` varchar(255) COLLATE utf8_unicode_ci DEFAULT NULL,
   `descripcion` varchar(255) COLLATE utf8_unicode_ci DEFAULT NULL,
   `estatus` varchar(1) COLLATE utf8_unicode_ci DEFAULT 'A'
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
+
+-- --------------------------------------------------------
+
+--
+-- Estructura de tabla para la tabla `clientes`
+--
+
+CREATE TABLE IF NOT EXISTS `clientes` (
+`id` int(11) NOT NULL,
+  `nombres` varchar(255) COLLATE utf8_unicode_ci DEFAULT NULL,
+  `apellidos` varchar(255) COLLATE utf8_unicode_ci DEFAULT NULL,
+  `direccion` text COLLATE utf8_unicode_ci,
+  `email` varchar(255) COLLATE utf8_unicode_ci DEFAULT NULL,
+  `telefono` varchar(255) COLLATE utf8_unicode_ci DEFAULT NULL,
+  `telefono_movil` varchar(255) COLLATE utf8_unicode_ci DEFAULT NULL,
+  `sexo` varchar(255) COLLATE utf8_unicode_ci DEFAULT NULL,
+  `usuario_id` int(11) DEFAULT '0',
+  `estatus` varchar(1) COLLATE utf8_unicode_ci DEFAULT 'A',
+  `created_at` datetime NOT NULL,
+  `updated_at` datetime NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 
 -- --------------------------------------------------------
@@ -185,7 +206,7 @@ CREATE TABLE IF NOT EXISTS `opcion_menus` (
   `menu_id` int(11) DEFAULT NULL,
   `icono` varchar(255) COLLATE utf8_unicode_ci DEFAULT NULL,
   `orden` int(11) DEFAULT NULL
-) ENGINE=InnoDB AUTO_INCREMENT=99 DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=100 DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 
 --
 -- Volcado de datos para la tabla `opcion_menus`
@@ -229,17 +250,17 @@ INSERT INTO `opcion_menus` (`id`, `nombre`, `raiz`, `url`, `padre_id`, `menu_id`
 (35, 'Usuarios/Roles', 1, '/UsuariosRoles', 0, 2, 'fa fa-users', 4),
 (36, 'Agregar', 0, '/usuariosroles/agregar', 35, 2, 'fa fa-user-plus', 1),
 (37, 'Consultar', 0, '/usuariosroles/consultar', 35, 2, 'fa fa-eye', 2),
-(38, 'Mercadeo', 1, '/mercadeo', 0, 2, 'fa fa-share-alt-square ', 5),
+(38, 'Mercadeo', 1, '/mercadeo', 0, 2, 'fa fa-share-alt-square ', 6),
 (39, 'Variables Psicograficas', 0, '/mercadeo/variablespsicograficas', 38, 2, 'fa fa-thumbs-o-up', 1),
 (40, 'Agregar', 0, '/mercadeo/variablespsicograficas/agregar', 39, 2, 'fa fa-plus-square-o', 1),
 (41, 'Consultar', 0, '/mercadeo/variablespsicograficas/consultar', 39, 2, 'fa fa-eye', 2),
 (42, 'Campañas publicitarias', 0, '/mercadeo/campañas', 38, 2, 'fa fa-bullhorn ', 2),
 (43, 'Agregar', 0, '/mercadeo/campañas', 42, 2, 'fa fa-plus-square', 1),
 (44, 'Consultar', 0, '/mercadeo/campañas/consultar', 42, 2, 'fa fa-eye', 2),
-(48, 'herramientas', 1, '/herramientas', 0, 2, 'fa fa-wrench', 6),
+(48, 'herramientas', 1, '/herramientas', 0, 2, 'fa fa-wrench', 7),
 (49, 'Calendario', 0, '/herramientas/calendario', 48, 2, 'fa fa-calendar', 1),
 (50, 'Notas', 0, '/herramientas/notas', 48, 2, 'fa fa-file', 2),
-(51, 'Sugerencias', 1, '/sugerencias', 0, 2, 'fa fa-paper-plane-o', 7),
+(51, 'Sugerencias', 1, '/sugerencias', 0, 2, 'fa fa-paper-plane-o', 9),
 (52, 'Mi Cuenta', 1, NULL, 0, 2, 'fa fa-male', 8),
 (53, 'Ver Perfil', 0, '/usuarios/perfil', 52, 2, 'fa fa-user', 1),
 (54, 'Modificar Perfil', 0, '/usuarios/editar', 52, 2, 'fa fa-pencil', 2),
@@ -284,7 +305,8 @@ INSERT INTO `opcion_menus` (`id`, `nombre`, `raiz`, `url`, `padre_id`, `menu_id`
 (95, 'consultar', 0, '/preguntas_frecuentes', 93, 2, 'fa fa-eye', 1),
 (96, 'Tipo De Clientes ', 0, '/usuarios/tipo_clientes', 35, 2, 'fa fa-user', 2),
 (97, 'Agregar', 0, '/tipo_cliente/agregar', 96, 2, 'fa fa-plus-circle', 1),
-(98, 'Consultar', 0, '/tipos_clientes/consultar', 96, 2, 'fa fa-eye', 1);
+(98, 'Consultar', 0, '/tipos_clientes/consultar', 96, 2, 'fa fa-eye', 1),
+(99, 'Clientes', 0, '/clientes', 0, 2, 'fa fa-unlink', 5);
 
 -- --------------------------------------------------------
 
@@ -867,7 +889,8 @@ INSERT INTO `schema_migrations` (`version`) VALUES
 ('20151212191759'),
 ('20151225220541'),
 ('20151225221008'),
-('20160102204900');
+('20160102204900'),
+('20160104031515');
 
 -- --------------------------------------------------------
 
@@ -973,7 +996,7 @@ CREATE TABLE IF NOT EXISTS `usuarios` (
 --
 
 INSERT INTO `usuarios` (`id`, `email`, `encrypted_password`, `username`, `confirmacion_email`, `pais_id`, `reset_password_token`, `reset_password_sent_at`, `remember_created_at`, `sign_in_count`, `current_sign_in_at`, `last_sign_in_at`, `current_sign_in_ip`, `last_sign_in_ip`, `created_at`, `updated_at`) VALUES
-(1, 'rosire08@gmail.com', '$2a$10$VtE0lZB2.FwEIKLSZve8qegLsDvkjK/L4ga9ySaaG5F8OSB/uQ/wO', 'Rosiré Maiz*', 1, 232, '7e4f6a91a8f96feeea96efb55170e89c4e2ac02d2b12dd6c39c90dd75d50dc3e', '2015-10-11 22:23:28', NULL, 123, '2016-01-02 15:12:36', '2015-12-30 00:28:05', '127.0.0.1', '127.0.0.1', '2015-08-26 01:38:48', '2016-01-02 15:12:36'),
+(1, 'rosire08@gmail.com', '$2a$10$VtE0lZB2.FwEIKLSZve8qegLsDvkjK/L4ga9ySaaG5F8OSB/uQ/wO', 'Rosiré Maiz*', 1, 232, '7e4f6a91a8f96feeea96efb55170e89c4e2ac02d2b12dd6c39c90dd75d50dc3e', '2015-10-11 22:23:28', NULL, 124, '2016-01-04 02:35:14', '2016-01-02 15:12:36', '127.0.0.1', '127.0.0.1', '2015-08-26 01:38:48', '2016-01-04 02:35:14'),
 (2, 'ahewstone@gmail.com', '$2a$10$4t56xvGXVSmErhCmRbPlE.P88pslAB5Cbv67ZHiYT4/GxPsmGpKae', 'Alejandra', 0, 232, NULL, NULL, NULL, 1, '2016-01-02 15:12:01', '2016-01-02 15:12:01', '127.0.0.1', '127.0.0.1', '2015-12-30 00:20:28', '2016-01-02 15:12:01');
 
 -- --------------------------------------------------------
@@ -1057,6 +1080,12 @@ ALTER TABLE `autenticacions`
 --
 ALTER TABLE `categoria`
  ADD PRIMARY KEY (`id`);
+
+--
+-- Indices de la tabla `clientes`
+--
+ALTER TABLE `clientes`
+ ADD PRIMARY KEY (`id`), ADD KEY `index_clientes_on_usuario_id` (`usuario_id`);
 
 --
 -- Indices de la tabla `comentarios`
@@ -1253,6 +1282,11 @@ MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
 ALTER TABLE `categoria`
 MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
 --
+-- AUTO_INCREMENT de la tabla `clientes`
+--
+ALTER TABLE `clientes`
+MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
+--
 -- AUTO_INCREMENT de la tabla `comentarios`
 --
 ALTER TABLE `comentarios`
@@ -1286,7 +1320,7 @@ MODIFY `id` int(11) NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=4;
 -- AUTO_INCREMENT de la tabla `opcion_menus`
 --
 ALTER TABLE `opcion_menus`
-MODIFY `id` int(11) NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=99;
+MODIFY `id` int(11) NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=100;
 --
 -- AUTO_INCREMENT de la tabla `organizacions`
 --

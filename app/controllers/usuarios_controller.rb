@@ -21,6 +21,10 @@ class UsuariosController < ApplicationController
     	render json: {idRolActual: current_usuario.rol_actual.id}
 	end
 
+	def usuario_actual
+		render json: {username: current_usuario.username,formato_foto: current_usuario.perfil.formato_foto, foto: current_usuario.perfil.foto }
+	end
+
 	def new
 		if usuario_signed_in?
 			redirect_to root_path
@@ -146,15 +150,13 @@ class UsuariosController < ApplicationController
 	end
 
 	def edit
-			if usuario_signed_in? 
-
-				@usuario = current_usuario
-
-				@usuredes = UsuarioRedSocial.includes(:red_social).where("usuario_id = ?", @usuario.id)
-				@red_socials = RedSocial.where("estatus = ?", 'A')
-			else
-				redirect_to root_path
-			end	
+		if usuario_signed_in? 
+			@usuario = current_usuario
+			@usuredes = UsuarioRedSocial.includes(:red_social).where("usuario_id = ?", @usuario.id)
+			@red_socials = RedSocial.where("estatus = ?", 'A')
+		else
+			redirect_to root_path
+		end	
 	end
 
 	def save
