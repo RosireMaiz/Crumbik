@@ -28,44 +28,48 @@
 	<%= form_for @usuario, :url => usuarios_abrircuenta_path, html:{id: "submit_form", class: "form-horizontal"} do |f| %>
 		<div class="form-wizard">
 			<div class="form-body">
-				<ul class="nav nav-pills nav-justified steps">
-					<li class="active">
-						<a href="#tab1" data-toggle="tab" class="step active">
-						<span class="number">
-						1 </span>
-						<span class="desc">
-						<i class="fa fa-check"></i> Cuenta </span>
-						</a>
-					</li>
-					<li >
-						<a href="#tab2" data-toggle="tab" class="step">
-						<span class="number">
-						2 </span>
-						<span class="desc">
-						<i class="fa fa-check"></i> Organización </span>
-						</a>
-					</li>
-					<li>
-						<a href="#tab3" data-toggle="tab" class="step ">
-						<span class="number">
-						3 </span>
-						<span class="desc">
-						<i class="fa fa-check"></i> Pago </span>
-						</a>
-					</li>
-					<li>
-						<a href="#tab4" data-toggle="tab" class="step">
-						<span class="number">
-						4 </span>
-						<span class="desc">
-						<i class="fa fa-check"></i> Confirmación </span>
-						</a>
-					</li>
-				</ul>
-				<div id="bar" class="progress progress-striped" role="progressbar">
-					<div id="progress-bar-wizard" class="progress-bar progress-bar-success" >
+				<div class="pad150-h">
+					<ul class="nav nav-pills nav-justified steps ">
+						<li class="active">
+							<a href="#tab1" data-toggle="tab" class="step active">
+							<span class="number">
+							1 </span>
+							<span class="desc">
+							<i class="fa fa-check"></i> Cuenta </span>
+							</a>
+						</li>
+						<li >
+							<a href="#tab2" data-toggle="tab" class="step">
+							<span class="number">
+							2 </span>
+							<span class="desc">
+							<i class="fa fa-check"></i> Organización </span>
+							</a>
+						</li>
+						<li>
+							<a href="#tab3" data-toggle="tab" class="step ">
+							<span class="number">
+							3 </span>
+							<span class="desc">
+							<i class="fa fa-check"></i> Pago </span>
+							</a>
+						</li>
+						<li>
+							<a href="#tab4" data-toggle="tab" class="step">
+							<span class="number">
+							4 </span>
+							<span class="desc">
+							<i class="fa fa-check"></i> Confirmación </span>
+							</a>
+						</li>
+					</ul>
+					<div id="bar" class="progress progress-striped" role="progressbar">
+						<div id="progress-bar-wizard" class="progress-bar progress-bar-success" >
+						</div>
 					</div>
 				</div>
+				
+				
 				<div class="tab-content">
 					<div class="feedback alert alert-danger display-none">
 						<button class="close" data-dismiss="alert"></button>
@@ -171,7 +175,8 @@
 								<h5 class="block">Información del Plan</h5>
 									<%= o.fields_for :contratos do |c| %>
 										<div class="row input-group">
-											<%= c.date_field :fecha_vencimiento, :class => "hidden"  %>
+											<input type="date" name="usuario[organizacion_attributes][contratos_attributes][0][fecha_vencimiento]" id="usuario_organizacion_attributes_contratos_attributes_0_fecha_vencimiento" class="hidden">
+											
 											<label>Plan <span class="required">*</span></label>
 											<%= c.fields_for :pagos do |pa| %>
 												<%= pa.number_field :monto, :class => "hidden"  %>

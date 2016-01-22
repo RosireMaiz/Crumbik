@@ -17,40 +17,180 @@
 </div>
 
 <div class="row pad30-h">
-  <div class="col s12">
-    <ul class="collection">
-      <li class="collection-item avatar">
-        <img src="images/yuna.jpg" alt="" class="circle">
-        <span class="title">Title</span>
-        <p>First Line <br>
-           Second Line
-        </p>
-        <a href="#!" class="secondary-content"><i class="material-icons">grade</i></a>
+
+  <div class="fixed-action-btn " style="top: 250px; bottom: 0px">
+    <a href="/cliente/agregar" class="btn-floating btn-sm waves-effect waves-light red tooltipped" style="margin-bottom: 60px;" data-position="left" data-delay="50" data-tooltip="Agregar Cliente">
+      <i class=" mdi-av-playlist-add"></i>
+    </a>
+  </div>
+
+  <div class="col s12 m3">
+    <ul class="collapsible filtro" data-collapsible="expandable">
+      <li class="white">
+        <div class="collapsible-header active grey lighten-4">
+          <i class="small mdi-action-account-child deep-grey-text text-darken-1"></i>
+          Tipos de Clientes
+        </div>
+        <div class="collapsible-body white" style="display: inline-block; border-bottom: 0px solid #ddd;">
+          <% if !@tipo_clientes.blank? %>
+            <% @tipo_clientes.each do |tipo_cliente|%>
+              <div class="input-field col s12 left">
+                <input type="checkbox" id="<%= tipo_cliente.nombre %>" />
+                <label for="<%= tipo_cliente.nombre %>"><%= tipo_cliente.nombre %></label>
+              </div>
+            <% end %>
+          <% end %>
+        </div>
       </li>
-      <li class="collection-item avatar">
-        <i class="material-icons circle">folder</i>
-        <span class="title">Title</span>
-        <p>First Line <br>
-           Second Line
-        </p>
-        <a href="#!" class="secondary-content"><i class="material-icons">grade</i></a>
-      </li>
-      <li class="collection-item avatar">
-        <i class="material-icons circle green">insert_chart</i>
-        <span class="title">Title</span>
-        <p>First Line <br>
-           Second Line
-        </p>
-        <a href="#!" class="secondary-content"><i class="material-icons">grade</i></a>
-      </li>
-      <li class="collection-item avatar">
-        <i class="material-icons circle red">play_arrow</i>
-        <span class="title">Title</span>
-        <p>First Line <br>
-           Second Line
-        </p>
-        <a href="#!" class="secondary-content"><i class="material-icons">grade</i></a>
-      </li>
+    </ul> 
+  </div>
+
+  <div class="col s12 m8">
+    <ul class="collection z-depth-1">
+
+      <% if !@clientes.blank? %>
+        <% @clientes.each do |cliente| %>
+            <li class="collection-item avatar">
+              
+              <% if cliente.usuario.nil? %>
+                <img src="/assets/avatar/sinfoto.jpg" alt="" class="circle right-align  ">
+              <% else %>
+                 <img src="<%= cliente.usuario.perfi.formato_foto %><%= cliente.usuario.perfi.foto %>" alt="" class="circle valign-wrapper">
+              <% end -%>
+            
+              <span class="title"><strong><%= cliente.nombres %> <%= cliente.apellidos %></strong></span>
+              <p>
+                  <%= cliente.email %><br>
+                  Tipo de Cliente:
+                  <% if cliente.tipo_cliente.nil? %>
+                    No Asignado
+                  <% else %>
+                    <%= cliente.tipo_cliente.nombre %>
+                  <% end -%>
+              </p>
+
+              <div class="secondary-content">
+                <a href="/cliente/ver/<%= cliente.id %>" data-tooltip="Ver" class="tooltipped">
+                  <i class=" mdi-action-account-circle"></i>
+                </a>
+                <a href="/cliente/editar/<%= cliente.id %>" data-delay="50" data-tooltip="Editar" class="tooltipped">
+                  <i class="fa fa-edit"></i>
+                </a> 
+                <% if cliente.estatus == 'A' %>  
+                  <a href="#modal<%= cliente.id %>" data-position="bottom" data-delay="50" data-tooltip="Deshabilitar" class="modal-trigger tooltipped">
+                    <i class="mdi-content-block"></i>
+                  </a>
+                <% else %>
+                    <a href="#modal<%= cliente.id %>" data-position="bottom" data-delay="50" data-tooltip="Habilitar" class="modal-trigger tooltipped">
+                    <i class="mdi-action-done"></i>
+                <% end -%>
+
+                
+                <a href="#modaleliminar<%= cliente.id %>" data-position="bottom" data-delay="50" data-tooltip="Eliminar" class="modal-trigger tooltipped">
+                  <i class="mdi-action-delete"></i>
+                </a>
+              </div>
+
+            </li>
+
+            <div id="modal<%= cliente.id %>" class="modal">
+              <div class="modal-content">
+                <a href="#" style="float:right;" class="waves-effect btn-flat modal-close">
+                  <i class="mdi-content-clear"></i>
+                </a>
+                <% if (cliente.estatus == 'A') %>
+                  <h5>Deshabilitar Cliente</h5>
+                <% else %>
+                  <h5>Habilitar Cliente</h5>
+                <% end %>
+                <div class="row" style="padding-top: 35px;">
+                  <div class="col s12 text-center">
+                    <% if (cliente.estatus == 'A') %>
+                      <h6 style=" font-size: 20px;"> ¿Seguro que desea Deshabilitar el cliente seleccionado? </h6>
+                    <% else %>
+                      <h6 style=" font-size: 20px;"> ¿Seguro que desea Habilitar el cliente seleccionado? </h6>
+                    <% end %>
+                      <div style="padding-top: 35px;" class="right">
+                        <% if (cliente.estatus == 'A') %>
+                          <input type="button" class="btn btn-success btn-sm" value="Aceptar" onclick="update_estatus(<%= cliente.id %>,'I')">
+                        <% else %>
+                          <input type="button" class="btn btn-success btn-sm" value="Aceptar" onclick="update_estatus(<%= cliente.id %>,'A')">
+                        <% end %>
+                        <input type="button" class="btn btn-danger btn-sm modal-close" value="Cancelar">
+                      </div>
+
+                  </div>
+                </div>                
+              </div>
+            </div> 
+
+            <div id="modaleliminar<%= cliente.id %>" class="modal">
+              <div class="modal-content">
+                <a style="float:right;" class="waves-effect btn-flat modal-close">
+                  <i class="mdi-content-clear"></i>
+                </a>
+
+                <h5>Eliminar Cliente</h5>
+
+                <div class="row pad30-t" >
+                  <div class="col s12 text-center">
+
+                    <h6 style=" font-size: 20px;"> ¿Seguro que desea eliminar el cliente seleccionado? </h6>
+
+                    <div style="padding-top: 35px;" class="right">
+
+                      <input type="button" class="btn btn-success btn-sm" value="Aceptar" onclick="eliminar(<%= cliente.id %>)">
+
+                      <input type="button" class="btn btn-danger btn-sm modal-close" value="Cancelar">
+                    </div>
+
+                  </div>
+                </div>                
+              </div>
+            </div> 
+
+        <% end %>
+      <% end %>
     </ul>
   </div>
 </div>
+
+<% content_for :javascript_personalizado do %>
+  <script type="text/javascript">
+
+  function update_estatus(idcliente, estatus){
+    var request = $.ajax({
+                            url: '/clientes/update_estatus',
+                            method: "POST",
+                            data: { idcliente: idcliente, estatus: estatus},
+                            dataType: "JSON"
+                          });
+
+        request.done(function( data ) {
+                                        location.reload(); 
+                                      });
+                     
+        request.fail(function( jqXHR, textStatus ) {
+                                                    alert( "Request failed: " + textStatus );
+                                                   });
+    };
+
+  function eliminar(idcliente){
+    var request = $.ajax({
+                            url: '/clientes/eliminar',
+                            method: "POST",
+                            data: { idcliente: idcliente},
+                            dataType: "JSON"
+                          });
+
+        request.done(function( data ) {
+                                        location.reload(); 
+                                      });
+                     
+        request.fail(function( jqXHR, textStatus ) {
+                                                    alert( "Request failed: " + textStatus );
+                                                   });
+  }
+
+  </script>
+<% end %>

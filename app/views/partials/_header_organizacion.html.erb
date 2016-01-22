@@ -80,7 +80,7 @@
 				              		</div>
 								</div>
 				        	</a>
-				        	<ul class="dropdown-menu dropdown-menu-header" role="menu" aria-labelledby="dropdownMenu1">
+				        	<ul class="dropdown-menu dropdown-menu-header  <% if !$administrable %> dropdown-menu-header-subdomain <% end %>" role="menu" aria-labelledby="dropdownMenu1">
 					            <li role="presentation">
 					              <a id="cambiar-rol" role="menuitem" tabindex="-1" href="javascript:void(0)">Cambiar rol</a>
 					            </li>
@@ -112,7 +112,6 @@
 			    </ul>
 	    	</div>
 	    </div>
-
 	</nav>
 </div>
 <!-- ****************** -->

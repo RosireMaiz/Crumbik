@@ -28,6 +28,8 @@ Date.prototype.addMonths = function (value) {
 };
 
 $(document).ready(function(){
+    $('#form .alert-danger').hide();
+    $('#form .alert-success').hide();
     $('#form_wizard_1 .alert-danger').hide();
     $('#form_wizard_1 .alert-success').hide();
     $('#form_wizard_1').find('.button-previous').hide();
@@ -55,17 +57,17 @@ $(document).ready(function(){
                                             var mes = data.meses;
                                             var monto = data.monto; 
                                             var f = new Date().addMonths(parseInt(mes));
-                                            var date = f.getFullYear()+"-"+(f.getMonth()+1)
-                                                 +"-" + f.getDate();
+                                            var date = f.getFullYear()+"-"+("0"+f.getMonth()+1).slice(-2)
+                                                 +"-" + ("0"+f.getDate()).slice(-2);
                                             $("#usuario_organizacion_attributes_contratos_attributes_0_fecha_vencimiento").attr('value',date);
                                             $("#usuario_organizacion_attributes_contratos_attributes_0_fecha_vencimiento").val(date);
+                                            
                                             $("#usuario_organizacion_attributes_contratos_attributes_0_pagos_attributes_0_monto").attr('value',monto);
                                             $("#usuario_organizacion_attributes_contratos_attributes_0_pagos_attributes_0_monto").val(monto);
-                                            $("#msj-frecuencia").html("El plan se renovará el "+f.getDate()+"/"+(f.getMonth()+1)
-                                                 +"/"+f.getFullYear());
+                                            $("#msj-frecuencia").html("El plan se renovará el "+("0"+f.getDate()).slice(-2)+"/"+("0"+(f.getMonth()+1)).slice(-2) +"/"+f.getFullYear());
                                             $("#monto_plan").html(monto);
                                             $("#monto_display").html(monto);
-                                            $('#fecha_display').html(f.getDate()+"/"+(f.getMonth()+1) +"/"+f.getFullYear());
+                                            $('#fecha_display').html(("0"+f.getDate()).slice(-2)+"/"+("0"+(f.getMonth()+1)).slice(-2) +"/"+f.getFullYear());
                                           }
                             });   
 
@@ -149,15 +151,15 @@ $(document).ready(function(){
                                             var monto = data.monto;
                                             var meses = data.meses;
                                             var f = new Date().addMonths(parseInt(meses));
-                                            var date = f.getDate()+"-"+(f.getMonth()+1)
-                                                 +"-"+f.getFullYear();
+                                             var date = f.getFullYear()+"-"+("0"+(f.getMonth()+1)).slice(-2)
+                                                 +"-" + ("0"+f.getDate()).slice(-2);
                                             $("#usuario_organizacion_attributes_contratos_attributes_0_fecha_vencimiento").attr('value',date);
                                             $("#usuario_organizacion_attributes_contratos_attributes_0_fecha_vencimiento").val(date);
                                             $("#usuario_organizacion_attributes_contratos_attributes_0_pago_atributes_0_monto").attr('value',monto);
-                                            $("#msj-frecuencia").html("El plan se renovará el "+f.getDate()+"/"+(f.getMonth()+1)+"/"+f.getFullYear());
+                                            $("#msj-frecuencia").html("El plan se renovará el "+("0"+f.getDate()).slice(-2)+"/"+("0"+(f.getMonth()+1)).slice(-2) +"/"+f.getFullYear());
                                             $("#monto_plan").html(monto);
                                             $("#monto_display").html(monto);
-                                            $('#fecha_display').html(f.getDate()+"/"+(f.getMonth()+1) +"/"+f.getFullYear());
+                                            $('#fecha_display').html(("0"+f.getDate()).slice(-2)+"/"+("0"+(f.getMonth()+1)).slice(-2) +"/"+f.getFullYear());
                                           }
                             });   
              

@@ -3,9 +3,7 @@
  <%= stylesheet_link_tag    "plugins/fileinput.min" %> 
     <style type="text/css">
   .dropdown-content {
-    
     max-height: 200px; 
-    
   }
 </style>
 <% end %>
@@ -68,7 +66,6 @@
               <label >Tipo de Organizacion <span class="required">*</span></label>
               <%= o.collection_select(:tipo_organizacion_id, TipoOrganizacion.all, :id, :nombre) %>  
             </div>
-
         </div>
 
         <hr/>
@@ -142,17 +139,17 @@
         </div>
         <div class="input-field ">
           <%= o.text_area  :direccion, :required=>true, :class=>"materialize-textarea"  %>
-          <label for="organizacion_direccionn">Direccion
+          <label for="organizacion_direccionn">Dirección
           </label>
         </div>
         <div class="input-field ">
           <%= o.text_field  :telefono, :required=>true  %>
-          <label for="organizacion_telefono">Telefono
+          <label for="organizacion_telefono">Teléfono
           </label>
         </div>
         <div class="input-field ">
           <%= o.text_field  :email, :required=>true  %>
-          <label for="organizacion_telefono">Telefono
+          <label for="organizacion_telefono">Email
           </label>
         </div>
         <div class="input-field ">

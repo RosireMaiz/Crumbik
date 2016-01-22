@@ -1,24 +1,3 @@
-<% content_for :css_personalizado do %>
-  <style type="text/css">
-    .tabs .indicator {
-      background-color: #616161;
-    }
-
-    .card .card-content .card-title {
-        line-height: 25px;
-    }
-
-    .card .card-title {
-        color: #fff;
-        font-size: 18px;
-        font-weight: 300;
-    }
-    .card .card-reveal {
-      padding: 12px;
-    }
-  </style>
-<% end %>
-
 <div class="row titulo-seccion">
   <div class="banner banner-perfil">
     <div class="contenedor">
@@ -47,51 +26,51 @@
     </a>
   </div>
 
-  <div class = "col s3 ">
+  <div class = "col s12 m3 ">
 
-    <ul class="collapsible filtro" data-collapsible="expandable">
+    <ul class="collapsible" data-collapsible="expandable">
       <li>
         <div class="collapsible-header active  grey lighten-4"><i class="fa fa-usd fa-2x deep-purple-text text-darken-1"></i><span class="deep-purple-text text-darken-1">Precio</span></div>
         <div class="collapsible-body white">
-          <div style = " display: table;
-          width : 100%;">
-            <div class="input-field col s6">
+          <div class="row no-margin-v">
+            <div class="input-field col s12 m6">
               <input id="Desde" type="text" class="validate">
               <label for="Desde" class = "morado">Desde</label>
 
             </div>
-            <div class="input-field col s6">
+            <div class="input-field col s12 m6">
               <input id="Hasta" type="text" class="validate">
               <label for="Hasta" class = "morado">Hasta</label>
             </div>
+            <div class="input-field col s12 right">
+              <a class="waves-effect waves-light btn right pink accent-3">Buscar     </a>
+            </div>
 
           </div>
-          <a class="waves-effect waves-light btn z-depth-1 espacio pink accent-3" style = " margin-left: 27px;">Buscar     </a>
+          
         </div>
       </li>
       <li class="white">
-          <div class="collapsible-header active  grey lighten-4">
-            <i class="small mdi-social-cake deep-purple-text text-darken-1"></i>Categorías
-          </div>
-          <div class="collapsible-body white" style="display: inline-block; border-bottom: 0px solid #ddd;">
+        <div class="collapsible-header active  grey lighten-4">
+          <i class="small mdi-social-cake deep-purple-text text-darken-1"></i>
+          Categorías
+        </div>
+        <div class="collapsible-body white" style="display: inline-block; border-bottom: 0px solid #ddd;">
           <% if !@categorias.blank? %>
-            <% for item in @categorias %>
+            <% for categoria in @categorias %>
               <div class="input-field col s12 left">
-                <input type="checkbox" id="<%= item.nombre %>" />
-                <label for="<%= item.nombre %>"><%= item.nombre %></label>
+                <input type="checkbox" id="<%= categoria.nombre %>" />
+                <label for="<%= categoria.nombre %>"><%= categoria.nombre %></label>
               </div>
             <% end %>
-           
           <% end %>
-            
-          </div>
-
+        </div>
       </li>
 
     </ul> 
   </div>
 
-  <div class="col s9 ">
+  <div class="col s12 m9 ">
     <div class="row">
       <div class="input-field col m6 s12">
         <input id="BuscarNombre" type="text" class="validate">
@@ -100,13 +79,19 @@
     </div> 
     
     <div class="row">
-      <div class="col s12">
+      
         <ul class="tabs">
-          <li class="tab col s3"><a href="#todos" class="grey-text text-darken-2 active">Todos</a></li>
-          <li class="tab col s3"><a class="grey-text text-darken-2 " href="#habilitados">Habilitados</a></li>
-          <li class="tab col s3 "><a class="grey-text text-darken-2" href="#deshabilitados">Deshabilitados</a></li>
+          <li class="tab col s12 m3">
+            <a href="#todos" class="grey-text text-darken-2 active">Todos</a>
+          </li>
+          <li class="tab col s12 m3">
+            <a class="grey-text text-darken-2 " href="#habilitados">Habilitados</a>
+          </li>
+          <li class="tab col s12 m3 ">
+            <a class="grey-text text-darken-2" href="#deshabilitados">Deshabilitados</a>
+          </li>
         </ul>
-      </div>
+     
     </div>
 
     <div class="row center-align valign-wrappe">
@@ -116,14 +101,14 @@
         <div id="todos">
           <% @productos.each_with_index do |producto, index| %>
             <div class="<% if (index.to_i+1) % 3 == 0 %> row <% end %>">
-              <div class = "col s3 " style="width: 33%;">
+              <div class = "col s12 m3 card-product">
                 <div class="card hoverable">
                   <div class="card-image">
                     <img src="<%= producto.formato_imagen %><%= producto.imagen %>" class="activator img-responsive">
                   </div>
                   <div class="card-content  pad5-hv left-align">
                   <div class="row no-margin-v">
-                   <span class="card-title activator grey-text text-darken-4">
+                   <span class="card-title card-catalogo activator grey-text text-darken-4">
                       <div class="col s10">
                         <h6 class="grey-text"><%= producto.nombre %></h6>
                       </div>
@@ -145,10 +130,10 @@
                    
                   </div>
 
-                  <div class="card-reveal left-align">
+                  <div class="card-reveal card-catalogo-detail left-align">
 
                     <div class="row" style="    margin-bottom: 12px;">
-                      <span class="card-title grey-text text-darken-4">
+                      <span class="card-title card-catalogo grey-text text-darken-4">
                         <div class="col s10">
                           <%= producto.nombre %>
                         </div>
@@ -176,7 +161,7 @@
           <% @productos.each_with_index do |producto, index| %>
             <% if producto.estatus == 'A' %>
               <div class="<% if (index.to_i+1) % 3 == 0 %> row <% end %>">
-                <div class = "col s3 " style="width: 33%;">
+                <div class = "col s12 m3 card-product">
                   <div class="card hoverable">
                     <div class="card-image">
                       <img src="<%= producto.formato_imagen %><%= producto.imagen %>" class="activator img-responsive">
@@ -237,7 +222,7 @@
           <% @productos.each_with_index do |producto, index| %>
             <% if producto.estatus == 'I' %>
               <div class="<% if (index.to_i+1) % 3 == 0 %> row <% end %>">
-                <div class = "col s3 " style="width: 33%;">
+                <div class = "col s12 m3 card-product">
                   <div class="card hoverable">
                     <div class="card-image">
                       <img src="<%= producto.formato_imagen %><%= producto.imagen %>" class="activator img-responsive">
@@ -259,9 +244,9 @@
                       <a href="/productos/editar/<%= producto.id %>" class="left"> Editar</a>
                       <a href="#modaleliminar<%= producto.id %>" class="modal-trigger waves-effect left"> Eliminar</a>
                       <% if producto.estatus == 'A' %>
-                         <a href="#modal<%= producto.id %>" class=" modal-trigger waves-effect left"> Deshabilitar</a>
+                         <a href="#modal<%= producto.id %>" class="modal-trigger waves-effect left"> Deshabilitar</a>
                       <% else %>
-                        <a href="#modal<%= producto.id %>" class=" modal-trigger waves-effect left"> Habilitar</a>
+                        <a href="#modal<%= producto.id %>" class="modal-trigger waves-effect left"> Habilitar</a>
                       <%  end %>
                      
                     </div>
@@ -301,7 +286,6 @@
     <div class="row valign-wrapper">
       <%= paginate(@productos) %>
     </div>
-  
   </div>
 
 

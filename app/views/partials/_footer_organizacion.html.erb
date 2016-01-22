@@ -1,31 +1,35 @@
   <footer id="fondo" class="page-footer">
-  
-    <div class="row">
-      <div class="col s2">
-        <img id ="footer-logo" class="responsive-img" src ="<%= @organizacion.formato_logo%><%= @organizacion.logo%>" />
-    </div>
+    <div class="contenedor">
+      <div class="row ">
+        <div class="col s12 m2 center-align">
+          <img id ="footer-logo" class="responsive-img" src ="<%= @organizacion.formato_logo%><%= @organizacion.logo%>" />
+        </div>
 
-    <div id="contenedor-letras" class="col s6">
-      <h5 class="white-text">Comun&iacute;cate con nosotros</h5>
-      <span id = "footer-phone">
-        <i class="fa fa-mobile fa-4x"></i>
-      </span>
-      <span id="numero-rosa">
-      <%= @organizacion.telefono %>
-      </span>
-    </div>
+        <div id="contenedor-letras" class="col s12 m6">
+          <h5 class="white-text">Comun&iacute;cate con nosotros</h5>
+          <span id = "footer-phone">
+            <i class="fa fa-mobile fa-4x"></i>
+          </span>
+          <span id="numero-rosa">
+          <%= @organizacion.telefono %>
+          </span>
+        </div>
+          
+        <div class="footer-slogan col s12 m4">
+          <h5 class= "white-text"> <%= @organizacion.nombre %> </h5>
+          <p id = "footer-slogan"> <%= @organizacion.slogan %> </p>
+        </div>
+
+        
+      </div>
+      <div class="footer-copyright">
+        <div id="redes" class="row">
+            <a href="#!"><i class="fa fa-facebook fa-2x estilo white-text"></i></a>
+            <a href="#!"><i class="fa fa-twitter fa-2x estilo white-text"></i></a>
+            <a href="#!"><i class="fa fa-linkedin fa-2x white-text"></i></a>
+        </div> 
+      </div>
+
       
-    <div class="footer-slogan col s4">
-      <h5 class= "white-text"> <%= @organizacion.nombre %> </h5>
-      <p id = "footer-slogan"> <%= @organizacion.slogan %> </p>
-    </div>
-  </div>
-
-    <div class="footer-copyright">
-      <div id="redes" class="row">
-          <a href="#!"><i class="fa fa-facebook fa-2x estilo white-text"></i></a>
-          <a href="#!"><i class="fa fa-twitter fa-2x estilo white-text"></i></a>
-          <a href="#!"><i class="fa fa-linkedin fa-2x white-text"></i></a>
-      </div> 
     </div>
   </footer>

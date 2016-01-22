@@ -21,14 +21,14 @@
   </div>
 </div>
 
-<div class="contenedor">
-  <div class="row pad30 valign-wrapper">
-    <div class="col s4 center-align">
+
+  <div class="row pad30">
+    <div class="col s12 m4 center-align">
       <img class="foto-perfil responsive-img"
         src="<%= @usuario.perfil.formato_foto%><%= @usuario.perfil.foto%>">
     </div>
 
-    <div class="col s4">
+    <div class="col s12 m4">
       <ul class="asidefoto">
         <li>
           <i class="small mdi-action-account-circle"></i>
@@ -49,11 +49,6 @@
             <%= @usuario.perfil.ocupacion%>
           </span>
         </li>
- <!--        <li>
-          <i class="small mdi-social-school"></i>
-          <span class="grey-text darken-2">Estudio En</span>
-          <span class="negrita"></span>
-        </li>-->
         <li>
           <i class="small mdi-action-home"></i>
           <span class="grey-text darken-2">
@@ -70,14 +65,10 @@
             <span class="company"><%= @usuario.organizacion.nombre %></span>
           </li>
         <%  end -%>
- <!--       <li>
-          <i class="small mdi-action-stars"></i>
-          <span class="grey-text darken-2">Intereses</span>
-          <span class="negrita">Something</span>
-        </li>-->
+
       </ul>
     </div>
-    <div class="col s4">
+    <div class="col s12 m4">
       <ul class="asidefoto2">
 
         <% @usuredes.each do |red| %>
@@ -106,4 +97,4 @@
 
     </div>
   </div>
-</div>
+

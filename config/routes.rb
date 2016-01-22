@@ -196,6 +196,13 @@ Rails.application.routes.draw do
 		match "/productos/eliminar" => "productos#eliminar", via: :post
 
 		match "/clientes" => "clientes#consultar", via: :get
+		match "/cliente/crear_cliente" => "clientes#create", via: :post
+		match "/cliente/editar" => "clientes#save_edit", via: :post
+		match "/cliente/agregar" => "clientes#new", via: :get
+		match "/cliente/editar/:id_cliente" => "clientes#edit", via: :get
+		match "/cliente/ver/:id_cliente" => "clientes#show", via: :get
+		match "/clientes/update_estatus" => "clientes#update_estatus", via: :post
+		match "/clientes/eliminar" => "clientes#eliminar", via: :post
 
 		match "/productos/categorias/consultar" => "categorias#consultar", via: :get
     	match "/productos/categorias/agregar" => "categorias#new", via: :get

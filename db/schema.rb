@@ -28,19 +28,23 @@ ActiveRecord::Schema.define(version: 20160104031515) do
   end
 
   create_table "clientes", force: :cascade do |t|
-    t.string   "nombres",        limit: 255
-    t.string   "apellidos",      limit: 255
-    t.text     "direccion",      limit: 65535
-    t.string   "email",          limit: 255
-    t.string   "telefono",       limit: 255
-    t.string   "telefono_movil", limit: 255
-    t.string   "sexo",           limit: 255
-    t.integer  "usuario_id",     limit: 4,     default: 0
-    t.string   "estatus",        limit: 1,     default: "A"
-    t.datetime "created_at",                                 null: false
-    t.datetime "updated_at",                                 null: false
+    t.string   "nombres",         limit: 255
+    t.string   "apellidos",       limit: 255
+    t.text     "direccion",       limit: 65535
+    t.string   "email",           limit: 255
+    t.string   "telefono",        limit: 255
+    t.string   "telefono_movil",  limit: 255
+    t.string   "sexo",            limit: 255
+    t.integer  "usuario_id",      limit: 4
+    t.integer  "tipo_cliente_id", limit: 4
+    t.integer  "pais_id",         limit: 4
+    t.string   "estatus",         limit: 1,     default: "A"
+    t.datetime "created_at",                                  null: false
+    t.datetime "updated_at",                                  null: false
   end
 
+  add_index "clientes", ["pais_id"], name: "index_clientes_on_pais_id", using: :btree
+  add_index "clientes", ["tipo_cliente_id"], name: "index_clientes_on_tipo_cliente_id", using: :btree
   add_index "clientes", ["usuario_id"], name: "index_clientes_on_usuario_id", using: :btree
 
   create_table "comentarios", force: :cascade do |t|

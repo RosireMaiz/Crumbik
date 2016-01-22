@@ -8,7 +8,9 @@ class CreateClientes < ActiveRecord::Migration
       t.string :telefono
       t.string :telefono_movil
       t.string :sexo
-      t.references :usuario, index: true,  default: 0
+      t.references :usuario, index: true
+      t.references :tipo_cliente, index: true
+      t.references :pais, index: true
       t.string :estatus, default: "A", :limit => 1
 
       t.timestamps null: false

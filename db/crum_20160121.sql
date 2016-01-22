@@ -3,7 +3,7 @@
 -- http://www.phpmyadmin.net
 --
 -- Servidor: 127.0.0.1
--- Tiempo de generación: 08-01-2016 a las 03:27:05
+-- Tiempo de generación: 22-01-2016 a las 04:10:07
 -- Versión del servidor: 5.6.21-log
 -- Versión de PHP: 5.6.3
 
@@ -61,7 +61,9 @@ CREATE TABLE IF NOT EXISTS `clientes` (
   `telefono` varchar(255) COLLATE utf8_unicode_ci DEFAULT NULL,
   `telefono_movil` varchar(255) COLLATE utf8_unicode_ci DEFAULT NULL,
   `sexo` varchar(255) COLLATE utf8_unicode_ci DEFAULT NULL,
-  `usuario_id` int(11) DEFAULT '0',
+  `usuario_id` int(11) DEFAULT NULL,
+  `tipo_cliente_id` int(11) DEFAULT NULL,
+  `pais_id` int(11) DEFAULT NULL,
   `estatus` varchar(1) COLLATE utf8_unicode_ci DEFAULT 'A',
   `created_at` datetime NOT NULL,
   `updated_at` datetime NOT NULL
@@ -104,7 +106,7 @@ CREATE TABLE IF NOT EXISTS `contratos` (
 --
 
 INSERT INTO `contratos` (`id`, `fecha_creacion`, `fecha_vencimiento`, `estatus`, `observacion`, `organizacion_id`, `plan_id`) VALUES
-(1, '2015-12-29 19:50:56', NULL, NULL, NULL, 1, 2);
+(1, '2016-01-19 20:49:10', '2017-01-19', NULL, NULL, 1, 1);
 
 -- --------------------------------------------------------
 
@@ -356,16 +358,7 @@ CREATE TABLE IF NOT EXISTS `organizacion_red_socials` (
   `url` varchar(255) COLLATE utf8_unicode_ci DEFAULT NULL,
   `red_social_id` int(11) DEFAULT NULL,
   `organizacion_id` int(11) DEFAULT NULL
-) ENGINE=InnoDB AUTO_INCREMENT=4 DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
-
---
--- Volcado de datos para la tabla `organizacion_red_socials`
---
-
-INSERT INTO `organizacion_red_socials` (`id`, `url`, `red_social_id`, `organizacion_id`) VALUES
-(1, 'https://www.facebook.com/DulcesPach/', 1, 1),
-(2, 'http://instagram.com/dulcespach/', 2, 1),
-(3, 'https://twitter.com/dulcespach/', 6, 1);
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 
 -- --------------------------------------------------------
 
@@ -387,7 +380,7 @@ CREATE TABLE IF NOT EXISTS `pago_contratos` (
 --
 
 INSERT INTO `pago_contratos` (`id`, `monto`, `fecha`, `usuario_id`, `contrato_id`, `modo_pago_id`) VALUES
-(1, 190, '2015-12-29 19:50:56', 2, 1, 1);
+(1, 190, '2016-01-19 20:49:10', 2, 1, 1);
 
 -- --------------------------------------------------------
 
@@ -997,7 +990,7 @@ CREATE TABLE IF NOT EXISTS `usuarios` (
 
 INSERT INTO `usuarios` (`id`, `email`, `encrypted_password`, `username`, `confirmacion_email`, `pais_id`, `reset_password_token`, `reset_password_sent_at`, `remember_created_at`, `sign_in_count`, `current_sign_in_at`, `last_sign_in_at`, `current_sign_in_ip`, `last_sign_in_ip`, `created_at`, `updated_at`) VALUES
 (1, 'rosire08@gmail.com', '$2a$10$VtE0lZB2.FwEIKLSZve8qegLsDvkjK/L4ga9ySaaG5F8OSB/uQ/wO', 'Rosiré Maiz*', 1, 232, '7e4f6a91a8f96feeea96efb55170e89c4e2ac02d2b12dd6c39c90dd75d50dc3e', '2015-10-11 22:23:28', NULL, 124, '2016-01-04 02:35:14', '2016-01-02 15:12:36', '127.0.0.1', '127.0.0.1', '2015-08-26 01:38:48', '2016-01-04 02:35:14'),
-(2, 'ahewstone@gmail.com', '$2a$10$4t56xvGXVSmErhCmRbPlE.P88pslAB5Cbv67ZHiYT4/GxPsmGpKae', 'Alejandra', 0, 232, NULL, NULL, NULL, 1, '2016-01-02 15:12:01', '2016-01-02 15:12:01', '127.0.0.1', '127.0.0.1', '2015-12-30 00:20:28', '2016-01-02 15:12:01');
+(2, 'ahewstone@gmail.com', '$2a$10$PAvg0k.Mlw.xpyRKazJCJeHaZu9E.c6toa8xMccoaZMv9qmD94/AG', 'Alejandra', 0, 232, NULL, NULL, NULL, 0, NULL, NULL, NULL, NULL, '2016-01-20 01:18:25', '2016-01-20 01:18:25');
 
 -- --------------------------------------------------------
 
@@ -1085,7 +1078,7 @@ ALTER TABLE `categoria`
 -- Indices de la tabla `clientes`
 --
 ALTER TABLE `clientes`
- ADD PRIMARY KEY (`id`), ADD KEY `index_clientes_on_usuario_id` (`usuario_id`);
+ ADD PRIMARY KEY (`id`), ADD KEY `index_clientes_on_usuario_id` (`usuario_id`), ADD KEY `index_clientes_on_tipo_cliente_id` (`tipo_cliente_id`), ADD KEY `index_clientes_on_pais_id` (`pais_id`);
 
 --
 -- Indices de la tabla `comentarios`
@@ -1330,7 +1323,7 @@ MODIFY `id` int(11) NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=2;
 -- AUTO_INCREMENT de la tabla `organizacion_red_socials`
 --
 ALTER TABLE `organizacion_red_socials`
-MODIFY `id` int(11) NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=4;
+MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
 --
 -- AUTO_INCREMENT de la tabla `pago_contratos`
 --

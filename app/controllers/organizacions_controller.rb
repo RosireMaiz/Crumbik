@@ -81,61 +81,46 @@ class OrganizacionsController < ApplicationController
 		@organizacion = Organizacion.where(["id = ?", id_organizacion]).first
 
 		@organizacion.update(organizacion_edit_params)
-		redes_sociales = params[:organizacion][:red_social_attributes][:actual]
+		redes = params[:organizacion][:red_social_attributes]
 
-		if ! redes_sociales.nil?
-			redes_sociales.each do |red_social|
-			 	id = red_social[0]
-			 	url = red_social[1]
-			 	red_social_org = OrganizacionRedSocial.where("id = ?", id).first
-			 	if url.nil? || url == ""
-					red_social_org.destroy
-			 	else
-			 		red_social_org.update(:url => url)
-			 	end
+		if ! redes.nil?
+			redes_sociales = params[:organizacion][:red_social_attributes][:actual]
+
+			if ! redes_sociales.nil?
+				redes_sociales.each do |red_social|
+				 	id = red_social[0]
+				 	url = red_social[1]
+				 	red_social_org = OrganizacionRedSocial.where("id = ?", id).first
+				 	if url.blank?
+						red_social_org.destroy
+				 	else
+				 		red_social_org.update(:url => url)
+				 	end
+				end
+			end
+			redes_sociales_nuevas = params[:organizacion][:red_social_attributes][:nueva]
+
+			if ! redes_sociales_nuevas.nil?
+
+				redes_sociales_nuevas.each do |red_social_nueva|
+					id = red_social_nueva[0]
+			 		url = red_social_nueva[1]
+
+
+			 		if !url.blank?
+			 			puts "url " + url
+			 			red_social_org = OrganizacionRedSocial.new
+			 			red_social_org.url = url
+			 			red_social_org.red_social_id = id
+			 			red_social_org.organizacion_id = id_organizacion
+			 			red_social_org.save
+			 		end
+			  	end
 			end
 		end
-		redes_sociales_nuevas = params[:organizacion][:red_social_attributes][:nueva]
 
-		if ! redes_sociales_nuevas.nil?
-
-			redes_sociales_nuevas.each do |red_social_nueva|
-				id = red_social_nueva[0]
-		 		url = red_social_nueva[1]
-		 		
-		 		if ! url.nil?
-		 			red_social_org = OrganizacionRedSocial.new
-		 			red_social_org.url = url
-		 			red_social_org.red_social_id = id
-		 			red_social_org.organizacion_id = id_organizacion
-		 			red_social_org.save
-		 		end
-		  	end
-		end
-
-		redirect_to :controller => 'organizacions', :action => 'consultar', subdominio: @organizacion.subdominio 
+		redirect_to :controller => 'organizacions', :action => 'consultar'
 		 
-	end
-
-	def save_logo
-
-		@id = params[:organizacion_id]
-
-		@organizacion = Organizacion.where(["id = ?", @id]).first
-					
-		#Archivo subido por el usuario.
-	    archivo = params[:logo_id]
-
- 		formato = "data:"+ archivo.content_type+";base64,"
-		logo = Base64.encode64(File.open(archivo.tempfile, "rb").read)
-
-    	@organizacion.logo = logo
-
-    	@organizacion.formato_logo = formato
-
-    	@organizacion.save
-		
-		redirect_to :controller => 'organizacions', :action => 'edit', subdominio: @organizacion.subdominio 
 	end
 
 	def apariencia_index
@@ -221,15 +206,9 @@ class OrganizacionsController < ApplicationController
 	end
 	
 	private
-		def organizacion_params
-	      accessible = [ :nombre, :descripcion, :subdominio, :pais_id, :tipo_organizacion_id, :telefono, :slogan, :direccion, :mision, :vision] # extend with your own params
-	      params.require(:organizacion).permit(accessible)
-    	end
-
     	def organizacion_edit_params
-	      accessible = [ :nombre, :descripcion, :pais_id, :tipo_organizacion_id, :telefono, :slogan, :direccion, :slogan, :mision, :vision, :logo, :formato_logo] # extend with your own params
+	      accessible = [ :nombre, :descripcion, :pais_id, :tipo_organizacion_id, :telefono, :email, :slogan, :direccion, :slogan, :mision, :vision, :logo, :formato_logo] # extend with your own params
 	      params.require(:organizacion).permit(accessible)
     	end
-
 
 end

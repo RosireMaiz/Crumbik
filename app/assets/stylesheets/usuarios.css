@@ -159,9 +159,18 @@ word-wrap: break-word
 /****************************************************************/
 /*                       Bootstrap Wizard                       */
 /****************************************************************/
-#form_wizard_1{
-  width: 80%;
-  min-width: 600px; 
+@media only screen and (min-width: 850px){
+  .pad150-h{
+    padding-left: 150px;
+    padding-right: 150px;
+  }
+}
+
+@media only screen and (max-width: 850px){
+  .pad150-h{
+    padding-left: 80px;
+    padding-right: 80px;
+  }
 }
 
 .form-wizard .progress {

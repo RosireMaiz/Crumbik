@@ -3,15 +3,114 @@
     <div class="contenedor">
       <div class="col s6">
         <h5 class="text-uppercase ">
-         Editar Cliente
+         Ver Cliente
         </h5>
       </div>
       <div class="col s6 text-right ">
         <ol class="breadcrumb">
           <li><a href="/">Inicio</a></li>
-          <li class="active">Cliente</li>
+          <li class="active">Ver Cliente</li>
         </ol>
       </div>
     </div>
   </div>
+</div>
+
+<div class="row pad30-h">
+
+  <div class="col s12 m3 center-align">
+    <div class="card">
+      <div class="card-content center-align">
+        <% if @cliente.usuario.nil? %>
+          <img src="/assets/avatar/sinfoto.jpg" alt="" class="circle responsive-img" style="max-height: 150px;">
+           <% if ! @usuredes.blank? %>
+             <div class="card-action center-align">
+           
+              <% @usuredes.each do |red| %>
+                <% if ! red.nil? %>
+                  <a class="label-p" href="<%= red.url %>" target="_blank"> 
+                    <i class=" red-social <%= red.red_social.icono %>" style="background: <%= red.red_social.color %>;"></i>
+                  </a>
+                <% end %>
+              <% end %>
+            
+            </div>
+          <% end %>
+        <% else %>
+          <img src="<%= @cliente.usuario.perfi.formato_foto %><%= @cliente.usuario.perfi.foto %>" alt="" class="circle responsive-img" style="max-width: 150px; max-height: 150px;">
+        <% end %>
+
+      </div>
+    </div>
+  </div>
+
+  <div class="col s12 m9  no-margin-v">
+    <div class="card">
+      <div class="card-content">
+        <div class="col s12 m6">
+          <ul class="asidefoto">
+            <li>
+              <i class="small mdi-action-account-circle"></i>
+              <span class="negrita">
+                <%= @cliente.nombres%> <%=
+                @cliente.apellidos%>
+              </span>
+            </li>
+            <li>
+              <i class="small mdi-action-accessibility"></i>
+              <span class="grey-text darken-2">Sexo</span>
+              <span class="negrita text-capitalize"><%= @cliente.sexo%></span>
+            </li>
+            <li>
+              <i class="small mdi-action-home"></i>
+              <span class="grey-text darken-2">
+                Direcci&oacute;n
+              </span>
+              <span class="negrita"><%= @cliente.direccion %></span>
+            </li>
+
+            <li>
+              <i class="small mdi-social-public"></i>
+              <span class="grey-text darken-2">
+                Pa&iacute;s
+              </span>
+              <span class="negrita"><%= @cliente.pais.nombre %></span>
+            </li>
+           
+          </ul>
+        </div>
+        <div class="col s12 m6">
+          <ul class="asidefoto2">
+            <li>
+              <i class="small mdi-communication-email"></i>
+              <span class="grey-text darken-2">Email</span>
+              <span class="negrita">
+                <%= @cliente.email%>
+              </span>
+            </li>
+            <li>
+              <i class="mdi-communication-call small"></i>
+              <span class="grey-text darken-2">Telefono</span>
+              <span class="negrita">
+                <%= @cliente.telefono %>
+              </span>
+            </li>
+            <li>
+              <i class="mdi-communication-stay-primary-portrait small"></i>
+              <span class="grey-text darken-2">Telefono Movil</span>
+              <span class="negrita text-capitalize"><%= @cliente.telefono_movil %></span>
+            </li>
+            <li>
+              <i class="small mdi-action-wallet-travel "></i>
+              <span class="grey-text darken-2">Tipo de Cliente</span>
+              <span class="negrita">
+                <%= @cliente.tipo_cliente.nombre  %>
+              </span>
+            </li>
+          </ul>
+        </div>
+      </div>
+    </div>
+  </div>
+
 </div>

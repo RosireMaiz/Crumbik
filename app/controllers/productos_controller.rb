@@ -96,7 +96,6 @@ class ProductosController < ApplicationController
 	def catalogo
        @productos = Producto.order('nombre ASC').page(params[:page]).per(9)
        @categorias = Categorium.order('nombre ASC')
-       @valor = true;
        $administrable = false
        render "productos/catalogo"	
 	end
@@ -145,8 +144,6 @@ class ProductosController < ApplicationController
 		else
 			render :text => '{ "success" : "false"}'
 		end
-
-		
 	end
 
 

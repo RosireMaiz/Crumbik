@@ -29,7 +29,7 @@ Apartment.configure do |config|
 
   #
   config.tenant_names = lambda { Organizacion.pluck :subdominio }
-  #config.tenant_names = ['dulcespach']
+  config.tenant_names = ['dulcespach']
   #
   # ==> PostgreSQL only options
 

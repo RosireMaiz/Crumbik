@@ -1,3 +1,10 @@
+<% content_for :css_personalizado do %>
+  <style type="text/css">
+    .dropdown-content {
+      max-height: 200px; 
+    }
+  </style>
+<% end %>
 <div class="row titulo-seccion">
   <div class="banner banner-perfil">
     <div class="contenedor">
@@ -14,4 +21,108 @@
       </div>
     </div>
   </div>
+</div>
+<div id="form" class="row pad30-h">
+  <%= form_for(@cliente,  :url => cliente_editar_path, :html => {id: "edit_cliente", :method => :post },  :multipart => true ) do |f| %>
+    <div class="panel">
+
+      <div class="steps">
+        
+        <div class="feedback alert alert-danger display-none">
+          <button class="close" data-dismiss="alert"></button>
+          Algunos campos tienen errores. Por favor revisa abajo.
+        </div>
+        
+        <div class="feedback alert-success display-none">
+          <button class="close" data-dismiss="alert"></button>
+          La validación fue exitosa.
+        </div>
+        
+        <div class="row">
+          <div class="col s10 offset-s1 left">
+            <h5>Datos del Cliente </h5>
+
+            <input id="cliente_id" name="cliente_id" class="file" value="<%= @cliente.id %>" hidden />
+
+            <div class="row">
+              <div class="input-field col s12 m6">
+                <label for="categoria_nombre">Nombres: <span class="required">
+                * </span>
+                </label>
+                <%= f.text_field :nombres, :required=>true, autocomplete: "off" %>
+              </div>
+
+              <div class="input-field col s12 m6">
+                <label for="categoria_descripcion">Apellidos <span class="required">
+                * </span>
+                </label>
+                <%= f.text_field :apellidos, :required=>true, autocomplete: "off" %>
+              </div>
+            </div>
+
+            <div class="row">
+              <div class="input-field col s12 m6">
+                <label for="categoria_descripcion">Email <span class="required">
+                * </span>
+                </label>
+                <%= f.text_field :email, :required=>true, autocomplete: "off" %>
+              </div>
+              <div class="col s12 m6">
+                <label>Sexo</label>
+                <div>
+                  <%= f.radio_button :sexo, "masculino", :checked => (@cliente.sexo == "masculino") %>
+                  <%= f.label :sexo_masculino, "Masculino" %>
+                  <%= f.radio_button :sexo, "femenino", :checked => (@cliente.sexo == "femenino")%>
+                  <%= f.label :sexo_femenino, "Femenino"%>
+                </div> 
+              </div>
+            </div>
+
+            <div class="row">
+              <div class="input-field col s12 m6">
+                <label for="categoria_descripcion">Teléfono <span class="required">
+                * </span>
+                </label>
+                <%= f.text_field :telefono, :required=>true, autocomplete: "off" %>
+              </div>
+              <div class="input-field col s12 m6">
+                <label for="categoria_descripcion">Teléfono Móvil <span class="required">
+                * </span>
+                </label>
+                <%= f.text_field :telefono_movil, :required=>true, autocomplete: "off" %>
+              </div>
+            </div>
+
+            <div class="input-field col s12">
+              <label for="categoria_descripcion">Dirección <span class="required">
+              * </span>
+              </label>
+              <%= f.text_area :direccion, :required=>true, autocomplete: "off", class: "materialize-textarea", length: "120" %>
+            </div>
+
+            <div class="row">
+              <div class="col s12 m6">
+                <label>País <span class="required">*</span></label>
+                <%= f.collection_select(:pais_id, Pais.all, :id, :nombre) %>  
+              </div>
+              <div class="col s12 m6">
+                <label>Tipo de Cliente <span class="required">*</span></label>
+                <%= f.collection_select(:tipo_cliente_id, TipoCliente.all, :id, :nombre) %>  
+              </div>
+            </div>
+
+          </div>
+        </div>
+     
+      </div>
+
+      <div class="row">
+        <div class="col s12 center-align">
+          <input type="submit" class="btn btn-success " value="Guardar">
+          <button type="button" onclick="window.location.href='/clientes'" class="btn btn-danger waves-effect">Cancelar</button>
+        </div>
+      </div>
+      
+    </div>
+  <% end -%>
 </div>

@@ -3,26 +3,6 @@
 <% content_for :css_personalizado do %>
   <%= stylesheet_link_tag    "plugins/star-rating.min" %> 
   <%= stylesheet_link_tag    "star-product" %> 
-
-  <style type="text/css">
-    .tabs .indicator {
-      background-color: #616161;
-    }
-
-    .card .card-content .card-title {
-        line-height: 25px;
-    }
-
-    .card .card-title {
-        color: #fff;
-        font-size: 18px;
-        font-weight: 300;
-    }
-    
-    .card .card-reveal {
-      padding: 12px;
-    }
-  </style>
 <% end %>
 
 <script type="text/javascript" src="http://lvh.me:3000/jquery/jquery-1.10.2.min.js"></script>
@@ -32,51 +12,51 @@
 
   <div class="row pad30-h">
 
-    <div class = "col s3 ">
+    <div class = "col s12 m3">
 
-      <ul class="collapsible filtro" data-collapsible="expandable">
-        <li>
-          <div class="collapsible-header active  grey lighten-4">
-            <i class="fa fa-usd fa-2x deep-purple-text text-darken-1"></i>
-            <span class="deep-purple-text text-darken-1">Precio</span>
+      <ul class="collapsible" data-collapsible="expandable">
+      <li>
+        <div class="collapsible-header active  grey lighten-4"><i class="fa fa-usd fa-2x deep-purple-text text-darken-1"></i><span class="deep-purple-text text-darken-1">Precio</span></div>
+        <div class="collapsible-body white">
+          <div class="row no-margin-v">
+            <div class="input-field col s12 m6">
+              <input id="Desde" type="text" class="validate">
+              <label for="Desde" class = "morado">Desde</label>
+
+            </div>
+            <div class="input-field col s12 m6">
+              <input id="Hasta" type="text" class="validate">
+              <label for="Hasta" class = "morado">Hasta</label>
+            </div>
+            <div class="input-field col s12 right">
+              <a class="waves-effect waves-light btn right pink accent-3">Buscar     </a>
+            </div>
+
           </div>
-          <div class="collapsible-body white">
-            <div style = " display: table; width : 100%;">
-
-              <div class="input-field col s6">
-                <input id="Desde" type="text" class="validate">
-                <label for="Desde" class = "morado">Desde</label>
-
+          
+        </div>
+      </li>
+      <li class="white">
+        <div class="collapsible-header active  grey lighten-4">
+          <i class="small mdi-social-cake deep-purple-text text-darken-1"></i>
+          Categorías
+        </div>
+        <div class="collapsible-body white" style="display: inline-block; border-bottom: 0px solid #ddd;">
+          <% if !@categorias.blank? %>
+            <% for categoria in @categorias %>
+              <div class="input-field col s12 left">
+                <input type="checkbox" id="<%= categoria.nombre %>" />
+                <label for="<%= categoria.nombre %>"><%= categoria.nombre %></label>
               </div>
+            <% end %>
+          <% end %>
+        </div>
+      </li>
 
-              <div class="input-field col s6">
-                <input id="Hasta" type="text" class="validate">
-                <label for="Hasta" class = "morado">Hasta</label>
-              </div>
-
-            </div>
-            <a class="waves-effect waves-light btn z-depth-1 espacio pink accent-3" style = " margin-left: 27px;">Buscar     </a>
-          </div>
-        </li>
-        <% if !@categorias.blank? %>
-          <li class="white">
-            <div class="collapsible-header active  grey lighten-4">
-              <i class="small mdi-social-cake deep-purple-text text-darken-1"></i>Categorías
-            </div>
-            <div class="collapsible-body white" style="display: inline-block; border-bottom: 0px solid #ddd;">
-              <% for item in @categorias %>
-                <div class="input-field col s12 left">
-                  <input type="checkbox" id="<%= item.nombre %>" />
-                  <label for="<%= item.nombre %>"><%= item.nombre %></label>
-                </div>
-              <% end %>
-            </div>
-          </li>
-        <% end %>
-      </ul> 
+    </ul> 
     </div>
 
-    <div class="col s9 ">
+    <div class="col s12 m9">
       
       <div class="row">
         <div class="input-field col m6 s12">
@@ -86,14 +66,12 @@
       </div> 
       
       <div class="row valign-wrapper">
-        
-       
 
           <div id="todos">
 
             <% for producto in @productos %>
 
-              <div class = "col s3 " style="width: 33%;">
+              <div class = "col s12 m4" >
                 <div class="card hoverable">
 
                   <div class="card-image">
@@ -102,7 +80,7 @@
 
                   <div class="card-content  pad5-hv left-align">
                    <div class="row no-margin-v">
-                     <span class="card-title activator grey-text text-darken-4">
+                     <span class="card-title card-catalogo activator grey-text text-darken-4">
                         <div class="col s10">
                           <%= producto.nombre %>
                         </div>
@@ -127,9 +105,9 @@
                     <a href="/catalogo/<%= producto.id %>" class="waves-effect"> Ver </a>
                   </div>
 
-                  <div class="card-reveal left-align">
+                  <div class="card-reveal card-catalogo-detail left-align">
                     <div class="row" style="    margin-bottom: 12px;">
-                      <span class="card-title grey-text text-darken-4">
+                      <span class="card-title card-catalogo grey-text text-darken-4">
                         <div class="col s10">
                           <%= producto.nombre %>
                         </div>
@@ -195,7 +173,9 @@
        
     </div>
   </div>
+
   <br/>
+
 <% end %>
 
 <% content_for :javascript_personalizado do %>
