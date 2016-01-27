@@ -1,5 +1,21 @@
 class ClientesController < ApplicationController
 
+	def validar_email_cliente
+		if Cliente.exists?(email: params[:cliente][:email])
+			render json: false
+		else
+			render json: true
+		end
+	end
+	
+	def validar_email_cliente_update
+		if Cliente.exists?( ["email = ? AND  id <> ? ",  params[:cliente][:email],  params[:idcliente] ])
+			render json: false
+		else
+			render json: true
+		end
+	end
+
 	def new
 		if !usuario_signed_in?
 			redirect_to root_path

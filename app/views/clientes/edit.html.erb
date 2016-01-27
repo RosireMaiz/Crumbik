@@ -22,7 +22,7 @@
     </div>
   </div>
 </div>
-<div id="form" class="row pad30-h">
+<div id="form" class="row pad30-h" data-edit="<%= @cliente.id %>">
   <%= form_for(@cliente,  :url => cliente_editar_path, :html => {id: "edit_cliente", :method => :post },  :multipart => true ) do |f| %>
     <div class="panel">
 
@@ -67,7 +67,7 @@
                 </label>
                 <%= f.text_field :email, :required=>true, autocomplete: "off" %>
               </div>
-              <div class="col s12 m6">
+              <div id="div_cliente_sexo" class="col s12 m6">
                 <label>Sexo</label>
                 <div>
                   <%= f.radio_button :sexo, "masculino", :checked => (@cliente.sexo == "masculino") %>
@@ -126,3 +126,7 @@
     </div>
   <% end -%>
 </div>
+
+<% content_for :javascript_personalizado do %>
+  <%= javascript_include_tag 'validaciones/cliente' %> 
+<% end %>

@@ -21,6 +21,9 @@ Rails.application.routes.draw do
 	match "/validar_servicio" => "servicios#validar_servicio", via: :post
 	match "/validar_servicio_update" => "servicios#validar_servicio_update", via: :post
 
+	match "/validar_email_cliente" => "clientes#validar_email_cliente", via: :post
+	match "/validar_email_cliente_update" => "clientes#validar_email_cliente_update", via: :post
+
 	match "/validar_red_social" => "red_socials#validar_red_social", via: :post
 	match "/validar_red_social_update" => "red_socials#validar_red_social_update", via: :post
 	match "/validar_pais" => "pais#validar_pais", via: :post
