@@ -80,13 +80,13 @@
 				              		</div>
 								</div>
 				        	</a>
-				        	<ul class="dropdown-menu dropdown-menu-header  <% if !$administrable %> dropdown-menu-header-subdomain <% end %>" role="menu" aria-labelledby="dropdownMenu1">
+				        	<ul class="dropdown-menu dropdown-menu-header  <% if !current_usuario.current_administrable %> dropdown-menu-header-subdomain <% end %>" role="menu" aria-labelledby="dropdownMenu1">
 					            <li role="presentation">
-					              <a id="cambiar-rol" role="menuitem" tabindex="-1" href="javascript:void(0)">Cambiar rol</a>
+					              <a id="cambiar-rol" role="menuitem" href="#login-form" class="modal-trigger">Cambiar rol</a>
 					            </li>
 					            <% if current_usuario.rol_actual.acceso_administrable %>
 					            	<li class="divider center"></li>
-						            <% if !$administrable %>
+						            <% if !current_usuario.current_administrable %>
 							            <li role="presentation">
 							              <a id="administrar" role="menuitem"  href="/inicio_administrable">
 							              	Administrar Mi Portal
@@ -119,4 +119,6 @@
 <!-- ****************** -->
 <% if !usuario_signed_in? %>
 	<%= render "devise/sessions/new" %>
+<% else %>
+	<%= render "rols/change_rol" %>
 <% end %>

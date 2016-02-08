@@ -75,9 +75,9 @@
 				              		</div>
 								</div>
 				        	</a>
-				        	<ul class="dropdown-menu dropdown-menu-header" role="menu" aria-labelledby="dropdownMenu1">
+				        	<ul class="dropdown-menu dropdown-menu-header dropdown-menu-header-subdomain" role="menu" aria-labelledby="dropdownMenu1">
 					            <li role="presentation">
-					              <a id="cambiar-rol" role="menuitem" tabindex="-1" href="javascript:void(0)">Cambiar rol</a>
+					              <a  role="menuitem" href="#change_rol" class="modal-trigger">Cambiar rol</a>
 					            </li>
 					            <li class="divider center"></li>
 					            <% if !$administrable %>
@@ -113,4 +113,6 @@
 <!-- ****************** -->
 <% if !usuario_signed_in? %>
 	<%= render "devise/sessions/new" %>
+<% else %>
+	<%= render "rols/change_rol" %>
 <% end %>

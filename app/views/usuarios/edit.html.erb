@@ -1,13 +1,11 @@
 <!-- Usuario/editar perfil -->
 
 <% content_for :css_personalizado do %>
-   <%= stylesheet_link_tag    "usuarios" %> 
-   <%= stylesheet_link_tag    "plugins/fileinput.min" %> 
-    <style type="text/css">
+  <%= stylesheet_link_tag    "usuarios" %> 
+  <%= stylesheet_link_tag    "plugins/fileinput.min" %> 
+  <style type="text/css">
      .dropdown-content {
-      
       max-height: 300px; 
-      
     }
   </style>
 <% end %>
@@ -42,18 +40,18 @@
           <%= f.fields_for :perfil do |perfil| %>
             <div class="row">
               <h5>Datos básicos</h5>
-              <div class="input-field col s6">
-                <%= perfil.label :nombre %>
-                <%= perfil.text_field :nombres, :required => true %>
+              <div class="input-field col s12 m6">
+                <%= perfil.label :nombres %>
+                <%= perfil.text_field :nombres, :required => true,  :autocomplete => false %>
               </div>
-              <div class="input-field col s6">
-                <%= perfil.label :apellido %>
-                <%= perfil.text_field :apellidos, :required => true %>
+              <div class="input-field col s12 m6">
+                <%= perfil.label :apellidos %>
+                <%= perfil.text_field :apellidos, :required => true,  :autocomplete => false %>
               </div>
             </div>
 
             <div class="row">
-              <div class="input-field col s6">
+              <div class="input-field col s12 m6">
                 <%= f.label :email %>
                 <%= f.email_field :email, :required => true %>
               </div>
@@ -67,20 +65,25 @@
             </div>
 
             <div class="row">
-              <div class="input-field col s6">
+              <div class="input-field col s12 m6">
                  <%= perfil.label :ocupacion %>
-                 <%= perfil.text_field :ocupacion, :required => true %>             
+                 <%= perfil.text_field :ocupacion, :required => true,  :autocomplete => false %>             
               </div>
-              <div class="input-field col s6">
+              <div class="input-field col s12 m6">
                  <%= f.label :username %>
-                 <%= f.text_field :username, :required => true %>             
+                 <%= f.text_field :username, :required => true,  :autocomplete => false %>             
               </div>
             </div>
 
             <div class="row">
-              <div class="col s8">
+              <div class="col s12 m6">
                 <label >Pais <span class="required">*</span></label>
-                <%= f.collection_select(:pais_id, Pais.all, :id, :nombre) %>  
+                <%= f.collection_select(:pais_id, Pais.all, :id, :nombre_codigo_telefono) %>  
+              </div>
+              <div class="input-field col s12 m6" style="margin-top: 25px;">
+                <label for="usuario[perfil_attributes][telefono_movil]">Teléfono Móvil <span class="required">*</span></label>
+               
+                 <%= perfil.phone_field :telefono_movil, :required => true, :autocomplete => false %>             
               </div>
             </div>
 
@@ -88,36 +91,37 @@
             <h5>Redes sociales</h5>
             
             <div class="row">
-              <div class="col s7">
-                <ul id="lista-redes-sociales" class="vacia">
+              <div class="col s10">
+                <ul id="lista-redes-sociales" class="vacia  list-inline">
                   <li>Te falta agregar alguna red social. Usa el botón a la derecha para hacerlo.</li>
 
                   <% @usuredes.each do |red| %>
 
                     <% if ! red.nil? %>
-                      <li>
-                        <div class="input-group">
-                          <span class="input-group-addon red-social-add " style="background: <%= red.red_social.color %>;">
-                          <i class="<%= red.red_social.icono %>"></i></span>
-                          <input id="usuario_red_social_<%= red.red_social.id %>" name="usuario[red_social_attributes][actual][<%= red.id %>]" type='text' class="form-control" value="<%= red.url%>">
-                        </div>
-                      </li>
+                      <li> 
+                      
+                       <a href="<%= red.url.to_s%>" target="_blank"><span class="input-group-addon red-social-add " style="background: <%= red.red_social.color %>; border-bottom-left-radius: 100%; border-top-left-radius: 100%; display: inline-block; margin-bottom: 12px !important">
+                          <i class="<%= red.red_social.icono %>" style="margin-top: 4px;"></i></span>
+                          <span><%= red.url.truncate(35)%></span>
+                        </a>
+                      
+                    </li>
 
                     <% end %>
                   <% end %>
                 </ul>
               </div>
-              <div class="col s5 text-center">
+              <div class="col s2 text-center">
                 <div class="dropdown">
                   <a href="javascript:void(0)" class="btn-floating waves-effect waves-light red"
                   data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                   <i class="mdi-content-add"></i>
                   </a>
-                  <ul id="agregar-red-social-usuario" class='dropdown-menu list-inline' role="menu" style="min-width: 100px;">
+                  <ul  class='dropdown-menu list-inline' role="menu" style="min-width: 100px;">
                     <% @red_socials.each do |red_social| %>
 
                       <% if ! red_social.nil? %>
-                         <li style="padding-bottom: 5px;"><a href="javascript:void(0)"  id="<%= red_social.id %>" class="red-social-add" style="background: <%= red_social.color %>;"><i class="<%= red_social.icono %>"></i></a></li> 
+                         <li> <span style="padding-bottom: 5px;"><a href="/link_social_usuario/<%= red_social.id %>"  id="<%= red_social.id %>" class="red-social-add" style="background: <%= red_social.color %>;"><i class="<%= red_social.icono %>"></i></a></span> </li>
 
                       <% end %>
                     <% end %>

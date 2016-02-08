@@ -5,6 +5,11 @@ class Usuarios::SessionsController < Devise::SessionsController
   def new
     super
     $administrable = false
+    usuario = current_usuario
+    rol = usuario.rols[0].id
+    usuario.current_rol_id = rol
+    usuario.current_administrable = false
+    usuario.save
   end
 
   # POST /resource/sign_in

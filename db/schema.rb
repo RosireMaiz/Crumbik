@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20160104031515) do
+ActiveRecord::Schema.define(version: 20160208021736) do
 
   create_table "autenticacions", force: :cascade do |t|
     t.integer "usuario_id", limit: 4
@@ -75,6 +75,21 @@ ActiveRecord::Schema.define(version: 20160104031515) do
     t.string "nombre", limit: 255
   end
 
+  create_table "eventos", force: :cascade do |t|
+    t.string   "titulo",       limit: 255
+    t.string   "descripcion",  limit: 255
+    t.string   "url",          limit: 255
+    t.string   "color",        limit: 255
+    t.boolean  "dia_completo", limit: 1,   default: true, null: false
+    t.datetime "inicio"
+    t.datetime "fin"
+    t.integer  "usuario_id",   limit: 4
+    t.datetime "created_at",                              null: false
+    t.datetime "updated_at",                              null: false
+  end
+
+  add_index "eventos", ["usuario_id"], name: "index_eventos_on_usuario_id", using: :btree
+
   create_table "frecuencia_pagos", force: :cascade do |t|
     t.string  "nombre",  limit: 255
     t.integer "meses",   limit: 4
@@ -106,9 +121,14 @@ ActiveRecord::Schema.define(version: 20160104031515) do
   add_index "opcion_menus", ["padre_id"], name: "index_opcion_menus_on_padre_id", using: :btree
 
   create_table "organizacion_red_socials", force: :cascade do |t|
-    t.string  "url",             limit: 255
-    t.integer "red_social_id",   limit: 4
-    t.integer "organizacion_id", limit: 4
+    t.string   "url",              limit: 255
+    t.integer  "red_social_id",    limit: 4
+    t.integer  "organizacion_id",  limit: 4
+    t.string   "uid",              limit: 255
+    t.string   "provider",         limit: 255
+    t.string   "oauth_token",      limit: 255
+    t.string   "oauth_secret",     limit: 255
+    t.datetime "oauth_expires_at"
   end
 
   add_index "organizacion_red_socials", ["organizacion_id"], name: "index_organizacion_red_socials_on_organizacion_id", using: :btree
@@ -154,21 +174,29 @@ ActiveRecord::Schema.define(version: 20160104031515) do
   add_index "pago_contratos", ["usuario_id"], name: "index_pago_contratos_on_usuario_id", using: :btree
 
   create_table "pais", force: :cascade do |t|
-    t.string "iso",     limit: 3,   default: "A"
-    t.string "nombre",  limit: 255
-    t.string "estatus", limit: 1,   default: "A"
+    t.string  "iso",             limit: 3,   default: "A"
+    t.string  "nombre",          limit: 255
+    t.string  "nicename",        limit: 255
+    t.string  "iso3",            limit: 3,   default: "A"
+    t.string  "numcode",         limit: 3,   default: "A"
+    t.integer "codigo_telefono", limit: 8,                 null: false
+    t.string  "estatus",         limit: 1,   default: "A"
   end
 
   create_table "perfils", force: :cascade do |t|
-    t.string  "nombres",      limit: 255
-    t.string  "apellidos",    limit: 255
-    t.string  "sexo",         limit: 255
-    t.string  "ocupacion",    limit: 255
-    t.integer "usuario_id",   limit: 4
-    t.binary  "foto",         limit: 4294967295
-    t.string  "formato_foto", limit: 255
+    t.string  "nombres",            limit: 255
+    t.string  "apellidos",          limit: 255
+    t.string  "sexo",               limit: 255
+    t.string  "ocupacion",          limit: 255
+    t.integer "telefono_movil",     limit: 4
+    t.boolean "confirmacion_movil", limit: 1,          default: false, null: false
+    t.integer "authy_id",           limit: 4
+    t.integer "usuario_id",         limit: 4
+    t.binary  "foto",               limit: 4294967295
+    t.string  "formato_foto",       limit: 255
   end
 
+  add_index "perfils", ["authy_id"], name: "index_perfils_on_authy_id", using: :btree
   add_index "perfils", ["usuario_id"], name: "index_perfils_on_usuario_id", using: :btree
 
   create_table "plan_servicios", force: :cascade do |t|
@@ -247,6 +275,7 @@ ActiveRecord::Schema.define(version: 20160104031515) do
   create_table "rols", force: :cascade do |t|
     t.string  "nombre",               limit: 255
     t.boolean "acceso_administrable", limit: 1,   default: false, null: false
+    t.integer "type_rol",             limit: 4,   default: 0
     t.string  "estatus",              limit: 1,   default: "A"
   end
 
@@ -279,9 +308,14 @@ ActiveRecord::Schema.define(version: 20160104031515) do
   end
 
   create_table "usuario_red_socials", force: :cascade do |t|
-    t.string  "url",           limit: 255
-    t.integer "red_social_id", limit: 4
-    t.integer "usuario_id",    limit: 4
+    t.string   "url",              limit: 255
+    t.integer  "red_social_id",    limit: 4
+    t.integer  "usuario_id",       limit: 4
+    t.string   "uid",              limit: 255
+    t.string   "provider",         limit: 255
+    t.string   "oauth_token",      limit: 255
+    t.string   "oauth_secret",     limit: 255
+    t.datetime "oauth_expires_at"
   end
 
   add_index "usuario_red_socials", ["red_social_id"], name: "index_usuario_red_socials_on_red_social_id", using: :btree
@@ -308,11 +342,14 @@ ActiveRecord::Schema.define(version: 20160104031515) do
     t.datetime "current_sign_in_at"
     t.datetime "last_sign_in_at"
     t.string   "current_sign_in_ip",     limit: 255
+    t.integer  "current_rol_id",         limit: 4
+    t.boolean  "current_administrable",  limit: 1,   default: false, null: false
     t.string   "last_sign_in_ip",        limit: 255
     t.datetime "created_at",                                         null: false
     t.datetime "updated_at",                                         null: false
   end
 
+  add_index "usuarios", ["current_rol_id"], name: "index_usuarios_on_current_rol_id", using: :btree
   add_index "usuarios", ["email"], name: "index_usuarios_on_email", unique: true, using: :btree
   add_index "usuarios", ["pais_id"], name: "index_usuarios_on_pais_id", using: :btree
   add_index "usuarios", ["reset_password_token"], name: "index_usuarios_on_reset_password_token", unique: true, using: :btree

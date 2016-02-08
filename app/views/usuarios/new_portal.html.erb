@@ -91,29 +91,11 @@
 								</div>
 								
 
-								<div class="input-field col s12">
-									<label for="usuario_password2">Contraseña <span class="required">
-									* </span>
-									</label>
-									<%= f.password_field :password, :maxlength=>30, :required=>true, autocomplete: "off" %>
-								</div>
-								<div class="col s12">
-				                    <div class="pwstrength_viewport_progress progress-bar-seguridad"></div>
-
-				          
-				                </div>
-								<div class="input-field col s12">
-									<label for="usuario_password_confirmation">Confirma tu contraseña <span class="required">
-									* </span>
-									</label>
-									<%= f.password_field :password_confirmation, :maxlength=>30, :required=>true, autocomplete: "off" %>
-								</div>
-
 								<div class="row">
 							      <div class="col s12" id="rol_list">
 							        <label for="usuario[rol_ids][]">Roles:</label>
 							        <div class="checkbox-list" >
-		                                 <%= f.collection_check_boxes( :rol_ids, Rol.all, :id, :nombre) %>
+		                                 <%= f.collection_check_boxes( :rol_ids, Rol.where("type_rol = ?", Rol.portal.to_s), :id, :nombre) %>
 							        </div>
 							        <span id='usuario_rols_ids-error' class="hidden" style='text-transform: uppercase; font-size: 11px;"+ "margin-bottom: 15px;  color: #d34836; font-weight: 400;'>Debe Seleccionar un rol.</span>
 							      </div>

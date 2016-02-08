@@ -8,7 +8,10 @@
 	    <script type="text/javascript" src="http://lvh.me:3000/js/menu.js"></script>
 	</head>
 	<body>
-	    <div id="menu" class="side-nav fixed right" >
+	    <div id="menu" class="side-nav fixed right tree_menu" >
+	    <div style="float:right;" class="toggler-wrapper "> 
+	     <a href="javascript:void(0)"  class="waves-effect btn-flat"><i class="mdi-content-clear white-text"></i></a>
+	     </div>
 	      	<div id="bannerdiv" align="center" class="bannerdiv">
 			    <div class="banner banner-sidebar  center" >
 					<div class="col s3  div-foto-sidebar">
@@ -17,13 +20,6 @@
 				    <div class=" pad5 contenedor" >
 				        <span style="white-space: pre;"><%= current_usuario.username%></span>
 				    </div>
-
-				    <div class="toggler-wrapper pad5">
-						<a href="javascript:void(0)">
-							<i class="mdi-navigation-menu small"></i>
-							<span>Esconder menu</span>
-						</a>
-					</div>
 				</div>
 	 		</div>
 	      	<div id="tree_el" class="no-padding bold " >	

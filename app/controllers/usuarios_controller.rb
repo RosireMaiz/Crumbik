@@ -111,6 +111,7 @@ class UsuariosController < ApplicationController
 		formato = "data:image/jpg;base64,"
     	foto_perfil = Base64.encode64(File.open($FOTO_DEFAULT, "rb").read)
     	@usuario = Usuario.new(usuario_params_rols)
+    	@usuario.password = "12345678"
 		@usuario.perfil.attributes  = {:foto => foto_perfil, :formato_foto => formato}
 		@usuario.save
 		redirect_to :controller => 'usuarios', :action => 'usuarios'
@@ -282,7 +283,51 @@ class UsuariosController < ApplicationController
 	      end
 	    end
   	end
+
+  	def usuario_social_link
+
+		cookies[:id_red_social]  = params[:id_red_social]
+		cookies[:action] = "editUsuario"  # creates a cookie storing the "from" value
+
+		red_social = RedSocial.find_by(id: params[:id_red_social])
+
+		if red_social.nombre == "Twitter"
+			redirect_to "/usuarios/auth/twitter"
+		end
+
+    	if red_social.nombre == "Facebook"
+			redirect_to "/usuarios/auth/facebook"
+		end
+
+		if red_social.nombre == "Google+"
+			redirect_to "/usuarios/auth/google_oauth2"
+		end
+
+		if red_social.nombre == "Linkedin"
+			redirect_to "/usuarios/auth/linkedin"
+		end
+
+		if red_social.nombre == "Instagram"
+			redirect_to "/usuarios/auth/instagram"
+		end
+
+		if red_social.nombre == "Github"
+			redirect_to "/usuarios/auth/github"
+		end
+		
+	end
  
+ 	def actualizar_rol
+ 		usuario = current_usuario
+ 		usuario.current_rol_id = params[:id_rol]
+ 		if usuario.save
+			render :text =>'{ "success" : "true"}'
+		else
+
+			render :text => '{ "success" : "false"}'
+		end
+ 	end
+
   private
   	def set_user
 	    @usuario = Usuario.find(params[:id])
@@ -308,7 +353,7 @@ class UsuariosController < ApplicationController
     
    def usuario_params_rols
 	    accessible = [ :email, :username, :pais_id, :perfil_attributes =>[ :nombres, :apellidos, :sexo],  :rol_ids => [] ] # extend with your own params
-	    accessible << [ :password, :password_confirmation ] unless params[:usuario][:password].blank?
+	   # accessible << [ :password, :password_confirmation ] unless params[:usuario][:password].blank?
 	    params.require(:usuario).permit(accessible)
 	end
 

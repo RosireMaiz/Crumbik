@@ -72,8 +72,6 @@ class OpcionMenu < ActiveRecord::Base
   	end
   	return @tira
   end
-  	
-
 
 #ObtenerHijos, Usado por el metodo: BuscarTodosArbolJson
   def ObtenerHijosSinHref(menu,padreid)
@@ -162,8 +160,9 @@ class OpcionMenu < ActiveRecord::Base
       end
       @opcionMenu.orden = orden
       @opcionMenu.save
-      if menu > 0
-        OpcionMenu.update(menu, raiz: true)        
+      opcion = OpcionMenu.find_by(id: padreid)
+      if !opcion.raiz
+        OpcionMenu.update(padreid, raiz: true)        
       end
       return 1
    end

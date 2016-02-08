@@ -1,6 +1,6 @@
 $(document).ready(function(){
 
-$("#cambiar-rol").click(function(){
+	$("#cambiar-rol").click(function(){
 		$("<div id='dialogos'></div>").appendTo('body');
 		React.render(
 		  React.createElement(DialogoRoles, null),
@@ -8,6 +8,50 @@ $("#cambiar-rol").click(function(){
 		);
 		$("#form-cambio-roles").openModal();
 	});
+
+	var table = $('#rols').DataTable({
+		 "searching": false,
+		  "select": true, 
+		  "pageLength": 2,
+		  "lengthChange": false
+	});
+
+	$('#btnAceptarRol').on('click', function() {
+		var idRol = $("#rols").find('tbody tr.selected').attr("data-id");
+		if (idRol == null || idRol == "") {
+			alert("idRol " +  idRol);
+			$('#change_rol').closeModal();
+		} else {
+			var request = $.ajax({
+									url: '/usuario/actualizar_rol',
+											method: "POST",
+											data: { id_rol: idRol },
+											dataType: "JSON"
+									});
+					           		request.done(function( data ) {
+					           					window.location.href="/" 
+					           					//$('#change_rol').closeModal();
+												//actualizarMenu();
+										});
+										 
+									request.fail(function( jqXHR, textStatus ) {
+										  alert( "Fallo la Actualización. " + textStatus );
+										});	
+		};
+	});
+
+	$('#rols tbody').on('click', 'tr', function () {
+		//alert($(this).attr("data-id"));
+		if ( $(this).hasClass('selected') ) {
+		    $(this).removeClass('selected');
+		}
+		else {
+		    table.$('tr.selected').removeClass('selected');
+		    $(this).addClass('selected');
+		}
+	} );
+
+
     $('#form .alert-danger').hide();
     $('#form .alert-success').hide();
  	$(".button-collapse").sideNav({edge: 'left', });

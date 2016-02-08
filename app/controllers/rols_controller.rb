@@ -21,6 +21,7 @@ class RolsController < ApplicationController
 			redirect_to root_path
 		else
 			@rol = Rol.new
+			@type_rol = Rol.type_rols
 			if request.subdomain.present?
 				redirect_to root_path
 			else
@@ -96,7 +97,7 @@ class RolsController < ApplicationController
 
 private
 	 def rol_params
-      accessible = [ :nombre, :acceso_administrable] # extend with your own params
+      accessible = [ :nombre, :acceso_administrable, :type_rol] # extend with your own params
       params.require(:rol).permit(accessible)
     end
 

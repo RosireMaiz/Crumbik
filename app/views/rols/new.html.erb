@@ -37,16 +37,26 @@
                 <h5>Datos del Rol </h5>
                 <br>
     
-                <div class="input-field col s12 m8 no-margin-v">
+                <div class="input-field col s12 m10 no-margin-v">
                   <label for="rol_nombre">Nombre: <span class="required">
                   * </span>
                   </label>
                   <%= f.text_field :nombre, :required=>true, autocomplete: "off" %>
                 </div>
-                <div class="col s12 input-field ">
-                    <span class="pull-left"><%= f.check_box :acceso_administrable %> <%= f.label :acceso_administrable, "Acceso al administrable" %></span>
-                 </div>
-                 <div class=" row pad15"> </div>
+                <div class="row">
+                  <div class="col s12 m6 form-group">
+                    <label for="rol_type_rol">Tipo: 
+                      <span class="required"> * </span>
+                    </label>
+                   
+                    <%= f.collection_select :type_rol, Rol.type_rols.keys, :to_s, :titlecase %>
+                  </div>
+                  <div class="col s12 m6 input-field ">
+                      <span class="pull-left"><%= f.check_box :acceso_administrable %> <%= f.label :acceso_administrable, "Acceso al administrable" %></span>
+                  </div>  
+               </div>
+
+                <div class=" row pad15"> </div>
                 <div class="col s8  text-center ">
             
                   <input type="submit" class="btn btn-success " value="Guardar">

@@ -1,0 +1,75 @@
+<% content_for :css_personalizado do %>
+   <%= stylesheet_link_tag    "fullcalendar" %>
+<% end %>
+
+<div class="row titulo-seccion">
+  <div class="banner banner-perfil">
+    <div class="contenedor">
+      <div class="col s6">
+        <h5 class="text-uppercase ">
+         Mi Calendario
+        </h5>
+      </div>
+      <div class="col s6 text-right ">
+        <ol class="breadcrumb">
+          <li>
+            <a href="/">Inicio</a>
+          </li>
+          <li class="active">Calendario</li>
+        </ol>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="row ">
+	<div class="col-md-2"> </div>
+  <div class="col-md-8 white pad45">
+    <div id='calendar'></div>
+  </div>  
+  <div class="col-md-2"> </div>
+   <div class="fixed-action-btn " style="top: 250px; bottom: 0px">
+    <a href="/cliente/agregar" class="btn-floating btn-sm waves-effect waves-light red tooltipped" style="margin-bottom: 60px;" data-position="left" data-delay="50" data-tooltip="Agregar Evento">
+      <i class=" mdi-av-playlist-add"></i>
+    </a>
+  </div>
+
+</div>	
+
+
+<% content_for :javascript_personalizado do %>
+  <%= javascript_include_tag 'fullcalendar.min' %>
+ 
+
+  <script type="text/javascript">
+  
+     $('#calendar').fullCalendar({
+
+      eventClick: function(calEvent, jsEvent, view) {
+
+        alert('Event: ' + calEvent.title + "id " + calEvent.id);
+       // alert('Coordinates: ' + jsEvent.pageX + ',' + jsEvent.pageY);
+        //alert('View: ' + view.name);
+
+        // change the border color just for fun
+        //$(this).css('border-color', 'red');
+
+        },
+        header: {
+          left: 'prev,next today',
+          center: 'title',
+          right: 'month,basicWeek'
+        },
+
+        defaultDate: Date(),
+        editable: false,
+        eventLimit: true, // allow "more" link when too many events
+         eventSources: [
+      {
+        url: '/eventos'
+      }
+    ],
+    });
+  </script>
+
+<% end %>

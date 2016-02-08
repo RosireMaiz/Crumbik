@@ -94,15 +94,36 @@ class ProductosController < ApplicationController
 	end
 
 	def catalogo
+		#require 'rubygems'
+		#require 'twitter'
+		#		autenticacion = Autenticacion.where("usuario_id = ? AND provider = ?",current_usuario.id, "twitter").first
+		#		client = Twitter::REST::Client.new do |config|
+		#		  config.consumer_key        = "iLW5ICM65xM9cO7npmEZRTSKz"
+		#		  config.consumer_secret     = "qXwz81sGgFPC09nFu9o17vo7HEhlIna9dnJ1xVlMTr9qldWCOm"
+		#		  config.access_token        = autenticacion.oauth_token
+		#		  config.access_token_secret = autenticacion.oauth_secret
+		#		end
+
+		#		ret = client.update('Tweet prueba')
+		#		puts "id tweet " + ret.id.to_s
+		#		@id = ret.id
+		#		tweet = client.status(@id)
+		#		@cantidad = tweet.favorite_count
        @productos = Producto.order('nombre ASC').page(params[:page]).per(9)
        @categorias = Categorium.order('nombre ASC')
        $administrable = false
+       usuario = current_usuario
+	   usuario.current_administrable = false
+	   usuario.save
        render "productos/catalogo"	
 	end
 
 	def show
 		id_producto = params[:id_producto]
 		$administrable = false
+		usuario = current_usuario
+	    usuario.current_administrable = false
+	    usuario.save
 		if usuario_signed_in?
 			usuario_id = current_usuario.id
 			@puntuacion = Puntuacion.where( ["producto_id = ? AND usuario_id = ? ", id_producto, usuario_id] ).first

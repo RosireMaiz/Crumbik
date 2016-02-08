@@ -228,7 +228,7 @@
                   </div>
 
                   <div class="row" style="margin-bottom: 0px;">
-                    <% if ! redes.nil? %>
+                    <% if ! redes.blank? %>
                       <div class="col s12">
                       <b class="grey-text text-darken-3">Redes Sociales:</b>
                        </div>
@@ -240,7 +240,7 @@
                         <div class="col s12 m6">
                           
                           <a class="label-p" href="<%= red.url %>" target="_blank"> <i class=" red-social <%= red.red_social.icono %>  " style="background: <%= red.red_social.color %>;"></i>
-                            <%= red.url %></a>
+                            <%= red.url.truncate(35) %></a>
                         
                         </div>
                         <% end %>

@@ -44,7 +44,7 @@ class Usuario < ActiveRecord::Base
           email: email ? email : "#{auth.uid}@change-me.com",
           password: password,
           password_confirmation: password, 
-          username: auth.info.name
+          username: auth.info.name,
         )
 
 
@@ -84,7 +84,15 @@ class Usuario < ActiveRecord::Base
 
   private
     def set_rol_actual
-      self.rol_actual = self.rols[0]
+      if !self.rols[0].blank?
+        if !self.current_rol_id.nil?
+          rol = Rol.find_by("id = ? ", self.current_rol_id)
+          self.rol_actual = rol #self.rols[0]
+        else
+          self.current_rol_id = self.rols[0].id
+          self.rol_actual = self.rols[0]
+        end
+      end
     end
   
 end

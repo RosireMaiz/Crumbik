@@ -1,0 +1,44 @@
+
+<div id ="change_rol" class="panel panel-info modal col s6">
+
+  <div class="panel-body">
+   <a style="float:right;" class="waves-effect btn-flat modal-close"><i class="mdi-content-clear"></i></a>
+               
+      <div class="row">
+        <strong><legend class="text-center">Cambiar de Rol</legend></strong>
+
+        <div class="col s12">
+             
+          <p>Seleccione su Rol</p>
+            <table id="rols" class="display" cellspacing="0" width="100%" >
+              <thead>
+                <tr>
+                    <th>Rol</th>
+                </tr>
+              </thead>
+              <tbody>
+                <% current_usuario.rols.each do |rol| %>
+
+                   <% if ! rol.nil? %>
+                      <tr data-id="<%= rol.id %>">
+                          <td > 
+                              <%= rol.nombre %> 
+                          </td>  
+                      </tr>
+                    <% end %>
+                  <% end %>
+                      
+               </tbody>
+            </table>
+            <div style="padding-top: 35px;" class="right">
+                      
+              <input id="btnAceptarRol" type="button" class="btn btn-success btn-sm " value="Aceptar" >
+              <input type="button" class="btn btn-danger btn-sm modal-close" value="Cancelar" >
+
+            </div>
+        </div>
+      </div>
+
+  </div>
+
+</div>

@@ -61,6 +61,12 @@ gem 'omniauth-twitter'
 gem 'omniauth-github'
 gem 'omniauth-google-oauth2'
 gem 'omniauth-linkedin-oauth2'
+gem 'omniauth-instagram'
+gem 'instagram'
+
+gem 'oauth'
+gem 'twitter'
+gem 'twitter-bootstrap-rails'
 
 gem 'apartment'
 
@@ -73,3 +79,5 @@ gem 'react-rails', github: 'reactjs/react-rails', branch: 'master'
 gem 'showdown-rails'
 gem 'closure_tree'
 gem 'seed_dump'
+gem 'twilio-ruby'
+gem 'authy'

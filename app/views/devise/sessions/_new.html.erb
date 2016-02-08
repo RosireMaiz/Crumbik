@@ -36,7 +36,7 @@
         <div class=" col s12 text-center redes-login">
           <strong>O inicia sesi&oacute;n con </strong>
           <a href="<%= omniauth_authorize_path(resource_name, :facebook) %>" class="fb"><i class="fa fa-facebook "></i></a>
-          <a href="<%= omniauth_authorize_path(resource_name, :twitter) %>" class="tw" ><i class="fa fa-twitter "></i></a>
+          <a href="<%= omniauth_authorize_path(resource_name, :twitter, :action => 'createUser') %>" class="tw" ><i class="fa fa-twitter "></i></a>
           <a href="<%= omniauth_authorize_path(resource_name, :google_oauth2) %>" class="gp" ><i class="fa fa-google-plus"></i></a>
           <a href="<%= omniauth_authorize_path(resource_name, :linkedin) %>" class="lk" ><i class="fa fa-linkedin"></i></a>
           <a href="<%= omniauth_authorize_path(resource_name, :github) %>" class="gh" ><i class="fa fa-github"></i></a>

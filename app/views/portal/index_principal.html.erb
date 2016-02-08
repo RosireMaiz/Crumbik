@@ -16,21 +16,19 @@
 </div>
 
 <div class="row">
-	<div class="col s6">
+	<div class="col s12 m6">
 		<div class="panel panel-primary">
 			
 			<div class="panel-heading"><i class="fa fa-bullhorn"></i> Últimos Mensajes</div>
   		<div class="panel-body">
-              <ul id="lista-ultimos-mensajes" class="bordered hoverable">
-
-            
+              <ul id="lista-ultimos-mensajes" class="bordered hoverable">            
           </ul>
       </div>
 
 		</div>
     
 	</div>
-	<div class="col s6">
+	<div class="col s12 m6">
 		<div class="panel panel-danger">
 			<div class="panel-heading pink">
 				<i></i> Últimos Comentarios
@@ -44,12 +42,13 @@
 	</div>
 </div>
 <div class="row">
-	<div class="col s6">
+	<div class="col s12 m6 white ">
 		
 			<div id='calendar'></div>
 	
 	</div>
-	<div class="col s6">
+
+	<div class="col s12 m6 pad45">
 		<div class="panel panel-warning">
 			<div class="panel-heading purple">
 				<i></i> Mis últimas acciones
@@ -77,47 +76,11 @@
         defaultDate: Date(),
         editable: false,
         eventLimit: true, // allow "more" link when too many events
-        events: [
-          {
-            title: 'Inicio del curso',
-            start: '2014-12-01'
-          },
-          {
-            title: 'Examen Primera Lección',
-            start: '2014-12-10',
-            end: '2014-12-12'
-          },
-          {
-            id: 9,
-            title: 'Discuciones de ejercicios propuestos',
-            start: '2014-12-12T16:00:00'
-          },
-          {
-            id: 999,
-            title: 'Discuciones de ejercicios propuestos',
-            start: '2014-12-19T16:00:00'
-          },
-          {
-            title: 'Examen Segunda Lección',
-            start: '2014-12-28',
-            end: '2014-12-30'
-          },
-          {
-            id: 991,
-            title: 'Discuciones generales',
-            start: '2014-12-24T16:00:00'
-          },
-          {
-            id: 991,
-            title: 'Discuciones generales',
-            start: '2014-12-31T16:00:00'
-          },
-          {
-            title: 'Entregar Proyecto Lab3',
-            url: 'http://google.com/',
-            start: '2015-01-04'
-          }
-        ]
+        eventSources: [
+                          {
+                            url: '/eventos'
+                          }
+                      ],
     });
   </script>
 

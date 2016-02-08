@@ -273,4 +273,5 @@ Devise.setup do |config|
   config.omniauth :google_oauth2, "494194995517-uj40t2ou7q19tb7m7g10oknfb59lqh7g.apps.googleusercontent.com", "JAQ0b6dbVawuHFvSoMBfiLOk",  {client_options: {ssl: {ca_file: Rails.root.join('lib/assets/cacert.pem').to_s}}}
   config.omniauth :linkedin,"77d7odwbww3s9v", "dsiCek7fogybeywk", { :scope => 'r_basicprofile r_emailaddress', :client_options => {:ssl => {:ca_file => Rails.root.join('lib/assets/cacert.pem').to_s}}}
   config.omniauth :github, "f1ea0ad0f8a688837081", "54183e06a703572044636158e246d2a1c789cc9e", scope: "user, public_repo", :client_options => {:ssl => {:ca_file => Rails.root.join('lib/assets/cacert.pem').to_s}}
+  config.omniauth :instagram, "2515e3eebaf243f1a6307a61eeab6e31", "a783e3c133924cf5b15504b5e2fd7f23", :scope => "basic public_content follower_list relationships likes comments",  client_options: {ssl: {ca_file: Rails.root.join('lib/assets/cacert.pem').to_s}}
 end

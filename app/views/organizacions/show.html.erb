@@ -126,24 +126,25 @@
     </div>
 
     <div class="row">
-      <div class="col s12" >
 
-        <% if ! @redes.nil? %>
+      <div class="col s12" >
+        <% if ! @redes.blank? %>
           <b class="grey-text text-darken-3">Redes Sociales:</b>
-            
         <% end %>
       </div>
+
       <% @redes.each do |red| %>
 
         <% if ! red.nil? %>
           <div class="col s6">
                         
             <a class="label-p" href="<%= red.url %>" target="_blank"> <i class=" red-social <%= red.red_social.icono %>  " style="background: <%= red.red_social.color %>;"></i>
-            <%= red.url %></a>
+            <%= red.url.truncate(40) %></a>
                       
           </div>
         <% end %>
       <% end %>
+
     </div>
 
     <% if ! @organizacion.iframe.nil? and @organizacion.iframe != "" %>

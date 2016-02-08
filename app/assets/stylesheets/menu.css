@@ -105,7 +105,7 @@
 
  #tree_el > .x-panel, .x-plain {
     overflow-y: auto !important;
-    max-height: 390px;
+    max-height: 430px;
 }
 
 .x-body {
@@ -178,7 +178,7 @@ body {
 }
 
 
-.tree_estructura .x-grid-body {
+.tree_estructura .x-grid-body, .tree_menu .x-grid-body  {
     background: transparent;
     border-width: 1px;
     border-style: solid;

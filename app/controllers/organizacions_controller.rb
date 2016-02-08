@@ -201,10 +201,44 @@ class OrganizacionsController < ApplicationController
 	end
 
 	def apariencia_tema
-		@valor = true
 		render "organizacions/temas"
 	end
 	
+	def organizacion_social_link
+
+		cookies[:id_red_social]  = params[:id_red_social]
+		cookies[:action] = "editOrganization"  # creates a cookie storing the "from" value
+		cookies[:subdominio] = params[:subdominio]
+
+		red_social = RedSocial.find_by(id: params[:id_red_social])
+
+		if red_social.nombre == "Twitter"
+			redirect_to "/usuarios/auth/twitter"
+		end
+
+    	if red_social.nombre == "Facebook"
+			redirect_to "/usuarios/auth/facebook"
+		end
+
+		if red_social.nombre == "Google+"
+			redirect_to "/usuarios/auth/google_oauth2"
+		end
+
+		if red_social.nombre == "Linkedin"
+			redirect_to "/usuarios/auth/linkedin"
+		end
+
+		if red_social.nombre == "Instagram"
+			redirect_to "/usuarios/auth/instagram"
+		end
+
+		if red_social.nombre == "Github"
+			redirect_to "/usuarios/auth/github"
+		end
+		
+	end
+
+
 	private
     	def organizacion_edit_params
 	      accessible = [ :nombre, :descripcion, :pais_id, :tipo_organizacion_id, :telefono, :email, :slogan, :direccion, :slogan, :mision, :vision, :logo, :formato_logo] # extend with your own params

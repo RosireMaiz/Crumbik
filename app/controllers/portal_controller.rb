@@ -2,7 +2,7 @@ class PortalController < ApplicationController
 	
 	def index
 		if usuario_signed_in?
-			if !$administrable
+			if !current_usuario.current_administrable
 				if request.subdomain.present?
 		        	render "organizacions/index"
 			    else
@@ -22,6 +22,9 @@ class PortalController < ApplicationController
 
 	def index_inicio
 		$administrable = false
+		usuario = current_usuario
+	    usuario.current_administrable = false
+	    usuario.save
 		if request.subdomain.present?
         	render "organizacions/index"
 	    else
@@ -31,13 +34,15 @@ class PortalController < ApplicationController
 
 	def index_administrable
 		$administrable = true
-		organizacion = Organizacion.where("usuario_id = ?", current_usuario.id)
+		usuario = current_usuario
+	    usuario.current_administrable = true
+	    usuario.save
+		organizacion = Organizacion.where("usuario_id = ?", usuario.id)
 		if organizacion.length > 0
-			redirect_to "http://" + organizacion.first.subdominio + ".lvh.me:3000"
+			redirect_to "http://" + organizacion.firt.subdominio + ".lvh.me:3000"
 		else
 			render "portal/index_principal"
 		end
-		
 	end
 
 end

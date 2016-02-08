@@ -3,6 +3,7 @@
 	<head>
 	  
 	  	<%= stylesheet_link_tag 'application', media: 'all', 'data-turbolinks-track' => true %>
+	  	<%= stylesheet_link_tag    "jquery.dataTables" %> 
 
 	  	<% if request.subdomain.present? %>
 	  		<title><%= @organizacion.nombre%></title>
@@ -23,19 +24,19 @@
 	<body>
 		
 		<% if usuario_signed_in? %>
-			<main class="<% if $administrable %>sesion<% end %>" >
-				<% if $administrable %>
+			<main class="<% if current_usuario.current_administrable %>sesion<% end %>" >
+				<% if current_usuario.current_administrable %>
 	        		<%= render "partials/menu" %>
 	        	<% else %>
 	        		<%= render "partials/sidebar" %>
 	        	<% end %>
-	       		<div id ="<% if $administrable %>contenedor<% end %>" class="container-fluid no-padding logged-in">
+	       		<div id ="<% if current_usuario.current_administrable %>contenedor<% end %>" class="container-fluid no-padding logged-in">
 	          		<div class="col s12">
 	          			<% if request.subdomain.present? %>
 	          				<header>
 								<%= render "partials/header_organizacion" %>
 							</header>
-							<% if ! $administrable %>
+							<% if ! current_usuario.current_administrable %>
 								<div class="fixed-action-btn">
 									<a data-activates="slide-out" class="button-collapse btn-floating btn-large waves-effect waves-light pink accent-3 right absolute" ><i class="mdi-communication-chat"></i></a>
 								</div>
@@ -94,6 +95,9 @@
 		</main>
 			
 		<%= javascript_include_tag 'application' %>
+
+		<%= javascript_include_tag 'jquery.dataTables.min' %>
+
 		<%= yield :javascript_personalizado %>
 	
 	</body>

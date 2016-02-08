@@ -1,5 +1,6 @@
+require 'twitter'
 class ClientesController < ApplicationController
-
+ TWITTER_SETTINGS={:site=>"http://api.twitter.com", :request_endpoint => 'http://api.twitter.com',}
 	def validar_email_cliente
 		if Cliente.exists?(email: params[:cliente][:email])
 			render json: false
@@ -48,6 +49,28 @@ class ClientesController < ApplicationController
 				#if !opcion.blank?
 					#puts "url " + request.fullpath
 				#end
+				require 'rubygems'
+require 'twitter'
+
+				client = Twitter::REST::Client.new do |config|
+				  config.consumer_key        = "iLW5ICM65xM9cO7npmEZRTSKz"
+				  config.consumer_secret     = "qXwz81sGgFPC09nFu9o17vo7HEhlIna9dnJ1xVlMTr9qldWCOm"
+				  config.access_token        = "72471749-c1rontqDpqjg5Xho2ZvQH4GWQOQNFMNOmqbjzYMEV"
+				  config.access_token_secret = "El3vJnqM2fwb2GXQYgcGYbwq04ooJ4wAiIJAg514dGYrO"
+
+				end
+
+				#ret = client.update('Prueba Tweet')
+				#puts "id tweet " + ret.id.to_s
+				#@id = ret.id
+				#@tweet = client.status(@id)
+				#@cantidad = @tweet.favorite_count
+				#puts "tweet " + @tweet.to_s
+
+				#path = "1.1/statuses/lookup.json"
+				#ids = ['693845076523499520']
+
+				#@response = Twitter::REST::Request.new(client, 'get', path, {id: ids, map: true}).perform
      		@tipo_clientes = TipoCliente.order('nombre ASC')
            	@clientes = Cliente.order('id ASC')
            	render "clientes/clientes"	

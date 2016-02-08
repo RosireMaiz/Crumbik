@@ -26,7 +26,8 @@ class MenuController < ApplicationController
 
  def ajax
 	@opcionMenus = OpcionMenu.new
-	@tira = @opcionMenus.BuscarTodosArbolJson(@menuprueba)
+	@menu = Menu.where(rol_id: current_usuario.rol_actual.id).first
+	@tira = @opcionMenus.BuscarTodosArbolJson(@menu)
 	render :text => @tira
  end
  

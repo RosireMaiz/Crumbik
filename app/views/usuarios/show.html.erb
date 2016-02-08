@@ -79,7 +79,7 @@
               
               <a href="<%= red.url%>" target="_blank" class="negrita  grey-text text-darken-2">
                 <i class="<%= red.red_social.icono %> fa-2x"></i>
-                <span><%= red.url%></span></a>
+                <span><%= red.url.truncate(35)%></span></a>
             </li>
 
           <% end %>

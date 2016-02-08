@@ -23,6 +23,8 @@ class DeviseCreateUsuarios < ActiveRecord::Migration
       t.datetime :current_sign_in_at
       t.datetime :last_sign_in_at
       t.string   :current_sign_in_ip
+      t.references :current_rol, index: true
+      t.boolean :current_administrable, null: false, default: false
       t.string   :last_sign_in_ip
 
       ## Confirmable
