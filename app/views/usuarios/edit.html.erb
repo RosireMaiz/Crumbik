@@ -5,7 +5,7 @@
   <%= stylesheet_link_tag    "plugins/fileinput.min" %> 
   <style type="text/css">
      .dropdown-content {
-      max-height: 300px; 
+      max-height: 200px; 
     }
   </style>
 <% end %>
@@ -80,10 +80,22 @@
                 <label >Pais <span class="required">*</span></label>
                 <%= f.collection_select(:pais_id, Pais.all, :id, :nombre_codigo_telefono) %>  
               </div>
-              <div class="input-field col s12 m6" style="margin-top: 25px;">
-                <label for="usuario[perfil_attributes][telefono_movil]">Teléfono Móvil <span class="required">*</span></label>
-               
-                 <%= perfil.phone_field :telefono_movil, :required => true, :autocomplete => false %>             
+              <div class="col s12 m6 ">
+                <div class="input-field input-group" style="margin-top: 25px;">
+                  <label for="usuario[perfil_attributes][telefono_movil]">Teléfono Móvil <span class="required">*</span></label>
+                 
+                   <%= perfil.text_field :telefono_movil, :required => true, :autocomplete => false %>   
+                  
+                      <a href="javascript:void(0)" class="input-group-addon " id="validate_movil"  role="button" data-toggle="popover" data-trigger="hover" data-title="" data-content="<% if @usuario.perfil.confirmacion_movil %>Télefono Móvil Verificado <% else %> Télefono Móvil Pendiente por Verificar <% end %>" placement="right" data-container="body">
+                      <% if @usuario.perfil.confirmacion_movil  %>
+                         <i class="mdi-action-done-all green-text"></i> 
+                      <% else %> 
+                         <i class="mdi-navigation-cancel red-text"></i>
+                      <% end %>
+                       
+                        
+                      </a>         
+                </div>
               </div>
             </div>
 
@@ -177,12 +189,78 @@
     <div class="pad15"></div>
   </div>
 </div>
+<%= render "usuarios/verificacion_movil" %>
 <% content_for :javascript_personalizado do %>
   <%= javascript_include_tag "plugins/pwstrength-bootstrap-1.2.4.min" %>
   <%= javascript_include_tag 'plugins/fileinput.js' %>
   <%= javascript_include_tag 'usuarios' %>
 
   <script>
+$("#validate_movil").click(function(){
+    var telefono_movil = $("#usuario_perfil_attributes_telefono_movil").val();
+    if (telefono_movil == null || telefono_movil == "") {
+      alert("telefono_movil " +  telefono_movil);
+      ///$('#change_rol').closeModal();
+    } else {
+      //alert("telefono_movil " +  telefono_movil);
+          $('#codigo_valicacion').hide(); 
+      $('#telefono_valicacion').fadeIn();  
+    //$('#codigo_valicacion').removeClass('hide'); 
+
+      $('#validacion_movil').openModal();
+      
+    };
+  });
+
+$('#btnEnviarSMS').on('click', function() {
+
+
+   
+    var telefono_movil = $("#telefono_movil").val();
+    var pais_id = $("#usuario_pais_id").val();
+    
+    var request = $.ajax({
+                  url: '/usuario/enviar_codigo',
+                      method: "POST",
+                      data: { telefono_movil: telefono_movil,
+                              pais_id: pais_id},
+                      dataType: "JSON"
+                  });
+                        request.done(function( data ) {
+                           $('#telefono_valicacion').hide();  
+                            //$('#codigo_valicacion').removeClass('hide'); 
+                            $('#codigo_valicacion').fadeIn(600); 
+                           //alert(pais_id + telefono_movil );
+                              //$('#change_rol').closeModal();
+                        //actualizarMenu();
+                    });
+                     
+                  request.fail(function( jqXHR, textStatus ) {
+                      alert( "Fallo El Envio de SMS. " + textStatus );
+                    }); 
+  });
+
+$('#btnValidarCodigo').on('click', function() {
+    var token = $("#token").val();
+   
+    var request = $.ajax({
+                  url: '/usuario/validacion_codigo',
+                      method: "POST",
+                      data: { token: token},
+                      dataType: "JSON"
+                  });
+                        request.done(function( data ) {
+                          $('#validacion_movil').closeModal();
+                          location.reload(); 
+                           // alert(token);
+                              //$('#change_rol').closeModal();
+                        //actualizarMenu();
+                    });
+                     
+                  request.fail(function( jqXHR, textStatus ) {
+                      alert( "Fallo El Envio de SMS. " + textStatus );
+                    }); 
+  });
 
     $("#avatar_id").fileinput({
       'browseLabel':'cambiar',

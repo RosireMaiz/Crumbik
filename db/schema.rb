@@ -188,7 +188,7 @@ ActiveRecord::Schema.define(version: 20160208021736) do
     t.string  "apellidos",          limit: 255
     t.string  "sexo",               limit: 255
     t.string  "ocupacion",          limit: 255
-    t.integer "telefono_movil",     limit: 4
+    t.string  "telefono_movil",     limit: 11
     t.boolean "confirmacion_movil", limit: 1,          default: false, null: false
     t.integer "authy_id",           limit: 4
     t.integer "usuario_id",         limit: 4

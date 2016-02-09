@@ -69,14 +69,14 @@ Rails.application.routes.draw do
 
     match "/usuario/guardar_foto" => "usuarios#save_foto", via: :post
     match "/usuario/guardar_foto" => "usuarios#save_foto", via: :get
-
+match "/usuario/validacion_codigo"=>"usuarios#validacion_codigo", via: :post
     match "/usuarios_portal/consultar" => "usuarios#usuarios", via: :get
     match "/usuarios_portal/agregarusuario" => "usuarios#new_user", via: :get
 	match "/usuario/actualizar_rol"=>"usuarios#actualizar_rol", via: :post
  	match "/usuarios/create_portal"=>"usuarios#create_portal", via: :post
  	match "/link_social_usuario/:id_red_social" => "usuarios#usuario_social_link", via: :get
  	match "/usuario/usuario_actual"=>"usuarios#usuario_actual", via: :post
-
+match "/usuario/enviar_codigo"=>"usuarios#envio_codigo", via: :post
     match "/roles/consultar" => "rols#consultar", via: :get
     match "/roles/agregar" => "rols#new", via: :get
     match "/roles/crear_rol" => "rols#create", via: :post

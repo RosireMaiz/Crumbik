@@ -24,13 +24,18 @@
 
 
 <div class="row pad30-h">
-  <table id="rols" class="display" cellspacing="0" width="100%" >
+  <table id="rols_consultar" class="display" cellspacing="0" width="100%" >
     <thead>
       <tr>
           <th>Nombre</th>
           <th class="center">Acceso al Administrable</th>
           <th class="center">Estatus</th>
-          <th>Acciones</th>
+          <th>
+            Acciones
+              <a href="/roles/agregar"  class="white-text red lighten-1 btn-sm btn-table-action tooltipped waves-effect"data-position="bottom" data-tooltip="Agregar Rol" data-delay="20">
+                <i class="fa fa-plus"></i>
+              </a>
+          </th>
       </tr>
     </thead>
     <tbody>
@@ -165,7 +170,7 @@
   <%= javascript_include_tag 'jquery.dataTables.min' %>
   <script type="text/javascript">
     $(document).ready(function(){
-      $('#rols').dataTable({
+      $('#rols_consultar').dataTable({
         "select": false, 
         "pageLength": 4,
         "lengthChange": false,

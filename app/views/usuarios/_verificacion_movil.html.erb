@@ -1,0 +1,52 @@
+<div id ="validacion_movil" class="panel panel-info modal modal-45 col s6">
+
+  <div class="panel-body">
+   <a style="float:right;" class="waves-effect btn-flat modal-close"><i class="mdi-content-clear"></i></a>
+               
+      <div id="telefono_valicacion" class="row">
+        <strong><legend class="text-center">Envio del Código de Validación</legend></strong>
+
+        <div class="col s12">
+          <p>
+              Introduce tu Teléfono Móvil, para recibir el código de validación
+          </p>
+          <div class="col-md-6">
+              <label >Pais <span class="required">*</span></label>
+              <%= collection_select(:usuario, :pais_id, Pais.all, :id, :nombre_codigo_telefono) %>
+          </div>
+          <div class="input-field col-md-6" style="margin-top: 25px;">
+            <%= label_tag :code, "Telefono Móvil:" %>
+            <%= text_field_tag :telefono_movil, @usuario.perfil.telefono_movil, class: "form-control" %>
+          </div>
+          <div class="right">
+            <input id="btnEnviarSMS" type="button" class="btn btn-success btn-sm " value="Enviar" >
+            <input type="button" class="btn btn-danger btn-sm modal-close" value="Cancelar" >
+          </div>
+        </div>
+      </div>
+
+      <div id="codigo_valicacion" class="row">
+        <strong><legend class="text-center">Validación del SMS</legend></strong>
+
+        <div class="col s12">
+          <p>
+             Necesitamos verificar que no eres un robot. Por Favor, intorduce el código que ha sido enviado a tu teléfono móvil.
+          </p>
+          <div class="input-field col-md-1">
+          </div>
+          <div class="input-field col-md-10">
+            <%= label_tag :code, "Código de Verificación:" %>
+            <%= text_field_tag :token, '', class: "form-control" %>
+          </div>
+          <div class="input-field col-md-1">
+          </div>
+          <div  class="right">
+              <input id="btnValidarCodigo" type="button" class="btn btn-success btn-sm " value="Validar" >
+              <input type="button" class="btn btn-danger btn-sm modal-close" value="Cancelar" >
+          </div>
+        </div>
+      </div>
+
+  </div>
+
+</div>

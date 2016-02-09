@@ -155,6 +155,7 @@ class UsuariosController < ApplicationController
 			@usuario = current_usuario
 			@usuredes = UsuarioRedSocial.includes(:red_social).where("usuario_id = ?", @usuario.id)
 			@red_socials = RedSocial.where("estatus = ?", 'A')
+			#send_message('+584165528455', "Su registro en Crumbik ha sido validado exitosamente.")
 		else
 			redirect_to root_path
 		end	
@@ -177,6 +178,24 @@ class UsuariosController < ApplicationController
 		 @perfil.apellidos = params[:usuario][:perfil_attributes][:apellidos]
 		 @perfil.sexo = params[:usuario][:perfil_attributes][:sexo]
 		 @perfil.ocupacion = params[:usuario][:perfil_attributes][:ocupacion]
+		 movil = params[:usuario][:perfil_attributes][:telefono_movil]
+		 pais = Pais.find_by("id = ?" ,params[:usuario][:pais_id])
+
+		 if !(movil == @perfil.telefono_movil)
+		 	@perfil.telefono_movil = params[:usuario][:perfil_attributes][:telefono_movil]
+		 	@perfil.confirmacion_movil = false
+		 	authy = Authy::API.register_user(
+			        email: @usuario.email,
+			        cellphone: movil,
+			        country_code: pais.codigo_telefono 
+			      )
+		 	if authy.ok?
+		 		puts "authy " + authy.id.to_s
+		 	end
+		 	
+     		@perfil.authy_id = authy.id
+		 end
+		 
 		 @perfil.save
 
 		 id_usuario = @usuario.id
@@ -216,8 +235,6 @@ class UsuariosController < ApplicationController
 			end
 
 		 end
-
-		
 
 		 @usuario = Usuario.find_by(id: current_usuario.id)
 		 @usuredes = UsuarioRedSocial.includes(:red_social).where("usuario_id = ?", @usuario.id)
@@ -328,10 +345,90 @@ class UsuariosController < ApplicationController
 		end
  	end
 
+ 	def validacion_codigo
+			@usuario = current_usuario
+		 	@perfil = Perfil.where("usuario_id = ?", @usuario.id)
+		 	@perfil.each do |per|
+		 		@perfil = per
+			end
+		    # Use Authy to send the verification token
+		    token = Authy::API.verify(id: @perfil.authy_id, token: params[:token])
+
+		    if token.ok?
+		      # Mark the usuario as verified for get /usuario/:id
+		      @perfil.confirmacion_movil = true
+		      @perfil.save
+ 				pais = Pais.find_by("id = ?" ,@usuario.pais_id)
+ 				movil = @perfil.telefono_movil
+ 				codigo_telefono =  pais.codigo_telefono
+		      # Send an SMS to the usuario 'success'
+		      @alert_message = "Numero Validado Exitosamente"
+			  phone_number = '+'+codigo_telefono.to_s + movil.to_s
+			  send_message(phone_number, @alert_message)
+		    
+		      render :text =>'{ "success" : "true"}'
+		    else
+		    	render :text => '{ "success" : "false"}'
+		    end
+ 	end
+
+ 	def envio_codigo
+ 		 @usuario = current_usuario
+ 		 @usuario.pais_id = params[:pais_id]
+ 		 @usuario.save
+		 @perfil = Perfil.where("usuario_id = ?", @usuario.id)
+
+		 @perfil.each do |per|
+		 	@perfil = per
+		 end
+
+		 movil = params[:telefono_movil]
+		 pais = Pais.find_by("id = ?",params[:pais_id])
+
+		 #if !(movil == @perfil.telefono_movil)
+		 	@perfil.telefono_movil = movil
+		 	@perfil.confirmacion_movil = false
+		 	authy = Authy::API.register_user(
+			        email: @usuario.email,
+			        cellphone: movil,
+			        country_code: pais.codigo_telefono 
+			      )
+		 	if authy.ok?
+		 		puts "authy " + authy.id.to_s
+		 	end
+		 	
+     		@perfil.authy_id = authy.id
+		 #end
+		 
+			@perfil.save
+			response = Authy::API.request_sms(:id => @perfil.authy_id)
+
+		    if response.ok?
+		      render :text =>'{ "success" : "true"}'
+		    else
+		      	puts response.errors
+		    	render :text => '{ "success" : "false"}'
+		    end
+ 	end
+
+def send_message(phone_number, alert_message)
+		# set up a client to talk to the Twilio REST API 
+		@client = Twilio::REST::Client.new $account_sid, $auth_token 
+		 
+		message = @client.account.messages.create({
+			:from => $twilio_number, 
+			:to => phone_number, 
+			:body => alert_message,  
+		})
+
+      	puts message.to
+    end
   private
   	def set_user
 	    @usuario = Usuario.find(params[:id])
 	 end
+
+
 
     def usuario_params
       accessible = [ :email, :username,  :pais_id ] # extend with your own params

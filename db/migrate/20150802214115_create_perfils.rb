@@ -5,7 +5,7 @@ class CreatePerfils < ActiveRecord::Migration
       t.string :apellidos
       t.string :sexo
       t.string :ocupacion
-      t.integer :telefono_movil
+      t.string :telefono_movil, :limit => 11
       t.boolean :confirmacion_movil, null: false, default: false
       t.references :authy, index: true
 	    t.references :usuario, index: true
