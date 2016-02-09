@@ -15,6 +15,11 @@
 	  		<link rel="shortcut icon" type="image/x-icon" href="<%= asset_path 'header-logo.png' %>" />
 		<% end %>
 
+		<script type="text/javascript" src="http://lvh.me:3000/ext/build/ext-all.js"></script>
+  	<!-- Incluya hojas de estilos de: Extjs 5.1 -->
+	  	<link rel="stylesheet" type="text/css" href="http://lvh.me:3000/ext/packages/ext-theme-crisp/build/resources/ext-theme-crisp-all.css">
+
+
 	  <%= yield :css_personalizado %>
 	  
 	  <%= csrf_meta_tags %>

@@ -161,7 +161,7 @@ class OpcionMenu < ActiveRecord::Base
       @opcionMenu.orden = orden
       @opcionMenu.save
       opcion = OpcionMenu.find_by(id: padreid)
-      if !opcion.raiz
+      if !opcion.blank? 
         OpcionMenu.update(padreid, raiz: true)        
       end
       return 1

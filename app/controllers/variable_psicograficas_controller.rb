@@ -23,6 +23,7 @@ class VariablePsicograficasController < ApplicationController
 			if !request.subdomain.present?
 				redirect_to root_path
 			else
+				@variable_psicografica.categorium.build
 				render "variable_psicograficas/new"
 			end
 		end
@@ -33,6 +34,53 @@ class VariablePsicograficasController < ApplicationController
 	    @variable_psicografica.save
 	  	redirect_to :controller => 'variable_psicograficas', :action => 'consultar'
 	end
+
+	def edit
+		if !usuario_signed_in?
+			redirect_to root_path
+		else
+			@variable_psicografica = VariablePsicografica.new
+			if !request.subdomain.present?
+				redirect_to root_path
+			else
+				id = params[:id_variable_psicografica]
+				@variable_psicografica = VariablePsicografica.where("id = ?", id).first
+				render "variable_psicograficas/edit"
+			end
+		end
+	end
+
+	def save_edit
+		id = params[:id_variable_psicografica]
+
+		variable_edit = VariablePsicografica.where(["id = ?", id]).first
+		variable_edit.update(variable_psicografica_edit_params)
+
+		variable_categorias = variable_edit.variable_categorium
+		if ! variable_categorias.nil?
+			variable_categorias.each do |variable_categorium|
+				variable_categorium.destroy
+			end
+		end
+
+		categorias = params[:variable_psicografica][:categorium_ids]
+
+		variable_id = variable_edit.id
+		if ! categorias.nil?
+			categorias.each do |categorium|
+				if !categorium.blank?
+			 		@variable_categorium = VariableCategorium.new
+			 		@variable_categorium.categoria_id = categorium
+			 		@variable_categorium.variable_psicografica_id = variable_id
+					@variable_categorium.save
+				end
+			end
+		end
+		
+		redirect_to :controller => 'variable_psicograficas', :action => 'consultar'
+
+	end
+
 
 	def consultar
 		if !usuario_signed_in?
@@ -47,7 +95,6 @@ class VariablePsicograficasController < ApplicationController
 	          render root_path
 	        else
 	           @variable_psicograficas = VariablePsicografica.order('id ASC')
-	           @valor = true;
 	           render "variable_psicograficas/variable_psicograficas"	
 	        end
          
@@ -64,20 +111,18 @@ class VariablePsicograficasController < ApplicationController
 		end
 	end
 
-	def update
-		id = params[:id_variable_psicografica]
-		nombre = params[:nombre]
-		if VariablePsicografica.update(id, :nombre => nombre)
-			render :text =>'{ "success" : "true"}'
-		else
-
-			render :text => '{ "success" : "false"}'
-		end
-	end
-
 	def eliminar
 		id = params[:id_variable_psicografica]
 		variable_psicografica = VariablePsicografica.where(id: id).first
+		
+		
+		variable_categorias = variable_psicografica.variable_categorium
+		if ! variable_categorias.nil?
+			variable_categorias.each do |variable_categorium|
+				variable_categorium.destroy
+			end
+		end
+		
 		variable_psicografica.destroy
       if variable_psicografica.destroyed?
       	render :text =>'{ "success" : "true"}'
@@ -94,7 +139,12 @@ class VariablePsicograficasController < ApplicationController
 
 	private
 		def variable_psicografica_params
-	      accessible = [ :nombre ] # extend with your own params
+	      accessible = [ :nombre, :descripcion, :categorium_ids => [] ] # extend with your own params
+	      params.require(:variable_psicografica).permit(accessible)
+	    end
+
+	    def variable_psicografica_edit_params
+	      accessible = [ :nombre, :descripcion] # extend with your own params
 	      params.require(:variable_psicografica).permit(accessible)
 	    end
 

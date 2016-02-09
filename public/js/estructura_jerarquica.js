@@ -15,6 +15,7 @@ var editarnodo = null;
 var menuderecho = null;
 var rootmenuderecho = null;
 var idRol = 1;
+var typeMenu=0;
 
 Ext.require([
 	         	'Ext.tree.*',
@@ -38,7 +39,16 @@ Ext.onReady(function() {
 		});
 
 		$('#select').on('change', function() {
-			 idRol = this.value;
+			idRol = this.value;
+			typeMenu = $('#select_type_menu').val();
+			
+			actualizar();		
+		});
+
+		$('#select_type_menu').on('change', function() {
+			idRol = $('#select').val();;
+			typeMenu =  this.value;;
+			
 			actualizar();		
 		});
 
@@ -236,7 +246,7 @@ function actualizar(){
 			store_estructura = Ext.create('Ext.data.TreeStore', {
 			         		proxy: {
 			         			type: 'ajax',
-			         			url: '/menu/cargar_estructura?idRol='+idRol
+			         			url: '/menu/cargar_estructura?idRol='+idRol+'&typeMenu='+typeMenu
 			         		},
 			         		root: {
 			         			text: 'Menu',

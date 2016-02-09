@@ -1,10 +1,10 @@
 
-<!-- Bootstrap -->
-<link rel="stylesheet" href="bootstrap-3.2.0/css/bootstrap.css"/>
-<!-- Elusive Icons -->
-<link rel="stylesheet" href="icon-fonts/font-awesome-4.2.0/css/font-awesome.min.css"/>
-<!-- Bootstrap-Iconpicker -->
-<link rel="stylesheet" href="bootstrap-iconpicker/css/bootstrap-iconpicker.css"/>
+  <!-- Bootstrap -->
+  <link rel="stylesheet" href="bootstrap-3.2.0/css/bootstrap.css"/>
+  <!-- Elusive Icons -->
+  <link rel="stylesheet" href="icon-fonts/font-awesome-4.2.0/css/font-awesome.min.css"/>
+  <!-- Bootstrap-Iconpicker -->
+  <link rel="stylesheet" href="bootstrap-iconpicker/css/bootstrap-iconpicker.css"/>
  <!-- jQuery -->
   <script type="text/javascript" src="jquery/jquery-1.10.2.min.js"></script>
   <!-- Bootstrap -->
@@ -16,8 +16,11 @@
 
   <script type="text/javascript" src= "http://lvh.me:3000/js/estructura_jerarquica.js"></script>
 
-
-
+  <style type="text/css">
+     .dropdown-content {
+      max-height: 300px; 
+    }
+  </style>
 <div class="row titulo-seccion">
   <div class="banner banner-perfil">
     <div class="contenedor">
@@ -41,15 +44,26 @@
 <div class="row" >
   <div class="col s12">
     <div class="row">
-      <div class="input-field col s4">
-       
-        <select id="select" name="rol" >
-            <option value="-1" disabled selected>Elija un rol</option>
-            <%= options_from_collection_for_select(Rol.all, :id, :nombre) %>
-        </select>
-       
-        <label>Roles</label>
-      </div>
+      <div class=" col s4">
+        <div class="col s12 ">
+          <label for="select">Roles</label>
+          <select id="select" name="rol" >
+              <option value="-1" disabled selected>Elija un rol</option>
+              <%= options_from_collection_for_select(Rol.all, :id, :nombre) %>
+          </select>
+        </div>
+        <div class="col s12">
+          <label for="rol_type_rol">Tipo de Menu: 
+            <span class="required"> * </span>
+          </label>
+         
+          <select id="select_type_menu" name="rol" >
+           
+            <%= options_for_select(Menu.type_menus.to_a.map { |w| [w[0].humanize, w[1]] }) %>
+          </select>
+         
+        </div>
+        </div>
       <div class="col s4 offset-s1 transparent tree_estructura" id="tree">
       </div>
     </div>

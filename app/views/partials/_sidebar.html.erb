@@ -1,6 +1,14 @@
+<html>
+	<head>
+
+	    <!-- Incluya los javascripts propios -->
+	    <script type="text/javascript" src="http://lvh.me:3000/js/sidebar.js"></script>
+	</head>
+	<body>
 <nav style="height: 0px;  line-height: 1px;">
 	
-	<div id="slide-out" class="side-nav">
+	<div id="slide-out" class="side-nav tree_menu">
+		
 		<div>
 			<% if usuario_signed_in? %>
 					   
@@ -15,13 +23,11 @@
 
 					</div>
 		 		</div>
-		 		<div class="divider center"></div>
-		      	
-		    
+		 				    
 		    <% end %>
 		</div>
-		<div>
-			<ul class="side-li">
+		<div id="tree_el" class="no-padding bold tree_menu" >
+			<!--<ul class="side-li">
 				
 			    <li>
 			    	<a href="/preguntas_Frecuentes" role="link" class="x-tree-node-text">
@@ -87,7 +93,9 @@
 			    	</ul>
 			    </li>
 			    
-			</ul>
+			</ul>-->
 		</div>
 	</div>
 </nav>
+	</body>
+</html>

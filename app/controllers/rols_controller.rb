@@ -33,6 +33,7 @@ class RolsController < ApplicationController
 	def create
 		@rol = Rol.new(rol_params)
 	    @rol.save
+	    
 	  	redirect_to :controller => 'rols', :action => 'consultar'
 	end
 
@@ -97,9 +98,8 @@ class RolsController < ApplicationController
 
 private
 	 def rol_params
-      accessible = [ :nombre, :acceso_administrable, :type_rol] # extend with your own params
+      accessible = [ :nombre, :acceso_administrable] # extend with your own params
       params.require(:rol).permit(accessible)
     end
-
 
 end

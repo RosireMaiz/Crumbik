@@ -32,7 +32,7 @@ $(document).ready(function(){
 	    }
   	});
 
-	$("#addClass").click(function () {
+	$("#ext-element-3 .chat-vivo").click(function () {
 	    $('#chat').addClass('popup-box-on');
 	});
 	          

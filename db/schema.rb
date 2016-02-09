@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20160208021736) do
+ActiveRecord::Schema.define(version: 20160209162108) do
 
   create_table "autenticacions", force: :cascade do |t|
     t.integer "usuario_id", limit: 4
@@ -97,7 +97,8 @@ ActiveRecord::Schema.define(version: 20160208021736) do
   end
 
   create_table "menus", force: :cascade do |t|
-    t.integer "rol_id", limit: 4
+    t.integer "type_menu", limit: 4, default: 0
+    t.integer "rol_id",    limit: 4
   end
 
   add_index "menus", ["rol_id"], name: "index_menus_on_rol_id", using: :btree
@@ -106,6 +107,17 @@ ActiveRecord::Schema.define(version: 20160208021736) do
     t.string "nombre",  limit: 255
     t.string "estatus", limit: 1,   default: "A"
   end
+
+  create_table "nota", force: :cascade do |t|
+    t.string   "titulo",     limit: 255
+    t.string   "contenido",  limit: 255
+    t.string   "color",      limit: 255
+    t.integer  "usuario_id", limit: 4
+    t.datetime "created_at",             null: false
+    t.datetime "updated_at",             null: false
+  end
+
+  add_index "nota", ["usuario_id"], name: "index_nota_on_usuario_id", using: :btree
 
   create_table "opcion_menus", force: :cascade do |t|
     t.string  "nombre",   limit: 255
@@ -275,7 +287,6 @@ ActiveRecord::Schema.define(version: 20160208021736) do
   create_table "rols", force: :cascade do |t|
     t.string  "nombre",               limit: 255
     t.boolean "acceso_administrable", limit: 1,   default: false, null: false
-    t.integer "type_rol",             limit: 4,   default: 0
     t.string  "estatus",              limit: 1,   default: "A"
   end
 
@@ -294,6 +305,15 @@ ActiveRecord::Schema.define(version: 20160208021736) do
   end
 
   add_index "sugerencia", ["usuario_id"], name: "index_sugerencia_on_usuario_id", using: :btree
+
+  create_table "temas", force: :cascade do |t|
+    t.string   "nombre",         limit: 255
+    t.string   "descripcion",    limit: 255
+    t.binary   "imagen",         limit: 4294967295
+    t.string   "formato_imagen", limit: 255
+    t.datetime "created_at",                        null: false
+    t.datetime "updated_at",                        null: false
+  end
 
   create_table "tipo_clientes", force: :cascade do |t|
     t.string "nombre",      limit: 255

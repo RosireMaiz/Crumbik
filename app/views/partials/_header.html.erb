@@ -80,7 +80,7 @@
 					              <a  role="menuitem" href="#change_rol" class="modal-trigger">Cambiar rol</a>
 					            </li>
 					            <li class="divider center"></li>
-					            <% if !$administrable %>
+					            <% if !current_usuario.current_administrable %>
 						            <li role="presentation">
 						              <a id="administrar" role="menuitem"  href="/inicio_administrable">
 						              	Administrar Mi Portal

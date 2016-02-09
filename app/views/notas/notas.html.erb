@@ -17,11 +17,63 @@
     </div>
   </div>
 </div>
+<style type="text/css">
+  .action-note{
+    -webkit-box-sizing: border-box;
+    box-sizing: border-box;
+    bottom: 0;
+    opacity: 0;
+    padding: 4px 0;
+    -webkit-transition-duration: .218s;
+    transition-duration: .218s;
+    -webkit-transition-property: opacity;
+    transition-property: opacity;
+    -webkit-transition-timing-function: ease-in;
+    transition-timing-function: ease-in;
+}
+ .action-note:hover {
+    opacity: 1;
+}
+.card .card-action {
+    border-top: none;
+    padding: 20px;
+}
+</style>
 
 
-<div class="row pad30-h">
-   <div class="chip">
-    Jane Doe
-    <i class="mdi-content-clear material-icons "></i>
+<div class="row wrapper  pad30-h" >
+  <div class="fixed-action-btn " style="top: 250px; bottom: 0px">
+    <a href="/productos/agregar" class="btn-floating btn-sm waves-effect waves-light red left absolute tooltipped" style="margin-bottom: 60px;" data-position="left" data-delay="50" data-tooltip="Agregar Nota">
+      <i class=" mdi-av-playlist-add"></i>
+    </a>
+  </div>
+
+  <div class="col s11">
+    <div class="masonry">
+     
+          <div class="item" >
+            <div class="card  hoverable " style="    background-color: white !important;">
+              <div class="card-content grey-text text-darken-4">
+              
+              
+
+                <span class="card-title grey-text text-darken-4">  <p>Titulo</p></span>
+                
+                <p>Contenido</p>
+                
+              </div>
+              <div class="card-action action-note" style="float:right">
+                <a href="#" class="tooltipped" data-position="bottom"  data-tooltip="Agregar Recordatorio"><i class="mdi-social-notifications-on "></i></a>
+                <a href="#" class="tooltipped" data-position="bottom"  data-tooltip="Color"><i class=" mdi-image-color-lens "></i></a>
+                 <a href="#" class="tooltipped" data-position="bottom"  data-tooltip="Ver" ><i class=" mdi-image-remove-red-eye"></i></a>
+                  <a href="#" class="tooltipped" data-position="bottom"  data-tooltip="Editar" ><i class="mdi-editor-border-color"></i></a>
+                 <a href="#" class="tooltipped" data-position="bottom"  data-tooltip="Eliminar" ><i class=" mdi-action-delete"></i></a>
+              
+              </div>
+
+            </div>
+          </div>
+        
     </div>
+  </div>
 </div>

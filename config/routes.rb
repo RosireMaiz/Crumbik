@@ -49,10 +49,13 @@ Rails.application.routes.draw do
 	match "/usuarios/abrircuenta"=>"usuarios#create", via: :post
   	match '/usuarios/:id/confirmar_registro' => 'usuarios#finish_signup', via: [:get, :patch], as: :finish_signup
 	match "/registro" => "usuarios#new", via: :get
+
 	get 'current_rol' => "usuarios#current_rol"
 
 	match '/menu/ajax' => "menu#ajax", via: :post
 	match '/menu/ajax' => "menu#ajax", via: :get
+	match '/menu/portal' => "menu#portal", via: :post
+	match '/menu/portal' => "menu#portal", via: :get
 
 	match '/estructurajerarquica' => "menu#estructura_jerarquica", via: :post
 	match '/estructurajerarquica' => "menu#estructura_jerarquica", via: :get
@@ -69,14 +72,19 @@ Rails.application.routes.draw do
 
     match "/usuario/guardar_foto" => "usuarios#save_foto", via: :post
     match "/usuario/guardar_foto" => "usuarios#save_foto", via: :get
-match "/usuario/validacion_codigo"=>"usuarios#validacion_codigo", via: :post
+
+	match "/usuario/validacion_codigo"=>"usuarios#validacion_codigo", via: :post
+	match "/usuario/enviar_codigo"=>"usuarios#envio_codigo", via: :post
+
+	match "/link_social_usuario/:id_red_social" => "usuarios#usuario_social_link", via: :get
+
     match "/usuarios_portal/consultar" => "usuarios#usuarios", via: :get
     match "/usuarios_portal/agregarusuario" => "usuarios#new_user", via: :get
 	match "/usuario/actualizar_rol"=>"usuarios#actualizar_rol", via: :post
  	match "/usuarios/create_portal"=>"usuarios#create_portal", via: :post
- 	match "/link_social_usuario/:id_red_social" => "usuarios#usuario_social_link", via: :get
+
  	match "/usuario/usuario_actual"=>"usuarios#usuario_actual", via: :post
-match "/usuario/enviar_codigo"=>"usuarios#envio_codigo", via: :post
+	
     match "/roles/consultar" => "rols#consultar", via: :get
     match "/roles/agregar" => "rols#new", via: :get
     match "/roles/crear_rol" => "rols#create", via: :post
@@ -150,7 +158,11 @@ match "/usuario/enviar_codigo"=>"usuarios#envio_codigo", via: :post
 	match "/pregunta_frecuentes/update" => "pregunta_frecuentes#update", via: :post
 	match "/pregunta_frecuentes/consultar_pregunta_frecuente" => "pregunta_frecuentes#consultar_pregunta_frecuente", via: :post
 	match "/pregunta_frecuentes/eliminar" => "pregunta_frecuentes#eliminar", via: :post
-match "/eventos" => "eventos#eventos", via: :get
+
+	match "/eventos" => "eventos#eventos", via: :get
+	match "/herramientas/notas" => "notas#notas", via: :get
+	match "/herramientas/calendario" => "eventos#calendario", via: :get
+
 	match "/planes" => "plans#consultar", via: :get
     match "/planes/agregar" => "plans#new", via: :get
     match "/plans/crear_plan" => "plans#create", via: :post
@@ -160,14 +172,26 @@ match "/eventos" => "eventos#eventos", via: :get
 	match "/plan/editar" => "plans#save_edit", via: :post
 	match "/plan/guardar_imagen" => "plans#save_imagen", via: :post
 	match "/planes/consultar_plan" => "plans#consultar_plan", via: :post
-match "/herramientas/notas" => "notas#notas", via: :get
+
 	match "/organizaciones" => "organizacions#consultar", via: :get
 	match "/organizacion/consultar/:subdominio" => "organizacions#show", via: :get
 	match "/organizacion/editar/:subdominio" => "organizacions#edit", via: :get
   	match "/organizacion/editar" => "organizacions#save", via: :post
-	match "/herramientas/calendario" => "eventos#calendario", via: :get
+  	match "/link_social_organizacion/:id_red_social/:subdominio" => "organizacions#organizacion_social_link", via: :get
+
+  	match "/organizacion/apariencia/tema"=> "organizacions#apariencia_tema", via: :get
+  	match "/gestion_temas"=> "temas#consultar", via: :get
+	match "/apariencia/editar"=> "organizacions#editar_tema", via: :get
+
+    match "/temas/agregar" => "temas#new", via: :get
+    match "/tema/crear_tema" => "temas#create", via: :post
+    match "/tema/editar/:id_tema" => "temas#edit", via: :get
+    match "/tema/editar" => "temas#save_edit", via: :post
+	match "/tema/eliminar" => "temas#eliminar", via: :post
+
 	match "/sugerencias" => "sugerencias#consultar", via: :get
-	match "/link_social_organizacion/:id_red_social/:subdominio" => "organizacions#organizacion_social_link", via: :get
+	
+
 	devise_scope :usuario do
 	    post "/entrar" => "devise/sessions#create"
 	    get "/entrar" => "devise/sessions#new"
@@ -185,7 +209,6 @@ match "/herramientas/notas" => "notas#notas", via: :get
 		match "/organizacion/save_banner" => "organizacions#save_banner", via: :post
 		match "/organizacion/editar_ubicacion" => "organizacions#editar_ubicacion_iframe", via: :post
 		match "/organizacion/eliminar_ubicacion_iframe" => "organizacions#eliminar_ubicacion_iframe", via: :post
-		match "/organizacion/apariencia/tema"=> "organizacions#apariencia_tema", via: :get
 
 		match "/sugerencia/agregar"=> "sugerencias#new", via: :get
 		match "/sugerencias/crear_sugerencia" => "sugerencias#create", via: :post
@@ -237,7 +260,13 @@ match "/herramientas/notas" => "notas#notas", via: :get
 		match "/tipo_clientes/consultar_tipo_cliente" => "tipo_clientes#consultar_tipo_cliente", via: :post
 		match "/tipo_clientes/eliminar" => "tipo_clientes#eliminar", via: :post
 
-		
+		match "/mercadeo/variablespsicograficas/agregar" => "variable_psicograficas#new", via: :get
+    	match "/variable_psicografica/crear_variable_psicografica" => "variable_psicograficas#create", via: :post
+		match "/mercadeo/variablespsicograficas/consultar" => "variable_psicograficas#consultar", via: :get
+		match "/variable_psicografica/editar/:id_variable_psicografica" => "variable_psicograficas#edit", via: :get
+		match "/variable_psicografica/editar" => "variable_psicograficas#save_edit", via: :post
+		match "/mercadeo/variablespsicograficas/eliminar" => "variable_psicograficas#eliminar", via: :post
+		match "/mercadeo/variablespsicograficas/update_estatus" => "variable_psicograficas#update_estatus", via: :post
 	end
 
 end

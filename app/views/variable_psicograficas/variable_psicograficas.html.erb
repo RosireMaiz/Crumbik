@@ -1,0 +1,158 @@
+<% content_for :css_personalizado do %>
+ <%= stylesheet_link_tag    "jquery.dataTables" %> 
+<% end %>
+
+<div class="row titulo-seccion">
+  <div class="banner banner-perfil">
+    <div class="contenedor">
+      <div class="col s6">
+        <h5 class="text-uppercase ">
+         Variables Psicográficas
+        </h5>
+      </div>
+      <div class="col s6 text-right ">
+        <ol class="breadcrumb">
+          <li><a href="/">Inicio</a></li>
+          <li><a href="/"> Mercadeo</a></li>
+          <li class="active">Variables Psicográficas</li>
+        </ol>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="row pad30-h">
+  <table id="variable_psicograficas" class="display" cellspacing="0" width="100%" >
+    <thead>
+      <tr>
+          <th>Nombre</th>
+          <th>Categorías</th>
+          <th>Estatus</th>
+          <th>
+            Acciones
+             <a href="/mercadeo/variablespsicograficas/agregar"  class="white-text red lighten-1 btn-sm btn-table-action tooltipped waves-effect" data-position="bottom" data-tooltip="Agregar Variable" data-delay="20"><i class="fa fa-plus"></i></a>
+          </th>
+      </tr>
+    </thead>
+    <tbody>
+      <% @variable_psicograficas.each do |variable_psicografica| %>
+
+         <% if ! variable_psicografica.nil? %>
+            <tr>
+                <td data-search="<%= variable_psicografica.nombre %>"> 
+                    <%= variable_psicografica.nombre %> 
+                </td>
+                <td>
+                  <% if ! variable_psicografica.variable_categorium.nil?  %>
+                      <% variable_psicografica.variable_categorium.each do |variable_categorium| %>
+                            <div class="chip">
+                              <%= variable_categorium.categorium.nombre %>
+                            </div>
+
+                      <% end %>
+                  <% end %>
+                </td>                  
+                <td> 
+                <% if (variable_psicografica.estatus == 'A') %>
+                    Activo 
+                <% else %>
+                    Deshabilitado
+                <% end %>
+                </td> 
+                <td> 
+                <% if !(variable_psicografica.estatus == 'A') %>
+                  <a  href="#modal<%= variable_psicografica.id %>" class="modal-trigger btn-success btn-sm"> Habilitar</a>
+                <% else %>
+                   <a  href="#modal<%= variable_psicografica.id %>" class=" modal-trigger btn-warning btn-sm">Deshabilitar</a>
+                <% end %>
+                  <a href="/variable_psicografica/editar/<%= variable_psicografica.id %>" class="modal-trigger btn-primary btn-sm"> Editar</a>
+  
+                  <a  href="#modaleliminar<%= variable_psicografica.id %>" class="modal-trigger btn-danger btn-sm">Eliminar</a>
+                  
+                </td>  
+                    
+            </tr>
+          <% end %>
+        <% end %>
+            
+     </tbody>
+  </table>
+
+  <% @variable_psicograficas.each do |variable_psicograficas| %>
+    <% if ! variable_psicograficas.nil? %>
+        <!-- Modal Structure -->
+        <div id="modal<%= variable_psicograficas.id %>" class="modal">
+          <div class="modal-content">
+                <a style="float:right;" class="waves-effect btn-flat modal-close"><i class="mdi-content-clear"></i></a>
+                <% if (variable_psicograficas.estatus == 'A') %>
+                  <h5>Deshabilitar Variable Psicografica</h5>
+                <% else %>
+                  <h5>Habilitar Variable Psicografica</h5>
+                <% end %>
+                <div class="row pad30-t" >
+                    <div class="col s12 text-center">
+                      <% if (variable_psicograficas.estatus == 'A') %>
+                        <h6 style=" font-size: 20px;">¿Seguro que desea Deshabilitar la Variable Psicografica seleccionada? 
+                        </h6>
+                      <% else %>
+                        <h6 style=" font-size: 20px;">¿Seguro que desea Habilitar la Variable Psicografica seleccionada?</h6>
+                      <% end %>
+                      <div style="padding-top: 35px;" class="right">
+                      <% if (variable_psicograficas.estatus == 'A') %>
+                         <input type="button" class="btn btn-success btn-sm" value="Aceptar" onclick="update_estatus(<%= variable_psicograficas.id %>,'I')">
+                      <% else %>
+                        <input type="button" class="btn btn-success btn-sm" value="Aceptar" onclick="update_estatus(<%= variable_psicograficas.id %>,'A')">
+                      <% end %>
+                       
+                        <input type="button" class="btn btn-danger btn-sm modal-close" value="Cancelar">
+                      </div>
+
+                    </div>
+                </div>                
+          </div>
+        </div> 
+
+        <div id="modaleliminar<%= variable_psicograficas.id %>" class="modal">
+          <div class="modal-content">
+                <a style="float:right;" class="waves-effect btn-flat modal-close"><i class="mdi-content-clear"></i></a>
+               
+                <h5>Eliminar Variable Psicografica</h5>
+               
+                <div class="row pad30-t" >
+                    <div class="col s12 text-center">
+                     
+                        <h6 style=" font-size: 20px;"> ¿Seguro que desea eliminar la variable psicografica seleccionada? </h6>
+                      
+                      <div style="padding-top: 35px;" class="right">
+                      
+                        <input type="button" class="btn btn-success btn-sm" value="Aceptar" onclick="eliminar(<%= variable_psicograficas.id %>)">
+                      
+                        <input type="button" class="btn btn-danger btn-sm modal-close" value="Cancelar">
+                      </div>
+
+                    </div>
+                </div>                
+          </div>
+        </div> 
+    <% end %>
+  <% end %>
+
+</div>
+
+<% content_for :javascript_personalizado do %>
+  <%= javascript_include_tag 'validaciones/variable_psicografica' %>
+  <%= javascript_include_tag 'jquery.dataTables.min' %>
+  <script type="text/javascript">
+    $(document).ready(function(){
+      $('#variable_psicograficas').dataTable({
+        "select": false, 
+        "pageLength": 4,
+        "lengthChange": false,
+        "language": {
+                "zeroRecords": "No hay datos disponibles en la tabla",
+        }
+      });
+    });
+
+  </script>
+<% end %>

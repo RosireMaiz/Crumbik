@@ -26,11 +26,27 @@ class MenuController < ApplicationController
 
  def ajax
 	@opcionMenus = OpcionMenu.new
-	@menu = Menu.where(rol_id: current_usuario.rol_actual.id).first
+	if request.subdomain.present?
+		@menu = Menu.where(rol_id: current_usuario.rol_actual.id, type_menu: Menu.type_menus[:subdominio]).first
+	else
+		@menu = Menu.where(rol_id: current_usuario.rol_actual.id, type_menu: Menu.type_menus[:portal]).first
+	end
+	
 	@tira = @opcionMenus.BuscarTodosArbolJson(@menu)
 	render :text => @tira
  end
  
+  def portal
+	@opcionMenus = OpcionMenu.new
+	if request.subdomain.present?
+		@menu = Menu.where(rol_id: '5', type_menu: Menu.type_menus[:subdominio]).first
+	else
+		@menu = Menu.where(rol_id: '5', type_menu: Menu.type_menus[:portal]).first
+	end
+	
+	@tira = @opcionMenus.BuscarTodosArbolJson(@menu)
+	render :text => @tira
+ end
 
  def estructura_jerarquica
 
@@ -39,7 +55,14 @@ class MenuController < ApplicationController
  def cargar_estructura
 	@opcionMenus = OpcionMenu.new
 	$idRol = params[:idRol]
-	$menuJerarquia = Menu.where(rol_id: $idRol).last
+	$typeMenu = params[:typeMenu]
+	$menuJerarquia = Menu.where("rol_id = ? AND type_menu=?", $idRol, $typeMenu).first
+	if $menuJerarquia.blank?
+		$menuJerarquia = Menu.new
+		$menuJerarquia.type_menu = $typeMenu.to_i
+		$menuJerarquia.rol_id = $idRol
+		$menuJerarquia.save
+	end
 	@tira = @opcionMenus.BuscarTodosArbolJsonSinHref($menuJerarquia)
 	render :text => @tira
  end

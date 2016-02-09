@@ -204,6 +204,10 @@ class OrganizacionsController < ApplicationController
 		render "organizacions/temas"
 	end
 	
+	def editar_tema
+		rredirect_to :controller => 'organizacions', :action => 'apariencia_tema'
+	end
+
 	def organizacion_social_link
 
 		cookies[:id_red_social]  = params[:id_red_social]

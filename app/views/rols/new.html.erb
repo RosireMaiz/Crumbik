@@ -44,13 +44,7 @@
                   <%= f.text_field :nombre, :required=>true, autocomplete: "off" %>
                 </div>
                 <div class="row">
-                  <div class="col s12 m6 form-group">
-                    <label for="rol_type_rol">Tipo: 
-                      <span class="required"> * </span>
-                    </label>
-                   
-                    <%= f.collection_select :type_rol, Rol.type_rols.keys, :to_s, :titlecase %>
-                  </div>
+                  
                   <div class="col s12 m6 input-field ">
                       <span class="pull-left"><%= f.check_box :acceso_administrable %> <%= f.label :acceso_administrable, "Acceso al administrable" %></span>
                   </div>  
