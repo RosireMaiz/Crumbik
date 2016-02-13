@@ -233,10 +233,13 @@ Rails.application.routes.draw do
 		match "/productos/categorias/consultar" => "categorias#consultar", via: :get
     	match "/productos/categorias/agregar" => "categorias#new", via: :get
     	match "/categoria/crear_categoria" => "categorias#create", via: :post
-    	match "/categorias/update_estatus" => "categorias#update_estatus", via: :post
 		match "/categorias/update" => "categorias#update", via: :post
+		match "/productos/categorias/update_estatus" => "categorias#update_estatus", via: :post
 		match "/categorias/consultar_categoria" => "categorias#consultar_categoria", via: :post
-		match "/categorias/eliminar" => "categorias#eliminar", via: :post
+		match "/productos/categorias/eliminar" => "categorias#eliminar", via: :post
+		match "/categoria/editar/:id_categoria" => "categorias#edit", via: :get
+		match "/categoria/editar" => "categorias#save_edit", via: :post
+
 
 		match "/productos/puntuacion" => "productos#puntuacion", via: :post
 		
