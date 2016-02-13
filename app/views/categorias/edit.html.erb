@@ -17,7 +17,7 @@
     <div class="contenedor">
       <div class="col s6">
         <h5 class="text-uppercase">
-         Crear Nueva Categoría
+         Editar Categoría
         </h5>
       </div>
       <div class="col s6 text-right ">
@@ -25,7 +25,7 @@
           <li>
             <a href="/">Inicio</a>
           </li>
-          <li class="active">Crear Categoría</li>
+          <li class="active">Editar Categoría</li>
         </ol>
       </div>
     </div>
@@ -33,8 +33,9 @@
 </div>
 
 <div  id="form_wizard_1" class="row pad30-h"  style="width: 100%">
+  
+  <%= form_for(@categoria,  :url => categoria_editar_path, :html => {id: "edit_categoria", :method => :post },  :multipart => true ) do |f| %>
 
-  <%= form_for @categoria, :url => categoria_crear_categoria_path, html:{id: "add_categoria", class: "form-horizontal"} do |f| %>
     <div class="form-wizard">
       <div class="form-body steps ">
         <div class="tab-content">
@@ -50,6 +51,7 @@
               <div class="col s10 offset-s1 left panel z-depth-3 ">
                 <h5>Datos de la Categoría </h5>
                 <div class="row">
+                  <input id="id_categoria" name="id_categoria" class="file" value="<%= @categoria.id %>" hidden />
                   <div class="col s12">
                     <div class="input-field col s12">
                       <label for="categoria_nombre">Nombre <span class="required">
@@ -68,11 +70,11 @@
                   
                   <% if !VariablePsicografica.all.blank? %> 
                     <div class="col s12 ">  
-                      <label for="categoria[variable_psicografica_ids][]">Variables Psicográficas:</label>
+                      <label for="categorium[variable_psicografica_ids][]">Variales Psicograficas:</label>
                         <div class="checkbox-list" >
                           <%= f.collection_check_boxes( :variable_psicografica_ids, VariablePsicografica.all, :id, :nombre) %>
                         </div>
-                        <span id='categoria_variable_ids-error' class="hidden span-error-input">Debe Seleccionar una Variable Psicográfica.</span>
+                        <span id='variable_psicografica_categorium_ids-error' class="hidden span-error-input">Debe Seleccionar una categoria.</span>
                     </div> 
                   <% end %>  
 
@@ -81,7 +83,7 @@
 
             </div>
           </div>
-
+          
         </div>
       </div>
 
@@ -89,7 +91,9 @@
         <div class="row">
           <div class="offset-s4 col s8">
             <input type="submit" class="btn btn-success " value="Guardar">
-            <button type="button" onclick="window.location.href='/productos/categorias/consultar'" class="btn btn-danger waves-effect">Cancelar</button>
+            <button type="button" class="btn btn-danger waves-effect"
+            onclick="window.location.href='/productos/categorias/consultar'">
+            Cancelar</button>
           </div>
         </div>
       </div>
@@ -99,6 +103,7 @@
 </div>
 
 <% content_for :javascript_personalizado do %>
+
   <%= javascript_include_tag 'validaciones/categorium' %>
 
   <script type="text/javascript">
@@ -106,5 +111,5 @@
           $('.alert-danger').hide();
           $('.alert-success').hide();       
       });
-  </script>
+    </script>
 <% end %>
