@@ -142,10 +142,4 @@ class VariablePsicograficasController < ApplicationController
 	      accessible = [ :nombre, :descripcion, :categorium_ids => [] ] # extend with your own params
 	      params.require(:variable_psicografica).permit(accessible)
 	    end
-
-	    def variable_psicografica_edit_params
-	      accessible = [ :nombre, :descripcion] # extend with your own params
-	      params.require(:variable_psicografica).permit(accessible)
-	    end
-
 end
