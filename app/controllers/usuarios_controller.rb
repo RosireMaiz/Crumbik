@@ -49,14 +49,9 @@ class UsuariosController < ApplicationController
 			redirect_to root_path
 		else
 			@usuario = Usuario.new
-			if request.subdomain.present?
-				render "devise/registrations/new"
-			else
-				@usuario.build_perfil				
-				@usuario.rols.build
-				render "usuarios/new_portal"
-			
-			end
+			@usuario.build_perfil				
+			@usuario.rols.build
+			render "usuarios/new_portal"
 		end
 	end
 
@@ -122,18 +117,9 @@ class UsuariosController < ApplicationController
         	render "portal/index"
      	else
 
-	        @rol =  Rol.where(nombre: 'Administrador del sistema')
-	        
-	        @usuarioRol = UsuarioRol.where(usuario_id: current_usuario.id, rol_id: current_usuario.rol_actual.id) 
-
-	        if @usuarioRol[0] == nil or @rol[0].id != current_usuario.rol_actual.id
-	          render "portal/index_principal"
-	        else
 	           @usuarios = Usuario.order('id ASC').page(params[:page]).per(9)
 	           @valor = true;
-	           render "usuarios/usuarios_portal"	
-	        end
-         
+	           render "usuarios/usuarios_portal"	         
      	end
 	end
 

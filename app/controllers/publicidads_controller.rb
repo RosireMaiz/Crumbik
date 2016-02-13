@@ -6,23 +6,50 @@ class PublicidadsController < ApplicationController
 		if !usuario_signed_in?
 			redirect_to root_path
 		else
-			if !request.subdomain.present?
-				redirect_to root_path
-			else
-				@publicidad = Publicidad.new
-				formato_imagen = "data:image/png;base64,"
-    			imagen = Base64.encode64(File.open($IMAGEN_DEFAULT, "rb").read)
-    			@publicidad.formato_imagen = formato_imagen
-    			@publicidad.imagen = imagen
-				render "publicidads/new"
-			end
+
+			@publicidad = Publicidad.new
+			formato_imagen = "data:image/png;base64,"
+			imagen = Base64.encode64(File.open($IMAGEN_DEFAULT, "rb").read)
+			@formato_imagen = formato_imagen
+			@imagen = imagen
+			@red_socials =  OrganizacionRedSocial.includes(:red_social).where("organizacion_id = ? ", @organizacion.id)
+			render "publicidads/new"
 		end
 	end
 
 	def create
 		publicidad = Publicidad.new(publicidad_params)
 	    publicidad.save
-	  	redirect_to :controller => 'publicidads', :action => 'consultar'
+
+ 		if params[:contenido_tweet].present?
+
+ 			contenido_tweet = params[:contenido_tweet]
+		    url_tweet = params[:url_tweet]
+
+	 		tweet = contenido_tweet.to_s + " " + url_tweet
+	 		autenticacion = OrganizacionRedSocial.where("organizacion_id = ? AND provider = ?",@organizacion.id, "twitter").first
+			client = Twitter::REST::Client.new do |config|
+			  config.consumer_key        = $consumer_key_twitter
+			  config.consumer_secret     = $consumer_secret_twitter
+			  config.access_token        = autenticacion.oauth_token
+			  config.access_token_secret = autenticacion.oauth_secret
+			end
+			interaccion_social = InteraccionSocial.new
+		    interaccion_social.descripcion = contenido_tweet
+		    interaccion_social.url = url_tweet
+		    interaccion_social.organizacion_red_social_id = autenticacion.id
+		    interaccion_social.publicidad_id = publicidad.id
+		    interaccion_social.save
+
+		    tweet_update = client.update(tweet)
+		    publicacion = PublicacionSocial.new
+		    publicacion.id_social = tweet_update.id.to_s
+		    publicacion.interaccion_social_id = interaccion_social.id
+		    publicacion.save
+
+ 		end
+		
+	 	redirect_to :controller => 'publicidads', :action => 'consultar'
 	end
 
 	def consultar
@@ -30,17 +57,8 @@ class PublicidadsController < ApplicationController
         	render "portal/index"
      	else
 
-	        @rol =  Rol.where(nombre: 'Empresario')
-	        
-	        @usuarioRol = UsuarioRol.where(usuario_id: current_usuario.id, rol_id: current_usuario.rol_actual.id) 
-
-	        if @usuarioRol[0] == nil or @rol[0].id != current_usuario.rol_actual.id
-	          render root_path
-	        else
 	           @publicidads = Publicidad.order('id ASC').page(params[:page]).per(9)
 	           render "publicidads/publicidads"	
-	        end
-         
      	end
 	end
 
@@ -48,13 +66,11 @@ class PublicidadsController < ApplicationController
 		if !usuario_signed_in?
 			redirect_to root_path
 		else
-			if !request.subdomain.present?
-				redirect_to root_path
-			else
+			
 				id = params[:id_publicidad]
 				@publicidad = Publicidad.where("id = ?", id).first	
 				render "publicidads/edit"
-			end
+
 		end
 	end
 
@@ -92,9 +108,28 @@ class PublicidadsController < ApplicationController
 	   end
 	end
 
+	def interaccion_social
+		if !usuario_signed_in?
+			redirect_to root_path
+		else
+			
+			id = params[:id_publicidad]
+			autenticacion = OrganizacionRedSocial.where("organizacion_id = ? AND provider = ?",@organizacion.id, "twitter").first
+			@client = Twitter::REST::Client.new do |config|
+			  config.consumer_key        = $consumer_key_twitter
+			  config.consumer_secret     = $consumer_secret_twitter
+			  config.access_token        = autenticacion.oauth_token
+			  config.access_token_secret = autenticacion.oauth_secret
+			end
+			@interaccion_socials = InteraccionSocial.where("publicidad_id = ?", id)	
+			render "publicidads/interaccion_social_publicidad"
+
+		end
+	end
+
 	private
 	 def publicidad_params
-      accessible = [ :titulo, :descripcion,  :formato_imagen, :imagen, :producto_id, :fecha_inicio , :fecha_finalizacion ] # extend with your own params
+      accessible = [ :descripcion, :producto_id, :fecha_inicio , :fecha_finalizacion ] # extend with your own params
       params.require(:publicidad).permit(accessible)
     end
 end

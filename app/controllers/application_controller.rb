@@ -2,6 +2,8 @@ require 'base64'
 require 'rubygems' 
 require 'twilio-ruby' 
 require 'authy'
+require 'rubygems'
+require 'twitter'
 $IMAGEN_DEFAULT = "app/assets/images/producto.png";
 $FOTO_DEFAULT = "app/assets/images/avatar/sinfoto.jpg";
 $LOGO_DEFAULT = "app/assets/images/header-logo.png";
@@ -14,6 +16,9 @@ Authy.api_uri = 'https://api.authy.com/'
 $account_sid = 'ACc6b076d941741f47e46dfe041bd98eed' 
 $auth_token = '4a8218fbf947e1865c470f7e2cb0d70c' 
 $twilio_number = '+18594485515'
+
+$consumer_key_twitter = 'iLW5ICM65xM9cO7npmEZRTSKz'
+$consumer_secret_twitter = 'qXwz81sGgFPC09nFu9o17vo7HEhlIna9dnJ1xVlMTr9qldWCOm' 
 
 class ApplicationController < ActionController::Base
   # Prevent CSRF attacks by raising an exception.

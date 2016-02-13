@@ -205,7 +205,44 @@ class OrganizacionsController < ApplicationController
 	end
 	
 	def editar_tema
-		rredirect_to :controller => 'organizacions', :action => 'apariencia_tema'
+		redirect_to :controller => 'organizacions', :action => 'apariencia_tema'
+	end
+
+	def contrato_show
+		if  !usuario_signed_in?
+			
+		else
+			if  params[:subdominio].present?
+				subdominio = params[:subdominio]
+			else
+				subdominio = request.subdomain
+			end
+			
+			@organizacion = Organizacion.includes(:contratos).where(["subdominio = ?", subdominio]).first
+			@usuario_organizacion = @organizacion.usuario
+			
+			render "organizacions/contrato"
+		end
+		
+	end
+
+	def pago_plan
+		if  !usuario_signed_in?
+			
+		else
+			@contrato = Contrato.new
+			@contrato.pagos.build
+			@planes = Plan.where(estatus: "A")
+			render "organizacions/pago_plan"
+		end
+		
+	end
+
+	def procesar_pago
+		@respuesta = Hash.new
+		@respuesta["codigo"] = 200
+	    @respuesta["url"] = "/organizacion/gestionplanes/informacion"
+	    render json: @respuesta
 	end
 
 	def organizacion_social_link

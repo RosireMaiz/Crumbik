@@ -79,6 +79,7 @@
        <div class="col s4" align="justify">
           <p class="no-padding">
             <b class="grey-text text-darken-3">Fecha Venc. Plan:</b>
+            <%= @organizacion.contratos[0].fecha_vencimiento.strftime("%d/%m/%Y ") %>
           </p>
 
           <p class="no-padding">

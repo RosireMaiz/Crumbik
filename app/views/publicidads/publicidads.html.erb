@@ -26,6 +26,11 @@
 </div>
 
 <div class="row pad30-h">
+  <div class="fixed-action-btn " style="top: 250px; bottom: 0px">
+    <a href="/productos/publicidad/agregar" class="btn-floating btn-sm waves-effect waves-light red left absolute tooltipped" style="margin-bottom: 60px;" data-position="left" data-delay="50" data-tooltip="Agregar Publicidad">
+      <i class=" mdi-av-playlist-add"></i>
+    </a>
+  </div>
   <div class="col s3">
       <ul class="collapsible filtro" data-collapsible="expandable">
         <li>
@@ -68,25 +73,18 @@
     <div class="row"> 
       <div class="col s12" align="justify">
         <% if !@publicidads.blank? %>
-          <ul class="collapsible popout" >
+          <ul class="collection" >
             <% @publicidads.each do |publicidad| %>
               <% if ! publicidad.nil? %>
-                <li>
-                  <div class="collapsible-header grey lighten-4 active ">
-                    <i class="fa fa-circle light-green-text text-accent-4 collapsible-header-org"></i>
-                    <b class="grey-text text-darken-1">
-                      <%= publicidad.titulo %>
-                    </b>
-                  </div>
-                  <div class="collapsible-body white">
-                    <div class="pad30-hv">
+                <li class="collection-item">
+
+                    <div class="">
                       <div class="row no-margin-v">
-                        <div class="row">
-                          <img class="img-responsive" src=" <%= publicidad.formato_imagen %> <%= publicidad.imagen %>">
-                        </div>
 
                         <div class="col s12 ">
-
+                          <p class="no-padding">
+                            <b class="grey-text text-darken-3">Descripción General:</b><br><%= publicidad.descripcion %>
+                          </p>
                           
                           <div class="col s6 no-padding">
                             <p class="no-padding">
@@ -104,32 +102,39 @@
                             <b class="grey-text text-darken-3">Producto:</b>
                             <%= publicidad.producto.nombre %>
                           </p>
-                          <p class="no-padding">
-                            <b class="grey-text text-darken-3">Descripción:</b>
-                            <%= publicidad.descripcion %>
-                          </p>
                           
-                          <div class="right">
-                            <a href="/publicidad/editar/<%= publicidad.id %>">
-                              Editar
-                            </a>
-                            <a href="#modal_deshabilitar<%= publicidad.id %>" class="modal-trigger " >
-                              <% if (publicidad.estatus == 'A') %>
-                                Deshabilitar
+                          
+                          <div class="secondary-content">
+                             <!-- <a href="/cliente/ver/" data-tooltip="Ver" class="tooltipped">
+                                <i class="small mdi-action-account-circle"></i>
+                              </a>-->
+                             
+                              <a href="/publicidad/editar/<%= publicidad.id %>" data-delay="50" data-tooltip="Editar" class="tooltipped">
+                                <i class="small fa fa-edit"></i>
+                              </a> 
+                               <% if (publicidad.estatus == 'A') %>
+                                <a href="#modal_deshabilitar<%= publicidad.id %>" data-position="bottom" data-delay="50" data-tooltip="Deshabilitar" class="modal-trigger tooltipped">
+                                  <i class="small mdi-content-block"></i>
+                                </a>
                               <% else %>
-                                Habilitar
-                              <%  end -%>
-                            </a>
-                            <a href="#modal_eliminar<%= publicidad.id %>" class="modal-trigger " >
-                              Eliminar
-                            </a>
+                                  <a href="#modal_deshabilitar<%= publicidad.id %>" data-position="bottom" data-delay="50" data-tooltip="Habilitar" class="modal-trigger tooltipped">
+                                  <i class="small mdi-action-done"></i>
+                              <% end -%>
+
+                
+                                <a href="#modal_eliminar<%= publicidad.id %>" data-position="bottom" data-delay="50" data-tooltip="Eliminar" class="modal-trigger tooltipped">
+                                  <i class=" small mdi-action-delete"></i>
+                                </a>
+                                 <a href="/publicidad/interaccion_social/<%= publicidad.id %>" data-tooltip="Interacción Social" class="tooltipped">
+                                <i class="small fa fa-bar-chart-o"></i>
+                              </a>
                           </div>
                         </div>
                         
                       </div>
 
                     </div>
-                  </div>
+
                 </li>
               <% end %>
             <% end %>

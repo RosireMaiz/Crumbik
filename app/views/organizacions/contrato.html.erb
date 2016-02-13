@@ -1,0 +1,207 @@
+<div class="row titulo-seccion">
+  <div class="banner banner-perfil">
+    <div class="contenedor">
+      <div class="col s6">
+        <h5 class="text-capitalize ">
+          Contrato de <%= @organizacion.nombre %>
+        </h5>
+      </div>
+      <div class="col s6 text-right ">
+        <ol class="breadcrumb">
+          <li>
+            <a href="/">Inicio</a>
+          </li>
+          <li class="active">Contratos</li>
+        </ol>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div  class="center-block row ">
+<div class="col s8 offset-s2 panel">
+    <div class="form-wizard">
+      <div class="form-body">
+        <div class="tab-content">
+          <div class="tab-pane active" id="tab4">
+            <div class="row">
+              <div class="col s8 offset-s2 ">
+                <h6 class="form-section">Datos de la cuenta</h6>
+                <div class="row no-margin-v form-group">
+                  <div class="col-md-4 right-align">
+                    <label>Nombre:</label>
+                  </div>
+                  <div class="col-md-4">
+                    <span class="form-control-static" data-display="usuario[perfil_attributes][nombres]"><%= @usuario_organizacion.perfil.nombres %></span>
+                    <span class="form-control-static" data-display="usuario[perfil_attributes][apellidos]"><%= @usuario_organizacion.perfil.apellidos %></span>
+                  </div>
+                </div>
+                <div class="row no-margin-v form-group">
+                  <div class="col-md-4 right-align">
+                    <label>Email:</label>
+                  </div>
+                  <div class="col-md-4">
+                    <span class="form-control-static" data-display="usuario[email]"><%= @usuario_organizacion.email %>
+                    </span>
+                  </div>
+                </div>
+                
+                <h6 class="form-section">Datos de la organización</h6>
+                <div class="row no-margin-v form-group">
+                  <div class="col-md-4 right-align">
+                    <label>Nombre de la organización:</label>
+                  </div>
+                  
+                  <div class="col-md-4">
+                    <span class="form-control-static" data-display="usuario[organizacion_attributes][nombre]">
+                      <%= @organizacion.nombre %>
+                    </span>
+                  </div>
+                </div>
+                <div class=" row no-margin-v form-group">
+                  <div class="col-md-4 right-align">
+                    <label>Descripción:</label>
+                  </div>
+                  
+                  <div class="col-md-4">
+                    <span class="form-control-static" data-display="usuario[organizacion_attributes][descripcion]"><%= @organizacion.descripcion %>
+                    </span>
+                  </div>
+                </div>
+                <div class="row no-margin-v  form-group">
+                  <div class="col-md-4 right-align">
+                    <label>Subdominio:</label>
+                  </div>
+                  <div class="col-md-4">
+                    <span class="form-control-static" data-display="usuario[organizacion_attributes][subdominio]">
+                      <%= @organizacion.subdominio %>.crumbik.com
+                    </span>
+                  </div>
+                </div>
+                <div class=" row no-margin-v form-group">
+                  <div class="col-md-4 right-align">
+                    <label>Tipo de Organización:</label>
+                  </div>
+                  <div class="col-md-4">
+                    <span class="form-control-static" data-display="usuario[organizacion_attributes][tipo_organizacion_id]">
+                    <%= @organizacion.tipo_organizacion.nombre %>
+                    </span>
+                  </div>
+                </div>
+               
+                <h6 class="form-section">Datos del Plan</h6>
+                <div class="row no-margin-v form-group">
+                  <div class="col-md-4 right-align">
+                    <label>Plan:</label>
+                  </div>
+                  <div class="col-md-4">
+                    <span class="form-control-static" data-display="usuario[organizacion_attributes][contratos_attributes][0][plan_id]">
+                    <%= @organizacion.contratos[0].plan.nombre %>
+                    </span>
+                  </div>
+                </div>
+                <div class="row no-margin-v form-group">
+                  <div class="col-md-4 right-align">
+                    <label>Costo del Plan:</label>
+                  </div>
+                  <div class="col-md-4">
+                    $<span class="form-control-static" id="monto_display" data-display="usuario[organizacion_attributes][contratos_attributes][0][pagos][0][monto]">
+                    <%= @organizacion.contratos[0].plan.costo %>
+                    </span>
+                  </div>
+                </div>
+                <div class="row no-margin-v form-group">
+                  <div class="col-md-4 right-align">
+                    <label>Fecha de Inicio:</label>
+                  </div>
+                  <div class="col-md-4">
+                    <span class="form-control-static" id="fecha_display" data-display="usuario[organizacion_attributes][contratos_attributes][0][fecha_vencimiento]">
+                    <%= @organizacion.contratos[0].fecha_creacion.strftime("%d/%m/%Y ") %>
+                    </span>
+                  </div>
+                </div>
+                <div class="row no-margin-v form-group">
+                  <div class="col-md-4 right-align">
+                    <label>Fecha de Finalización:</label>
+                  </div>
+                  <div class="col-md-4">
+                    <span class="form-control-static" id="fecha_display" data-display="usuario[organizacion_attributes][contratos_attributes][0][fecha_vencimiento]">
+                    <%= @organizacion.contratos[0].fecha_vencimiento.strftime("%d/%m/%Y ") %>
+                    </span>
+                  </div>
+                </div>
+                <div class="row no-margin-v form-group">
+                  <div class="col-md-4 right-align">
+                    <label>Terminos y Condiciones:</label>
+                  </div>
+                  <div class="col-md-4">
+                    <span class="form-control-static" id="fecha_display" data-display="usuario[organizacion_attributes][contratos_attributes][0][fecha_vencimiento]">
+                      <a href="/assets/Términos y condiciones de uso.pdf" class="tooltipped" data-position="bottom"  data-tooltip="Descargar" download><i class="mdi-file-cloud-download"></i> Descargar PDF</a>
+                    </span>
+                  </div>
+                </div>
+                
+                
+                <h6 class="form-section">Datos del Pago</h6>
+                <div id="form-tarjeta">
+                  <div class="row no-margin-v form-group">
+                    <div class="col-md-4 right-align">
+                      <label>Nombre del Tarjeta Habiente:</label>
+                    </div>
+                    <div class="col-md-4">
+                      <span class="form-control-static" data-display="tarjeta[nombre]">
+                      <span class="form-control-static" data-display="usuario[perfil_attributes][nombres]"><%= @usuario_organizacion.perfil.nombres %></span>
+                    <span class="form-control-static" data-display="usuario[perfil_attributes][apellidos]"><%= @usuario_organizacion.perfil.apellidos %></span>
+                      </span>
+                    </div>
+                  </div>
+                  <div class="row no-margin-v form-group">
+                    <div class="col-md-4 right-align">
+                      <label>Número de Tarjeta de Crédito:</label>
+                    </div>
+                    <div class="col-md-4">
+                      <span class="form-control-static" data-display="tarjeta[numero]">
+                      xxxx-xxxx-xxxx-58
+                      </span>
+                    </div>
+                  </div>
+                  <div class="row no-margin-v form-group">
+                    <div class="col-md-4 right-align">
+                      <label>CVC:</label>
+                    </div>
+                    <div class="col-md-4">
+                      <span class="form-control-static" data-display="tarjeta[cvc]">
+                    481
+                      </span>
+                    </div>
+                  </div>
+                  <div class="row no-margin-v form-group">
+                    <div class="col-md-4 right-align">
+                      <label>Fecha Expiración:</label>
+                    </div>
+                    <div class="col-md-4">
+                      <span class="form-control-static" data-display="tarjeta[cvc]">
+                      12/21
+                      </span>
+                    </div>
+                  </div>
+                </div>
+                <div id="form-payment" class="hide">
+                  <div class="row no-margin-v form-group">
+                    <label class="control-label col-md-4">Payment Options:</label>
+                    <div class="col-md-4">
+                      <span class="form-control-static" data-display="payment">
+                      </span>
+                    </div>  
+                  </div>
+                </div>
+              </div>
+            </div>
+             
+          </div>
+        </div>
+      </div>
+
+    </div>
+  </div>
+</div>

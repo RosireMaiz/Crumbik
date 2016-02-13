@@ -34,20 +34,24 @@ $(document).ready(function(){
     $('#form_wizard_1 .alert-success').hide();
     $('#form_wizard_1').find('.button-previous').hide();
     $('#form_wizard_1 .button-submit').hide();
+    $('#form_wizard_1 .confirmacion').hide();
     $("#campos-paypal").hide();
     $("#campos-tarjeta-credito").show();
     $("#form-payment").hide();
     $("#form-tarjeta").show();
     $("#usuario_organizacion_attributes_contratos_attributes_0_pagos_attributes_0_modo_pago_id").attr('value',1);
 
+    $("#contratos_pagos_attributes_0_modo_pago_id").attr('value',1);
+
     var idtipo = $("#usuario_organizacion_attributes_tipo_organizacion_id").val();
     var href_tipo_organizacion = "#detalle_tipo_organizacion_" + idtipo;
     $('#basic_addo_tipo_organizacion').attr("href", href_tipo_organizacion);
 
     var idplan = $("#usuario_organizacion_attributes_contratos_attributes_0_plan_id").val();
-    var href_plan = "#detalle_plan_" + idplan;
-    $('#basic_addo_plan').attr("href", href_plan);
-    var request = $.ajax({
+    if(idplan != null){
+      var href_plan = "#detalle_plan_" + idplan;
+      $('#basic_addo_plan').attr("href", href_plan);
+      var request = $.ajax({
                                   url: '/planes/consultar_plan',
                                   method: "POST",
                                   data: { idplan: idplan },
@@ -69,7 +73,37 @@ $(document).ready(function(){
                                             $("#monto_display").html(monto);
                                             $('#fecha_display').html(("0"+f.getDate()).slice(-2)+"/"+("0"+(f.getMonth()+1)).slice(-2) +"/"+f.getFullYear());
                                           }
-                            });   
+                            }); 
+    }
+      
+    var idplanpago = $("#contrato_plan_id").val();
+    if(idplanpago != null){
+      var href_plan = "#detalle_plan_" + idplanpago;
+      $('#basic_addo_plan').attr("href", href_plan);
+      var request = $.ajax({
+                                  url: '/planes/consultar_plan',
+                                  method: "POST",
+                                  data: { idplan: idplanpago },
+                                          dataType: "JSON",
+                                  success: function( data ) {
+
+                                            var mes = data.meses;
+                                            var monto = data.monto; 
+                                            var f = new Date().addMonths(parseInt(mes));
+                                            var date = f.getFullYear()+"-"+("0"+f.getMonth()+1).slice(-2)
+                                                 +"-" + ("0"+f.getDate()).slice(-2);
+                                            $("#contrato_fecha_vencimiento").attr('value',date);
+                                            $("#contrato_fecha_vencimiento").val(date);
+                                            
+                                            $("#contrato_pagos_attributes_0_monto").attr('value',monto);
+                                            $("#contrato_pagos_attributes_0_monto").val(monto);
+                                            $("#msj-frecuencia").html("El plan se renovará el "+("0"+f.getDate()).slice(-2)+"/"+("0"+(f.getMonth()+1)).slice(-2) +"/"+f.getFullYear());
+                                            $("#monto_plan").html(monto);
+                                            $("#monto_display").html(monto);
+                                            $('#fecha_display').html(("0"+f.getDate()).slice(-2)+"/"+("0"+(f.getMonth()+1)).slice(-2) +"/"+f.getFullYear());
+                                          }
+                            }); 
+    }
 
      $('#usuario_password').pwstrength({
          common: {
@@ -156,6 +190,36 @@ $(document).ready(function(){
                                             $("#usuario_organizacion_attributes_contratos_attributes_0_fecha_vencimiento").attr('value',date);
                                             $("#usuario_organizacion_attributes_contratos_attributes_0_fecha_vencimiento").val(date);
                                             $("#usuario_organizacion_attributes_contratos_attributes_0_pago_atributes_0_monto").attr('value',monto);
+                                            $("#msj-frecuencia").html("El plan se renovará el "+("0"+f.getDate()).slice(-2)+"/"+("0"+(f.getMonth()+1)).slice(-2) +"/"+f.getFullYear());
+                                            $("#monto_plan").html(monto);
+                                            $("#monto_display").html(monto);
+                                            $('#fecha_display').html(("0"+f.getDate()).slice(-2)+"/"+("0"+(f.getMonth()+1)).slice(-2) +"/"+f.getFullYear());
+                                          }
+                            });   
+             
+    });
+
+     $(".tab-pane").on("change","#contrato_plan_id",
+        function(){
+          // alert("elegiste otro plan" + $(this).val());
+            var id_plan = $(this).val();
+            var href = "#detalle_plan_" + id_plan;
+            $('#basic_addo_plan').attr("href", href);
+
+            var request = $.ajax({
+                                  url: '/planes/consultar_plan',
+                                  method: "POST",
+                                  data: { idplan: id_plan },
+                                          dataType: "JSON",
+                                  success: function( data ) {
+                                            var monto = data.monto;
+                                            var meses = data.meses;
+                                            var f = new Date().addMonths(parseInt(meses));
+                                             var date = f.getFullYear()+"-"+("0"+(f.getMonth()+1)).slice(-2)
+                                                 +"-" + ("0"+f.getDate()).slice(-2);
+                                            $("#contrato_fecha_vencimiento").attr('value',date);
+                                            $("#contrato_fecha_vencimiento").val(date);
+                                            $("#contrato_pago_atributes_0_monto").attr('value',monto);
                                             $("#msj-frecuencia").html("El plan se renovará el "+("0"+f.getDate()).slice(-2)+"/"+("0"+(f.getMonth()+1)).slice(-2) +"/"+f.getFullYear());
                                             $("#monto_plan").html(monto);
                                             $("#monto_display").html(monto);
@@ -414,10 +478,12 @@ $(document).ready(function(){
                     if (current >= total) {
                         $('#form_wizard_1').find('.button-next').hide();
                         $('#form_wizard_1').find('.button-submit').show();
+                        $('#form_wizard_1').find('.confirmacion').show();
                         displayConfirm();
                     } else {
                         $('#form_wizard_1').find('.button-next').show();
                         $('#form_wizard_1').find('.button-submit').hide();
+                        $('#form_wizard_1').find('.confirmacion').hide();
                     }
                     $('html,body').animate({
                         scrollTop: $(".steps").offset().top-60
@@ -484,6 +550,51 @@ $(document).ready(function(){
                                 $("#notificacion").html(html);
                                 $('#notificacion').openModal();
                                 setTimeout(function(){
+                                        window.location.href=response["url"]
+                                    }, 8000);
+                            }else{
+                                var html = "<div><i class='large mdi-content-clear  "+
+                                "red-text darken-2'></i></div><h5>Ha ocurrido un error al momento "+
+                                "de procesar tu suscripción</h5><p class='lead'>"+
+                                response["errores"]+"</p>"
+                                $("#notificacion").html(html);
+                                //$('#notificacion').openModal();
+                            }
+                            
+                        },
+                        "json"
+                    );
+                    return false;
+                });
+
+                   $(".confirmacion").click(function(evt){
+                    evt.preventDefault();
+                    success.show();
+                    error.hide();
+                    var data = $(form).serializeArray();
+
+                    var action = $(form).attr("action");
+                    console.log(data);
+                    //procesar pago
+                   //data[12]["tarjeta[nombre]"] = "";
+                    //data[14]["tarjeta[cvc]"] = "";
+   //                 data[15]["tarjeta[fecha_expiracion]"]  = "";
+                    var html = "<div><div class='progress'><div class='indeterminate'></div></div>"+
+                                "</div><h5>Espera mientras validamos tu pago.</h5>"
+                    $("#notificacion").html(html);
+                    $('#notificacion').openModal();
+
+                    $.post(action, 
+                        data,
+                        function(response){
+                            if(response["codigo"] == 200){
+                                var html = "<div><i class='large mdi-action-done  "+
+                                "light-blue-text darken-2'></i></div><h5>Tu pago "+
+                                "se ha realizado exitosamente</h5><p class='lead'>Gracias"+
+                                " por elegirnos.</p>"
+                                $("#notificacion").html(html);
+                                $('#notificacion').openModal();
+                               setTimeout(function(){
                                         window.location.href=response["url"]
                                     }, 8000);
                             }else{

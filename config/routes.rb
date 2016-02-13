@@ -191,6 +191,11 @@ Rails.application.routes.draw do
 
 	match "/sugerencias" => "sugerencias#consultar", via: :get
 	
+	match "/organizacion/gestionplanes/informacion" => "organizacions#contrato_show", via: :get
+	match "/organizacion/gestionplanes/pagar" => "organizacions#pago_plan", via: :get
+	match "/organizacion/procesar_pago" => "organizacions#procesar_pago", via: :post
+
+	match "/publicidad/interaccion_social/:id_publicidad" => "publicidads#interaccion_social", via: :get
 
 	devise_scope :usuario do
 	    post "/entrar" => "devise/sessions#create"

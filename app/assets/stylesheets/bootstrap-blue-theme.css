@@ -1200,3 +1200,9 @@ nav a.brand-logo {
         column-count: 3;
     }
 }
+
+    .checkbox-list input[type="checkbox"] + label {
+        width: 33% !important;
+        vertical-align: top;
+        height: inherit;
+    }

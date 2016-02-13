@@ -95,7 +95,7 @@
 							      <div class="col s12" id="rol_list">
 							        <label for="usuario[rol_ids][]">Roles:</label>
 							        <div class="checkbox-list" >
-		                                 <%= f.collection_check_boxes( :rol_ids, Rol.where("type_rol = ?", Rol.portal.to_s), :id, :nombre) %>
+		                                 <%= f.collection_check_boxes( :rol_ids, Rol.all, :id, :nombre) %>
 							        </div>
 							        <span id='usuario_rols_ids-error' class="hidden" style='text-transform: uppercase; font-size: 11px;"+ "margin-bottom: 15px;  color: #d34836; font-weight: 400;'>Debe Seleccionar un rol.</span>
 							      </div>

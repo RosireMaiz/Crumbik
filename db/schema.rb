@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20160209162108) do
+ActiveRecord::Schema.define(version: 20160213024342) do
 
   create_table "autenticacions", force: :cascade do |t|
     t.integer "usuario_id", limit: 4
@@ -95,6 +95,22 @@ ActiveRecord::Schema.define(version: 20160209162108) do
     t.integer "meses",   limit: 4
     t.string  "estatus", limit: 1,   default: "A"
   end
+
+  create_table "interaccion_socials", force: :cascade do |t|
+    t.string   "titulo",                     limit: 255
+    t.string   "descripcion",                limit: 255
+    t.string   "url",                        limit: 255
+    t.binary   "media",                      limit: 4294967295
+    t.string   "formato_media",              limit: 255
+    t.string   "type_media",                 limit: 255
+    t.integer  "organizacion_red_social_id", limit: 4
+    t.integer  "publicidad_id",              limit: 4
+    t.datetime "created_at",                                    null: false
+    t.datetime "updated_at",                                    null: false
+  end
+
+  add_index "interaccion_socials", ["organizacion_red_social_id"], name: "index_interaccion_socials_on_organizacion_red_social_id", using: :btree
+  add_index "interaccion_socials", ["publicidad_id"], name: "index_interaccion_socials_on_publicidad_id", using: :btree
 
   create_table "menus", force: :cascade do |t|
     t.integer "type_menu", limit: 4, default: 0
@@ -253,15 +269,24 @@ ActiveRecord::Schema.define(version: 20160209162108) do
 
   add_index "productos", ["categoria_id"], name: "index_productos_on_categoria_id", using: :btree
 
+  create_table "publicacion_socials", force: :cascade do |t|
+    t.integer  "id_social",             limit: 4
+    t.integer  "interaccion_social_id", limit: 4
+    t.datetime "created_at",                      null: false
+    t.datetime "updated_at",                      null: false
+  end
+
+  add_index "publicacion_socials", ["interaccion_social_id"], name: "index_publicacion_socials_on_interaccion_social_id", using: :btree
+
   create_table "publicidads", force: :cascade do |t|
-    t.string  "titulo",             limit: 255
-    t.text    "descripcion",        limit: 65535
-    t.date    "fecha_inicio"
-    t.date    "fecha_finalizacion"
-    t.string  "estatus",            limit: 1,          default: "A"
-    t.binary  "imagen",             limit: 4294967295
-    t.string  "formato_imagen",     limit: 255
-    t.integer "producto_id",        limit: 4
+    t.string   "titulo",             limit: 255
+    t.text     "descripcion",        limit: 65535
+    t.date     "fecha_inicio"
+    t.date     "fecha_finalizacion"
+    t.string   "estatus",            limit: 1,     default: "A"
+    t.integer  "producto_id",        limit: 4
+    t.datetime "created_at",                                     null: false
+    t.datetime "updated_at",                                     null: false
   end
 
   add_index "publicidads", ["producto_id"], name: "index_publicidads_on_producto_id", using: :btree
