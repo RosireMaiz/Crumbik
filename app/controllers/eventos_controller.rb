@@ -1,5 +1,22 @@
 class EventosController < ApplicationController
 
+	def new
+		if !usuario_signed_in?
+			redirect_to root_path
+		else
+			@evento = Evento.new
+				render "eventos/new"
+		
+		end
+	end
+
+	def create
+		@evento = Evento.new(evento_params)
+		@evento.usuario_id = current_usuario.id
+	    @evento.save
+	  	redirect_to :controller => 'eventos', :action => 'calendario'
+	end
+
 	def calendario
 		@alert_message = "Hola Mundo SMS =D"
 		phone_number = '+584165528455'
