@@ -112,9 +112,9 @@ jQuery(function ($) {
 					                    }
 							});
 
-  $('#add_categoria').submit(function(event){
+		  $('#add_categoria').submit(function(event){
        
-      var fields = $("input[name='categoria[variable_psicografica_ids']").serializeArray();
+      var fields = $("input[name='categorium[variable_psicografica_ids][]']").serializeArray();
         if (fields.length == 1) 
         { 
            $("#categoria_variable_ids-error").removeClass("hidden");
@@ -127,8 +127,8 @@ jQuery(function ($) {
         }
       });
 
-    $("input[name='categoria[variable_psicografica_ids']").on('change', function (){
-        var fields = $("input[name='categoria[variable_psicografica_ids']").serializeArray();
+    $("input[name='categorium[variable_psicografica_ids][]']").on('change', function (){
+        var fields = $("input[name='categorium[variable_psicografica_ids][]']").serializeArray();
         if (fields.length == 1) 
         { 
             $("#categoria_variable_ids-error").removeClass("hidden");

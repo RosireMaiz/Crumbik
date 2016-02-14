@@ -19,37 +19,102 @@
 </div>
 
 <div class="row pad30-h">
-  <div class="col s12 m4">
-    
+  <div class="col s12 m3" style="border-right: solid 1px #D0D0D0;">
+    <div>
+       <% if !@red_socials.blank? %>
+           <div class="row no-margin-v" style="border-bottom: solid 1px #E05996;">
+              <div class="col s12 m8  no-padding">
+                <h6> Cuentas </h6>
+              </div>
+              <div class="col s12 m4 no-padding right-align">
+               <a href="#!" class="btn-flat btn-sm waves-effect waves-light rigth no-padding tooltipped " data-position="bottom" data-delay="50" data-tooltip="Agregar Cuenta">
+                <i class="rigth mdi-content-add text-pink lighten-2"></i>
+              </a>
+              </div>
+           </div>
+           <table class="highlight bordered">
+
+
+            <tbody>
+              <% @red_socials.each do |red_social| %>
+
+                <% if ! red_social.nil? %>
+                  <tr>
+                    <td><a href="<%= red_social.url %>" target="_blank" class="text-pink lighten-2"> <i class="<%= red_social.red_social.icono %>"></i>  <%= red_social.red_social.nombre %> </a></td>
+                  </tr>
+                <% end -%>
+              <% end -%>
+            </tbody>
+          </table>
+       <% end -%>
+    </div>
   </div>
-  <div class="col s12 m8">
-          <table>
+  <div class="col s12 m9">
+    <% if !@interaccion_socials.blank? %>
+    <div class="row center">
+      <div class="col s6 left">
+        <h5 class="left">@<%= @cliente_twitter.user.screen_name %></h5>
+      </div>
+      <div class="col s2">
+         <h5><%= @cliente_twitter.user.statuses_count %></h5>
+         Tweets
+      </div>
+      <div class="col s2">
+        <h5><%= @cliente_twitter.user.favorites_count %></h5>
+        Favoritos
+      </div>
+      <div class="col s2">
+        <h5><%= @cliente_twitter.user.followers_count %></h5>
+         Seguidores
+      </div>
+    </div>
+    <div class="row">
+      <table class="striped">
         <thead>
           <tr>
-              <th data-field="id">Name</th>
-              <th data-field="name">Item Name</th>
-              <th data-field="price">Item Price</th>
+              <th class="center">Fecha</th>
+              <th class="center">Tweet</th>
+              <th class="center">Tipo</th>
+              <th class="center">Retweets</th>
+              <th class="center">Likes</th>
           </tr>
         </thead>
 
         <tbody>
-          <tr>
-            <td>Alvin</td>
-            <td>Eclair</td>
-            <td>$0.87</td>
-          </tr>
-          <tr>
-            <td>Alan</td>
-            <td>Jellybean</td>
-            <td>$3.76</td>
-          </tr>
-          <tr>
-            <td>Jonathan</td>
-            <td>Lollipop</td>
-            <td>$7.00</td>
-          </tr>
+          <% @publicaciones.each do |publicacion| %>
+
+            <% if ! publicacion.nil? %>
+           
+              <% interaccion = @cliente_twitter.status(publicacion.id_social) %>
+              <tr>
+
+                <td> 
+                  <%= interaccion.created_at.strftime("%d/%m/%Y") %>
+                </td>
+
+                <td> 
+                  <%= interaccion.text %>
+                </td>
+
+                 <td class="center"> 
+                    <i class="fa fa-comment"></i>
+                </td>
+
+                <td class="center"> 
+                  <%= interaccion.retweet_count %>
+                </td>
+
+                <td class="center"> 
+                  <%= interaccion.favorites_count %>
+                </td>
+               
+              </tr>
+            <% end -%>
+          <% end -%>
         </tbody>
       </table>
+      </div>
+    <% end -%>
   </div>
   
 </div>

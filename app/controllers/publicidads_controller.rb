@@ -115,13 +115,20 @@ class PublicidadsController < ApplicationController
 			
 			id = params[:id_publicidad]
 			autenticacion = OrganizacionRedSocial.where("organizacion_id = ? AND provider = ?",@organizacion.id, "twitter").first
-			@client = Twitter::REST::Client.new do |config|
+			@cliente_twitter = Twitter::REST::Client.new do |config|
 			  config.consumer_key        = $consumer_key_twitter
 			  config.consumer_secret     = $consumer_secret_twitter
 			  config.access_token        = autenticacion.oauth_token
 			  config.access_token_secret = autenticacion.oauth_secret
 			end
-			@interaccion_socials = InteraccionSocial.where("publicidad_id = ?", id)	
+			@red_socials =  OrganizacionRedSocial.includes(:red_social).where("organizacion_id = ? ", @organizacion.id)
+			@interaccion_socials = InteraccionSocial.where("publicidad_id = ?", id).first
+			@publicaciones = @interaccion_socials.publicacion_social
+			#@username = @cliente_twitter.user.name
+			
+			#@count_tweets = @cliente_twitter.user.statuses_count 
+			#@favorites_count = @cliente_twitter.user.favorites_count
+			#@followers = @cliente_twitter.user.followers_count
 			render "publicidads/interaccion_social_publicidad"
 
 		end
