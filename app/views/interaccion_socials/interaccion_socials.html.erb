@@ -3,7 +3,7 @@
     <div class="contenedor">
       <div class="col s6">
         <h5 class="text-uppercase">
-         Interacción Social de Publicidad
+         Interacción Social 
         </h5>
       </div>
       <div class="col s6 text-right ">
@@ -69,6 +69,11 @@
       </div>
     </div>
     <div class="row">
+      <div class="col s12 center-align">
+          <img src="/assets/Post2.jpg" class="img-responsive"/>
+        </div>
+    </div>
+    <div class="row">
       <table class="striped">
         <thead>
           <tr>
@@ -81,19 +86,17 @@
         </thead>
 
         <tbody>
-          <% @publicaciones.each do |publicacion| %>
+          <% @interaccion_socials.each do |interaccion_social| %>
 
-            <% if ! publicacion.nil? %>
-           
-              <% interaccion = @cliente_twitter.status(publicacion.id_social) %>
+            <% if ! interaccion_social.nil? %>
               <tr>
 
                 <td> 
-                  <%= interaccion.created_at.strftime("%d/%m/%Y") %>
+                  <%= interaccion_social.created_at.strftime("%d/%m/%Y") %>
                 </td>
 
                 <td> 
-                  <%= interaccion.text %>
+                  <%= interaccion_social.text %>
                 </td>
 
                  <td class="center"> 
@@ -101,11 +104,11 @@
                 </td>
 
                 <td class="center"> 
-                  <%= interaccion.retweet_count %>
+                  <%= interaccion_social.retweet_count %>
                 </td>
 
                 <td class="center"> 
-                  <%= interaccion.favorites_count %>
+                  <%= interaccion_social.favorites_count %>
                 </td>
                
               </tr>

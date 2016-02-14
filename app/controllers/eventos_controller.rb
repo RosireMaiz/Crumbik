@@ -18,8 +18,8 @@ class EventosController < ApplicationController
 	end
 
 	def calendario
-		@alert_message = "Hola Mundo SMS =D"
-		phone_number = '+584165528455'
+		#@alert_message = "Hola Mundo SMS =D"
+		#phone_number = '+584165528455'
 		#send_message(phone_number, @alert_message)
 		if !usuario_signed_in?
 			redirect_to root_path
@@ -63,6 +63,12 @@ class EventosController < ApplicationController
 		})
 
       	puts message.to
+    end
+
+    private
+	 def evento_params
+      accessible = [ :titulo,:descripcion, :inicio , :fin, :dia_completo ] # extend with your own params
+      params.require(:evento).permit(accessible)
     end
  
 end

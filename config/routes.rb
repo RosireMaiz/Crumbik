@@ -162,6 +162,8 @@ Rails.application.routes.draw do
 	match "/eventos" => "eventos#eventos", via: :get
 	match "/herramientas/notas" => "notas#notas", via: :get
 	match "/herramientas/calendario" => "eventos#calendario", via: :get
+	match "/evento/agregar" => "eventos#new", via: :get
+	match "/evento/crear_evento" => "eventos#create", via: :post
 
 	match "/planes" => "plans#consultar", via: :get
     match "/planes/agregar" => "plans#new", via: :get
@@ -196,6 +198,7 @@ Rails.application.routes.draw do
 	match "/organizacion/procesar_pago" => "organizacions#procesar_pago", via: :post
 
 	match "/publicidad/interaccion_social/:id_publicidad" => "publicidads#interaccion_social", via: :get
+	match "/resultados_social" => "interaccion_socials#consuta_interaccion_socials", via: :get
 
 	devise_scope :usuario do
 	    post "/entrar" => "devise/sessions#create"
