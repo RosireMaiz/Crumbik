@@ -1,0 +1,202 @@
+<div class="row titulo-seccion">
+  <div class="banner banner-perfil">
+    <div class="contenedor">
+      <div class="col s6">
+        <h5 class="text-uppercase">
+         Crear Nuevo Evento
+      </div>
+      <div class="col s6 text-right ">
+        <ol class="breadcrumb">
+          <li>
+            <a href="/">Inicio</a>
+          </li>
+          <li class="active">Crear Nuevo Evento</li>
+        </ol>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div id="form_wizard_1" class="center-block">
+  <%= form_for @evento, :url => evento_crear_evento_path, html:{id: "add_evento", class: "form-horizontal"} do |f| %>
+    <div class="form-wizard">
+      <div class="form-body steps">
+        <div class="tab-content">
+          <div class="feedback alert alert-danger display-none">
+            <button class="close" data-dismiss="alert"></button>
+            Algunos campos tienen errores. Por favor revisa abajo.
+          </div>
+          <div class="feedback alert-success display-none">
+            <button class="close" data-dismiss="alert"></button>
+            La validación fue exitosa.
+          </div>
+          <div class="tab-pane active" id="tab1">
+            <div class="row">
+              <div class="col s9 offset-s1 left">
+                <h5>Datos del Evento</h5>
+    
+                <div class="input-field col s12">
+                  <label for="evento_titulo">T&iacutetulo <span class="required">
+                  * </span>
+                  </label>
+                  <%= f.text_field :titulo, :required=>true, autocomplete: "off" %>
+                </div>
+
+                <div class="input-field col s12">
+                  <label for="evento_descripcion">Descripci&oacuten <span class="required">
+                  * </span>
+                  </label>
+                  <%= f.text_area :descripcion, :required=>true, autocomplete: "off", class: "materialize-textarea", length: "255" %>
+
+                </div>
+                <div class="row col s12">
+                  
+                   <input type="checkbox" id="evento_dia_completo" name="evento[dia_completo]" />
+                    <label for="evento_dia_completo">Dia Completo</label>
+                </div>
+                <div class="col s12 m6">
+                  <label>Fecha de Inicio <span class="required">*</span></label>
+                  <input type="date" class="datepicker" id="evento_inicio" name="evento[inicio]">
+                  <span id="evento_inicio-error_local" class="hiden msj-rojo"></span>
+                </div>
+
+                <div class="col s12 m6">
+                  <label>Fecha de Finalización <span class="required">*</span></label>
+                  <input type="date" class="datepicker" id="evento_fin" name="evento[fin]">
+                  <span id="evento_fin-error_local" class="hiden msj-rojo"></span>
+                </div>
+              </div>
+            </div>
+          </div>
+
+        </div>
+      </div>
+      <div class="form-actions">
+        <div class="row">
+          <div class="col-md-offset-3 col-md-9">
+            
+            <input type="submit" class="btn btn-success " value="Guardar">
+            <button type="button" onclick="window.location.href='/eventos'" class="btn btn-danger waves-effect">Cancelar</button>
+          </div>
+        </div>
+      </div>
+    </div>
+  <% end %>
+</div>
+
+<% content_for :javascript_personalizado do %>
+  <script type="text/javascript">
+    $(document).ready(function(){
+        $('#form_wizard_1 .alert-danger').hide();
+        $('#form_wizard_1 .alert-success').hide();
+    });
+
+  $('#evento_inicio').pickadate({
+        selectMonths: true, // Creates a dropdown to control month
+        selectYears: true, // Creates a dropdown of 15 years to control year
+        labelMonthNext: 'Próximo Mes',
+        labelMonthPrev: 'Mes Anterior',
+        labelMonthSelect: 'Selecione Mes',
+        labelYearSelect: 'Selecione Año',
+        monthsFull: [ 'Enero', 'Febrero', 'MArzo', 'Abril', 'Mayo', 'Junio', 'Julio', 'Agosto', 'Septiembre', 'Octubre', 'Noviembre', 'Diciembre' ],
+        monthsShort: [ 'Ene', 'Feb', 'Mar', 'Abr', 'May', 'Jun', 'Jul', 'Ago', 'Sep', 'Oct', 'Nov', 'Dic' ],
+        weekdaysFull: [ 'Domingo', 'Lunes', 'Martes', 'Miercoles', 'Jueves', 'Viernes', 'Sábado' ],
+        weekdaysShort: [ 'Dom', 'Lun', 'Mar', 'Mier', 'Jue', 'Vie', 'Sab' ],
+        weekdaysLetter: [ 'D', 'L', 'M', 'X', 'J', 'V', 'S' ],
+        today: 'Hoy',
+        clear: 'Limpiar',
+        close: 'Cerrar',
+        format: 'dd/mm/yyyy',
+        closeOnSelect: true,
+        closeOnClear: false,
+        onSet: function () {
+          this.close();
+          },
+
+        onClose:function(){
+
+                  var inicio = $("#evento_inicio").val();
+                  var  fin = $("#evento_fin").val();
+                  if (inicio != "" && inicio != null && fin != "" 
+                      && fin != null) {
+                      
+                      if (inicio > fin) {
+                          $("#evento_inicio-error").addClass("valid").html("");;
+                          $("#evento_inicio-error_local").removeClass("hiden").html("Ingrese una fecha menor que la fecha de finalización");
+                          $("#evento_fin-error_local").addClass("hiden").html("");
+                      } else {
+                          $("#evento_inicio-error").addClass("valid").html("");
+                          $("#evento_inicio-error_local").addClass("hiden").html("");
+                          $("#evento_fin-error_local").addClass("hiden").html("");
+                      };
+                  }
+
+                }           
+      });
+
+
+  $('#evento_fin').pickadate({
+        selectMonths: true, // Creates a dropdown to control month
+        selectYears: true, // Creates a dropdown of 15 years to control year
+        labelMonthNext: 'Próximo Mes',
+        labelMonthPrev: 'Mes Anterior',
+        labelMonthSelect: 'Selecione Mes',
+        labelYearSelect: 'Selecione Año',
+        monthsFull: [ 'Enero', 'Febrero', 'MArzo', 'Abril', 'Mayo', 'Junio', 'Julio', 'Agosto', 'Septiembre', 'Octubre', 'Noviembre', 'Diciembre' ],
+        monthsShort: [ 'Ene', 'Feb', 'Mar', 'Abr', 'May', 'Jun', 'Jul', 'Ago', 'Sep', 'Oct', 'Nov', 'Dic' ],
+        weekdaysFull: [ 'Domingo', 'Lunes', 'Martes', 'Miercoles', 'Jueves', 'Viernes', 'Sábado' ],
+        weekdaysShort: [ 'Dom', 'Lun', 'Mar', 'Mier', 'Jue', 'Vie', 'Sab' ],
+        weekdaysLetter: [ 'D', 'L', 'M', 'X', 'J', 'V', 'S' ],
+        today: 'Hoy',
+        clear: 'Limpiar',
+        close: 'Cerrar',
+        format: 'dd/mm/yyyy',
+        closeOnSelect: true,
+        closeOnClear: false,
+        onSet: function () {
+          this.close();
+          },
+
+          onClose:function(){
+                    var inicio = $("#evento_inicio").val();
+                    var  fin = $("#evento_fin").val();
+                    if (inicio != "" && inicio != null && fin != "" 
+                        && fin != null) {
+                      if (inicio > fin) {
+                          $("#evento_fin-error").addClass("valid").html("");;
+                          $("#evento_fin-error_local").removeClass("hiden").html("Ingrese una fecha mayor que la fecha de inicio");
+                          $("#evento_inicio-error_local").addClass("hiden").html("");
+                          
+                      }else{
+                          $("#evento_fin-error").addClass("valid").html("");
+                          $("#evento_inicio-error_local").addClass("hiden").html("");
+                          $("#evento_fin-error_local").addClass("hiden").html("");
+                      };
+                    }
+
+
+                  }           
+      });
+  
+      $('#add_evento').submit(function(event){
+         
+          var inicio = $("#evento_inicio").val();
+          var  fin = $("#evento_fin").val();
+         
+          if ( inicio != "" && inicio != null && fin != "" && fin != null   && inicio > fin) {
+            $("#evento_fin-error_local").removeClass("hiden").html("Ingrese una fecha mayor que la fecha de inicio");
+            $("#evento_inicio-error_local").addClass("hiden").html("");
+            $('.alert-danger').show();
+            $('.alert-success').hide();
+            $('html,body').animate({
+                scrollTop: $(".steps").offset().top-350
+            }, 'slow');
+            event.preventDefault();
+          } else {
+            $("#evento_inicio-error_local").addClass("hiden").html("");
+            $("#evento_fin-error_local").addClass("hiden").html("");
+          };
+
+      });
+  </script>
+<% end %>

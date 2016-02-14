@@ -46,9 +46,9 @@
      $('#calendar').fullCalendar({
 
       eventClick: function(calEvent, jsEvent, view) {
-
-        alert('Event: ' + calEvent.title + "id " + calEvent.id);
-       // alert('Coordinates: ' + jsEvent.pageX + ',' + jsEvent.pageY);
+         alert('Evento: ' + calEvent.title + "\n\nDescripcion: " + calEvent.description);
+        //alert('Event: ' + calEvent.title + "id " + calEvent.id);
+        // alert('Coordinates: ' + jsEvent.pageX + ',' + jsEvent.pageY);
         //alert('View: ' + view.name);
 
         // change the border color just for fun
