@@ -211,7 +211,8 @@ Rails.application.routes.draw do
 	match "/campanas_publicitaria/emails" => "actividad_publicitaria#actividad_publicitarias_email", via: :get
 	match "/campanas_publicitaria/llamadas_clientes/:id" => "actividad_publicitaria#actividad_publicitarias_llamadas_clientes", via: :get
 	match "/llamada" => "actividad_publicitaria#llamada", via: :get
-	match "/campanas_publicitaria/sms_clientes" => "actividad_publicitaria#enviar_sms", via: :get
+	match "/campanas_publicitaria/sms_clientes/:id" => "actividad_publicitaria#enviar_sms", via: :get
+	match "/campanas_publicitaria/email_clientes/:id" => "actividad_publicitaria#enviar_email", via: :get
 
 
 

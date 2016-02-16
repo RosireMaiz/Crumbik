@@ -121,8 +121,19 @@ class ActividadPublicitariaController < ApplicationController
 		if !usuario_signed_in?
         	render "portal/index"
      	else
+     		@actividad_publicitaria_detalle = ActividadPublicitariaDetalle.where(id: params[:id]).first
      		@clientes = Cliente.order('id ASC')
 	        render "actividad_publicitaria/sms"	
+     	end
+	end
+
+	def enviar_email
+		if !usuario_signed_in?
+        	render "portal/index"
+     	else
+     		@actividad_publicitaria_detalle = ActividadPublicitariaDetalle.where(id: params[:id]).first
+     		@clientes = Cliente.order('id ASC')
+	        render "actividad_publicitaria/email"	
      	end
 	end
 

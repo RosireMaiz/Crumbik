@@ -4,14 +4,14 @@
 <div class="row titulo-seccion banner banner-perfil">
   <div class="contenedor">
     <div class="col s6">
-      <h5 class="text-uppercase">Envio de SMS</h5>
+      <h5 class="text-uppercase">Envio de Email</h5>
     </div>
     <div class="col s6 text-right ">
         <ol class="breadcrumb">
           <li>
             <a href="/">Inicio</a>
           </li>
-          <li class="active">Envío SMS</li>
+          <li class="active">Envío Email</li>
         </ol>
       </div>
   </div>
@@ -19,11 +19,11 @@
 
 <div id="sms-fondo">
   <div class="sms-contenedor">
-    <div class="row no-margin-sms">
+        <div class="row no-margin-v">
       <div class="col s12 m2">
         <p class="org-sub-bold sms-contenido"> Contacto</p>
       </div>
-      <div id="telefonos" class="col s12 m10" style="text-align: left;"></div>
+      <div id="emails" class="col s12 m10" style="text-align: left;"></div>
     </div>
     <div class="col s12 m4 input-field sms-buscar"></div>
     <a href="#change_clientes" class="white-text pink accent-3 btn-sm btn-table-action tooltipped modal-trigger waves-effect" data-position="bottom" data-tooltip="Agregar Contacto" data-delay="20"><i class="fa fa-plus"></i></a>
@@ -37,7 +37,7 @@
    <a style="float:right;" class="waves-effect btn-flat modal-close"><i class="mdi-content-clear"></i></a>
                
       <div class="row">
-        <strong><legend class="text-center">Cambiar de Contacto</legend></strong>
+        <strong><legend class="text-center">Agregar de Contacto</legend></strong>
 
         <div class="col s12">
              
@@ -46,19 +46,20 @@
               <thead>
                 <tr>
                     <th>Cliente</th>
-                    <th>Teléfono</th>
+                    <th>Email</th>
                 </tr>
               </thead>
               <tbody>
                 <% @clientes.each do |cliente| %>
 
                    <% if ! cliente.nil? %>
-                      <tr data-id="<%= cliente.id %>" data-telefono="+<%= cliente.pais.codigo_telefono %><%= cliente.telefono_movil%>">
+                      <tr data-id="<%= cliente.id %>" data-email="
+                              <%= cliente.email%>">
                           <td > 
                               <%= cliente.nombres %> <%= cliente.apellidos %> 
                           </td>  
                           <td > 
-                              +<%= cliente.pais.codigo_telefono %><%= cliente.telefono_movil%>
+                              <%= cliente.email%>
                           </td>  
                       </tr>
                     <% end %>
@@ -94,10 +95,9 @@
       alert("idRol " +  idRol);
       $('#change_rol').closeModal();
     } else {
-      var idTelefono = $("#clientes").find('tbody tr.selected').attr("data-telefono");
-       $("#telefonos").append("<div class='chip'>" + idTelefono + "</div>");
-       $("#change_clientes").closeModal();
-    
+      var idemail = $("#clientes").find('tbody tr.selected').attr("data-email");
+       $("#emails").append("<div class='chip'>" + idemail + "</div>");
+        $("#change_clientes").closeModal();
     };
   });
 
