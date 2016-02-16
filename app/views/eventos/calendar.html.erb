@@ -46,14 +46,10 @@
      $('#calendar').fullCalendar({
 
       eventClick: function(calEvent, jsEvent, view) {
-         alert('Evento: ' + calEvent.title + "\n\nDescripcion: " + calEvent.description);
-        //alert('Event: ' + calEvent.title + "id " + calEvent.id);
-        // alert('Coordinates: ' + jsEvent.pageX + ',' + jsEvent.pageY);
-        //alert('View: ' + view.name);
-
-        // change the border color just for fun
-        //$(this).css('border-color', 'red');
-
+         var html = "<h4>"+ calEvent.title + "</h4>" + "<p>" + calEvent.description + "</p>";
+        $('#modal1 > .modal-content').html(html);
+        $('#modal1').openModal();
+        // alert('Evento: ' + calEvent.title + "\n\nDescripcion: " + calEvent.description);
         },
         header: {
           left: 'prev,next today',
@@ -70,6 +66,16 @@
       }
     ],
     });
-  </script>
 
+</script>
+<!-- Modal Structure -->
+  <div id="modal1" class="modal modal-fixed-footer">
+    <div class="modal-content">
+  </div>
+      <div class="modal-footer">
+        <input class="btn btn-danger btn-sm modal-close" value="Borrar" type="button">
+          <a href="#!" class="modal-action modal-close waves-effect waves-green btn-flat">Aceptar</a>
+      </div>
+    </div>
+    <link href='https://cdnjs.cloudflare.com/ajax/libs/jqueryui/1.11.3/jquery-ui.css' rel='stylesheet' />
 <% end %>

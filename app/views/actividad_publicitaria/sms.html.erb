@@ -1,0 +1,26 @@
+<% content_for :css_personalizado do %>
+   <%= stylesheet_link_tag "frontend" %>
+<% end %>
+<div class="row titulo-seccion banner banner-perfil">
+  <div class="contenedor">
+    <div class="col s6">
+      <h5 class="text-uppercase">Envio de SMS</h5>
+    </div>
+    <div class="col s6 text-right ">
+        <ol class="breadcrumb">
+          <li>
+            <a href="/">Inicio</a>
+          </li>
+          <li class="active">Envío SMS</li>
+        </ol>
+      </div>
+  </div>
+</div>
+
+<div id="sms-fondo">
+  <div class="sms-contenedor">
+    <p class="org-sub-bold sms-contenido"> Contacto</p>
+    <div class="col s12 m4 input-field sms-buscar"></div>
+    <a href="/" class="white-text pink accent-3 btn-sm btn-table-action tooltipped waves-effect" data-position="bottom" data-tooltip="Agregar Contacto" data-delay="20"><i class="fa fa-plus"></i></a>
+  </div>
+</div>
