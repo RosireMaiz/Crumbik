@@ -117,6 +117,15 @@ class ActividadPublicitariaController < ApplicationController
 	   end
 	end
 
+	def enviar_sms
+		if !usuario_signed_in?
+        	render "portal/index"
+     	else
+
+	        render "actividad_publicitaria/sms"	
+     	end
+	end
+
 	private
 	 def actividad_publicitaria_params
       accessible = [ :titulo, :descripcion, :producto_id, :inicio , :fin ] # extend with your own params
