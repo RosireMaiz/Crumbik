@@ -1,0 +1,123 @@
+.end-call-botton{
+  position: absolute;
+  bottom: 50px;
+  left: 45%;
+  width: 55px;
+  height: 55px;
+  border-radius: 50%;
+  background: #E91E63;
+  color: #FFF;
+  text-align: center;
+  padding-top: 12px;
+}
+.actions-menu{
+  position: absolute;
+  right: 30px;
+}
+.convo{
+  padding: 25px 60px 30px;
+}
+.convo li{
+  margin: 10px 0px;
+}
+.convo .text{
+  min-height: 40px;
+  display: inline-block;
+  vertical-align: bottom;
+
+}
+.convo .avatar{
+  width: 40px;
+}
+#card-container{
+  position: relative;
+  height: 650px;
+}
+.contactPic {
+  width: 180px;
+  height: 180px;
+  border-radius: 50%;
+  position: absolute;
+  top: 25%;
+  left: 51%;
+  margin-top: -40px;
+  margin-left: -100px;
+  z-index: 30;
+  /*background: url('http://i.imgur.com/MNOyFyi.png') center center;*/
+  /* Transparent ver NOT for use at the moment*/
+  background: rgb(233, 30, 99);
+  background:url('img/Untitled-1.png') no-repeat; 
+  background-size: contain;
+  border: 10px solid rgb(233, 30, 99);
+  /*box-shadow: 
+    -45px -45px 0 -40px white,
+     45px  45px 0 -40px white;*/
+  /*x y blur width color */
+ /* -webkit-animation: pulse 3s infinite;
+  animation: pulse 3s infinite;*/
+}
+.contactPic:before {
+  content: '';
+  width: 100%;
+  position: absolute;
+  top: 360px;
+  left: 0%;
+  font-weight: bold;
+  font-size: 16pt;
+  text-align: center;
+  color: white;
+  border-radius: 50%;
+  height: 100%;
+  z-index: 48;
+  box-shadow: 
+    0 -360px 0 15px rgba(233, 30, 99, 0.31),
+    0 -360px 0 45px rgba(233, 30, 99, 0.31),
+    0 -360px 0 80px rgba(233, 30, 99, 0.31);
+  -webkit-animation: nameAlign 3s infinite;
+  animation: nameAlign 3s infinite;
+}
+.contactPic:after {
+  content: 'RINGING';
+  width: 100%;
+  height: 100%;
+  top: 230px;
+  position: absolute;
+  color: rgb(233, 30, 99);
+  text-align: center;
+  -webkit-animation: typeAlign 3s infinite;
+  animation: typeAlign 3s infinite;
+}
+@keyframes pulse {
+  30% {
+    width:300px; height:300px;
+    top:calc(50% - 40px); left:calc(50% - 45px);
+    /* Makes it more smooth but messes up z-index
+    -webkit-transform: translate(-25px, -25px);
+    transform:translate(-25px, -25px);*/
+    /*border:25px solid white;
+    box-shadow: 
+      -35px -35px 0 -25px white,
+       35px  35px 0 -25px white;*/
+  }
+  40% {
+    width:300px; height:300px;
+    top:calc(50% - 40px); left:calc(50% - 45px);
+    /* Makes it more smooth but messes up z-index
+    -webkit-transform: translate(-25px, -25px);
+    transform:translate(-25px, -25px);*/
+    /*border:25px solid white;
+    box-shadow: 
+      -35px -35px 0 -25px white,
+       35px  35px 0 -25px white;*/
+  }
+}
+@keyframes nameAlign { 
+  30%,40% {  -webkit-transform:translateY(20px); transform:translateY(20px); }
+  50% {
+    box-shadow: 
+      0 -365px 0 0px rgba(255,255,255,.2),
+      0 -365px 0 0px rgba(255,255,255,.2),
+      0 -365px 0 0px rgba(255,255,255,.2)
+  }
+}
+@keyframes typeAlign { 30%,40% {  -webkit-transform:translateY(20px); transform:translateY(20px); } }

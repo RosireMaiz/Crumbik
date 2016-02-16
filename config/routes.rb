@@ -206,10 +206,11 @@ Rails.application.routes.draw do
 	match "/campanas_publicitaria/consultar"  =>  "actividad_publicitaria#consultar", via: :get
 	match "/actividad_publicitaria/agregar" => "actividad_publicitaria#new", via: :get
 	match "/actividad_publicitaria/crear_actividad_publicitaria" => "actividad_publicitaria#create", via: :post
-
-
-
-
+	match "/campanas_publicitaria/envio_sms" => "actividad_publicitaria#actividad_publicitarias_sms", via: :get
+	match "/campanas_publicitaria/llamadas" => "actividad_publicitaria#actividad_publicitarias_llamadas", via: :get
+	match "/campanas_publicitaria/emails" => "actividad_publicitaria#actividad_publicitarias_email", via: :get
+	match "/campanas_publicitaria/llamadas_clientes/:id" => "actividad_publicitaria#actividad_publicitarias_llamadas_clientes", via: :get
+	match "/llamada" => "actividad_publicitaria#llamada", via: :get
 
 
 

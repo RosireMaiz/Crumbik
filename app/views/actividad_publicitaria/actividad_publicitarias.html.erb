@@ -83,7 +83,7 @@
 
                         <div class="col s12 ">
                           <p class="no-padding">
-                            <b class="grey-text text-darken-3">Descripción General:</b><br><%= actividad_publicitaria.descripcion %>
+                            <h5 class="pink-text text-darken-3 no-margin-v"><%= actividad_publicitaria.descripcion %></h5><br><%= actividad_publicitaria.descripcion %>
                           </p>
                           
                           <div class="col s6 no-padding">
@@ -102,31 +102,35 @@
                             <b class="grey-text text-darken-3">Producto:</b>
                             <%= actividad_publicitaria.producto.nombre %>
                           </p>
+                           <p class="no-padding">
+                           <b class="grey-text text-darken-3">Actividades Publicitarias:</b>
+                           <% if ! actividad_publicitaria.actividad_publicitaria_detalle.nil?  %>
+                              <ul  class='list-inline'> 
+                                <% actividad_publicitaria.actividad_publicitaria_detalle.each do |actividad_publicitaria_detalle| %>
+                                    <% if  actividad_publicitaria_detalle.sms? %>
+                                       <li> <span style="padding-bottom: 5px;"><a href="#!"  id="<%= ActividadPublicitariaDetalle.type_actividads["sms"] %> " class="red-social-add light-blue tooltipped" data-tooltip="SMS"><i class="fa fa-comments"></i></a></span> </li>
+                                       <% end -%>
+                                    <%  if  actividad_publicitaria_detalle.llamada? %>
+                                      <li> <span style="padding-bottom: 5px;"><a href="#!"  id="<%= ActividadPublicitariaDetalle.type_actividads["llamada"] %> " class="red-social-add  light-blue tooltipped" data-tooltip="Llamadas"><i class="mdi-notification-phone-in-talk "></i></a></span> </li>
+                                      <% end -%>
+                                    <%  if  actividad_publicitaria_detalle.email? %>
+                                       <li> <span style="padding-bottom: 5px;"><a href="#!"  id="<%= ActividadPublicitariaDetalle.type_actividads["email"] %>" class="red-social-add light-blue tooltipped" data-tooltip="Email"><i class="  mdi-communication-email "></i></a></span> </li>
+                                    <% end -%>
+                                      
+                                <% end %>
+                              </ul>
+                            <% end %>
+                                                      
+                          </p>
                           
                           
                           <div class="secondary-content">
-                             <!-- <a href="/cliente/ver/" data-tooltip="Ver" class="tooltipped">
-                                <i class="small mdi-action-account-circle"></i>
-                              </a>-->
-                             
-                              <a href="/actividad_publicitaria/editar/<%= actividad_publicitaria.id %>" data-delay="50" data-tooltip="Editar" class="tooltipped">
+                              <a href="#!" data-delay="50" data-tooltip="Editar" class="tooltipped">
                                 <i class="small fa fa-edit"></i>
-                              </a> 
-                               <% if (actividad_publicitaria.estatus == 'A') %>
-                                <a href="#modal_deshabilitar<%= actividad_publicitaria.id %>" data-position="bottom" data-delay="50" data-tooltip="Deshabilitar" class="modal-trigger tooltipped">
-                                  <i class="small mdi-content-block"></i>
-                                </a>
-                              <% else %>
-                                  <a href="#modal_deshabilitar<%= actividad_publicitaria.id %>" data-position="bottom" data-delay="50" data-tooltip="Habilitar" class="modal-trigger tooltipped">
-                                  <i class="small mdi-action-done"></i>
-                              <% end -%>
-
-                
-                                <a href="#modal_eliminar<%= actividad_publicitaria.id %>" data-position="bottom" data-delay="50" data-tooltip="Eliminar" class="modal-trigger tooltipped">
+                              </a>                 
+                                <a href="#!" data-position="bottom" data-delay="50" data-tooltip="Eliminar" class="modal-trigger tooltipped">
                                   <i class=" small mdi-action-delete"></i>
                                 </a>
-                                 <a href="/actividad_publicitaria/interaccion_social/<%= actividad_publicitaria.id %>" data-tooltip="Interacción Social" class="tooltipped">
-                                <i class="small fa fa-bar-chart-o"></i>
                               </a>
                           </div>
                         </div>
@@ -140,44 +144,10 @@
             <% end %>
           </ul> <!-- Fin collapse actividad_publicitarias -->
 
-          <div class="row valign-wrapper">
-            <%= paginate(@actividad_publicitarias) %>
-          </div>
-
           <% @actividad_publicitarias.each do |actividad_publicitaria| %>
             <% if ! actividad_publicitaria.nil? %>
 
-              <div id="modal_deshabilitar<%= actividad_publicitaria.id %>" class="modal">
-                <div class="modal-content">
-                  <a href="#" style="float:right;" class="waves-effect btn-flat modal-close"><i class="mdi-content-clear"></i></a>
-                  <% if (actividad_publicitaria.estatus == 'A') %>
-                  <h5>Deshabilitar actividad_publicitaria</h5>
-                  <% else %>
-                  <h5>Habilitar actividad_publicitaria</h5>
-                  <% end %>
-
-
-                  <div class="row" style="padding-top: 35px;">
-                    <div class="col s12 text-center">
-                    <% if (actividad_publicitaria.estatus == 'A') %>
-                      <h6 style=" font-size: 20px;"> ¿Seguro que desea Deshabilitar la Campaña Publicitaria seleccionada?</h6>
-                      <% else %>
-                      <h6 style=" font-size: 20px;"> ¿Seguro que desea Habilitar la Campaña Publicitaria  seleccionada? </h6>
-                      <% end %>
-                      <div style="padding-top: 35px;" class="right">
-                        <% if (actividad_publicitaria.estatus == 'A') %>
-                          <input type="button" class="btn btn-success btn-sm" value="Aceptar" onclick="update_estatus(<%= actividad_publicitaria.id %>,'I')">
-                        <% else %>
-                          <input type="button" class="btn btn-success btn-sm" value="Aceptar" onclick="update_estatus(<%= actividad_publicitaria.id %>,'A')">
-                        <% end %>
-                         <input type="button" class="btn btn-danger btn-sm modal-close" value="Cancelar">
-                      </div>
-
-                    </div>
-                  </div>                
-                </div>
-              </div> 
-
+            
               <div id="modal_eliminar<%= actividad_publicitaria.id %>"class="modal">
                 <div class="modal-content">
                   <a style="float:right;" class="waves-effect btn-flat modal-close"><i class="mdi-content-clear"></i></a>

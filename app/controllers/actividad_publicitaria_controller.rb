@@ -16,19 +16,39 @@ class ActividadPublicitariaController < ApplicationController
 
 	def create
 		actividad_publicitaria = ActividadPublicitarium.new(actividad_publicitaria_params)
+	    
 	    actividad_publicitaria.save
 
  		if !params[:contenido_sms].blank?
  			contenido_sms = params[:contenido_sms]
-	 		sms = contenido_sms.to_s 
-			actividad_publicitaria_detalle = ActividadPublicitariaDetalles.new
+ 			url_sms = params[:url_sms]
+ 			contenido = contenido_sms.to_s + " " + url_sms.to_s
+			actividad_publicitaria_detalle = ActividadPublicitariaDetalle.new
 		    actividad_publicitaria_detalle.contenido = contenido_sms
-		    actividad_publicitaria_detalle.type_actividad = ActividadPublicitariaDetalles.type_actividad[:sms]
-		    actividad_publicitaria_detalle.actividad_publicitaria_id = actividad_publicitaria.id
+		    actividad_publicitaria_detalle.type_actividad = ActividadPublicitariaDetalle.type_actividads[:sms]
+		    actividad_publicitaria_detalle.campanna_id = actividad_publicitaria.id
 		    actividad_publicitaria_detalle.save
  		end
-		
-	 	redirect_to :controller => 'publicidads', :action => 'consultar'
+		if !params[:asunto_llamada].blank?
+ 			asunto_llamada = params[:asunto_llamada]
+			actividad_publicitaria_detalle = ActividadPublicitariaDetalle.new
+		    actividad_publicitaria_detalle.contenido = asunto_llamada.to_s
+		    actividad_publicitaria_detalle.type_actividad = ActividadPublicitariaDetalle.type_actividads[:llamada]
+		    actividad_publicitaria_detalle.campanna_id = actividad_publicitaria.id
+		    actividad_publicitaria_detalle.save
+ 		end
+
+ 		if !params[:contenido_email].blank?
+ 			contenido_email = params[:contenido_email]
+	 		asunto_email = params[:asunto_email]
+	 		contenido =  asunto_email.to_s + "*e*e*u*" + contenido_email.to_s
+			actividad_publicitaria_detalle = ActividadPublicitariaDetalle.new
+		    actividad_publicitaria_detalle.contenido = contenido
+		    actividad_publicitaria_detalle.type_actividad = ActividadPublicitariaDetalle.type_actividads[:email]
+		    actividad_publicitaria_detalle.campanna_id = actividad_publicitaria.id
+		    actividad_publicitaria_detalle.save
+ 		end
+	 	redirect_to :controller => 'actividad_publicitaria', :action => 'consultar'
 	end
 	
 	def consultar
@@ -41,20 +61,50 @@ class ActividadPublicitariaController < ApplicationController
      	end
 	end
 
-	
-
-	def update_estatus
-
-		id = params[:actividad_publicitaria_id]
-		puts "id " + id.to_s
-		estatus = params[:estatus]
-		if ActividadPublicitarium.update(id, :estatus => estatus)
-			render :text =>'{ "success" : "true"}'
-		else
-			render :text => '{ "success" : "false"}'
-		end
+	def actividad_publicitarias_sms
+		if !usuario_signed_in?
+        	render "portal/index"
+     	else
+	        @actividad_publicitaria_detalle = ActividadPublicitariaDetalle.where(type_actividad: ActividadPublicitariaDetalle.type_actividads[:sms]).order('id ASC')
+	        render "actividad_publicitaria/actividad_publicitarias_sms"	
+     	end
 	end
 
+	def actividad_publicitarias_llamadas
+		if !usuario_signed_in?
+        	render "portal/index"
+     	else
+	        @actividad_publicitaria_detalle = ActividadPublicitariaDetalle.where(type_actividad: ActividadPublicitariaDetalle.type_actividads[:llamada]).order('id ASC')
+	        render "actividad_publicitaria/actividad_publicitarias_llamadas"	
+     	end
+	end
+
+	def actividad_publicitarias_llamadas_clientes
+		if !usuario_signed_in?
+        	render "portal/index"
+     	else
+	        @actividad_publicitaria_detalle = ActividadPublicitariaDetalle.where(id: params[:id]).first
+	        @clientes = Cliente.order('id ASC')
+	        render "actividad_publicitaria/actividad_publicitarias_llamadas_clientes"	
+     	end
+	end
+
+	def llamada
+		if !usuario_signed_in?
+        	render "portal/index"
+     	else
+	        render "actividad_publicitaria/llamada"	
+     	end
+	end
+
+	def actividad_publicitarias_email
+		if !usuario_signed_in?
+        	render "portal/index"
+     	else
+	        @actividad_publicitaria_detalle = ActividadPublicitariaDetalle.where(type_actividad: ActividadPublicitariaDetalle.type_actividads[:email]).order('id ASC')
+	        render "actividad_publicitaria/actividad_publicitarias_email"	
+     	end
+	end
 
 	def eliminar
 		id = params[:actividad_publicitaria_id]
@@ -67,11 +117,9 @@ class ActividadPublicitariaController < ApplicationController
 	   end
 	end
 
-
-
 	private
 	 def actividad_publicitaria_params
-      accessible = [ :descripcion, :producto_id, :inicio , :fin ] # extend with your own params
+      accessible = [ :titulo, :descripcion, :producto_id, :inicio , :fin ] # extend with your own params
       params.require(:actividad_publicitarium).permit(accessible)
     end
 end

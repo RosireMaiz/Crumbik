@@ -1,7 +1,7 @@
 class CreateActividadPublicitariaDetalles < ActiveRecord::Migration
   def change
     create_table :actividad_publicitaria_detalles do |t|
-      t.string :contenido
+      t.text :contenido
       t.integer :type_actividad, default: 0
       t.references :campanna, index: true
 
