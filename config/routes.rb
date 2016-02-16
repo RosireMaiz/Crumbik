@@ -199,6 +199,11 @@ Rails.application.routes.draw do
 
 	match "/publicidad/interaccion_social/:id_publicidad" => "publicidads#interaccion_social", via: :get
 	match "/resultados_social" => "interaccion_socials#consuta_interaccion_socials", via: :get
+	match "/interaccion_social" => "interaccion_socials#consuta_interaccion_socials", via: :get
+	match "/publicidad_social" => "publicidads#consultar", via: :get
+
+	match "/mercadeo/actividades_publicitarias" =>  "actividad_publicitaria#consultar", via: :get
+	match "/campanas_publicitaria/consultar"  =>  "actividad_publicitaria#consultar", via: :get
 
 	devise_scope :usuario do
 	    post "/entrar" => "devise/sessions#create"

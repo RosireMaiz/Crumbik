@@ -39,18 +39,11 @@ class TipoClientesController < ApplicationController
         	render "portal/index"
      	else
 
-	        @rol =  Rol.where(nombre: 'Empresario')
 	        
-	        @usuarioRol = UsuarioRol.where(usuario_id: current_usuario.id, rol_id: current_usuario.rol_actual.id) 
-
-	        if @usuarioRol[0] == nil or @rol[0].id != current_usuario.rol_actual.id
-	          render root_path
-	        else
 	           @tipo_clientes = TipoCliente.order('id ASC')
 	           @valor = true;
 	           render "tipo_clientes/tipo_clientes"	
-	        end
-         
+
      	end
 	end
 	

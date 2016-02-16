@@ -3,7 +3,7 @@
 -- http://www.phpmyadmin.net
 --
 -- Servidor: 127.0.0.1
--- Tiempo de generación: 13-02-2016 a las 18:34:05
+-- Tiempo de generación: 16-02-2016 a las 01:33:20
 -- Versión del servidor: 5.6.21-log
 -- Versión de PHP: 5.6.3
 
@@ -19,6 +19,38 @@ SET time_zone = "+00:00";
 --
 -- Base de datos: `crumbik`
 --
+
+-- --------------------------------------------------------
+
+--
+-- Estructura de tabla para la tabla `actividad_publicitaria`
+--
+
+CREATE TABLE IF NOT EXISTS `actividad_publicitaria` (
+`id` int(11) NOT NULL,
+  `titulo` varchar(255) COLLATE utf8_unicode_ci DEFAULT NULL,
+  `descripcion` varchar(255) COLLATE utf8_unicode_ci DEFAULT NULL,
+  `inicio` date DEFAULT NULL,
+  `fin` date DEFAULT NULL,
+  `producto_id` int(11) NOT NULL,
+  `created_at` datetime NOT NULL,
+  `updated_at` datetime NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
+
+-- --------------------------------------------------------
+
+--
+-- Estructura de tabla para la tabla `actividad_publicitaria_detalles`
+--
+
+CREATE TABLE IF NOT EXISTS `actividad_publicitaria_detalles` (
+`id` int(11) NOT NULL,
+  `contenido` varchar(255) COLLATE utf8_unicode_ci DEFAULT NULL,
+  `type_actividad` int(11) DEFAULT '0',
+  `campanna_id` int(11) DEFAULT NULL,
+  `created_at` datetime NOT NULL,
+  `updated_at` datetime NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 
 -- --------------------------------------------------------
 
@@ -271,7 +303,7 @@ CREATE TABLE IF NOT EXISTS `opcion_menus` (
   `menu_id` int(11) DEFAULT NULL,
   `icono` varchar(255) COLLATE utf8_unicode_ci DEFAULT NULL,
   `orden` int(11) DEFAULT NULL
-) ENGINE=InnoDB AUTO_INCREMENT=174 DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=178 DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 
 --
 -- Volcado de datos para la tabla `opcion_menus`
@@ -295,15 +327,13 @@ INSERT INTO `opcion_menus` (`id`, `nombre`, `raiz`, `url`, `padre_id`, `menu_id`
 (25, 'Información', 0, '/organizacion/gestionplanes/informacion', 23, 2, 'fa fa-info-circle', 2),
 (26, 'Catalogos', 1, '/productos', 0, 2, 'fa fa-cart-plus ', 3),
 (28, 'Productos/Servicios', 0, '/productos/consultar', 26, 2, 'fa fa-search', 2),
-(29, 'Categorias', 0, '/productos/categorias', 26, 2, 'fa fa-server', 3),
-(30, 'Agregar', 0, '/productos/categorias/agregar', 29, 2, 'fa fa-plus-square-o ', 1),
-(31, 'Consultar', 0, '/productos/categorias/consultar', 29, 2, 'fa fa-eye', 2),
+(29, 'Categorias', 1, '/productos/categorias/consultar', 26, 2, 'fa fa-server', 3),
 (35, 'Usuarios/Clientes', 1, '/UsuariosRoles', 0, 2, 'fa fa-users', 4),
 (36, 'Usuarios', 0, '/usuarios_portal', 35, 2, 'fa fa-user-plus', 1),
 (37, 'Clientes', 0, '/clientes', 35, 2, 'fa fa-unlink', 2),
 (38, 'Mercadeo', 1, '/mercadeo', 0, 2, 'fa fa-share-alt-square ', 6),
 (39, 'Variables Psicograficas', 0, '/mercadeo/variablespsicograficas/consultar', 38, 2, 'fa fa-thumbs-o-up', 1),
-(42, 'Actividades publicitarias', 0, '/mercadeo/campañas', 38, 2, 'fa fa-bullhorn ', 2),
+(42, 'Campañas publicitarias', 0, '/mercadeo/actividades_publicitarias', 38, 2, 'fa fa-bullhorn ', 2),
 (48, 'herramientas', 1, '/herramientas', 0, 2, 'fa fa-wrench', 7),
 (49, 'Calendario', 0, '/herramientas/calendario', 48, 2, 'fa fa-calendar', 1),
 (50, 'Notas', 0, '/herramientas/notas', 48, 2, 'fa fa-file', 2),
@@ -321,7 +351,7 @@ INSERT INTO `opcion_menus` (`id`, `nombre`, `raiz`, `url`, `padre_id`, `menu_id`
 (64, 'Portal', 0, '/organizacion/apariencia/portal', 22, 2, 'fa fa-desktop', 1),
 (65, 'Tipos de Organizaciones', 0, '/tipos_organizaciones', 55, 1, 'fa fa-briefcase', 2),
 (66, 'Perfil Organización', 0, '/organizacion/consultar', 0, 3, 'fa fa-university', 1),
-(67, 'Productos/Servicios', 0, '/productos', 0, 3, 'fa fa-language', 1),
+(67, 'Mercadeo', 1, '/productos', 0, 3, 'fa fa-language', 1),
 (68, 'Gestión Publicitaria', 1, '/gestion_publicitaria ', 0, 3, 'fa fa-bullhorn', 1),
 (69, 'Herramientas', 0, '/herramientas', 0, 3, 'fa fa-wrench', 1),
 (70, 'Calendario', 0, '/herramientas/calendario', 69, 3, 'fa fa-calendar', 1),
@@ -409,7 +439,11 @@ INSERT INTO `opcion_menus` (`id`, `nombre`, `raiz`, `url`, `padre_id`, `menu_id`
 (170, 'Modificar Perfil', 0, '/usuarios/editar', 168, 13, 'fa fa-pencil', 1),
 (171, 'Preguntas Frecuentes', 0, '/preguntas_frecuentes', 0, 14, 'fa fa-question-circle', 1),
 (172, 'Chat', 0, '#!', 0, 14, 'fa fa-comments', 1),
-(173, 'Contáctanos', 0, '/contactanos', 0, 14, 'fa fa-exchange', 1);
+(173, 'Contáctanos', 0, '/contactanos', 0, 14, 'fa fa-exchange', 1),
+(174, 'Productos/Servicios', 0, '/productos/consultar', 67, 3, 'fa fa-shopping-cart', 1),
+(175, 'Categorias', 0, '/productos/categorias/consultar', 29, 3, 'fa fa-server', 1),
+(176, 'Categorias', 0, '/productos/categorias/consultar', 67, 3, 'fa fa-list', 1),
+(177, 'Variables Psicograficas', 0, '/mercadeo/variablespsicograficas/consultar', 67, 3, 'fa fa-thumbs-o-up', 1);
 
 -- --------------------------------------------------------
 
@@ -1028,7 +1062,9 @@ INSERT INTO `schema_migrations` (`version`) VALUES
 ('20160209155824'),
 ('20160209162108'),
 ('20160213024138'),
-('20160213024342');
+('20160213024342'),
+('20160215022016'),
+('20160215022516');
 
 -- --------------------------------------------------------
 
@@ -1152,7 +1188,7 @@ CREATE TABLE IF NOT EXISTS `usuarios` (
 --
 
 INSERT INTO `usuarios` (`id`, `email`, `encrypted_password`, `username`, `confirmacion_email`, `pais_id`, `reset_password_token`, `reset_password_sent_at`, `remember_created_at`, `sign_in_count`, `current_sign_in_at`, `last_sign_in_at`, `current_sign_in_ip`, `current_rol_id`, `current_administrable`, `last_sign_in_ip`, `created_at`, `updated_at`) VALUES
-(1, 'rosire08@gmail.com', '$2a$10$VtE0lZB2.FwEIKLSZve8qegLsDvkjK/L4ga9ySaaG5F8OSB/uQ/wO', 'Rosiré Maiz*', 1, 232, '7e4f6a91a8f96feeea96efb55170e89c4e2ac02d2b12dd6c39c90dd75d50dc3e', '2015-10-11 22:23:28', NULL, 131, '2016-02-07 20:56:46', '2016-02-07 19:31:28', '127.0.0.1', 1, 0, '127.0.0.1', '2015-08-26 01:38:48', '2016-02-07 23:36:44'),
+(1, 'rosire08@gmail.com', '$2a$10$VtE0lZB2.FwEIKLSZve8qegLsDvkjK/L4ga9ySaaG5F8OSB/uQ/wO', 'Rosiré Maiz*', 1, 232, '7e4f6a91a8f96feeea96efb55170e89c4e2ac02d2b12dd6c39c90dd75d50dc3e', '2015-10-11 22:23:28', NULL, 132, '2016-02-15 02:05:37', '2016-02-07 20:56:46', '127.0.0.1', 1, 1, '127.0.0.1', '2015-08-26 01:38:48', '2016-02-15 02:05:51'),
 (2, 'ahewstone@gmail.com', '$2a$10$PAvg0k.Mlw.xpyRKazJCJeHaZu9E.c6toa8xMccoaZMv9qmD94/AG', 'Alejandra', 0, 232, NULL, NULL, NULL, 1, '2016-02-05 01:55:32', '2016-02-05 01:55:32', '127.0.0.1', 1, 0, '127.0.0.1', '2016-01-20 01:18:25', '2016-02-05 01:55:32'),
 (3, 'rubenbello@gmail.com', '$2a$10$NevepWS19EsMmh.Szw5ryudaviYOBA9nRi65AHAyFbV.HKBLREmh.', 'Ruben', 0, 231, NULL, NULL, NULL, 3, '2016-02-08 00:57:29', '2016-02-08 00:45:58', '127.0.0.1', 1, 1, '127.0.0.1', '2016-02-08 00:44:06', '2016-02-09 03:06:42');
 
@@ -1232,6 +1268,18 @@ CREATE TABLE IF NOT EXISTS `variable_psicograficas` (
 --
 -- Índices para tablas volcadas
 --
+
+--
+-- Indices de la tabla `actividad_publicitaria`
+--
+ALTER TABLE `actividad_publicitaria`
+ ADD PRIMARY KEY (`id`);
+
+--
+-- Indices de la tabla `actividad_publicitaria_detalles`
+--
+ALTER TABLE `actividad_publicitaria_detalles`
+ ADD PRIMARY KEY (`id`), ADD KEY `index_actividad_publicitaria_detalles_on_campanna_id` (`campanna_id`);
 
 --
 -- Indices de la tabla `autenticacions`
@@ -1466,6 +1514,16 @@ ALTER TABLE `variable_psicograficas`
 --
 
 --
+-- AUTO_INCREMENT de la tabla `actividad_publicitaria`
+--
+ALTER TABLE `actividad_publicitaria`
+MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
+--
+-- AUTO_INCREMENT de la tabla `actividad_publicitaria_detalles`
+--
+ALTER TABLE `actividad_publicitaria_detalles`
+MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
+--
 -- AUTO_INCREMENT de la tabla `autenticacions`
 --
 ALTER TABLE `autenticacions`
@@ -1529,7 +1587,7 @@ MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
 -- AUTO_INCREMENT de la tabla `opcion_menus`
 --
 ALTER TABLE `opcion_menus`
-MODIFY `id` int(11) NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=174;
+MODIFY `id` int(11) NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=178;
 --
 -- AUTO_INCREMENT de la tabla `organizacions`
 --

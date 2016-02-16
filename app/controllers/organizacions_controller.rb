@@ -18,32 +18,17 @@ class OrganizacionsController < ApplicationController
 	       	
 	       	if request.subdomain.present?
 
-	       		@rol =  Rol.where(nombre: 'Empresario')
-	        
-		        @usuarioRol = UsuarioRol.where(usuario_id: current_usuario.id, rol_id: current_usuario.rol_actual.id) 
-
-		        if @usuarioRol[0] == nil or @rol[0].id != current_usuario.rol_actual.id
-		          render "portal/index_principal"
-		        else
+	       	
 					@organizacion = Organizacion.where(["subdominio = ?", request.subdomain]).first
 		        	@organizacions = Organizacion.where(usuario_id: @organizacion.usuario_id).order('id ASC')
 					@valor = true;
-					render "organizacions/organizacions"	
-	        	end
+					render "organizacions/organizacions"
 	        	
 	       	else
-	       		@rol =  Rol.where(nombre: 'Administrador del sistema')
-	        
-		        @usuarioRol = UsuarioRol.where(usuario_id: current_usuario.id, rol_id: current_usuario.rol_actual.id) 
-
-		        if @usuarioRol[0] == nil or @rol[0].id != current_usuario.rol_actual.id
-		          render "portal/index_principal"
-		        else
+	       		
 					@organizacions = Organizacion.order('id ASC')
 					@valor = true;
-					render "organizacions/organizacions"	
-	        	end
-				
+					render "organizacions/organizacions"					
 	        end
          
      	end

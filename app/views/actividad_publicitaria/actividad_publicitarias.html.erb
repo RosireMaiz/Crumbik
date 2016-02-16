@@ -1,0 +1,253 @@
+<% content_for :css_personalizado do %>
+    <style type="text/css">
+      .dropdown-content {
+        max-height: 250px;  
+      }
+    </style>
+<% end %>
+<div class="row titulo-seccion">
+  <div class="banner banner-perfil">
+    <div class="contenedor">
+      <div class="col s6">
+        <h5 class="text-uppercase">
+         Campañas Publicitarias
+        </h5>
+      </div>
+      <div class="col s6 text-right ">
+        <ol class="breadcrumb">
+          <li>
+            <a href="/">Inicio</a>
+          </li>
+          <li class="active">Campañas Publicitarias</li>
+        </ol>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="row pad30-h">
+  <div class="fixed-action-btn " style="top: 250px; bottom: 0px">
+    <a href="/actividad_publicitaria/agregar" class="btn-floating btn-sm waves-effect waves-light red left absolute tooltipped" style="margin-bottom: 60px;" data-position="left" data-delay="50" data-tooltip="Agregar Campaña Publicitaria">
+      <i class=" mdi-av-playlist-add"></i>
+    </a>
+  </div>
+  <div class="col s3">
+      <ul class="collapsible filtro" data-collapsible="expandable">
+        <li>
+          <div class="collapsible-header active  grey lighten-4">
+            <i class="fa fa-calendar fa-2x deep-purple-text text-darken-1"></i>
+            <span class="deep-purple-text text-darken-1">Fecha</span>
+          </div>
+          <div class="collapsible-body white">
+            <div style = " display: table; width : 100%;">
+
+              <div class="input-field col s6">
+                <input id="Desde" type="date" class="datepicker">
+                <label for="Desde" class = "morado">Inicio</label>
+
+              </div>
+
+              <div class="input-field col s6">
+                <input id="Hasta" type="date" class="datepicker">
+                <label for="Hasta" class = "morado">Fin</label>
+              </div>
+
+            </div>
+            <a class="waves-effect waves-light btn z-depth-1 espacio pink accent-3" style = " margin-left: 27px;">Buscar </a>
+          </div>
+        </li>
+      </ul>
+  </div>
+
+  <div class="col s9">
+    <div class="row no-margin-v">
+      <div class="input-field col m6 s12">
+       <select id="select" name="rol" >
+            <option value="-1" selected>Elija un Producto</option>
+            <%= options_from_collection_for_select(Producto.all, :id, :nombre) %>
+        </select>
+        <label>Producto</label>
+      </div>
+    </div>
+
+    <div class="row"> 
+      <div class="col s12" align="justify">
+        <% if !@actividad_publicitarias.blank? %>
+          <ul class="collection" >
+            <% @actividad_publicitarias.each do |actividad_publicitaria| %>
+              <% if ! actividad_publicitaria.nil? %>
+                <li class="collection-item">
+
+                    <div class="">
+                      <div class="row no-margin-v">
+
+                        <div class="col s12 ">
+                          <p class="no-padding">
+                            <b class="grey-text text-darken-3">Descripción General:</b><br><%= actividad_publicitaria.descripcion %>
+                          </p>
+                          
+                          <div class="col s6 no-padding">
+                            <p class="no-padding">
+                              <b class="grey-text text-darken-3">Fecha de inicio:</b>
+                              <%= actividad_publicitaria.inicio.strftime("%d/%m/%Y ") %>
+                            </p>
+                          </div>
+                          <div class="col s6 no-padding">
+                            <p class="no-padding">
+                              <b class="grey-text text-darken-3">Fecha de vencimiento:</b>
+                              <%= actividad_publicitaria.fin.strftime("%d/%m/%Y ") %>
+                            </p>
+                          </div>
+                          <p class="no-padding">
+                            <b class="grey-text text-darken-3">Producto:</b>
+                            <%= actividad_publicitaria.producto.nombre %>
+                          </p>
+                          
+                          
+                          <div class="secondary-content">
+                             <!-- <a href="/cliente/ver/" data-tooltip="Ver" class="tooltipped">
+                                <i class="small mdi-action-account-circle"></i>
+                              </a>-->
+                             
+                              <a href="/actividad_publicitaria/editar/<%= actividad_publicitaria.id %>" data-delay="50" data-tooltip="Editar" class="tooltipped">
+                                <i class="small fa fa-edit"></i>
+                              </a> 
+                               <% if (actividad_publicitaria.estatus == 'A') %>
+                                <a href="#modal_deshabilitar<%= actividad_publicitaria.id %>" data-position="bottom" data-delay="50" data-tooltip="Deshabilitar" class="modal-trigger tooltipped">
+                                  <i class="small mdi-content-block"></i>
+                                </a>
+                              <% else %>
+                                  <a href="#modal_deshabilitar<%= actividad_publicitaria.id %>" data-position="bottom" data-delay="50" data-tooltip="Habilitar" class="modal-trigger tooltipped">
+                                  <i class="small mdi-action-done"></i>
+                              <% end -%>
+
+                
+                                <a href="#modal_eliminar<%= actividad_publicitaria.id %>" data-position="bottom" data-delay="50" data-tooltip="Eliminar" class="modal-trigger tooltipped">
+                                  <i class=" small mdi-action-delete"></i>
+                                </a>
+                                 <a href="/actividad_publicitaria/interaccion_social/<%= actividad_publicitaria.id %>" data-tooltip="Interacción Social" class="tooltipped">
+                                <i class="small fa fa-bar-chart-o"></i>
+                              </a>
+                          </div>
+                        </div>
+                        
+                      </div>
+
+                    </div>
+
+                </li>
+              <% end %>
+            <% end %>
+          </ul> <!-- Fin collapse actividad_publicitarias -->
+
+          <div class="row valign-wrapper">
+            <%= paginate(@actividad_publicitarias) %>
+          </div>
+
+          <% @actividad_publicitarias.each do |actividad_publicitaria| %>
+            <% if ! actividad_publicitaria.nil? %>
+
+              <div id="modal_deshabilitar<%= actividad_publicitaria.id %>" class="modal">
+                <div class="modal-content">
+                  <a href="#" style="float:right;" class="waves-effect btn-flat modal-close"><i class="mdi-content-clear"></i></a>
+                  <% if (actividad_publicitaria.estatus == 'A') %>
+                  <h5>Deshabilitar actividad_publicitaria</h5>
+                  <% else %>
+                  <h5>Habilitar actividad_publicitaria</h5>
+                  <% end %>
+
+
+                  <div class="row" style="padding-top: 35px;">
+                    <div class="col s12 text-center">
+                    <% if (actividad_publicitaria.estatus == 'A') %>
+                      <h6 style=" font-size: 20px;"> ¿Seguro que desea Deshabilitar la Campaña Publicitaria seleccionada?</h6>
+                      <% else %>
+                      <h6 style=" font-size: 20px;"> ¿Seguro que desea Habilitar la Campaña Publicitaria  seleccionada? </h6>
+                      <% end %>
+                      <div style="padding-top: 35px;" class="right">
+                        <% if (actividad_publicitaria.estatus == 'A') %>
+                          <input type="button" class="btn btn-success btn-sm" value="Aceptar" onclick="update_estatus(<%= actividad_publicitaria.id %>,'I')">
+                        <% else %>
+                          <input type="button" class="btn btn-success btn-sm" value="Aceptar" onclick="update_estatus(<%= actividad_publicitaria.id %>,'A')">
+                        <% end %>
+                         <input type="button" class="btn btn-danger btn-sm modal-close" value="Cancelar">
+                      </div>
+
+                    </div>
+                  </div>                
+                </div>
+              </div> 
+
+              <div id="modal_eliminar<%= actividad_publicitaria.id %>"class="modal">
+                <div class="modal-content">
+                  <a style="float:right;" class="waves-effect btn-flat modal-close"><i class="mdi-content-clear"></i></a>
+
+                  <h5>Eliminar Actividad Publicitaria</h5>
+
+                  <div class="row pad30-t" >
+                    <div class="col s12 text-center">
+
+                      <h6 style=" font-size: 20px;"> ¿Seguro que desea eliminar la Campaña Publicitaria 
+
+                      <div style="padding-top: 35px;" class="right">
+
+                        <input type="button" class="btn btn-success btn-sm" value="Aceptar" onclick="eliminar(<%= actividad_publicitaria.id %>)">
+
+                        <input type="button" class="btn btn-danger btn-sm modal-close" value="Cancelar">
+                      </div>
+
+                    </div>
+                  </div>                
+                </div>
+              </div> 
+
+            <% end %>
+          <% end %> <!-- Fin collapse modals -->
+
+        <% end %>
+      </div>
+    </div>  
+  </div>
+</div>
+
+
+<% content_for :javascript_personalizado do %>
+  <script type="text/javascript">
+
+
+  function update_estatus(idactividad_publicitaria, estatus){
+    var request = $.ajax({
+                            url: '/actividad_publicitaria/update_estatus',
+                            method: "POST",
+                            data: { idactividad_publicitaria: idactividad_publicitaria, estatus: estatus},
+                            dataType: "JSON"
+                          });
+
+        request.done(function( data ) {
+                                        location.reload(); 
+                                      });
+                     
+        request.fail(function( jqXHR, textStatus ) {
+                                                    alert( "Request failed: " + textStatus );
+                                                   });
+    };
+
+  function eliminar(idactividad_publicitaria){
+    var request = $.ajax({
+                            url: '/actividad_publicitaria/eliminar',
+                            method: "POST",
+                            data: { idactividad_publicitaria: idactividad_publicitaria},
+                            dataType: "JSON"
+                          });
+
+        request.done(function( data ) {
+                                        location.reload(); 
+                                      });
+                     
+        request.fail(function( jqXHR, textStatus ) {
+                                                    alert( "Request failed: " + textStatus );
+                                                   });
+  }
+
+  </script>
+<% end %>

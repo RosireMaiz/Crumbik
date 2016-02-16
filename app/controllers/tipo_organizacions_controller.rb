@@ -38,18 +38,9 @@ class TipoOrganizacionsController < ApplicationController
 		if !usuario_signed_in?
         	render "portal/index"
      	else
-
-	        @rol =  Rol.where(nombre: 'Administrador del sistema')
-	        
-	        @usuarioRol = UsuarioRol.where(usuario_id: current_usuario.id, rol_id: current_usuario.rol_actual.id) 
-
-	        if @usuarioRol[0] == nil or @rol[0].id != current_usuario.rol_actual.id
-	          render root_path
-	        else
 	           @tipo_organizacions = TipoOrganizacion.order('id ASC')
 	           @valor = true;
 	           render "tipo_organizacions/tipo_organizacions"	
-	        end
          
      	end
 	end

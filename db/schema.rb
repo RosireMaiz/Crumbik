@@ -11,7 +11,26 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20160213024342) do
+ActiveRecord::Schema.define(version: 20160215022516) do
+
+  create_table "actividad_publicitaria", force: :cascade do |t|
+    t.string   "titulo",      limit: 255
+    t.string   "descripcion", limit: 255
+    t.date     "inicio"
+    t.date     "fin"
+    t.datetime "created_at",              null: false
+    t.datetime "updated_at",              null: false
+  end
+
+  create_table "actividad_publicitaria_detalles", force: :cascade do |t|
+    t.string   "contenido",      limit: 255
+    t.integer  "type_actividad", limit: 4,   default: 0
+    t.integer  "campanna_id",    limit: 4
+    t.datetime "created_at",                             null: false
+    t.datetime "updated_at",                             null: false
+  end
+
+  add_index "actividad_publicitaria_detalles", ["campanna_id"], name: "index_actividad_publicitaria_detalles_on_campanna_id", using: :btree
 
   create_table "autenticacions", force: :cascade do |t|
     t.integer "usuario_id", limit: 4
@@ -270,10 +289,10 @@ ActiveRecord::Schema.define(version: 20160213024342) do
   add_index "productos", ["categoria_id"], name: "index_productos_on_categoria_id", using: :btree
 
   create_table "publicacion_socials", force: :cascade do |t|
-    t.integer  "id_social",             limit: 4
+    t.string   "id_social",             limit: 255
     t.integer  "interaccion_social_id", limit: 4
-    t.datetime "created_at",                      null: false
-    t.datetime "updated_at",                      null: false
+    t.datetime "created_at",                        null: false
+    t.datetime "updated_at",                        null: false
   end
 
   add_index "publicacion_socials", ["interaccion_social_id"], name: "index_publicacion_socials_on_interaccion_social_id", using: :btree

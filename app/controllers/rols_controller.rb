@@ -21,7 +21,6 @@ class RolsController < ApplicationController
 			redirect_to root_path
 		else
 			@rol = Rol.new
-			@type_rol = Rol.type_rols
 			if request.subdomain.present?
 				redirect_to root_path
 			else

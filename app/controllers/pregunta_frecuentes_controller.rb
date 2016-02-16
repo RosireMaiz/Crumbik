@@ -20,11 +20,8 @@ class PreguntaFrecuentesController < ApplicationController
 			redirect_to root_path
 		else
 			@pregunta_frecuente = PreguntaFrecuente.new
-			if !request.subdomain.present?
-				redirect_to root_path
-			else
-				render "pregunta_frecuentes/new"
-			end
+			
+			render "pregunta_frecuentes/new"
 		end
 	end
 
@@ -39,17 +36,10 @@ class PreguntaFrecuentesController < ApplicationController
         	render "portal/index"
      	else
 
-	        @rol =  Rol.where(nombre: 'Empresario')
 	        
-	        @usuarioRol = UsuarioRol.where(usuario_id: current_usuario.id, rol_id: current_usuario.rol_actual.id) 
-
-	        if @usuarioRol[0] == nil or @rol[0].id != current_usuario.rol_actual.id
-	          render root_path
-	        else
 	           @pregunta_frecuentes = PreguntaFrecuente.order('id ASC')
 	           @valor = true;
 	           render "pregunta_frecuentes/pregunta_frecuentes"	
-	        end
          
      	end
 	end

@@ -99,16 +99,8 @@ class CategoriasController < ApplicationController
         	render "portal/index"
      	else
 
-	        @rol =  Rol.where(nombre: 'Empresario')
-	        
-	        @usuarioRol = UsuarioRol.where(usuario_id: current_usuario.id, rol_id: current_usuario.rol_actual.id) 
-
-	        if @usuarioRol[0] == nil or @rol[0].id != current_usuario.rol_actual.id
-	          render root_path
-	        else
 	           @categorias = Categorium.order('id ASC')
 	           render "categorias/categorias"	
-	        end
          
      	end
 	end

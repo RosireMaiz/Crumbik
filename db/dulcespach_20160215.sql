@@ -3,7 +3,7 @@
 -- http://www.phpmyadmin.net
 --
 -- Servidor: 127.0.0.1
--- Tiempo de generación: 13-02-2016 a las 18:34:40
+-- Tiempo de generación: 16-02-2016 a las 01:33:52
 -- Versión del servidor: 5.6.21-log
 -- Versión de PHP: 5.6.3
 
@@ -19,6 +19,38 @@ SET time_zone = "+00:00";
 --
 -- Base de datos: `dulcespach`
 --
+
+-- --------------------------------------------------------
+
+--
+-- Estructura de tabla para la tabla `actividad_publicitaria`
+--
+
+CREATE TABLE IF NOT EXISTS `actividad_publicitaria` (
+`id` int(11) NOT NULL,
+  `titulo` varchar(255) DEFAULT NULL,
+  `descripcion` varchar(255) DEFAULT NULL,
+  `inicio` date DEFAULT NULL,
+  `fin` date DEFAULT NULL,
+  `producto_id` int(11) NOT NULL,
+  `created_at` datetime NOT NULL,
+  `updated_at` datetime NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+-- --------------------------------------------------------
+
+--
+-- Estructura de tabla para la tabla `actividad_publicitaria_detalles`
+--
+
+CREATE TABLE IF NOT EXISTS `actividad_publicitaria_detalles` (
+`id` int(11) NOT NULL,
+  `contenido` varchar(255) DEFAULT NULL,
+  `type_actividad` int(11) DEFAULT '0',
+  `campanna_id` int(11) DEFAULT NULL,
+  `created_at` datetime NOT NULL,
+  `updated_at` datetime NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 -- --------------------------------------------------------
 
@@ -173,7 +205,15 @@ CREATE TABLE IF NOT EXISTS `eventos` (
   `usuario_id` int(11) DEFAULT NULL,
   `created_at` datetime NOT NULL,
   `updated_at` datetime NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=utf8;
+
+--
+-- Volcado de datos para la tabla `eventos`
+--
+
+INSERT INTO `eventos` (`id`, `titulo`, `descripcion`, `url`, `color`, `dia_completo`, `inicio`, `fin`, `usuario_id`, `created_at`, `updated_at`) VALUES
+(1, 'Entrega de Proyecto de Laboratorio 3', 'Prototipo del xCRM social', NULL, NULL, 1, '2016-02-16 00:00:00', '2016-02-16 00:00:00', 1, '2016-02-14 16:26:20', '2016-02-14 16:26:20'),
+(2, 'II Parcial IO3', 'II Parcial de Investigación de operaciones', NULL, NULL, 1, '2016-02-15 00:00:00', '2016-02-15 00:00:00', 1, '2016-02-14 16:27:50', '2016-02-14 16:27:50');
 
 -- --------------------------------------------------------
 
@@ -507,7 +547,6 @@ CREATE TABLE IF NOT EXISTS `publicidads` (
 --
 
 INSERT INTO `publicidads` (`id`, `titulo`, `descripcion`, `fecha_inicio`, `fecha_finalizacion`, `estatus`, `producto_id`, `created_at`, `updated_at`) VALUES
-(1, NULL, 'DEscripcion de la publicidad para el usuario que la consulta', '2016-02-02', '2016-02-12', 'A', 1, '2016-02-13 03:13:38', '2016-02-13 03:13:38'),
 (2, NULL, 'DEscripcion de la publicidad para el usuario que la consulta', '2016-02-11', '2016-02-20', 'A', 1, '2016-02-13 03:15:04', '2016-02-13 03:15:04');
 
 -- --------------------------------------------------------
@@ -613,7 +652,9 @@ INSERT INTO `schema_migrations` (`version`) VALUES
 ('20160209155824'),
 ('20160209162108'),
 ('20160213024138'),
-('20160213024342');
+('20160213024342'),
+('20160215022016'),
+('20160215022516');
 
 -- --------------------------------------------------------
 
@@ -724,7 +765,7 @@ CREATE TABLE IF NOT EXISTS `usuarios` (
 --
 
 INSERT INTO `usuarios` (`id`, `email`, `encrypted_password`, `username`, `confirmacion_email`, `pais_id`, `reset_password_token`, `reset_password_sent_at`, `remember_created_at`, `sign_in_count`, `current_sign_in_at`, `last_sign_in_at`, `current_sign_in_ip`, `current_rol_id`, `current_administrable`, `last_sign_in_ip`, `created_at`, `updated_at`) VALUES
-(1, 'ahewstone@gmail.com', '$2a$10$Y8LfnK4TOmU2Qm1KiJ9vROPCWbcTCA0shJVgNCqL.2oqgOVOugAf2', 'Alejandra', 0, 232, NULL, NULL, NULL, 11, '2016-02-09 14:46:10', '2016-02-07 16:11:57', '127.0.0.1', 2, 1, '127.0.0.1', '2016-01-20 01:19:11', '2016-02-09 15:48:10'),
+(1, 'ahewstone@gmail.com', '$2a$10$Y8LfnK4TOmU2Qm1KiJ9vROPCWbcTCA0shJVgNCqL.2oqgOVOugAf2', 'Alejandra', 0, 232, NULL, NULL, NULL, 15, '2016-02-15 01:59:36', '2016-02-14 15:04:54', '127.0.0.1', 3, 1, '127.0.0.1', '2016-01-20 01:19:11', '2016-02-15 02:57:33'),
 (2, 'rosima_08@gmail.com', '$2a$10$hHueWJ5W9dQ6lpFpzkR75uhtMPCmsnOXdtlRvvxUZlgRVO7QQ2qXO', 'Rosiré Maiz*', 1, 232, NULL, NULL, NULL, 3, '2015-12-26 14:43:29', '2015-12-26 00:34:11', '127.0.0.1', NULL, 0, '127.0.0.1', '2015-12-26 00:03:05', '2015-12-26 14:43:29'),
 (3, 'rosima_08@hotmail.com', '$2a$10$TD/B23x8B.95Eoci.POc3efsEbX0BjUE/5uw9gdtqUvLZwh51wEai', 'Rosiré Maiz R', 1, 232, NULL, NULL, NULL, 2, '2015-12-26 14:56:24', '2015-12-26 00:34:39', '127.0.0.1', NULL, 0, '127.0.0.1', '2015-12-26 00:34:39', '2015-12-26 14:56:24');
 
@@ -763,7 +804,7 @@ CREATE TABLE IF NOT EXISTS `usuario_rols` (
 `id` int(11) NOT NULL,
   `usuario_id` int(11) DEFAULT NULL,
   `rol_id` int(11) DEFAULT NULL
-) ENGINE=InnoDB AUTO_INCREMENT=4 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=6 DEFAULT CHARSET=utf8;
 
 --
 -- Volcado de datos para la tabla `usuario_rols`
@@ -772,7 +813,9 @@ CREATE TABLE IF NOT EXISTS `usuario_rols` (
 INSERT INTO `usuario_rols` (`id`, `usuario_id`, `rol_id`) VALUES
 (1, 1, 2),
 (2, 2, 5),
-(3, 3, 5);
+(3, 3, 5),
+(4, 1, 3),
+(5, 1, 4);
 
 -- --------------------------------------------------------
 
@@ -784,7 +827,15 @@ CREATE TABLE IF NOT EXISTS `variable_categoria` (
 `id` int(11) NOT NULL,
   `categoria_id` int(11) DEFAULT NULL,
   `variable_psicografica_id` int(11) DEFAULT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=utf8;
+
+--
+-- Volcado de datos para la tabla `variable_categoria`
+--
+
+INSERT INTO `variable_categoria` (`id`, `categoria_id`, `variable_psicografica_id`) VALUES
+(1, 1, 1),
+(2, 4, 1);
 
 -- --------------------------------------------------------
 
@@ -797,11 +848,30 @@ CREATE TABLE IF NOT EXISTS `variable_psicograficas` (
   `nombre` varchar(255) DEFAULT NULL,
   `descripcion` text,
   `estatus` varchar(1) DEFAULT 'A'
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8;
+
+--
+-- Volcado de datos para la tabla `variable_psicograficas`
+--
+
+INSERT INTO `variable_psicograficas` (`id`, `nombre`, `descripcion`, `estatus`) VALUES
+(1, 'Variable', 'DEscripcion', 'A');
 
 --
 -- Índices para tablas volcadas
 --
+
+--
+-- Indices de la tabla `actividad_publicitaria`
+--
+ALTER TABLE `actividad_publicitaria`
+ ADD PRIMARY KEY (`id`);
+
+--
+-- Indices de la tabla `actividad_publicitaria_detalles`
+--
+ALTER TABLE `actividad_publicitaria_detalles`
+ ADD PRIMARY KEY (`id`), ADD KEY `index_actividad_publicitaria_detalles_on_campanna_id` (`campanna_id`);
 
 --
 -- Indices de la tabla `autenticacions`
@@ -1036,6 +1106,16 @@ ALTER TABLE `variable_psicograficas`
 --
 
 --
+-- AUTO_INCREMENT de la tabla `actividad_publicitaria`
+--
+ALTER TABLE `actividad_publicitaria`
+MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
+--
+-- AUTO_INCREMENT de la tabla `actividad_publicitaria_detalles`
+--
+ALTER TABLE `actividad_publicitaria_detalles`
+MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
+--
 -- AUTO_INCREMENT de la tabla `autenticacions`
 --
 ALTER TABLE `autenticacions`
@@ -1069,7 +1149,7 @@ MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
 -- AUTO_INCREMENT de la tabla `eventos`
 --
 ALTER TABLE `eventos`
-MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
+MODIFY `id` int(11) NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=3;
 --
 -- AUTO_INCREMENT de la tabla `frecuencia_pagos`
 --
@@ -1209,17 +1289,17 @@ MODIFY `id` int(11) NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=2;
 -- AUTO_INCREMENT de la tabla `usuario_rols`
 --
 ALTER TABLE `usuario_rols`
-MODIFY `id` int(11) NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=4;
+MODIFY `id` int(11) NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=6;
 --
 -- AUTO_INCREMENT de la tabla `variable_categoria`
 --
 ALTER TABLE `variable_categoria`
-MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
+MODIFY `id` int(11) NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=3;
 --
 -- AUTO_INCREMENT de la tabla `variable_psicograficas`
 --
 ALTER TABLE `variable_psicograficas`
-MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
+MODIFY `id` int(11) NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=2;
 --
 -- Restricciones para tablas volcadas
 --
