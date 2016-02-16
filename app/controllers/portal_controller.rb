@@ -21,15 +21,24 @@ class PortalController < ApplicationController
 	end
 
 	def index_inicio
-		$administrable = false
-		usuario = current_usuario
-	    usuario.current_administrable = false
-	    usuario.save
-		if request.subdomain.present?
-        	render "organizacions/index"
+		if usuario_signed_in?
+			$administrable = false
+			usuario = current_usuario
+		    usuario.current_administrable = false
+		    usuario.save
+			if request.subdomain.present?
+	        	render "organizacions/index"
+		    else
+		       	render "portal/index"	
+		    end
 	    else
-	       	render "portal/index"	
+	    	if request.subdomain.present?
+	        	render "organizacions/index"
+		    else
+		       	render "portal/index"	
+		    end
 	    end
+
 	end
 
 	def index_administrable
@@ -43,6 +52,9 @@ class PortalController < ApplicationController
 		else
 			render "portal/index_principal"
 		end
+	end
+	def desarrolladores
+		render "portal/desarrolladores"
 	end
 
 end

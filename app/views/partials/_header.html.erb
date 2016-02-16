@@ -79,20 +79,24 @@
 					            <li role="presentation">
 					              <a  role="menuitem" href="#change_rol" class="modal-trigger">Cambiar rol</a>
 					            </li>
-					            <li class="divider center"></li>
-					            <% if !current_usuario.current_administrable %>
-						            <li role="presentation">
-						              <a id="administrar" role="menuitem"  href="/inicio_administrable">
-						              	Administrar Mi Portal
-						              </a>
-						            </li>
-						        <% else %>
-					              	<li role="presentation">
-						              <a id="administrar" role="menuitem"  href="/inicio">
-						              	Regresar al Portal
-						              </a>
-					            	</li>
-					            <% end %>
+					           
+					            <% if current_usuario.rol_actual.acceso_administrable %>
+									<li class="divider center"></li>
+						            <% if !current_usuario.current_administrable %>
+						            	
+							            <li role="presentation">
+							              <a id="administrar" role="menuitem"  href="/inicio_administrable">
+							              	Administrar Mi Portal
+							              </a>
+							            </li>
+							        <% else %>
+						              	<li role="presentation">
+							              <a id="administrar" role="menuitem"  href="/inicio">
+							              	Regresar al Portal
+							              </a>
+						            	</li>
+						            <% end %>
+						        <% end -%>
 					             <li class="divider center"></li>
 					             <li>
 			        				<%= link_to 'Editar Perfil', controller: "usuarios", action: "edit" %>

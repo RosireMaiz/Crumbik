@@ -213,11 +213,14 @@ Rails.application.routes.draw do
 	match "/llamada" => "actividad_publicitaria#llamada", via: :get
 	match "/campanas_publicitaria/sms_clientes/:id" => "actividad_publicitaria#enviar_sms", via: :get
 	match "/campanas_publicitaria/email_clientes/:id" => "actividad_publicitaria#enviar_email", via: :get
+	match "/campanas_publicitaria/enviar_sms" => "actividad_publicitaria#enviar_mensaje", via: :post
+	match "/campanas_publicitaria/enviar_correo/" => "actividad_publicitaria#enviar_correo", via: :post
 
+	match "/graficas/interaccion_social" => "interaccion_socials#consuta_interaccion_socials", via: :get
+	match "/graficas/interaccion_productos"  => "productos#consulta_interaccion_productos", via: :get
 
-
-
-
+	match "/dessarroladores" => "portal#desarrolladores", via: :get
+	
 	devise_scope :usuario do
 	    post "/entrar" => "devise/sessions#create"
 	    get "/entrar" => "devise/sessions#new"

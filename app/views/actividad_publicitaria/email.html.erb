@@ -27,6 +27,25 @@
     </div>
     <div class="col s12 m4 input-field sms-buscar"></div>
     <a href="#change_clientes" class="white-text pink accent-3 btn-sm btn-table-action tooltipped modal-trigger waves-effect" data-position="bottom" data-tooltip="Agregar Contacto" data-delay="20"><i class="fa fa-plus"></i></a>
+     <div class="row no-margin-v">
+      
+     
+      <div class="input-field col s12">
+                    <input placeholder="Asunto del Email" id="asunto_email" name="asunto_email" type="text" class="validate" value="<%= @asunto_email %>">
+                    <label for="asunto_email">Asunto</label>
+                  </div>
+ 
+    </div>
+        <div class="row ">
+      
+      <div id="text-sms" class="col s12 input-field" style="text-align: left;">
+        <textarea id="contenido_sms" placeholder="Escriba el contenido del SMS" name="contenido_sms" class="materialize-textarea" length="220" ><%= @contenido_email %></textarea>
+        <label for="contenido_sms">Email</label>
+      </div>
+    </div>
+    <div class="row right">
+       <button type="button" id="btnSMS" class="btn light-blue waves-effect">Enviar</button>
+    </div>
   </div>
 </div>
 
@@ -79,6 +98,8 @@
   </div>
 
 </div>
+<div id="notificacion" class="modal text-center">
+</div>
 
 <% content_for :javascript_personalizado do %>
 <script type="text/javascript">
@@ -112,6 +133,30 @@
     }
   } );
 
+  $('#btnSMS').on('click', function() {
+    var request = $.ajax({
+                            url: '/campanas_publicitaria/enviar_correo/',
+                            method: "POST",
+                            
+                            dataType: "JSON"
+                          });
+
+        request.done(function( data ) {
+                                      var html = "<div><i class='large mdi-action-done  "+
+                                "light-blue-text darken-2'></i></div><h5>Su Email "+
+                                "se ha enviado exitosamente</h5><p class='lead'>Gracias"+
+                                " por elegirnos.</p>"
+                                $("#notificacion").html(html);
+                                $('#notificacion').openModal();
+                               setTimeout(function(){
+                                        window.location.href= "/campanas_publicitaria/emails"
+                                    }, 1000);
+                                      });
+                     
+        request.fail(function( jqXHR, textStatus ) {
+                                                    alert( "Request failed: " + textStatus );
+                                                   });
+  });
 
 </script>
 <% end -%>

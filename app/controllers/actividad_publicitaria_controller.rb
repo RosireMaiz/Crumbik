@@ -127,15 +127,46 @@ class ActividadPublicitariaController < ApplicationController
      	end
 	end
 
+	def enviar_mensaje
+		contenido_sms = params[:contenido_sms]
+		phone_number = '+584149552967'
+		send_message(phone_number, contenido_sms)
+		    
+		render :text =>'{ "success" : "true"}'
+	end
+
+
+	def enviar_correo
+	
+		    
+		render :text =>'{ "success" : "true"}'
+	end
+
 	def enviar_email
 		if !usuario_signed_in?
         	render "portal/index"
      	else
      		@actividad_publicitaria_detalle = ActividadPublicitariaDetalle.where(id: params[:id]).first
      		@clientes = Cliente.order('id ASC')
+     		
+     		@asunto_email = "San Valentin"
+     		@contenido_email = "Disfruta tu san Valentin con Dulces Pach https://www.facebook.com/DulcesPach/"
 	        render "actividad_publicitaria/email"	
      	end
 	end
+
+	def send_message(phone_number, alert_message)
+		# set up a client to talk to the Twilio REST API 
+		@client = Twilio::REST::Client.new $account_sid, $auth_token 
+		 
+		message = @client.account.messages.create({
+			:from => $twilio_number, 
+			:to => phone_number, 
+			:body => alert_message,  
+		})
+
+      	puts message.to
+    end
 
 	private
 	 def actividad_publicitaria_params

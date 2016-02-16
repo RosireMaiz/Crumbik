@@ -65,6 +65,7 @@ class UsuariosController < ApplicationController
     	banner_organizacion = Base64.encode64(File.open($BANNER_DEFAULT, "rb").read)
 
  		@rol = Rol.where("nombre = ?", "Empresario").first 
+ 		@rol_portal = Rol.where("nombre = ?", "Cliente").first 
 		@usuario = Usuario.new(usuario_params_organizacion)
 
 		id_pais = @usuario.organizacion.pais_id
@@ -78,7 +79,7 @@ class UsuariosController < ApplicationController
 	    	pago_id = @usuario.organizacion.contratos[0].pagos[0].id
 	    	PagoContrato.update( pago_id, :usuario_id => @usuario.id)
 
-	    	@rol_nuevo = @usuario.usuario_rols.build(:rol => @rol)
+	    	@rol_nuevo = @usuario.usuario_rols.build(:rol => @rol_portal)
     		@rol_nuevo.save 	
 
 			@respuesta["codigo"] = 200

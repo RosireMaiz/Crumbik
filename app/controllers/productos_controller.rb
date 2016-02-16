@@ -161,6 +161,14 @@ class ProductosController < ApplicationController
 		end
 	end
 
+	def consulta_interaccion_productos
+		if !usuario_signed_in?
+			redirect_to root_path
+		else
+
+				render "productos/graficas"
+		end
+	end
 
 	private
 	 def producto_params

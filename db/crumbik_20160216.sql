@@ -3,7 +3,7 @@
 -- http://www.phpmyadmin.net
 --
 -- Servidor: 127.0.0.1
--- Tiempo de generación: 16-02-2016 a las 03:14:05
+-- Tiempo de generación: 16-02-2016 a las 14:23:07
 -- Versión del servidor: 5.6.21-log
 -- Versión de PHP: 5.6.3
 
@@ -45,7 +45,7 @@ CREATE TABLE IF NOT EXISTS `actividad_publicitaria` (
 
 CREATE TABLE IF NOT EXISTS `actividad_publicitaria_detalles` (
 `id` int(11) NOT NULL,
-  `contenido` varchar(255) COLLATE utf8_unicode_ci DEFAULT NULL,
+  `contenido` text COLLATE utf8_unicode_ci,
   `type_actividad` int(11) DEFAULT '0',
   `campanna_id` int(11) DEFAULT NULL,
   `created_at` datetime NOT NULL,
@@ -359,12 +359,10 @@ INSERT INTO `opcion_menus` (`id`, `nombre`, `raiz`, `url`, `padre_id`, `menu_id`
 (72, 'Mi Cuenta', 0, '/mi_Cuenta', 0, 3, 'fa fa-male', 1),
 (73, 'Ver Perfil', 0, '/usuarios/perfil', 72, 3, 'fa fa-user', 1),
 (74, 'Modificar Perfil', 0, '/usuarios/editar', 72, 3, 'fa fa-pencil', 1),
-(75, 'Chat en Vivo', 0, '/campanas_publicitaria/chat_vivo', 68, 3, 'fa fa-comments-o', 1),
-(76, 'Envio SMS', 0, '/campanas_publicitaria/envio_sms', 68, 3, 'fa fa-mobile-phone', 1),
+(76, 'Envio De SMS', 0, '/campanas_publicitaria/envio_sms', 68, 3, 'fa fa-mobile-phone', 1),
 (77, 'Realizar Llamadas', 0, '/campanas_publicitaria/llamadas', 68, 3, 'fa fa-phone', 1),
-(78, 'Consultar Campañas', 0, '/campanas_publicitaria/consultar', 68, 3, 'fa fa-eye', 1),
-(79, 'Actividades Realizadas', 0, '/campanas_publicitaria/actividades_realizadas', 68, 3, 'fa fa-check-square-o', 1),
-(80, 'Actividades Posibles', 0, '/campanas_publicitaria/actividades_posibles', 68, 3, 'fa fa-external-link', 1),
+(78, 'Envio de Emails', 0, '/campanas_publicitaria/emails', 68, 3, 'fa fa-envelope-o', 1),
+(79, 'Campañas Publicitarias', 0, '/campanas_publicitaria/consultar', 68, 3, 'fa fa-check-square-o', 1),
 (81, 'Perfil Organización', 0, '/organizacion/perfil', 0, 4, 'fa fa-university', 1),
 (82, 'Gráficos', 1, '/graficos', 0, 4, 'fa fa-line-chart', 1),
 (83, 'Herramientas', 0, '/herramientas', 0, 4, 'fa fa-wrench', 1),
@@ -411,13 +409,11 @@ INSERT INTO `opcion_menus` (`id`, `nombre`, `raiz`, `url`, `padre_id`, `menu_id`
 (142, 'Perfil Organizacion', 0, '/organizacion/perfil', 0, 8, 'fa fa-university', 1),
 (143, 'Poductos/Servicios', 0, '/productos_servicios', 0, 8, 'fa fa-stack-overflow', 1),
 (144, 'Gestión Publicitaria', 1, '/gestion_prublicitaria', 0, 8, 'fa fa-exchange', 1),
-(145, 'Chat en vivo', 0, '/chat_vivo', 144, 8, 'fa fa-wechat', 1),
 (146, 'SMS', 0, '/envio_sms', 144, 8, 'fa fa-mobile-phone', 1),
 (147, 'Llamadas', 0, '/llamadas', 144, 8, 'fa fa-phone-square', 1),
 (148, 'Email', 0, '/email', 144, 8, 'fa fa-at', 1),
 (149, 'Actividades Publicitarias', 0, '/actividades_publicitarias', 144, 8, 'fa fa-bullhorn', 1),
 (150, 'Actividades Realizadas', 0, '/actividades_realizadas', 144, 8, 'fa fa-check-square-o', 1),
-(151, 'Actividades Posibles', 0, '/actividades_posibles', 144, 8, 'fa fa-external-link', 1),
 (152, 'Publicidad Social', 0, '/publicidad_social', 144, 8, 'fa fa-share-square', 1),
 (153, 'Interacción Social', 0, '/interaccion_social', 144, 8, 'fa fa-soundcloud', 1),
 (154, 'Herramientas', 1, '/herramientas', 0, 8, 'fa fa-paperclip', 1),
@@ -1187,8 +1183,8 @@ CREATE TABLE IF NOT EXISTS `usuarios` (
 --
 
 INSERT INTO `usuarios` (`id`, `email`, `encrypted_password`, `username`, `confirmacion_email`, `pais_id`, `reset_password_token`, `reset_password_sent_at`, `remember_created_at`, `sign_in_count`, `current_sign_in_at`, `last_sign_in_at`, `current_sign_in_ip`, `current_rol_id`, `current_administrable`, `last_sign_in_ip`, `created_at`, `updated_at`) VALUES
-(1, 'rosire08@gmail.com', '$2a$10$VtE0lZB2.FwEIKLSZve8qegLsDvkjK/L4ga9ySaaG5F8OSB/uQ/wO', 'Rosiré Maiz*', 1, 232, '7e4f6a91a8f96feeea96efb55170e89c4e2ac02d2b12dd6c39c90dd75d50dc3e', '2015-10-11 22:23:28', NULL, 133, '2016-02-16 01:57:11', '2016-02-15 02:05:37', '127.0.0.1', 1, 1, '127.0.0.1', '2015-08-26 01:38:48', '2016-02-16 01:57:23'),
-(2, 'ahewstone@gmail.com', '$2a$10$PAvg0k.Mlw.xpyRKazJCJeHaZu9E.c6toa8xMccoaZMv9qmD94/AG', 'Alejandra', 0, 232, NULL, NULL, NULL, 1, '2016-02-05 01:55:32', '2016-02-05 01:55:32', '127.0.0.1', 1, 0, '127.0.0.1', '2016-01-20 01:18:25', '2016-02-05 01:55:32'),
+(1, 'rosire08@gmail.com', '$2a$10$VtE0lZB2.FwEIKLSZve8qegLsDvkjK/L4ga9ySaaG5F8OSB/uQ/wO', 'Rosiré Maiz*', 1, 232, '7e4f6a91a8f96feeea96efb55170e89c4e2ac02d2b12dd6c39c90dd75d50dc3e', '2015-10-11 22:23:28', NULL, 134, '2016-02-16 12:31:21', '2016-02-16 01:57:11', '127.0.0.1', 1, 1, '127.0.0.1', '2015-08-26 01:38:48', '2016-02-16 12:31:36'),
+(2, 'ahewstone@gmail.com', '$2a$10$PAvg0k.Mlw.xpyRKazJCJeHaZu9E.c6toa8xMccoaZMv9qmD94/AG', 'Alejandra', 0, 232, NULL, NULL, NULL, 3, '2016-02-16 13:16:04', '2016-02-16 13:09:21', '127.0.0.1', 5, 0, '127.0.0.1', '2016-01-20 01:18:25', '2016-02-16 13:18:24'),
 (3, 'rubenbello@gmail.com', '$2a$10$NevepWS19EsMmh.Szw5ryudaviYOBA9nRi65AHAyFbV.HKBLREmh.', 'Ruben', 0, 231, NULL, NULL, NULL, 3, '2016-02-08 00:57:29', '2016-02-08 00:45:58', '127.0.0.1', 1, 1, '127.0.0.1', '2016-02-08 00:44:06', '2016-02-09 03:06:42');
 
 -- --------------------------------------------------------
@@ -1235,7 +1231,7 @@ CREATE TABLE IF NOT EXISTS `usuario_rols` (
 
 INSERT INTO `usuario_rols` (`id`, `usuario_id`, `rol_id`) VALUES
 (1, 1, 1),
-(2, 2, 2),
+(2, 2, 5),
 (3, 3, 1),
 (4, 3, 6);
 
