@@ -41,15 +41,20 @@
           </div>
           <div class="panel  hoverable pad30-h">
 
-            
-
           <div class="col s12 pad15">
               <div class="col s12  left pad45 ">
-                <h5>Datos de la actividad_publicitaria </h5>
-            
+                
+                <h5>Datos de la Actividad Publicitaria</h5>
+                
 
-          
-            
+                <div class="input-field col s12">
+                  <label for="actividad_publicitaria_titulo">Título: <span class="required">
+                  * </span>
+                  </label>
+                  <%= f.text_field :titulo, :required=>true, autocomplete: "off", class: "materialize-textarea", length: "50" %>
+
+                </div>
+
                 <div class="input-field col s12">
                   <label for="actividad_publicitaria_descripcion">Descripción General: <span class="required">
                   * </span>
@@ -78,12 +83,12 @@
               </div>
 
               <hr/>
-              <h5>Redes sociales</h5>
+              <h5>Actividades Publicitarias</h5>
               
               <div class="row">
                 <div class="col s10">
                   <ul id="lista-redes-sociales" class="vacia  list-inline">
-                    <li>Selecciona la red social en la que deas publicar tu actividad_publicitaria.</li> 
+                    <li>Selecciona la actividad publicitaria de su preferencia.</li> 
                   </ul>
                 </div>
                 <div class="col s2 text-center">
@@ -93,11 +98,11 @@
                     <i class="mdi-content-add"></i>
                     </a>
                     <ul  class='dropdown-menu list-inline' role="menu">
-                      <li> <span style="padding-bottom: 5px;"><a href="#!"  id="<%= ActividadPublicitariaDetalle.type_actividads["sms"] %> " class="red-social-add light-blue"  onclick="showSocial('SMS')"><i class="fa fa-comments"></i></a></span> </li>
+                      <li> <span style="padding-bottom: 5px;"><a href="#!"  id="<%= ActividadPublicitariaDetalle.type_actividads["sms"] %> " class="red-social-add light-blue tooltipped" data-tooltip="SMS"  onclick="showSocial('SMS')"><i class="fa fa-comments"></i></a></span> </li>
                      
-                      <li> <span style="padding-bottom: 5px;"><a href="#!"  id="<%= ActividadPublicitariaDetalle.type_actividads["llamada"] %> " class="red-social-add  light-blue" onclick="showSocial('Llamada')"><i class="mdi-notification-phone-in-talk "></i></a></span> </li>
+                      <li> <span style="padding-bottom: 5px;"><a href="#!"  id="<%= ActividadPublicitariaDetalle.type_actividads["llamada"] %> " class="red-social-add  light-blue tooltipped" data-tooltip="Llamadas" onclick="showSocial('Llamada')"><i class="mdi-notification-phone-in-talk "></i></a></span> </li>
 
-                     <li> <span style="padding-bottom: 5px;"><a href="#!"  id="<%= ActividadPublicitariaDetalle.type_actividads["email"] %>" class="red-social-add light-blue" onclick="showSocial('Email')"><i class="  mdi-communication-email "></i></a></span> </li>
+                     <li> <span style="padding-bottom: 5px;"><a href="#!"  id="<%= ActividadPublicitariaDetalle.type_actividads["email"] %>" class="red-social-add light-blue tooltipped" data-tooltip="Email" onclick="showSocial('Email')"><i class="  mdi-communication-email "></i></a></span> </li>
                    </ul>
                   </div>
                 </div>
@@ -109,14 +114,14 @@
                  <a style="float:right;" class="waves-effect btn-flat " onclick="hideSocial('SMS')"><i class="mdi-content-clear"></i></a>
                  <div class="row">
                     <div class="input-field col s12">
-                      <input placeholder="Contenido del Tweet" id="contenido_tweet" name="contenido_tweet" type="text" class="validate" length="80">
-                      <label for="contenido_tweet">Descripción</label>
+                      <input placeholder="Contenido del SMS" id="contenido_sms" name="contenido_sms" type="text" class="validate" length="80">
+                      <label for="contenido_sms">Contenido</label>
                     </div>
                   </div>
                   <div class="row">
                     <div class="input-field col s12">
-                      <input placeholder="Url para el Tweet" id="url_tweet" name= "url_tweet"type="text" class="validate" length="60">
-                      <label for="url_tweet">Url</label>
+                      <input placeholder="Url para el SMS" id="url_sms" name= "url_sms"type="text" class="validate" length="60">
+                      <label for="url_sms">Url</label>
                     </div>
                   </div>
               </div>
@@ -125,32 +130,13 @@
                 <a style="float:right;" class="waves-effect btn-flat" onclick="hideSocial('Llamada')"><i class="mdi-content-clear"></i></a>
                 <h5>Información para Promoción por Llamadas</h5>
                 <div class="row">
-                  <div class=" col s12 m8">
+                  <div class=" col s12">
                     <div class="input-field col s12">
-                      <input placeholder="Titulo del Post" id="first_name" type="text" class="validate" length="80">
-                      <label for="first_name">Titulo</label>
-                    </div>
-                    <div class="input-field col s12">
-                      <input placeholder="Descripcion del Post" id="first_name" type="text" class="validate" length="80">
-                      <label for="first_name">Descripción</label>
+                      <input placeholder="Asunto de la Llamada" id="asunto_llamada" type="text" class="validate" length="80">
+                      <label for="asunto_llamada">Asunto</label>
                     </div>
                 
-                    <div class="input-field col s12">
-                      <input placeholder="Url para el Post" id="first_name" type="text" class="validate" length="60">
-                      <label for="first_name">Url</label>
-                    </div>
                   </div>
-                <div class="col s12 m4">
-                  <div class="col s12">
-                      <h5>Imagen de la actividad_publicitaria</h5>
-                      
-                      <div id="imagen" class="<%= @formato_imagen %><%= @imagen %>" > </div>
-                      
-                      <input id="imagen_llamadas" name="imagen_llamadas" type="file" class="file"  />
-                      
-                      <div class="pad15"></div>
-                  </div>
-                </div>
               </div>
             </div>
 
