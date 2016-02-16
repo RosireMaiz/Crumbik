@@ -56,14 +56,16 @@
           </span>
           <span class="negrita"><%= @usuario.pais.nombre %></span>
         </li>
-        <% if !@usuario.organizacion.nil? %>
-          <li>
-            <i class="small mdi-action-perm-identity"></i>
-            <span class="grey-text darken-2">
-              Compa&ntilde;ia
-            </span>
-            <span class="company"><%= @usuario.organizacion.nombre %></span>
-          </li>
+        <% if request.subdomain.present? %>
+          <% if !@usuario.organizacion.nil? %>
+            <li>
+              <i class="small mdi-action-perm-identity"></i>
+              <span class="grey-text darken-2">
+                Compa&ntilde;ia
+              </span>
+              <span class="company"><%= @usuario.organizacion.nombre %></span>
+            </li>
+          <%  end -%>
         <%  end -%>
 
       </ul>
@@ -87,10 +89,23 @@
 
         <li>
           <i class="small mdi-communication-phone"></i>
-          <span class="negrita">+58 4262584349</span>
+          <span class="grey-text darken-2">
+                Tel&ntilde;efono
+          </span>
+          <span class="negrita">+58 4265528455</span>
+        </li>
+        <li>
+          <i class="small fa fa-calendar"></i>
+          <span class="grey-text darken-2">
+                Fecha de Nacimiento
+          </span>
+          <span class="negrita">08/04/1992</span>
         </li>
         <li>
           <i class="small mdi-communication-email"></i>
+          <span class="grey-text darken-2">
+              Email
+          </span>
           <span class="negrita"><%= @usuario.email%></span>
         </li>
       </ul>

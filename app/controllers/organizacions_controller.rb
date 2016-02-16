@@ -35,21 +35,24 @@ class OrganizacionsController < ApplicationController
 	end
 
 	def show
+
 		if  params[:subdominio].present?
 			subdominio = params[:subdominio]
 		else
 			subdominio = request.subdomain
 		end
-		if !request.subdomain.present?
-			@organizacion = Organizacion.where(["subdominio = ?", subdominio]).first
-			@usuario_organizacion = @organizacion.usuario
-		else
-			Apartment::Tenant.switch!()
-			@organizacion = Organizacion.where(["subdominio = ?", subdominio]).first
-			@usuario_organizacion = Usuario.includes(:perfil).where(["id = ?", @organizacion.usuario_id]).first
+		if !subdominio.blank?
+			if !request.subdomain.present?
+				@organizacion = Organizacion.where(["subdominio = ?", subdominio]).first
+				@usuario_organizacion = @organizacion.usuario
+			else
+				Apartment::Tenant.switch!()
+				@organizacion = Organizacion.where(["subdominio = ?", subdominio]).first
+				@usuario_organizacion = Usuario.includes(:perfil).where(["id = ?", @organizacion.usuario_id]).first
+			end
+			@redes = OrganizacionRedSocial.includes(:red_social).where("organizacion_id = ?", @organizacion.id)
 		end
-
-		@redes = OrganizacionRedSocial.includes(:red_social).where("organizacion_id = ?", @organizacion.id)
+		
 		render "organizacions/show"	
 	end
 

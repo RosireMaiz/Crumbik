@@ -180,6 +180,7 @@ Rails.application.routes.draw do
 	match "/organizacion/editar/:subdominio" => "organizacions#edit", via: :get
   	match "/organizacion/editar" => "organizacions#save", via: :post
   	match "/link_social_organizacion/:id_red_social/:subdominio" => "organizacions#organizacion_social_link", via: :get
+	match "/organizacion/consultar" => "organizacions#show", via: :get
 
   	match "/organizacion/apariencia/tema"=> "organizacions#apariencia_tema", via: :get
   	match "/gestion_temas"=> "temas#consultar", via: :get
@@ -220,6 +221,8 @@ Rails.application.routes.draw do
 	match "/graficas/interaccion_productos"  => "productos#consulta_interaccion_productos", via: :get
 
 	match "/dessarroladores" => "portal#desarrolladores", via: :get
+	match "/rendimiento_sistema" => "portal#desarrolladores", via: :get
+
 	
 	devise_scope :usuario do
 	    post "/entrar" => "devise/sessions#create"

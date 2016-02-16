@@ -50,11 +50,19 @@
   <div class="col s12 m9">
     <div class="row no-margin-v">
       <div class="input-field col m6 s12">
+      <% if request.subdomain.present? %>
        <select id="select" name="rol" >
             <option value="-1" selected>Elija un Producto</option>
             <%= options_from_collection_for_select(Producto.all, :id, :nombre) %>
         </select>
         <label>Producto</label>
+      <% else -%>
+       <select id="select" name="rol" >
+            <option value="-1" selected>Elija un Plan</option>
+            <%= options_from_collection_for_select(Plan.all, :id, :nombre) %>
+        </select>
+        <label>Plan</label>
+      <% end -%>
       </div>
     </div>
 
