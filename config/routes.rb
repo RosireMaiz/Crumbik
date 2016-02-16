@@ -204,6 +204,17 @@ Rails.application.routes.draw do
 
 	match "/mercadeo/actividades_publicitarias" =>  "actividad_publicitaria#consultar", via: :get
 	match "/campanas_publicitaria/consultar"  =>  "actividad_publicitaria#consultar", via: :get
+	match "/actividad_publicitaria/agregar" => "actividad_publicitaria#new", via: :get
+	match "/actividad_publicitaria/crear_actividad_publicitaria" => "actividad_publicitaria#create", via: :post
+
+
+
+
+
+
+
+
+
 
 	devise_scope :usuario do
 	    post "/entrar" => "devise/sessions#create"
@@ -284,5 +295,12 @@ Rails.application.routes.draw do
 		match "/mercadeo/variablespsicograficas/eliminar" => "variable_psicograficas#eliminar", via: :post
 		match "/mercadeo/variablespsicograficas/update_estatus" => "variable_psicograficas#update_estatus", via: :post
 	end
+
+
+
+
+
+
+
 
 end

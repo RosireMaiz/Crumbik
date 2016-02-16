@@ -5,10 +5,11 @@ class ActividadPublicitariaController < ApplicationController
 			redirect_to root_path
 		else
 
-			@actividad_publicitaria = Publicidad.new
+			@actividad_publicitaria = ActividadPublicitarium.new
 			@formato_imagen = "data:image/png;base64,"
 			@imagen = Base64.encode64(File.open($IMAGEN_DEFAULT, "rb").read)
-			@red_socials = - ActividadPublicitariaDetalles.type_actividades
+			@red_socials =  ActividadPublicitariaDetalle.type_actividads["sms"]
+
 			render "actividad_publicitaria/new"
 		end
 	end
