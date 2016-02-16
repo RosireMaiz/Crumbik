@@ -19,8 +19,96 @@
 
 <div id="sms-fondo">
   <div class="sms-contenedor">
-    <p class="org-sub-bold sms-contenido"> Contacto</p>
+    <div class="col s12 m2">
+      <p class="org-sub-bold sms-contenido"> Contacto</p>
+    </div>
+    <div id="telefonos" class="col s12 m10"></div>
     <div class="col s12 m4 input-field sms-buscar"></div>
-    <a href="/" class="white-text pink accent-3 btn-sm btn-table-action tooltipped waves-effect" data-position="bottom" data-tooltip="Agregar Contacto" data-delay="20"><i class="fa fa-plus"></i></a>
+    <a href="#change_clientes" class="white-text pink accent-3 btn-sm btn-table-action tooltipped modal-trigger waves-effect" data-position="bottom" data-tooltip="Agregar Contacto" data-delay="20"><i class="fa fa-plus"></i></a>
   </div>
 </div>
+
+
+<div id ="change_clientes" class="panel panel-info modal col s6">
+
+  <div class="panel-body">
+   <a style="float:right;" class="waves-effect btn-flat modal-close"><i class="mdi-content-clear"></i></a>
+               
+      <div class="row">
+        <strong><legend class="text-center">Cambiar de Contacto</legend></strong>
+
+        <div class="col s12">
+             
+          <p>Seleccione los contactos deseados:</p>
+            <table id="clientes" class="display" cellspacing="0" width="100%" >
+              <thead>
+                <tr>
+                    <th>Cliente</th>
+                    <th>Teléfono</th>
+                </tr>
+              </thead>
+              <tbody>
+                <% @clientes.each do |cliente| %>
+
+                   <% if ! cliente.nil? %>
+                      <tr data-id="<%= cliente.id %>" data-telefono="+<%= cliente.pais.codigo_telefono %><%= cliente.telefono_movil%>">
+                          <td > 
+                              <%= cliente.nombres %> <%= cliente.apellidos %> 
+                          </td>  
+                          <td > 
+                              +<%= cliente.pais.codigo_telefono %><%= cliente.telefono_movil%>
+                          </td>  
+                      </tr>
+                    <% end %>
+                  <% end %>
+                      
+               </tbody>
+            </table>
+            <div style="padding-top: 35px;" class="right">
+                      
+              <input id="btnAceptar" type="button" class="btn btn-success btn-sm " value="Aceptar" >
+              <input type="button" class="btn btn-danger btn-sm modal-close" value="Cancelar" >
+
+            </div>
+        </div>
+      </div>
+
+  </div>
+
+</div>
+
+<% content_for :javascript_personalizado do %>
+<script type="text/javascript">
+  var table = $('#clientes').DataTable({
+     "searching": false,
+      "select": true, 
+      "pageLength": 2,
+      "lengthChange": false
+  });
+
+  $('#btnAceptar').on('click', function() {
+    var idRol = $("#clientes").find('tbody tr.selected').attr("data-id");
+    if (idRol == null || idRol == "") {
+      alert("idRol " +  idRol);
+      $('#change_rol').closeModal();
+    } else {
+      var idTelefono = $("#clientes").find('tbody tr.selected').attr("data-telefono");
+       $("#telefonos").append("<div class='chip'>" + idTelefono + "</div>");
+    
+    };
+  });
+
+  $('#clientes tbody').on('click', 'tr', function () {
+    //alert($(this).attr("data-id"));
+    if ( $(this).hasClass('selected') ) {
+        $(this).removeClass('selected');
+    }
+    else {
+        table.$('tr.selected').removeClass('selected');
+        $(this).addClass('selected');
+    }
+  } );
+
+
+</script>
+<% end -%>
