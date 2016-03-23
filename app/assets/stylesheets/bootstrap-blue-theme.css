@@ -22,7 +22,9 @@ textarea.materialize-textarea{
 hr{
   width: 50%;
 }
-i{vertical-align: middle;}
+i{
+  vertical-align: middle;
+}
 .publicidad{
   background: #673ab7;
   font-size: 30px;
@@ -43,26 +45,23 @@ i{vertical-align: middle;}
 /*                 TITULO DE LA PAGINA               */
 /*****************************************************/
 .titulo-seccion{
-
   position: relative;
   color: #ffffff;
   font-size: 26px;
-
 }
 
 .titulo-seccion h5, .titulo-seccion .breadcrumb{
 
-  margin-top: 110px
+  margin-top: 52px
 }
 
 .titulo-seccion .breadcrumb{
-
-  margin-top: 110px;
-  font-size: 15px;
+    margin-top: 44px;
+    font-size: 15px;
+    margin-bottom: 9.8px;
 }
 
 .titulo-seccion .breadcrumb > li, .titulo-seccion .breadcrumb > li> a{
-
   color: #fff !important
 }
 
@@ -1003,11 +1002,9 @@ div.seccion-principal span:after, div.seccion-principal span::after{
 .org-logo-consulta {
     margin-left: 15px;
     margin-right: 15px;
-    border-radius: 6px;
-    padding: 8px;
+    margin-bottom: 8px;
     max-height: 90px;
     max-width: 90px;
-    background-color: #EAE9EF !important;
 }
 
 .org-banner-consulta{
@@ -1039,7 +1036,7 @@ div.seccion-principal span:after, div.seccion-principal span::after{
 .banner{
   background-repeat: no-repeat;
   background-size: cover;
-  height: 160px;
+  height: auto;
   position: relative;
 }
 
@@ -1155,7 +1152,7 @@ nav a.brand-logo {
 }
 
 .tabs .indicator {
-  background-color: #616161;
+  background-color: #616161 !important;
 }
 
 /*** Gris Mansory ****/
@@ -1206,3 +1203,22 @@ nav a.brand-logo {
         vertical-align: top;
         height: inherit;
     }
+
+.link-pink{
+ color: #f50057 !important
+}
+
+ .kv-file-upload.btn, .kv-file-remove.btn {
+   box-shadow: none; 
+}
+
+.kv-file-upload.btn:hover, .kv-file-remove.btn:hover {
+  box-shadow: none;
+}
+.kv-file-upload.btn, .kv-file-remove.btn{
+    border: 1px solid #E9EAED;
+        padding: 0 10px;
+}
+.kv-file-upload.glyphicon, .kv-file-remove.glyphicon {
+    top: 0px !important;
+}

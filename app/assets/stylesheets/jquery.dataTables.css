@@ -43,7 +43,7 @@ table.dataTable tbody tr {
   background-color: white;
 }
 table.dataTable tbody tr.selected {
-/*  background-color: #b0bed9;*/
+  background-color: #E2E1E1;
 }
 table.dataTable tbody th,
 table.dataTable tbody td {
@@ -73,7 +73,7 @@ table.dataTable.stripe tbody tr.odd, table.dataTable.display tbody tr.odd {
   background-color: #f9f9f9;
 }
 table.dataTable.stripe tbody tr.odd.selected, table.dataTable.display tbody tr.odd.selected {
-  background-color: #abb9d3;
+  background-color: #E2E1E1;
 }
 table.dataTable.hover tbody tr:hover,
 table.dataTable.hover tbody tr.odd:hover,

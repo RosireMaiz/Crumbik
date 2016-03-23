@@ -5,7 +5,7 @@ class OrganizacionRedSocial < ActiveRecord::Base
 
   	def self.find_for_oauth(auth, idRedSocial, subdominio)
   		organizacion = Organizacion.where(["subdominio = ?", subdominio]).first
-    	organizacion_red_social = OrganizacionRedSocial.find_by(uid: auth.uid, provider: auth.provider)
+    	organizacion_red_social = OrganizacionRedSocial.find_by(uid: auth.uid, provider: auth.provider, organizacion_id: organizacion.id)
     	provider = auth.provider
 
 		if organizacion_red_social.blank?
@@ -20,7 +20,7 @@ class OrganizacionRedSocial < ActiveRecord::Base
 		organizacion_red_social.oauth_secret = auth.credentials.secret
 
 		if auth.credentials.expires
-			organizacion_red_social.oauth_expires_at  = Time.at(auth.credentials.expires_at)
+			organizacion_red_social.oauth_expires_at  = Time.at(auth.credentials.expires_at).to_datetime
 		end
 		
 
@@ -50,6 +50,19 @@ class OrganizacionRedSocial < ActiveRecord::Base
 
 		organizacion_red_social.save
 		organizacion_red_social
+  	end
+
+  	def Eliminar(id)
+	    if OrganizacionRedSocial.exists?(id)
+	      opcionMenu = OrganizacionRedSocial.find_by(id: "#{id}")
+	      opcionMenu.destroy
+	      if opcionMenu.destroyed?
+	        return 1
+	      else
+	        return 0
+	      end     
+	    end 
+	    return 0
   	end
 
 end

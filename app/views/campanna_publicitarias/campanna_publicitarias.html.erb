@@ -1,0 +1,139 @@
+<% content_for :css_personalizado do %>
+    <style type="text/css">
+      .dropdown-content {
+        max-height: 250px;  
+      }
+    </style>
+<% end %>
+<div class="row titulo-seccion banner banner-perfil">
+  <div class="contenedor">
+    <div class="col s6">
+      <h5 class="text-uppercase">
+       Campañas Publicitarias
+      </h5>
+    </div>
+    <div class="col s6 text-right ">
+      <ol class="breadcrumb">
+        <li>
+          <a href="/">Inicio</a>
+        </li>
+        <li class="active">Campañas Publicitarias</li>
+      </ol>
+    </div>
+  </div>
+</div>
+
+<div class="row pad30-h">
+
+  <div class="fixed-action-btn " style="top: 250px; bottom: 0px">
+    <a href="/actividad_publicitaria/agregar" class="btn-floating btn-sm waves-effect waves-light red left absolute tooltipped" style="margin-bottom: 60px;" data-position="left" data-delay="50" data-tooltip="Agregar Campaña Publicitaria">
+      <i class=" mdi-av-playlist-add"></i>
+    </a>
+  </div>
+
+  <div class="row">
+    <div class="col s12 ">
+       
+      <div class="valign-wrapper">
+        <div class="col">
+          <i class="fa fa-calendar"></i>
+          <span style="padding-left: 5px">Fecha</span>     
+        </div>
+       
+        <div class="input-field col s12 m2">
+          <input id="Desde" type="date" class="datepicker">
+          <label for="Desde" class = "morado">Inicio</label>
+        </div>
+
+        <div class="input-field col s12 m2">
+          <input id="Hasta" type="date" class="datepicker">
+          <label for="Hasta" class = "morado">Fin</label>
+        </div>
+
+        <div class="input-field col m5 s12">
+         
+            <% if request.subdomain.present? %>
+              <select id="select" name="rol" >
+                <option value="-1" selected>Elija un Producto</option>
+                <%= options_from_collection_for_select(Producto.where(estatus: "A"), :id, :nombre) %>
+              </select>
+              <label>Producto</label>
+            <% else %>
+              <select id="select" name="rol" >
+                <option value="-1" selected>Elija un Plan</option>
+                <%= options_from_collection_for_select(Plan.where(estatus: "A"), :id, :nombre) %>
+              </select>
+              <label>Plan</label>
+            <% end %>
+        </div>
+        <a class="waves-effect waves-light btn z-depth-1 " style = " margin-left: 27px;">Buscar </a>
+
+      </div>
+            
+    </div>  
+  </div>
+
+  <div class="row">
+        <ul class="tabs">
+          <li class="tab col s12 m3">
+            <a href="#todos" class="grey-text text-darken-2 active">Todas</a>
+          </li>
+          <li class="tab col s12 m3">
+            <a class="grey-text text-darken-2 " href="#ejecucion">En Ejecución</a>
+          </li>
+          <li class="tab col s12 m3 ">
+            <a class="grey-text text-darken-2" href="#proximas">Próximas a Ejecutar</a>
+          </li>
+          <li class="tab col s12 m3">
+            <a class="grey-text text-darken-2 " href="#ejecucion">Ejecutadas</a>
+          </li>
+        </ul>
+     
+    </div>
+
+  <div class="row">
+    <div class="col s4">
+      <div class="panel panel-primary">
+        <div class="panel-heading">
+            <span>Tittle Campanna</span>
+        </div>
+        <div class="panel-body">
+          <h5 class="center-align"> 1212 Interations</h5>
+          <p>Medios de Difusión</p>
+          <ul  class='list-inline'>  
+            <li style="padding-bottom: 5px;"> <span ><a href="#!"  id="<%= CampannaPublicitariaDetalle.tipo_difusions["sms"] %> " class="red-social-add light-blue tooltipped" data-tooltip="SMS"><i class="fa fa-comments"></i></a></span> </li>
+            <li> <span style="padding-bottom: 5px;"><a href="#!"  id="<%= CampannaPublicitariaDetalle.tipo_difusions["llamada"] %> " class="red-social-add  light-blue tooltipped" data-tooltip="Llamadas"><i class="mdi-notification-phone-in-talk "></i></a></span> </li>
+            <li> <span style="padding-bottom: 5px;"><a href="#!"  id="<%= CampannaPublicitariaDetalle.tipo_difusions["email"] %>" class="red-social-add light-blue tooltipped" data-tooltip="Email"><i class="  mdi-communication-email "></i></a></span> </li>
+            <li> <span style="padding-bottom: 5px;"><a href="#!"  id="<%= CampannaPublicitariaDetalle.tipo_difusions["red_social"] %>" class="red-social-add light-blue tooltipped" data-tooltip="Email"><i class="  mdi-communication-email "></i></a></span> </li>
+          </ul>
+          <div class="row">
+            <div class="col">
+              <i class="fa fa-calendar grey-text text-darken-3"></i>
+              <strong>Inicio:</strong> 04/02/2016 
+            </div>
+            <div class="col">
+              <strong>Fin:</strong> 04/04/2016 
+            </div>
+            <div class="secondary-content">
+               <a href="#!" style=" padding: 10px;">
+                  <span>Ver</span>
+                </a>  
+                <a href="#!" style="padding: 10px;">
+                  <span>Editar</span>
+                </a>                 
+                <a href="#!" class="modal-trigger" style="padding: 10px;">
+                    <span>Eliminar</span>
+                </a>
+                <a href="#!" class="modal-trigger" style="padding: 10px;">
+                    <span>Difundir</span>
+                </a>
+            </div>
+            
+          </div>
+        </div>
+            
+
+      </div>
+    </div>
+  </div>
+</div>

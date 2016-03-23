@@ -125,19 +125,19 @@ class ProductosController < ApplicationController
 		
 		if usuario_signed_in?
 			usuario_id = current_usuario.id
-			@puntuacion = Puntuacion.where( ["producto_id = ? AND usuario_id = ? ", id_producto, usuario_id] ).first
+			#@puntuacion = Puntuacion.where( ["producto_id = ? AND usuario_id = ? ", id_producto, usuario_id] ).first
 		end
 
 		if @puntuacion.nil?
-			@puntuacion =  Puntuacion.new
-			@puntuacion.puntuacion = 0
+			#@puntuacion =  Puntuacion.new
+			#@puntuacion.puntuacion = 0
 		end
 
-		@promedio = Puntuacion.where("producto_id = ? ", id_producto).average(:puntuacion)
+		#@promedio = Puntuacion.where("producto_id = ? ", id_producto).average(:puntuacion)
 
 		@producto = Producto.where("id = ?", id_producto).first	
-		@comentarios = Comentario.includes(:usuario).where("producto_id = ?", id_producto).order("created_at ASC")
-		@comentario = Comentario.new
+		#@comentarios = Comentario.includes(:usuario).where("producto_id = ?", id_producto).order("created_at ASC")
+		#@comentario = Comentario.new
 		
 		render "productos/show"
 	end
@@ -146,24 +146,24 @@ class ProductosController < ApplicationController
 		id_producto = params[:idproducto]
 		puntuacion = params[:puntuacion]
 		usuario_id = current_usuario.id
-		@puntuacion = Puntuacion.where( ["producto_id = ? AND usuario_id = ? ", id_producto, usuario_id] ).first
+		#@puntuacion = Puntuacion.where( ["producto_id = ? AND usuario_id = ? ", id_producto, usuario_id] ).first
 		
-		if @puntuacion.nil?
-			@puntuacion = Puntuacion.new
-			@puntuacion.producto_id = id_producto
-			@puntuacion.usuario_id = usuario_id
-			@puntuacion.puntuacion = puntuacion
-		else
-			@puntuacion.puntuacion = puntuacion	
-		end
+		#if @puntuacion.nil?
+			#@puntuacion = Puntuacion.new
+			#@puntuacion.producto_id = id_producto
+			#@puntuacion.usuario_id = usuario_id
+			#@puntuacion.puntuacion = puntuacion
+		#else
+			#@puntuacion.puntuacion = puntuacion	
+		#end
 		
 		
-		if @puntuacion.save
-			@promedio = Puntuacion.where("producto_id = ? ", id_producto).average(:puntuacion)
+		#if @puntuacion.save
+			@promedio = 0 # Puntuacion.where("producto_id = ? ", id_producto).average(:puntuacion)
       		render :text =>'{ "success" : "true", "promedio" : ' + @promedio.to_s + '}'
-		else
+		#else
 			render :text => '{ "success" : "false"}'
-		end
+		#end
 	end
 
 	def consulta_interaccion_productos

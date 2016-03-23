@@ -1,0 +1,231 @@
+<% content_for :css_personalizado do %>
+ <%= stylesheet_link_tag    "jquery.dataTables" %> 
+<% end %>
+
+<div class="row titulo-seccion banner banner-perfil">
+  <div class="contenedor">
+    <div class="col s6">
+      <h5 class="text-uppercase ">
+       Criterios de Difusión
+      </h5>
+    </div>
+    <div class="col s6 text-right ">
+      <ol class="breadcrumb">
+        <li>
+          <a href="/">Inicio</a>
+        </li>
+        <li class="active">Criterios de Difusión</li>
+      </ol>
+    </div>
+  </div>
+</div>
+
+
+<div class="row pad30-h">
+  <table id="criterio_difusions" class="display" cellspacing="0" width="100%" >
+    <thead>
+      <tr>
+          <th>Nombre</th>
+          <th>Estatus</th>
+          <th>
+            Acciones
+
+            <a href="/criterio_difusions/agregar" class="white-text red lighten-1 btn-sm btn-table-action tooltipped waves-effect" data-position="bottom" data-tooltip="Agregar Criterio de Difusión" data-delay="20">
+              <i class="fa fa-plus"></i>
+            </a>
+          </th>
+      </tr>
+    </thead>
+    <tbody>
+      <% @criterio_difusions.each do |criterio_difusion| %>
+
+         <% if ! criterio_difusion.nil? %>
+            <tr>
+                <td data-search="<%= criterio_difusion.nombre %>"> 
+                    <%= criterio_difusion.nombre %> 
+                </td>  
+
+                <td> 
+                <% if (criterio_difusion.estatus == 'A') %>
+                    Activo 
+                <% else %>
+                    Deshabilitado
+                <% end %>
+                </td> 
+                <td> 
+                <% if !(criterio_difusion.estatus == 'A') %>
+                  <a  href="#modal<%= criterio_difusion.id %>" class="modal-trigger btn-success btn-sm"> Habilitar</a>
+                <% else %>
+                   <a  href="#modal<%= criterio_difusion.id %>" class=" modal-trigger btn-warning btn-sm">Deshabilitar</a>
+                <% end %>
+                  <a href="#modalver<%= criterio_difusion.id %>" class="modal-trigger purple btn-primary btn-sm">Ver</a>
+                  <a href="#modaleditar<%= criterio_difusion.id %>" class="modal-trigger btn-primary btn-sm" onclick="validar(modaleditar<%= criterio_difusion.id %>, <%= criterio_difusion.id %>)">Editar</a>
+  
+                  <a  href="#modaleliminar<%= criterio_difusion.id %>" class="modal-trigger btn-danger btn-sm">Eliminar</a>
+                </td>
+                
+
+            </tr>
+          <% end %>
+        <% end %>
+            
+     </tbody>
+  </table>
+
+  <% @criterio_difusions.each do |criterio_difusions| %>
+    <% if ! criterio_difusions.nil? %>
+        <!-- Modal Structure -->
+       <div id="modal<%= criterio_difusions.id %>" class="modal">
+          <div class="modal-content">
+                <a style="float:right;" class="waves-effect btn-flat modal-close"><i class="mdi-content-clear"></i></a>
+                <% if (criterio_difusions.estatus == 'A') %>
+                  <h5>Deshabilitar Criterio de Difusión</h5>
+                <% else %>
+                  <h5>Habilitar Criterio de Difusión</h5>
+                <% end %>
+                <div class="row pad30-t" >
+                    <div class="col s12 text-center">
+                      <% if (criterio_difusions.estatus == 'A') %>
+                        <h6 style=" font-size: 20px;">¿Seguro que desea Deshabilitar el Criterio de Difusión seleccionado? 
+                        </h6>
+                      <% else %>
+                        <h6 style=" font-size: 20px;">¿Seguro que desea Habilitar el Criterio de Difusión seleccionado?</h6>
+                      <% end %>
+                      <div style="padding-top: 35px;" class="right">
+                      <% if (criterio_difusions.estatus == 'A') %>
+                         <input type="button" class="btn btn-success btn-sm" value="Aceptar" onclick="update_estatus(<%= criterio_difusions.id %>,'I')">
+                      <% else %>
+                        <input type="button" class="btn btn-success btn-sm" value="Aceptar" onclick="update_estatus(<%= criterio_difusions.id %>,'A')">
+                      <% end %>
+                        <input type="button" class="btn btn-danger btn-sm modal-close" value="Cancelar">
+                      </div>
+
+                    </div>
+                </div>                
+          </div>
+        </div> 
+
+        <div id="modaleliminar<%= criterio_difusions.id %>" class="modal">
+          <div class="modal-content">
+                <a style="float:right;" class="waves-effect btn-flat modal-close"><i class="mdi-content-clear"></i></a>
+               
+                  <h5>Eliminar Criterio de Disfusión </h5>
+               
+                <div class="row pad30-t" >
+                    <div class="col s12 text-center">
+                     
+                        <h6 style=" font-size: 20px;"> ¿Seguro que desea Eliminar el Criterio de Disfusión seleccionado? </h6>
+                      
+                      <div style="padding-top: 35px;" class="right">
+                      
+                        <input type="button" class="btn btn-success btn-sm" value="Aceptar" onclick="eliminar(<%= criterio_difusions.id %>)">
+                      
+                        <input type="button" class="btn btn-danger btn-sm modal-close" value="Cancelar">
+                      </div>
+
+                    </div>
+                </div>                
+          </div>
+        </div> 
+
+        <div id="modalver<%= criterio_difusions.id %>" class="modal modal-45">
+          <div class="modal-content">
+            <a href="#" style="float:right;" class="waves-effect btn-flat modal-close"><i class="mdi-content-clear"></i></a>
+            <h5>Ver Criterio de Difusión</h5>
+
+            <div class="row no-margin-v" style="padding-top: 15px;">
+              <div class="col s10 offset-s1 " align="justify">
+                <div class="row">
+                 <p><b style="color: #9E9E9E">Nombre:</b></p>
+                 <p>
+                   <%= criterio_difusions.nombre %></p>
+
+                 </div>
+
+                 <div class="row ">
+                   <p><b style="color: #9E9E9E">Decripci&oacute;n:</b></p>
+                   <p><%= criterio_difusions.descripcion %></p> 
+                 </div>
+                 <div class="row ">
+                   <p><b style="color: #9E9E9E">Tabla:</b></p>
+                   <p><%= criterio_difusions.tabla %></p> 
+                 </div>
+                 <div class="row ">
+                   <p><b style="color: #9E9E9E">Campo de Comparación:</b></p>
+                   <p><%= criterio_difusions.campo_comparacion %></p> 
+                 </div>
+               </div>
+
+             </div>
+           </div>                
+        </div>
+
+        <div id="modaleditar<%= criterio_difusions.id %>" class="modal modal-fixed-footer" form="true">
+          <div class="modal-content">
+                <a style="float:right;" class="waves-effect btn-flat modal-close" onclick="cancelar(modaleditar<%= criterio_difusions.id %>, <%= criterio_difusions.id %>, nombre<%= criterio_difusions.id %> )"><i class="mdi-content-clear"></i></a>
+                <h5>Editar Criterio de Disfusión</h5>
+                
+                <div class="row no-margin-v" style="padding-top: 10px;">
+                    <div class="col s12">
+                      <div class="row no-margin-v">
+                        <div class=" input-field col s12 m6 ">
+                          <input id="nombre<%= criterio_difusions.id %>" type="text" class="validate" value="<%= criterio_difusions.nombre %>" name="criterio_difusion[nombre]"> 
+                          <label for="nombre<%= criterio_difusions.id %>">Nombre:</label>
+                        </div>
+                        <div class=" input-field col s12 ">
+                          <textarea id="descripcion<%= criterio_difusions.id %>" type="text" class="validate materialize-textarea" name="criterio_difusion[descripcion]"> <%= criterio_difusions.descripcion %>
+                          </textarea>
+                          <label for="descripcion<%= criterio_difusions.id %>">Descripción:</label>
+                        </div>
+                        <div class=" input-field col s12 m6 ">
+                          <input id="tabla<%= criterio_difusions.id %>" type="text" class="validate" value="<%= criterio_difusions.tabla %>" name="criterio_difusion[tabla]"> 
+                          <label for="tabla<%= criterio_difusions.id %>">Tabla Referencia:</label>
+                        </div>
+                        <div class=" input-field col s12 m6 ">
+                          <input id="campo_comparacion<%= criterio_difusions.id %>" type="text" class="validate" value="<%= criterio_difusions.campo_comparacion %>" name="criterio_difusion[campo_comparacion]"> 
+                          <label for="campo_comparacion<%= criterio_difusions.id %>">Campo de Comparación:</label>
+                        </div>
+                      </div>
+                    </div>
+                      
+                 </div>
+          </div>  
+          <div class="modal-footer right-align">
+            <div class="col right">
+              <input type="button" class="btn btn-danger btn-sm" value="Cancelar" onclick="cancelar(modaleditar<%= criterio_difusions.id %>, <%= criterio_difusions.id %>, nombre<%= criterio_difusions.id %>,descripcion<%= criterio_difusions.id %>, tabla<%= criterio_difusions.id %>, campo_comparacion<%= criterio_difusions.id %> )">
+            </div>
+            <div class="col right">
+              <input type="button" class="btn btn-success btn-sm" value="Guardar" onclick="update(modaleditar<%= criterio_difusions.id %>, <%= criterio_difusions.id %>, nombre<%= criterio_difusions.id %>,descripcion<%= criterio_difusions.id %>, tabla<%= criterio_difusions.id %>, campo_comparacion<%= criterio_difusions.id %>)">
+                      
+            </div>
+
+            
+              
+            </div>              
+        </div>
+
+    <% end %>
+  <% end %>
+
+</div>
+
+<% content_for :javascript_personalizado do %>
+  <%= javascript_include_tag 'maestros/criterio_difusions' %>
+  <%= javascript_include_tag 'jquery.dataTables.min' %>
+  <script type="text/javascript">
+    $(document).ready(function(){
+      $('#criterio_difusions').dataTable({
+        "select": false, 
+        "pageLength": 4,
+        "lengthChange": false,
+        "language": {
+            "zeroRecords": "No hay datos disponibles en la tabla",
+            "infoEmpty": "No hay datos disponibles en la tabla",
+            
+        }
+
+      });
+    });
+
+  </script>
+<% end %>

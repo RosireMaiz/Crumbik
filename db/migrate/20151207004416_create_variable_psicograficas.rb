@@ -4,6 +4,8 @@ class CreateVariablePsicograficas < ActiveRecord::Migration
       t.string :nombre
       t.text :descripcion
       t.string :estatus, default: "A", :limit => 1
+
+      t.timestamps null: false
     end
   end
 end

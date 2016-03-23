@@ -55,7 +55,6 @@ class ActividadPublicitariaController < ApplicationController
 		if !usuario_signed_in?
         	render "portal/index"
      	else
-
 	        @actividad_publicitarias = ActividadPublicitarium.order('id ASC')
 	        render "actividad_publicitaria/actividad_publicitarias"	
      	end

@@ -1,5 +1,4 @@
-<div class="row titulo-seccion">
-  <div class="banner banner-perfil">
+<div class="row titulo-seccion banner banner-perfil">
     <div class="contenedor">
       <div class="col s6">
         <h5 class="text-uppercase">
@@ -15,7 +14,6 @@
         </ol>
       </div>
     </div>
-  </div>
 </div>
 <div class="row pad30-h">
   <div class="col s12 m3">
@@ -124,9 +122,11 @@
                   <%= organizacion.nombre %>
                 </b>
 
-                <a href="/organizacion/editar/<%= organizacion.subdominio %>" >
-                  <i class="fa fa-edit grey-text text-darken-1" style="float:right; margin-right: 0rem;"></i>
-                </a>
+                <% if request.subdomain.present? %>
+                  <a href="/organizacion/editar/<%= organizacion.subdominio %>" >
+                    <i class="fa fa-edit grey-text text-darken-1" style="float:right; margin-right: 0rem;"></i>
+                  </a>
+                <% end -%>
                 <a href="/organizacion/consultar/<%= organizacion.subdominio %>" >
                   <i class="mdi-action-visibility tiny grey-text text-darken-1" style="float:right; margin-right: 0rem;" ></i>
                </a>
@@ -185,16 +185,17 @@
                         <%= organizacion.telefono %>
                       </p>
 
-                      <p class="no-padding">
-                        <b class="grey-text text-darken-3">Fecha Venc. Plan:</b>
-                        <%= organizacion.contratos[0].fecha_vencimiento.strftime("%d %b  %Y ") %>
-                      </p>
-
-                      <p class="no-padding">
-                        <b class="grey-text text-darken-3">Plan:</b>
-                        <%= organizacion.contratos[0].plan.nombre %>
-                      </p>
-          
+                      <% if !organizacion.contratos.empty? %>
+                        <p class="no-padding">
+                          <b class="grey-text text-darken-3">Fecha Venc. Plan:</b>
+                          <%= organizacion.contratos[0].fecha_vencimiento.strftime("%d %b %Y") %>
+                        </p>
+                      
+                        <p class="no-padding">
+                          <b class="grey-text text-darken-3">Plan:</b>
+                          <%= organizacion.contratos[0].plan.nombre %>
+                        </p>
+                      <% end %>
                     </div>
 
                     <div class="col s12 m6">

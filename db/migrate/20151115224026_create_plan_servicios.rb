@@ -4,6 +4,8 @@ class CreatePlanServicios < ActiveRecord::Migration
       t.string :descripcion
       t.references :plan, index: true
       t.references :servicio, index: true
+
+      t.timestamps null: false
     end
   end
 end

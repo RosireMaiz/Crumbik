@@ -39,19 +39,13 @@ class ServiciosController < ApplicationController
 		if !usuario_signed_in?
         	render "portal/index"
      	else
-
-	        @rol =  Rol.where(nombre: 'Administrador del sistema')
-	        
-	        @usuarioRol = UsuarioRol.where(usuario_id: current_usuario.id, rol_id: current_usuario.rol_actual.id) 
-
-	        if @usuarioRol[0] == nil or @rol[0].id != current_usuario.rol_actual.id
+	        if request.subdomain.present?
 	          render "portal/index_principal"
 	        else
 	           @servicios = Servicio.order('id ASC')
 	           @valor = true;
 	           render "servicios/servicios"	
 	        end
-         
      	end
 	end
 	

@@ -2,7 +2,7 @@ class CreateEventos < ActiveRecord::Migration
   def change
     create_table :eventos do |t|
       t.string :titulo
-      t.string :descripcion
+      t.text :descripcion
       t.string :url
       t.string :color
       t.boolean :dia_completo , null: false, default: true

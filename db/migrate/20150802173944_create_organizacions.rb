@@ -22,6 +22,7 @@ class CreateOrganizacions < ActiveRecord::Migration
       t.references :usuario, index: true
       t.references :tipo_organizacion, index: true
 
+      t.timestamps null: false
     end
   end
 end

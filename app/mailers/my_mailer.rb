@@ -1,6 +1,6 @@
 class MyMailer < Devise::Mailer 
-
-require 'base64'
+  default from: "from@example.com"
+  require 'base64'
   helper :application # gives access to all helpers defined within `application_helper`.
   default template_path: 'devise/mailer' # to make sure that your mailer uses the devise views
 
@@ -22,7 +22,7 @@ require 'base64'
   private
 
   def custom_options(opts)
-  	if Apartment::Tenant.current != "crum"
+  	if Apartment::Tenant.current != "crumbik"
   		@subdominio = Apartment::Tenant.current
   		Apartment::Tenant.switch!()
   		@organizacion =  Organizacion.where("subdominio = ?", Apartment::Tenant.current.to_s).first

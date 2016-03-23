@@ -21,8 +21,7 @@
       max-height: 300px; 
     }
   </style>
-<div class="row titulo-seccion">
-  <div class="banner banner-perfil">
+<div class="row titulo-seccion banner banner-perfil">
     <div class="contenedor">
       <div class="col s6">
         <h5 class="text-uppercase ">
@@ -38,7 +37,6 @@
         </ol>
       </div>
     </div>
-  </div>
 </div>
 
 <div class="row" >
@@ -53,13 +51,13 @@
           </select>
         </div>
         <div class="col s12">
-          <label for="rol_type_rol">Tipo de Menu: 
+          <label for="select_type_menu">Tipo de Menu: 
             <span class="required"> * </span>
           </label>
          
           <select id="select_type_menu" name="rol" >
            
-            <%= options_for_select(Menu.type_menus.to_a.map { |w| [w[0].humanize, w[1]] }) %>
+            <%= options_for_select(Menu.tipo_menus.to_a.map { |w| [w[0].humanize, w[1]] }) %>
           </select>
          
         </div>

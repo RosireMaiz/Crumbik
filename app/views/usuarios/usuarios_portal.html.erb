@@ -2,22 +2,20 @@
  <%= stylesheet_link_tag    "jquery.dataTables" %> 
 <% end %>
 
-<div class="row titulo-seccion">
-  <div class="banner banner-perfil">
-    <div class="contenedor">
-      <div class="col s6">
-        <h5 class="text-uppercase ">
-         Usuarios
-        </h5>
-      </div>
-      <div class="col s6 text-right ">
-        <ol class="breadcrumb">
-          <li>
-            <a href="/">Inicio</a>
-          </li>
-          <li class="active">Usuarios</li>
-        </ol>
-      </div>
+<div class="row titulo-seccion banner banner-perfil">
+  <div class="contenedor">
+    <div class="col s6">
+      <h5 class="text-uppercase ">
+       Usuarios
+      </h5>
+    </div>
+    <div class="col s6 text-right ">
+      <ol class="breadcrumb">
+        <li>
+          <a href="/">Inicio</a>
+        </li>
+        <li class="active">Usuarios</li>
+      </ol>
     </div>
   </div>
 </div>
@@ -43,7 +41,7 @@
                 <p class="blue-text text-darken-4"><%= usuario.perfil.nombres %> <%= usuario.perfil.apellidos %></p>
                 <br>
                 <div class="row no-margin-v">
-                  <div class="col <% if !request.subdomain.present? %> <% if ! usuario.organizacion.nil? %> m1 <% else %> m2 <% end %> <% else %>  m2 <% end %> hide-on-small-only">&nbsp;</div>
+                  <div class="col <% if !request.subdomain.present? %> <% if ! usuario.organizacion.nil? && usuario.organizacion.id != 0 %> m1 <% else %> m2 <% end %> <% else %>  m2 <% end %> hide-on-small-only">&nbsp;</div>
                   <div class="col m2 s6 center-align">
                     <a href="/usuarios/perfil/<%= usuario.id %>" rel="nofollow"  data-method="post" class="tooltipped" 
                       data-position="bottom" data-delay="50" data-tooltip="Ver Perfil">
@@ -66,7 +64,7 @@
                     </a>
                   </div>
                   <% if !request.subdomain.present? %>
-                    <% if ! usuario.organizacion.nil? %>
+                    <% if ! usuario.organizacion.nil? && usuario.organizacion.id != 0 %>
                       <div class="col m2 s6 center-align" >
                         <a href="http://<%= usuario.organizacion.subdominio %>.lvh.me:3000/inicio" target="_blank" class="tooltipped" data-position="bottom" data-delay="50" data-tooltip="Ver Compañía">
                           <i class="small mdi-action-account-balance"></i>
@@ -115,31 +113,25 @@
                     <br>
                     <span><strong>Roles Actuales:</strong> </span>
                     <ul class="list-inline">
-                      
-
-                       <% rol_array = usuario.rols  %>
-                       <% rol_array.each do |rol| %>
-
-                          <li> <a href="#!" class="btn-success btn-sm"> <%= rol.nombre %></a> </li>
-
-                       <% end %>
-                        
-                          
+                     <% if !usuario.rols.empty? %>
+                          <% usuario.rols.each do |rol| %>
+                            <li> <a class="btn-success btn-sm"> <%= rol.nombre %></a> </li>
+                         <% end %>
+                       <% end  %>
                     </ul>
                     <br>
                     <p> Haz click en el rol que desees para el usuario:</p>
 
                        <span><strong>Roles:</strong> </span>
                      <ul class="list-inline">
-
-                       <% rol_array = Rol.where(estatus: "A")  %>
-                       <% rol_array.each do |rol| %>
-
-                          <li style="padding-bottom: 10px;"> <a href="#!" class="btn-warning btn-sm"> <%= rol.nombre %></a> </li>
-
+                      <% roles_array = Rol.where.not(id: UsuarioRol.select(:rol_id).where("usuario_id = #{usuario.id}")) %>
+                       <% roles_array.each do |rol| %>
+                          <li style="padding-bottom: 10px;">
+                            <a href="/usuario_add_rol/<%= rol.id %>/<%= usuario.id %>" class="btn-warning btn-sm"> 
+                                <%= rol.nombre %>
+                            </a> 
+                          </li>
                        <% end %>
-                        
-                          
                     </ul>
               </div>
 

@@ -5,7 +5,6 @@
 <% end %>
 
 <% @organizacion = Organizacion.find_by(subdominio: request.subdomain) %>
-<% @tipo = TipoOrganizacion.find_by(id: @organizacion.tipo_organizacion_id) %>
 
 <% @productos = Producto.where(estatus: "A").limit(6) %>
 <div>

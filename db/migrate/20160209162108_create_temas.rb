@@ -5,6 +5,7 @@ class CreateTemas < ActiveRecord::Migration
       t.string :descripcion
       t.binary :imagen,  :limit => 4294967295.bytes
       t.string :formato_imagen
+      t.string :estatus, default: "A", :limit => 1
 
       t.timestamps null: false
     end

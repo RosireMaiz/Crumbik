@@ -9,6 +9,7 @@ class CreateProductos < ActiveRecord::Migration
       t.references :categoria, index: true
       t.string :estatus, default: "A", :limit => 1
 
+      t.timestamps null: false
     end
   end
 end

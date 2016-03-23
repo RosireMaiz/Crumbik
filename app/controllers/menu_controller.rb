@@ -27,9 +27,9 @@ class MenuController < ApplicationController
  def ajax
 	@opcionMenus = OpcionMenu.new
 	if request.subdomain.present?
-		@menu = Menu.where(rol_id: current_usuario.rol_actual.id, type_menu: Menu.type_menus[:subdominio]).first
+		@menu = Menu.where(rol_id: current_usuario.rol_actual.id, tipo_menu: Menu.tipo_menus[:subdominio]).first
 	else
-		@menu = Menu.where(rol_id: current_usuario.rol_actual.id, type_menu: Menu.type_menus[:portal]).first
+		@menu = Menu.where(rol_id: current_usuario.rol_actual.id, tipo_menu: Menu.tipo_menus[:portal]).first
 	end
 	
 	@tira = @opcionMenus.BuscarTodosArbolJson(@menu)
@@ -39,9 +39,9 @@ class MenuController < ApplicationController
   def portal
 	@opcionMenus = OpcionMenu.new
 	if request.subdomain.present?
-		@menu = Menu.where(rol_id: '5', type_menu: Menu.type_menus[:subdominio]).first
+		@menu = Menu.where(rol_id: '5', tipo_menu: Menu.tipo_menus[:subdominio]).first
 	else
-		@menu = Menu.where(rol_id: '5', type_menu: Menu.type_menus[:portal]).first
+		@menu = Menu.where(rol_id: '5', tipo_menu: Menu.tipo_menus[:portal]).first
 	end
 	
 	@tira = @opcionMenus.BuscarTodosArbolJson(@menu)
@@ -55,11 +55,11 @@ class MenuController < ApplicationController
  def cargar_estructura
 	@opcionMenus = OpcionMenu.new
 	$idRol = params[:idRol]
-	$typeMenu = params[:typeMenu]
-	$menuJerarquia = Menu.where("rol_id = ? AND type_menu=?", $idRol, $typeMenu).first
+	$tipoMenu = params[:tipoMenu]
+	$menuJerarquia = Menu.where("rol_id = ? AND tipo_menu=?", $idRol, $tipoMenu).first
 	if $menuJerarquia.blank?
 		$menuJerarquia = Menu.new
-		$menuJerarquia.type_menu = $typeMenu.to_i
+		$menuJerarquia.tipo_menu = $tipoMenu.to_i
 		$menuJerarquia.rol_id = $idRol
 		$menuJerarquia.save
 	end

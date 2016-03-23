@@ -10,7 +10,22 @@
  * defined in the other CSS/SCSS files in this directory. It is generally better to create a new
  * file per style scope.
  *
- *= require_tree .
+
  *= require_self
+
+ *= require bootstrap-blue-theme.css 
+ *= require bootstrap-blue.css
+ *= require catalogo.css.erb
+ *= require crumbik.css.erb
+ *= require font-awesome.min.css
+ *= require frontend.css.erb
+ *= require frontend.css.erb
+ *= require materialize_conf.scss.erb
+ *= require menu.css
+ *= require owl.carousel.css
+ *= require owl.theme.css
+ *= require owl.transitions.css
+ *= require portal.css
+
  */
 

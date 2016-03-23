@@ -9,6 +9,8 @@ class CreateContratos < ActiveRecord::Migration
       t.string :observacion
       t.references :organizacion, index: true
       t.references :plan, index: true
+
+      t.timestamps null: false
     end
   end
 end

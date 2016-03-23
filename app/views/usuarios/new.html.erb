@@ -1,5 +1,6 @@
 <% content_for :css_personalizado do %>
-   <%= stylesheet_link_tag    "organizacion" %>
+   <%= stylesheet_link_tag    "usuarios" %>
+      <%= stylesheet_link_tag    "organizacion" %>
    <style type="text/css">
 	   .dropdown-content {
 	    	max-height: 200px; 
@@ -71,14 +72,18 @@
 				
 				
 				<div class="tab-content">
-					<div class="feedback alert alert-danger display-none">
-						<button class="close" data-dismiss="alert"></button>
-						Algunos campos tienen errores. Por favor revisa abajo.
+					
+					<div class="pad150-h">
+						<div class="feedback alert alert-danger display-none">
+							<button class="close" data-dismiss="alert"></button>
+							Algunos campos tienen errores. Por favor revisa abajo.
+						</div>
+						<div class="feedback alert-success display-none">
+							<button class="close" data-dismiss="alert"></button>
+							La validación fue exitosa.
+						</div>
 					</div>
-					<div class="feedback alert-success display-none">
-						<button class="close" data-dismiss="alert"></button>
-						La validación fue exitosa.
-					</div>
+					
 					<div class="tab-pane active" id="tab1">
 						<div class="row">
 							<div class="col s8 offset-s2 left">

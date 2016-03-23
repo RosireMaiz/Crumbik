@@ -9,6 +9,8 @@ class CreateOrganizacionRedSocials < ActiveRecord::Migration
       t.string :oauth_token
       t.string :oauth_secret
       t.datetime   :oauth_expires_at
+
+      t.timestamps null: false
     end
   end
 end

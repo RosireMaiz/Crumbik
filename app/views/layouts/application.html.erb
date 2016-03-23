@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html>
 	<head>
-	  
+		
 	  	<%= stylesheet_link_tag 'application', media: 'all', 'data-turbolinks-track' => true %>
 	  	<%= stylesheet_link_tag    "jquery.dataTables" %> 
 
@@ -19,7 +19,7 @@
   	<!-- Incluya hojas de estilos de: Extjs 5.1 -->
 	  	<link rel="stylesheet" type="text/css" href="http://lvh.me:3000/ext/packages/ext-theme-crisp/build/resources/ext-theme-crisp-all.css">
 
-
+		<link href="<%= stylesheet_path(@style) %>" rel="stylesheet" type="text/css" />
 	  <%= yield :css_personalizado %>
 	  
 	  <%= csrf_meta_tags %>

@@ -175,13 +175,11 @@ class OpcionMenu < ActiveRecord::Base
       opcionMenu = OpcionMenu.find_by(id: "#{id}")
       EliminarHijos(opcionMenu.menu,opcionMenu.id)
       opcionMenu.destroy
-
       if opcionMenu.destroyed?
         return 1
       else
         return 0
       end     
-
     end 
     return 0
   end

@@ -117,10 +117,16 @@ class UsuariosController < ApplicationController
 		if !usuario_signed_in?
         	render "portal/index"
      	else
-
-	           @usuarios = Usuario.order('id ASC').page(params[:page]).per(9)
-	           @valor = true;
-	           render "usuarios/usuarios_portal"	         
+     		#tabla = "perfils"
+			#sql = "Select usuario_id from "+ tabla.to_s+" where sexo = 'femenino' "
+			#records_array = ActiveRecord::Base.connection.execute(sql)
+     		#ids =[]
+     		#records_array.each do |row|
+			#	ids =row[0].to_s
+			#end
+          # @usuarios = Usuario.where("id IN (?)", ids).page(params[:page]).per(9)
+           @usuarios = Usuario.order('id ASC').page(params[:page]).per(9)
+           render "usuarios/usuarios_portal"	         
      	end
 	end
 
@@ -153,7 +159,6 @@ class UsuariosController < ApplicationController
 		 @usuario = current_usuario
 
 		 @usuario.update(usuario_params)
-
 
 		 @perfil = Perfil.where("usuario_id = ?", @usuario.id)
 
@@ -332,6 +337,20 @@ class UsuariosController < ApplicationController
 		end
  	end
 
+ 	def usuario_add_rol
+ 		id_usuario = params[:id_usuario]
+ 		id_rol = params[:id_rol]
+ 		rol_usuario = UsuarioRol.find_by(["usuario_id = ? AND rol_id = ?", id_usuario, id_rol])
+ 		if rol_usuario.nil?
+ 			rol_usuario = UsuarioRol.new
+ 			rol_usuario.usuario_id = id_usuario
+ 			rol_usuario.rol_id = id_rol
+ 			rol_usuario.save
+ 		end
+ 		redirect_to :controller => 'usuarios', :action => 'usuarios'
+ 	end
+
+
  	def validacion_codigo
 			@usuario = current_usuario
 		 	@perfil = Perfil.where("usuario_id = ?", @usuario.id)
@@ -398,7 +417,7 @@ class UsuariosController < ApplicationController
 		    end
  	end
 
-def send_message(phone_number, alert_message)
+	def send_message(phone_number, alert_message)
 		# set up a client to talk to the Twilio REST API 
 		@client = Twilio::REST::Client.new $account_sid, $auth_token 
 		 

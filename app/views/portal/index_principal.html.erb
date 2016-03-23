@@ -70,7 +70,7 @@
      $('#calendar').fullCalendar({
         header: {
           left: 'prev,next today',
-          center: 'month,basicWeek',
+          center: 'month,agendaWeek',
           right: 'title'
         },
         defaultDate: Date(),
@@ -81,6 +81,13 @@
                             url: '/eventos'
                           }
                       ],
+        selectable: true,
+        select: function(start, end, allDay) {
+          endtime = $.fullCalendar.formatDate(end,'h:mm tt');
+          starttime = $.fullCalendar.formatDate(start,'ddd, MMM d, h:mm tt');
+          var mywhen = starttime + ' - ' + endtime;
+          alert(mywhen);
+       }
     });
   </script>
 

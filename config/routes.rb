@@ -44,13 +44,10 @@ Rails.application.routes.draw do
 	match "/validar_tipo_cliente_update" => "tipo_clientes#validar_tipo_cliente_update", via: :post
 	match "/validar_tipo_cliente" => "tipo_clientes#validar_tipo_cliente", via: :post
 
+	match "/validar_criterio_difusion" => "criterio_difusions#validar_criterio_difusion", via: :post
+	match "/validar_criterio_difusion_update" => "criterio_difusions#validar_criterio_difusion_update", via: :post
+
 	match "/validar_opcion" => "menu#validar_opcion", via: :post		
-
-	match "/usuarios/abrircuenta"=>"usuarios#create", via: :post
-  	match '/usuarios/:id/confirmar_registro' => 'usuarios#finish_signup', via: [:get, :patch], as: :finish_signup
-	match "/registro" => "usuarios#new", via: :get
-
-	get 'current_rol' => "usuarios#current_rol"
 
 	match '/menu/ajax' => "menu#ajax", via: :post
 	match '/menu/ajax' => "menu#ajax", via: :get
@@ -63,6 +60,12 @@ Rails.application.routes.draw do
 	match '/menu/cargar_estructura' => "menu#cargar_estructura", via: :get
 	match '/menu/consultar' => "menu#consultar", via: :post
 	match '/menu/actualizar' => "menu#actualizar", via: :post
+
+	match "/usuarios/abrircuenta"=>"usuarios#create", via: :post
+  	match '/usuarios/:id/confirmar_registro' => 'usuarios#finish_signup', via: [:get, :patch], as: :finish_signup
+	match "/registro" => "usuarios#new", via: :get
+
+	get 'current_rol' => "usuarios#current_rol"
 
 	match "/usuarios/editar" => "usuarios#edit", via: :get
     match "/usuarios/editar" => "usuarios#save", via: :post
@@ -84,6 +87,8 @@ Rails.application.routes.draw do
  	match "/usuarios/create_portal"=>"usuarios#create_portal", via: :post
 
  	match "/usuario/usuario_actual"=>"usuarios#usuario_actual", via: :post
+
+ 	match "/usuario_add_rol/:id_rol/:id_usuario"=>"usuarios#usuario_add_rol", via: :get
 	
     match "/roles/consultar" => "rols#consultar", via: :get
     match "/roles/agregar" => "rols#new", via: :get
@@ -151,6 +156,15 @@ Rails.application.routes.draw do
 	match "/tipo_organizacions/consultar_tipo_organizacion" => "tipo_organizacions#consultar_tipo_organizacion", via: :post
 	match "/tipo_organizacions/eliminar" => "tipo_organizacions#eliminar", via: :post
 
+	match "/criterios_difusion" => "criterio_difusions#consultar", via: :get
+    match "/criterio_difusions/agregar" => "criterio_difusions#new", via: :get
+    match "/criterio_difusions/crear_criterio_difusion" => "criterio_difusions#create", via: :post
+    match "/criterio_difusions/eliminar" => "criterio_difusions#eliminar", via: :post
+	match "/criterio_difusions/update" => "criterio_difusions#update", via: :post
+	match "/criterio_difusions/update_estatus" => "criterio_difusions#update_estatus", via: :post
+	match "/criterio_difusions/consultar_criterio_difusion" => "criterio_difusions#consultar_criterio_difusion", via: :post
+	match "/criterio_difusions/eliminar" => "criterio_difusions#eliminar", via: :post
+
 	match "/preguntas_frecuentes" => "pregunta_frecuentes#consultar", via: :get
     match "/preguntas_frecuentes/agregar" => "pregunta_frecuentes#new", via: :get
     match "/pregunta_frecuente/crear_pregunta_frecuente" => "pregunta_frecuentes#create", via: :post
@@ -178,13 +192,24 @@ Rails.application.routes.draw do
 	match "/organizaciones" => "organizacions#consultar", via: :get
 	match "/organizacion/consultar/:subdominio" => "organizacions#show", via: :get
 	match "/organizacion/editar/:subdominio" => "organizacions#edit", via: :get
+	match "/organizacion/editar" => "organizacions#edit", via: :get
   	match "/organizacion/editar" => "organizacions#save", via: :post
   	match "/link_social_organizacion/:id_red_social/:subdominio" => "organizacions#organizacion_social_link", via: :get
+  	match "/remove_social_organizacion/:id_red_social_organizacion" => "organizacions#organizacion_social_link_remove", via: :get
 	match "/organizacion/consultar" => "organizacions#show", via: :get
 
   	match "/organizacion/apariencia/tema"=> "organizacions#apariencia_tema", via: :get
   	match "/gestion_temas"=> "temas#consultar", via: :get
 	match "/apariencia/editar"=> "organizacions#editar_tema", via: :get
+
+	match "/organizacion/consultar" => "organizacions#show", via: :get
+	match "/organizacion/apariencia/portal" => "organizacions#apariencia_index", via: :get
+	match "/organizacion/apariencia/editar_ubicacion" => "organizacions#editar_ubicacion", via: :get
+	match "/organizacion/apariencia/editar_banner" => "organizacions#editar_banner", via: :get
+	match "/organizacion/save_banner" => "organizacions#save_banner", via: :post
+	match "/organizacion/editar_ubicacion" => "organizacions#editar_ubicacion_iframe", via: :post
+	match "/organizacion/eliminar_ubicacion_iframe" => "organizacions#eliminar_ubicacion_iframe", via: :post
+
 
     match "/temas/agregar" => "temas#new", via: :get
     match "/tema/crear_tema" => "temas#create", via: :post
@@ -203,19 +228,21 @@ Rails.application.routes.draw do
 	match "/interaccion_social" => "interaccion_socials#consuta_interaccion_socials", via: :get
 	match "/publicidad_social" => "publicidads#consultar", via: :get
 
-	match "/mercadeo/actividades_publicitarias" =>  "actividad_publicitaria#consultar", via: :get
-	match "/campanas_publicitaria/consultar"  =>  "actividad_publicitaria#consultar", via: :get
-	match "/actividad_publicitaria/agregar" => "actividad_publicitaria#new", via: :get
-	match "/actividad_publicitaria/crear_actividad_publicitaria" => "actividad_publicitaria#create", via: :post
-	match "/campanas_publicitaria/envio_sms" => "actividad_publicitaria#actividad_publicitarias_sms", via: :get
-	match "/campanas_publicitaria/llamadas" => "actividad_publicitaria#actividad_publicitarias_llamadas", via: :get
-	match "/campanas_publicitaria/emails" => "actividad_publicitaria#actividad_publicitarias_email", via: :get
-	match "/campanas_publicitaria/llamadas_clientes/:id" => "actividad_publicitaria#actividad_publicitarias_llamadas_clientes", via: :get
-	match "/llamada" => "actividad_publicitaria#llamada", via: :get
-	match "/campanas_publicitaria/sms_clientes/:id" => "actividad_publicitaria#enviar_sms", via: :get
-	match "/campanas_publicitaria/email_clientes/:id" => "actividad_publicitaria#enviar_email", via: :get
-	match "/campanas_publicitaria/enviar_sms" => "actividad_publicitaria#enviar_mensaje", via: :post
-	match "/campanas_publicitaria/enviar_correo/" => "actividad_publicitaria#enviar_correo", via: :post
+	match "/mercadeo/actividades_publicitarias" =>  "campanna_publicitarias#dashboard_campanna", via: :get
+	match "/actividad_publicitaria/agregar" => "campanna_publicitarias#new", via: :get
+	#match "/mercadeo/actividades_publicitarias" =>  "actividad_publicitaria#consultar", via: :get
+	#match "/campanas_publicitaria/consultar"  =>  "actividad_publicitaria#consultar", via: :get
+	#match "/actividad_publicitaria/agregar" => "actividad_publicitaria#new", via: :get
+	match "/campanna_publicitaria/crear_campanna_publicitaria" => "campanna_publicitarias#create", via: :post
+	#match "/campanas_publicitaria/envio_sms" => "actividad_publicitaria#actividad_publicitarias_sms", via: :get
+	#match "/campanas_publicitaria/llamadas" => "actividad_publicitaria#actividad_publicitarias_llamadas", via: :get
+	#match "/campanas_publicitaria/emails" => "actividad_publicitaria#actividad_publicitarias_email", via: :get
+	#match "/campanas_publicitaria/llamadas_clientes/:id" => "actividad_publicitaria#actividad_publicitarias_llamadas_clientes", via: :get
+	#match "/llamada" => "actividad_publicitaria#llamada", via: :get
+	#match "/campanas_publicitaria/sms_clientes/:id" => "actividad_publicitaria#enviar_sms", via: :get
+	#match "/campanas_publicitaria/email_clientes/:id" => "actividad_publicitaria#enviar_email", via: :get
+	#match "/campanas_publicitaria/enviar_sms" => "actividad_publicitaria#enviar_mensaje", via: :post
+	#match "/campanas_publicitaria/enviar_correo/" => "actividad_publicitaria#enviar_correo", via: :post
 
 	match "/graficas/interaccion_social" => "interaccion_socials#consuta_interaccion_socials", via: :get
 	match "/graficas/interaccion_productos"  => "productos#consulta_interaccion_productos", via: :get
@@ -223,7 +250,20 @@ Rails.application.routes.draw do
 	match "/dessarroladores" => "portal#desarrolladores", via: :get
 	match "/rendimiento_sistema" => "portal#desarrolladores", via: :get
 
-	
+    match "/publicidad/crear_publicidad" => "publicidads#create", via: :post
+    match "/publicidad/editar/:id_publicidad" => "publicidads#edit", via: :get
+    match "/publicidad/editar" => "publicidads#save_edit", via: :post
+    match "/publicidad/update_estatus" => "publicidads#update_estatus", via: :post
+	match "/publicidad/eliminar" => "publicidads#eliminar", via: :post
+
+	match "/tipos_clientes/consultar" => "tipo_clientes#consultar", via: :get
+	match "/tipo_cliente/agregar" => "tipo_clientes#new", via: :get
+	match "/tipo_cliente/crear_tipo_cliente" => "tipo_clientes#create", via: :post
+	match "/tipo_clientes/update_estatus" => "tipo_clientes#update_estatus", via: :post
+	match "/tipo_clientes/update" => "tipo_clientes#update", via: :post
+	match "/tipo_clientes/consultar_tipo_cliente" => "tipo_clientes#consultar_tipo_cliente", via: :post
+	match "/tipo_clientes/eliminar" => "tipo_clientes#eliminar", via: :post
+
 	devise_scope :usuario do
 	    post "/entrar" => "devise/sessions#create"
 	    get "/entrar" => "devise/sessions#new"
@@ -234,14 +274,7 @@ Rails.application.routes.draw do
 
 	constraints(SubdomainPresent) do
 
-		match "/organizacion/consultar" => "organizacions#show", via: :get
-		match "/organizacion/apariencia/portal" => "organizacions#apariencia_index", via: :get
-		match "/organizacion/apariencia/editar_ubicacion" => "organizacions#editar_ubicacion", via: :get
-		match "/organizacion/apariencia/editar_banner" => "organizacions#editar_banner", via: :get
-		match "/organizacion/save_banner" => "organizacions#save_banner", via: :post
-		match "/organizacion/editar_ubicacion" => "organizacions#editar_ubicacion_iframe", via: :post
-		match "/organizacion/eliminar_ubicacion_iframe" => "organizacions#eliminar_ubicacion_iframe", via: :post
-
+		
 		match "/sugerencia/agregar"=> "sugerencias#new", via: :get
 		match "/sugerencias/crear_sugerencia" => "sugerencias#create", via: :post
 		
@@ -281,19 +314,7 @@ Rails.application.routes.draw do
 		
 		match "/productos/publicidad/consultar" => "publicidads#consultar", via: :get
 	    match "/productos/publicidad/agregar" => "publicidads#new", via: :get
-	    match "/publicidad/crear_publicidad" => "publicidads#create", via: :post
-	    match "/publicidad/editar/:id_publicidad" => "publicidads#edit", via: :get
-	    match "/publicidad/editar" => "publicidads#save_edit", via: :post
-	    match "/publicidad/update_estatus" => "publicidads#update_estatus", via: :post
-		match "/publicidad/eliminar" => "publicidads#eliminar", via: :post
 
-		match "/tipos_clientes/consultar" => "tipo_clientes#consultar", via: :get
-		match "/tipo_cliente/agregar" => "tipo_clientes#new", via: :get
-		match "/tipo_cliente/crear_tipo_cliente" => "tipo_clientes#create", via: :post
-		match "/tipo_clientes/update_estatus" => "tipo_clientes#update_estatus", via: :post
-		match "/tipo_clientes/update" => "tipo_clientes#update", via: :post
-		match "/tipo_clientes/consultar_tipo_cliente" => "tipo_clientes#consultar_tipo_cliente", via: :post
-		match "/tipo_clientes/eliminar" => "tipo_clientes#eliminar", via: :post
 
 		match "/mercadeo/variablespsicograficas/agregar" => "variable_psicograficas#new", via: :get
     	match "/variable_psicografica/crear_variable_psicografica" => "variable_psicograficas#create", via: :post
@@ -303,12 +324,5 @@ Rails.application.routes.draw do
 		match "/mercadeo/variablespsicograficas/eliminar" => "variable_psicograficas#eliminar", via: :post
 		match "/mercadeo/variablespsicograficas/update_estatus" => "variable_psicograficas#update_estatus", via: :post
 	end
-
-
-
-
-
-
-
 
 end

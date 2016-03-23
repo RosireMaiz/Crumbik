@@ -16,16 +16,12 @@ class OrganizacionsController < ApplicationController
      		@tipo_organizacions = TipoOrganizacion.order('id ASC')
      		@usuario = current_usuario
 	       	
-	       	if request.subdomain.present?
-
-	       	
+	       	if request.subdomain.present?       	
 					@organizacion = Organizacion.where(["subdominio = ?", request.subdomain]).first
 		        	@organizacions = Organizacion.where(usuario_id: @organizacion.usuario_id).order('id ASC')
 					@valor = true;
 					render "organizacions/organizacions"
-	        	
 	       	else
-	       		
 					@organizacions = Organizacion.order('id ASC')
 					@valor = true;
 					render "organizacions/organizacions"					
@@ -57,7 +53,11 @@ class OrganizacionsController < ApplicationController
 	end
 
 	def edit
-		@organizacion = Organizacion.where(["subdominio = ?", params[:subdominio]]).first
+		if !request.subdomain.present?
+			@organizacion = Organizacion.find_by(["id = ?", 0])
+		else
+			@organizacion = Organizacion.where(["subdominio = ?", params[:subdominio]]).first
+		end
 		@redes = OrganizacionRedSocial.includes(:red_social).where("organizacion_id = ?", @organizacion.id)
 		@red_socials = RedSocial.where("estatus = ?", 'A')
 		render "organizacions/edit"	
@@ -69,72 +69,43 @@ class OrganizacionsController < ApplicationController
 		@organizacion = Organizacion.where(["id = ?", id_organizacion]).first
 
 		@organizacion.update(organizacion_edit_params)
-		redes = params[:organizacion][:red_social_attributes]
+#		redes = params[:organizacion][:red_social_attributes]
 
-		if ! redes.nil?
-			redes_sociales = params[:organizacion][:red_social_attributes][:actual]
-
-			if ! redes_sociales.nil?
-				redes_sociales.each do |red_social|
-				 	id = red_social[0]
-				 	url = red_social[1]
-				 	red_social_org = OrganizacionRedSocial.where("id = ?", id).first
-				 	if url.blank?
-						red_social_org.destroy
-				 	else
-				 		red_social_org.update(:url => url)
-				 	end
-				end
-			end
-			redes_sociales_nuevas = params[:organizacion][:red_social_attributes][:nueva]
-
-			if ! redes_sociales_nuevas.nil?
-
-				redes_sociales_nuevas.each do |red_social_nueva|
-					id = red_social_nueva[0]
-			 		url = red_social_nueva[1]
-
-
-			 		if !url.blank?
-			 			puts "url " + url
-			 			red_social_org = OrganizacionRedSocial.new
-			 			red_social_org.url = url
-			 			red_social_org.red_social_id = id
-			 			red_social_org.organizacion_id = id_organizacion
-			 			red_social_org.save
-			 		end
-			  	end
-			end
-		end
+#			redes_sociales = params[:organizacion][:red_social_attributes][:actual]
 
 		redirect_to :controller => 'organizacions', :action => 'consultar'
 		 
 	end
 
 	def apariencia_index
-		@organizacion = Organizacion.where(["subdominio = ?", request.subdomain]).first
+		if !request.subdomain.present?
+			@organizacion = Organizacion.find_by(["id = ?", 0])
+		else
+			@organizacion = Organizacion.where(["subdominio = ?", request.subdomain]).first
+		end
 		render "organizacions/apariencia_index"
 	end
 
 	def editar_ubicacion
-		@organizacion = Organizacion.where(["subdominio = ?", request.subdomain]).first
+		if !request.subdomain.present?
+			@organizacion = Organizacion.find_by(["id = ?", 0])
+		else
+			@organizacion = Organizacion.find_by(["subdominio = ?", request.subdomain])
+		end
 		render "organizacions/editar_ubicacion"
 	end
 
 	def editar_ubicacion_iframe
+		
 		@id = params[:organizacion_id]
 
-		@organizacion = Organizacion.where(["id = ?", @id]).first
-
-		puts "id" + @id.to_s
+		@organizacion = Organizacion.find_by(["id = ?", @id])
 
 		if params[:organizacion][:iframe].present?
 			iframe = params[:organizacion][:iframe]
 		else
 			iframe = nil
 		end
-			
-		puts "iframe" + iframe.to_s
 
 		@organizacion.iframe = iframe
 
@@ -162,7 +133,11 @@ class OrganizacionsController < ApplicationController
 
 
 	def editar_banner
-		@organizacion = Organizacion.where(["subdominio = ?", request.subdomain]).first
+		if !request.subdomain.present?
+			@organizacion = Organizacion.find_by(["id = ?", 0])
+		else
+			@organizacion = Organizacion.find_by(["subdominio = ?", request.subdomain])
+		end
 		render "organizacions/editar_banner"
 	end
 
@@ -265,6 +240,13 @@ class OrganizacionsController < ApplicationController
 			redirect_to "/usuarios/auth/github"
 		end
 		
+	end
+
+	def organizacion_social_link_remove
+		id_red_social_organizacion  = params[:id_red_social_organizacion]
+		@organizacionRedSocial = OrganizacionRedSocial.new
+	   	valor = @organizacionRedSocial.Eliminar(id_red_social_organizacion)
+		redirect_to :controller => 'organizacions', :action => 'edit'
 	end
 
 

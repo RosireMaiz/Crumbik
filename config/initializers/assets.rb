@@ -14,6 +14,10 @@ Rails.application.config.assets.precompile += %w( owl.theme.css )
 Rails.application.config.assets.precompile += %w( owl.transitions.css )
 Rails.application.config.assets.precompile += %w( owl.carousel.min.js )
 
+Rails.application.config.assets.precompile += %w( bootstrap.css )
+Rails.application.config.assets.precompile += %w( bootstrap.min.js )
+Rails.application.config.assets.precompile += %w( plugins/fileinput_locale_es.js )
+
 Rails.application.config.assets.precompile += %w( plugins/jquery.bootstrap.wizard.min.js )
 Rails.application.config.assets.precompile += %w( organizacion.css )
 Rails.application.config.assets.precompile += %w( plugins/pwstrength-bootstrap-1.2.4.min.js )
@@ -52,10 +56,8 @@ Rails.application.config.assets.precompile += %w( maestros/tipo_organizacions.js
 Rails.application.config.assets.precompile += %w( maestros/pregunta_frecuentes.js )
 Rails.application.config.assets.precompile += %w( maestros/categorias.js )
 Rails.application.config.assets.precompile += %w( maestros/tipo_clientes.js  )
+Rails.application.config.assets.precompile += %w( maestros/criterio_difusions.js  )
 Rails.application.config.assets.precompile += %w( style.css )
-
-
-
 
 Rails.application.config.assets.precompile += %w( plugins/star-rating.min.js )
 Rails.application.config.assets.precompile += %w( plugins/star-rating.min.css)
@@ -63,3 +65,6 @@ Rails.application.config.assets.precompile += %w( star-product.css)
 Rails.application.config.assets.precompile += %w( validaciones/cliente.js  )
 Rails.application.config.assets.precompile += %w( validaciones/variable_psicografica.js)
 Rails.application.config.assets.precompile += %w( validaciones/categorium.js)
+
+
+Rails.application.config.assets.precompile += %w( template/template-rosa.css )

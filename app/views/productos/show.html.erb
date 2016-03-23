@@ -90,7 +90,7 @@
 	<% end %>
 
 </div>
-
+<% if !@comentario.nil? %>
 	<%= form_for @comentario, :url => comentarios_crear_comentario_path, html:{id: "add_comentario", class: "form-horizontal", :method => :post } do |f| %>
 		<div class="row "style="padding: 0px 160px;">
 			<div class="row">
@@ -108,7 +108,7 @@
 		</div>
 
 	<% end %>
-	
+<% end %>
 <div  class="pad15"></div>
 
 

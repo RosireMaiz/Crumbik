@@ -5,12 +5,15 @@ class CreatePerfils < ActiveRecord::Migration
       t.string :apellidos
       t.string :sexo
       t.string :ocupacion
+      t.date   :fecha_nacimiento
       t.string :telefono_movil, :limit => 11
       t.boolean :confirmacion_movil, null: false, default: false
       t.references :authy, index: true
 	    t.references :usuario, index: true
 	    t.binary :foto, :limit => 4294967295.bytes
       t.string :formato_foto
+
+      t.timestamps null: false
     end
   end
 end

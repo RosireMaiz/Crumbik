@@ -4,8 +4,10 @@ class CreateRedSocials < ActiveRecord::Migration
       t.string :icono
       t.string :nombre
       t.string :color
+      t.boolean :difusion, default: false
       t.string :estatus, default: "A", :limit => 1
 
+      t.timestamps null: false
     end
   end
 end

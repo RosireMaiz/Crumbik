@@ -1,19 +1,30 @@
-<div class="row titulo-seccion">
-  <div class="banner banner-perfil">
-    <div class="contenedor">
-      <div class="col s6">
-        <h5 class="text-capitalize ">
-          Apariencia del portal
-        </h5>
-      </div>
-      <div class="col s6 text-right ">
-        <ol class="breadcrumb">
-          <li>
-            <a href="/">Inicio</a>
-          </li>
-          <li class="active">Apariencia</li>
-        </ol>
-      </div>
+<% content_for :css_personalizado do %>
+
+  <%= stylesheet_link_tag    "owl.carousel" %>
+  <%= stylesheet_link_tag    "owl.theme" %>
+  <%= stylesheet_link_tag    "owl.transitions" %>
+  <style type="text/css">
+  #index-principal {
+    background-image: url("<%=@organizacion.formato_banner.to_s %><%=@organizacion.banner.to_s %>") !important;
+    height: 708px;
+}
+</style>
+<% end %>
+
+<div class="row titulo-seccion banner banner-perfil">
+  <div class="contenedor">
+    <div class="col s6">
+      <h5 class="text-capitalize ">
+        Apariencia del portal
+      </h5>
+    </div>
+    <div class="col s6 text-right ">
+      <ol class="breadcrumb">
+        <li>
+          <a href="/">Inicio</a>
+        </li>
+        <li class="active">Apariencia</li>
+      </ol>
     </div>
   </div>
 </div>
@@ -27,26 +38,48 @@
         <a href="/organizacion/apariencia/editar_banner" style="float:right; line-height: 3rem; height: auto ; " class="waves-effect btn-flat modal-trigger grey-text text-darken-1"><b><i class="fa fa-edit no-margin"> </i>  Editar</b></a>
       </div>
       <div class="collapsible-body white">
-        <div class="org-contenedor-banner banner-organizacion-edit">
-          <div>
-            <div class="org-contenedor-banner-edit org-contenedor-banner-edit">
-              <img src="<%= @organizacion.formato_banner %><%= @organizacion.banner %>" class="responsive-img"/>
+        <% if request.subdomain.present?  %>
+          <div class="org-contenedor-banner banner-organizacion-edit">
+            <div>
+              <div class="org-contenedor-banner-edit org-contenedor-banner-edit">
+                <img src="<%= @organizacion.formato_banner %><%= @organizacion.banner %>" class="responsive-img"/>
+              </div>
+
+              <% if @organizacion.titulo_banner.nil? || @organizacion.titulo_banner != "" %>
+                <div class="org-contenedor-texto pad30-t">
+                  <h1><%= @organizacion.titulo_banner %> </h1><br />
+                  <h5><%= @organizacion.subtitulo_banner %></h5>
+                  
+                  <div class="pad55-t">
+                    <a class="waves-effect btn">Con&oacute;cenos</a>
+                  </div>
+                </div>  
+              <% end %>
             </div>
-
-            <% if @organizacion.titulo_banner.nil? || @organizacion.titulo_banner != "" %>
-              <div class="org-contenedor-texto pad30-t">
-                <h1><%= @organizacion.titulo_banner %> </h1><br />
-                <h5><%= @organizacion.subtitulo_banner %></h5>
-                
-                <div class="pad55-t">
-                  <a class="waves-effect btn">Con&oacute;cenos</a>
-                </div>
-              </div>  
-            <% end %>
           </div>
-        </div>
-
-
+        <% else %>
+          <div id="index-principal">
+              <div id="index-principal-contenido" class="white-text">
+               <% if @organizacion.titulo_banner.nil? || @organizacion.titulo_banner != "" %>
+                  <h1><%= @organizacion.titulo_banner %> </h1><br />
+                  <h5><%= @organizacion.subtitulo_banner %></h5>
+                  <a href="#index-marco" class="waves-effect btn">&iquest;C&oacute;mo funciona?</a>
+              <% end %>
+              </div>
+              <!-- **************** -->
+              <!-- *SLIDE CLIENTES* -->
+              <!-- **************** -->
+              <div id="index-clientes">
+                <div id="index-clientes-slider">
+                  <div> <img src="<%= asset_path 'index-slide-cliente1.png' %>"></div>
+                  <div> <img src="<%= asset_path 'index-slide-cliente2.png' %>"></div>
+                  <div> <img src="<%= asset_path 'index-slide-cliente3.png' %>"></div>
+                  <div> <img src="<%= asset_path 'index-slide-cliente4.png' %>"></div>
+                  <div> <img src="<%= asset_path 'index-slide-cliente5.png' %>"></div>
+                </div>
+              </div>
+            </div>
+        <% end %>
       </div>
     </li>
     <li>
@@ -130,7 +163,21 @@
 
 
 <% content_for :javascript_personalizado do %>
+
+<%= javascript_include_tag 'owl.carousel.min' %>
+
 <script type="text/javascript">
+    $(document).ready(function() {
+        $("#index-clientes-slider").owlCarousel({
+          items: 3,
+          pagination: false,
+          autoPlay: 3000,
+          navigation: true,
+          navigationText: ["<i class='mdi-hardware-keyboard-arrow-left'></i>",
+          "<i class='mdi-hardware-keyboard-arrow-right'></i>"] 
+        });
+    });
+
 function eliminar_iframe (idorganizacion) {
     var request = $.ajax({
                             url: '/organizacion/eliminar_ubicacion_iframe',
@@ -147,5 +194,7 @@ function eliminar_iframe (idorganizacion) {
                                                     alert( "Request failed: " + textStatus );
                                                    });
 }
+
+
 </script>
 <% end %>

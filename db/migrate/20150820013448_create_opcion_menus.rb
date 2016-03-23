@@ -8,6 +8,8 @@ class CreateOpcionMenus < ActiveRecord::Migration
       t.references :menu, index: true
       t.string :icono
       t.integer :orden
+
+      t.timestamps null: false
     end
   end
 end

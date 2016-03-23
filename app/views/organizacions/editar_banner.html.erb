@@ -1,24 +1,23 @@
 <% content_for :css_personalizado do %>
  <%= stylesheet_link_tag    "usuarios" %> 
  <%= stylesheet_link_tag    "plugins/fileinput.min" %> 
+<link rel="stylesheet" href="http://lvh.me:3000/bootstrap-3.2.0/css/bootstrap.css"/>
+
 <% end %>
 
-<div class="row titulo-seccion">
-  <div class="banner banner-perfil">
-    <div class="contenedor">
-      <div class="col s6">
-        <h5 class="text-capitalize ">
-          Editar Banner de la Organizac&oacute;n
-        </h5>
-      </div>
-      <div class="col s6 text-right ">
-        <ol class="breadcrumb">
-          <li>
-            <a href="/">Inicio</a>
-          </li>
-          <li class="active">Ediatr Banner</li>
-        </ol>
-      </div>
+<div class="row titulo-seccion banner banner-perfil">
+  <div class="contenedor">
+    <div class="col s6">
+      <h5 class="text-capitalize ">
+        Editar Banner de la Organizac&oacute;n
+    </div>
+    <div class="col s6 text-right ">
+      <ol class="breadcrumb">
+        <li>
+          <a href="/">Inicio</a>
+        </li>
+        <li class="active">Editar Banner</li>
+      </ol>
     </div>
   </div>
 </div>
@@ -58,15 +57,17 @@
         <div class="row">
           <div class=" col s12 " align="right">
             <h5 align="left">Imagen del Banner</h5>
-            <input id="organizacion_id" name="organizacion_id" class="file" value="<%= @organizacion.id %>" hidden />
+            <input id="organizacion_id" name="organizacion_id" value="<%= @organizacion.id %>" hidden />
 
             <div id="banner" class="<%= @organizacion.formato_banner%><%= @organizacion.banner%>" > </div>
 
 
-            <input id="banner_id" name="banner_id" type="file" class="file" />
+            <input id="banner_id" type="file" name="inputfcount1[]" multiple  class="file" accept="image/*" data-upload-url="/image/banner"/>
             <div class="pad15"></div>
 
           </div>
+
+
         </div>
         
       </div>
@@ -84,19 +85,24 @@
 
 
 <% content_for :javascript_personalizado do %>
-  <%= javascript_include_tag "plugins/pwstrength-bootstrap-1.2.4.min" %>
   <%= javascript_include_tag 'plugins/fileinput.js' %>
+    <%= javascript_include_tag 'bootstrap.min' %>
+    <%= javascript_include_tag 'plugins/fileinput_locale_es' %>
 
   <script type="text/javascript">
 
     $("#banner_id").fileinput({
+       language: 'es',
+       'maxFileCount': 1,
+    validateInitialCount: true,
       'browseLabel':'Cambiar',
-      'showCaption':false,
+      'showUploadedThumbs': true,
+      'showCaption':true,
        'initialPreview': [
         "<img src='" + $("#banner").attr("class") +"' class='file-preview-image' alt='Banner' title='Banner actual'>"
       ],
-      'initialPreviewShowDelete':false,
-      'initialCaption':'Archivo(s) Seleccionado(s)',
+      /*'initialPreviewShowDelete':true,*/
+     /*'initialCaption':'Archivo(s) Seleccionado(s)',*/
       'allowedFileTypes':['image'],
       'allowedFileExtensions':['jpg', 'png', 'jpeg'],
       'browseClass':'btn btn-primary',
@@ -105,8 +111,8 @@
       'showUpload':false,
       'uploadLabel':'Subir',
       'uploadIcon':'<i class="mdi-file-file-upload"></i>',
-      'uploadClass':'btn btn-success ',
-      'showClose':false
+      'uploadClass':'btn-success btn-sm',
+       'removeTitle': 'Eliminar',
     });
 
   function readImage() {

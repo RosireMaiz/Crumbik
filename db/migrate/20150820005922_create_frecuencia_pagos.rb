@@ -5,6 +5,7 @@ class CreateFrecuenciaPagos < ActiveRecord::Migration
       t.integer :meses
       t.string :estatus, default: "A", :limit => 1
 
+      t.timestamps null: false
     end
   end
 end

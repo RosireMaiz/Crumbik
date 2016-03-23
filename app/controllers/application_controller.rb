@@ -12,7 +12,6 @@ $BANNER_DEFAULT = "app/assets/images/org-banner-construccion2.jpg";
 Authy.api_key = 'eXSf1pyYNtbjrqEgX60TvQdp14Xn8Bnf'
 Authy.api_uri = 'https://api.authy.com/'
 
-
 $account_sid = 'ACc6b076d941741f47e46dfe041bd98eed' 
 $auth_token = '4a8218fbf947e1865c470f7e2cb0d70c' 
 $twilio_number = '+18594485515'
@@ -62,12 +61,12 @@ class ApplicationController < ActionController::Base
   
   private
     def load_db
+      @style = "template/template-rosa.css"
       Apartment::Tenant.switch!()
       return unless request.subdomain.present?
       organizacion = Organizacion.where(["subdominio = ?", request.subdomain]).pluck(:subdominio)
       if organizacion.length > 0
         @organizacion = Organizacion.find_by(subdominio: request.subdomain)
-        @tipo = TipoOrganizacion.find_by(id: @organizacion.tipo_organizacion_id)
         Apartment::Tenant.switch!(request.subdomain)
       else
         redirect_to root_url(subdomain: false)

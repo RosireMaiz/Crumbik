@@ -4,12 +4,13 @@ class Usuarios::SessionsController < Devise::SessionsController
   # GET /resource/sign_in
   def new
     super
-    $administrable = false
-    usuario = current_usuario
-    rol = usuario.rols[0].id
-    usuario.current_rol_id = rol
-    usuario.current_administrable = false
-    usuario.save
+
+   # $administrable = false
+    #usuario = self.resource
+    #rol = usuario.rols[0].id
+    #usuario.current_rol_id = rol
+    #usuario.current_administrable = false
+    #usuario.save
   end
 
   # POST /resource/sign_in
@@ -18,9 +19,16 @@ class Usuarios::SessionsController < Devise::SessionsController
   # end
 
   # DELETE /resource/sign_out
-  # def destroy
-  #   super
-  # end
+   def destroy
+     usuario = current_usuario
+    rol = usuario.rols[0].id
+    usuario.current_rol_id = rol
+    usuario.current_administrable = false
+    usuario.save
+    current_usuario= usuario
+    super
+
+  end
 
   # protected
 

@@ -5,7 +5,7 @@ class UsuarioRedSocial < ActiveRecord::Base
 
   	def self.find_for_oauth(auth, idRedSocial, current_usuario)
   		usuario = current_usuario
-    	usuario_red_social = UsuarioRedSocial.find_by(uid: auth.uid, provider: auth.provider)
+    	usuario_red_social = UsuarioRedSocial.find_by(uid: auth.uid, provider: auth.provider, usuario_id: usuario.id)
     	provider = auth.provider
 
 		if usuario_red_social.blank?
@@ -20,7 +20,7 @@ class UsuarioRedSocial < ActiveRecord::Base
 		usuario_red_social.oauth_secret = auth.credentials.secret
 		
 		if auth.credentials.expires
-			usuario_red_social.oauth_expires_at  = Time.at(auth.credentials.expires_at)
+			usuario_red_social.oauth_expires_at  = Time.at(auth.credentials.expires_at).to_datetime
 		end
 
 		if provider == "twitter"

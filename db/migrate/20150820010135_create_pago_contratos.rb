@@ -7,6 +7,8 @@ class CreatePagoContratos < ActiveRecord::Migration
       t.references 	:usuario, index: true
       t.references 	:contrato, index: true
       t.references 	:modo_pago, index: true
+
+      t.timestamps null: false
     end
   end
 end

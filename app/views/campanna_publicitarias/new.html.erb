@@ -1,0 +1,271 @@
+<div class="row titulo-seccion banner banner-perfil">
+  <div class="contenedor">
+    <div class="col s6">
+      <h5 class="text-uppercase">
+       Crear Campaña Publicitaria
+      </h5>
+    </div>
+    <div class="col s6 text-right ">
+      <ol class="breadcrumb">
+        <li>
+          <a href="/">Inicio</a>
+        </li>
+        <li class="active">Campaña Publicitaria</li>
+      </ol>
+    </div>
+  </div>
+</div>
+
+<div  id="form" class="row pad30-h"  style="width: 100%">
+
+  <%= form_for @campanna_publicitaria, :url => campanna_publicitaria_crear_campanna_publicitaria_path, html:{id: "add_campanna_publicitaria", class: "form-horizontal"}, multipart: true do |f| %>
+    <div class="form-wizard">
+      <div class="form-body steps">
+
+        <div class="tab-content">
+          <div class="feedback alert alert-danger display-none">
+            <button class="close" data-dismiss="alert"></button>
+            Algunos campos tienen errores. Por favor revisa abajo.
+          </div>
+          <div class="feedback alert alert-success display-none">
+            <button class="close" data-dismiss="alert"></button>
+            La validación fue exitosa.
+          </div>
+          <div class="panel  hoverable pad30-h">
+
+          <div class="col s12 pad15">
+            <h5>Datos de la Campanña Publicitaria</h5>
+            <div class="row">
+               <div class="col s6  left ">
+
+                <div class="input-field col s12">
+                  <label for="campanna_publicitaria_titulo">Título: <span class="required">
+                  * </span>
+                  </label>
+                  <%= f.text_field :titulo, :required=>true, autocomplete: "off", length: "50" %>
+
+                </div>
+
+                <div class="input-field col s12">
+                  <label for="campanna_publicitaria_descripcion">Descripción General: <span class="required">
+                  * </span>
+                  </label>
+                  <%= f.text_area :descripcion, :required=>true, autocomplete: "off", class: "materialize-textarea", length: "300", style: "max-height: 20px;overflow-y: auto;" %>
+                </div>
+              </div>
+              <div class="col s6  left ">
+                <div class="col s12 row">
+                  <% if request.subdomain.present? %>
+                   <label><%=@organizacion.tipo_organizacion.nombre%> <span class="required">*</span></label>
+                   <%= f.collection_select(:producto_id, Producto.all, :id, :nombre) %> 
+                  <% else %>
+                     <label>Planes <span class="required">*</span></label>
+                       <%= f.collection_select(:producto_id, Plan.all, :id, :nombre) %> 
+                  <%  end -%> 
+                </div>
+                <br>
+                <div class="col s6">
+                  <label>Fecha de Inicio <span class="required">*</span></label>
+                  <input type="date" class="datepicker" id="campanna_publicitaria_inicio" name="campanna_publicitarium[inicio]">
+                  <span id="campanna_publicitaria_inicio-error_local" class="hiden msj-rojo"></span>
+                </div>
+
+                <div class="col s6">
+                  <label>Fecha de Finalización <span class="required">*</span></label>
+                  <input type="date" class="datepicker" id="campanna_publicitaria_fin" name="campanna_publicitarium[fin]">
+                  <span id="campanna_publicitaria_fin-error_local" class="hiden msj-rojo"></span>
+                </div>
+              
+              </div>
+            </div>
+            <hr/>
+             
+            <div class="row">
+              <div class="col s12 m6 ">
+                  <h5>Medio de  Difusión</h5>
+                  <ul id="lista-redes-sociales" class=" list-inline">
+                    <li>Selecciona el/los medio de difusión de su preferencia.</li> 
+                  </ul>
+                  <div class="col s12 valign-wrapper">
+                     <div class="col s10">
+                        <select id="select_type_menu" name="rol" class="text-capitalize">
+                          <%= options_for_select(CampannaPublicitariaDetalle.tipo_difusions.to_a.map { |w| [w[0].humanize, w[1]] }) %>
+                        </select>
+                      </div>
+                       <a href="javascript:void(0)"  class="white-text red lighten-1 btn-sm btn-table-action tooltipped waves-effect" data-position="bottom" data-tooltip="Agregar" data-delay="20" style="float: none;"><i class="mdi-content-add"></i></a>
+                       <a class="tooltipped"  data-position="right" data-delay="50" data-tooltip="Eliminar"><span><i class="mdi-navigation-close green-text"></i></span></a>
+                  </div>
+                  <div class="col s6" style="padding-bottom: 5px;" > 
+                    <span ><a href="#!"  id="<%= CampannaPublicitariaDetalle.tipo_difusions["sms"] %> " class="red-social-add light-blue" ><i class="fa fa-comments"></i></a> SMS</span>
+                    <a class="tooltipped"  data-position="right" data-delay="50" data-tooltip="Eliminar"><span><i class="mdi-navigation-close green-text"></i></span></a>
+                  </div>
+                  <div class="col s6" style="padding-bottom: 5px;"> 
+                    <span><a href="#!"  id="<%= CampannaPublicitariaDetalle.tipo_difusions["llamada"] %> " class="red-social-add  light-blue"><i class="mdi-notification-phone-in-talk "></i></a> Llamada</span>
+                    <a class="tooltipped"  data-position="right" data-delay="50" data-tooltip="Eliminar"><span><i class="mdi-navigation-close green-text"></i></span></a>
+                  </div>
+                  <div class="col s6" style="padding-bottom: 5px;"> 
+                    <span><a href="#!"  id="<%= CampannaPublicitariaDetalle.tipo_difusions["email"] %>" class="red-social-add light-blue"><i class="  mdi-communication-email "></i></a> Email</span>
+                    <a class="tooltipped"  data-position="right" data-delay="50" data-tooltip="Eliminar"><span><i class="mdi-navigation-close green-text"></i></span></a>
+                  </div>
+                  <div class="col s6" style="padding-bottom: 5px;"> 
+                    <span><a href="#!"  id="<%= CampannaPublicitariaDetalle.tipo_difusions["red_social"] %>" class="red-social-add light-blue "><i class="  mdi-communication-email "></i></a> Red Social</span>
+                    <a class="tooltipped"  data-position="right" data-delay="50" data-tooltip="Eliminar"><span><i class="mdi-navigation-close green-text"></i></span></a>
+                  </div>
+              </div>
+              <div class="col s12 m6">
+                  <h5>Criterios de  Difusión</h5>
+                  <ul id="lista-redes-sociales" class=" list-inline">
+                    <li>Selecciona el/los criterios de selección de usuarios de su preferencia.</li> 
+                  </ul>
+                  <div class="col s12 valign-wrapper">
+                     <div class="col s10">
+                        <select id="select" name="rol" >
+                            <option value="-1" disabled selected>Elija un Criterio</option>
+                            <%= options_from_collection_for_select(CriterioDifusion.all, :id, :nombre) %>
+                        </select>
+                      </div>
+                       <a href="javascript:void(0)"  class="white-text red lighten-1 btn-sm btn-table-action tooltipped waves-effect" data-position="bottom" data-tooltip="Agregar" data-delay="20" style="float: none;"><i class="mdi-content-add"></i></a>
+                  </div>
+                  <div class="col s6">
+                    <div class=" col s12">
+                      
+                    </div>
+                  </div>
+                      
+                  </div>
+              </div>
+            </div>
+          </div>
+          <div class="form-actions">
+            <div class="row pad15">
+              <div class=" col s12 text-center align-center ">
+                
+                <input type="submit" class="btn btn-success " value="Guardar">
+                <button type="button" onclick="window.location.href='/productos/campanna_publicitaria/consultar'" class="btn btn-danger waves-effect">Cancelar</button>
+
+              </div>
+            </div>
+          </div>
+
+          </div>
+
+        </div>
+      </div>
+
+    </div>
+  <% end %>
+</div>
+
+
+<% content_for :javascript_personalizado do %>  
+  <script>
+  $('#campanna_publicitaria_inicio').pickadate({
+        selectMonths: true, // Creates a dropdown to control month
+        selectYears: true, // Creates a dropdown of 15 years to control year
+        labelMonthNext: 'Próximo Mes',
+        labelMonthPrev: 'Mes Anterior',
+        labelMonthSelect: 'Selecione Mes',
+        labelYearSelect: 'Selecione Año',
+        monthsFull: [ 'Enero', 'Febrero', 'MArzo', 'Abril', 'Mayo', 'Junio', 'Julio', 'Agosto', 'Septiembre', 'Octubre', 'Noviembre', 'Diciembre' ],
+        monthsShort: [ 'Ene', 'Feb', 'Mar', 'Abr', 'May', 'Jun', 'Jul', 'Ago', 'Sep', 'Oct', 'Nov', 'Dic' ],
+        weekdaysFull: [ 'Domingo', 'Lunes', 'Martes', 'Miercoles', 'Jueves', 'Viernes', 'Sábado' ],
+        weekdaysShort: [ 'Dom', 'Lun', 'Mar', 'Mier', 'Jue', 'Vie', 'Sab' ],
+        weekdaysLetter: [ 'D', 'L', 'M', 'X', 'J', 'V', 'S' ],
+        today: 'Hoy',
+        clear: 'Limpiar',
+        close: 'Cerrar',
+        format: 'dd/mm/yyyy',
+        closeOnSelect: true,
+        closeOnClear: false,
+        onSet: function () {
+          this.close();
+          },
+
+        onClose:function(){
+
+                  var inicio = $("#campanna_publicitaria_inicio").val();
+                  var  fin = $("#campanna_publicitaria_fin").val();
+                  if (inicio != "" && inicio != null && fin != "" 
+                      && fin != null) {
+                      
+                      if (inicio > fin) {
+                          $("#campanna_publicitaria_inicio-error").addClass("valid").html("");;
+                          $("#campanna_publicitaria_inicio-error_local").removeClass("hiden").html("Ingrese una fecha menor que la fecha de finalización");
+                          $("#campanna_publicitaria_fin-error_local").addClass("hiden").html("");
+                      } else {
+                          $("#campanna_publicitaria_inicio-error").addClass("valid").html("");
+                          $("#campanna_publicitaria_inicio-error_local").addClass("hiden").html("");
+                          $("#campanna_publicitaria_fin-error_local").addClass("hiden").html("");
+                      };
+                  }
+
+                }           
+      });
+
+
+  $('#campanna_publicitaria_fin').pickadate({
+        selectMonths: true, // Creates a dropdown to control month
+        selectYears: true, // Creates a dropdown of 15 years to control year
+        labelMonthNext: 'Próximo Mes',
+        labelMonthPrev: 'Mes Anterior',
+        labelMonthSelect: 'Selecione Mes',
+        labelYearSelect: 'Selecione Año',
+        monthsFull: [ 'Enero', 'Febrero', 'MArzo', 'Abril', 'Mayo', 'Junio', 'Julio', 'Agosto', 'Septiembre', 'Octubre', 'Noviembre', 'Diciembre' ],
+        monthsShort: [ 'Ene', 'Feb', 'Mar', 'Abr', 'May', 'Jun', 'Jul', 'Ago', 'Sep', 'Oct', 'Nov', 'Dic' ],
+        weekdaysFull: [ 'Domingo', 'Lunes', 'Martes', 'Miercoles', 'Jueves', 'Viernes', 'Sábado' ],
+        weekdaysShort: [ 'Dom', 'Lun', 'Mar', 'Mier', 'Jue', 'Vie', 'Sab' ],
+        weekdaysLetter: [ 'D', 'L', 'M', 'X', 'J', 'V', 'S' ],
+        today: 'Hoy',
+        clear: 'Limpiar',
+        close: 'Cerrar',
+        format: 'dd/mm/yyyy',
+        closeOnSelect: true,
+        closeOnClear: false,
+        onSet: function () {
+          this.close();
+          },
+
+          onClose:function(){
+                    var inicio = $("#campanna_publicitaria_inicio").val();
+                    var  fin = $("#campanna_publicitaria_fin").val();
+                    if (inicio != "" && inicio != null && fin != "" 
+                        && fin != null) {
+                      if (inicio > fin) {
+                          $("#campanna_publicitaria_fin-error").addClass("valid").html("");;
+                          $("#campanna_publicitaria_fin-error_local").removeClass("hiden").html("Ingrese una fecha mayor que la fecha de inicio");
+                          $("#campanna_publicitaria_inicio-error_local").addClass("hiden").html("");
+                          
+                      }else{
+                          $("#campanna_publicitaria_fin-error").addClass("valid").html("");
+                          $("#campanna_publicitaria_inicio-error_local").addClass("hiden").html("");
+                          $("#campanna_publicitaria_fin-error_local").addClass("hiden").html("");
+                      };
+                    }
+
+
+                  }           
+      });
+  
+      $('#add_campanna_publicitaria').submit(function(event){
+         
+          var inicio = $("#campanna_publicitaria_inicio").val();
+          var  fin = $("#campanna_publicitaria_fin").val();
+         
+          if ( inicio != "" && inicio != null && fin != "" && fin != null   && inicio > fin) {
+            $("#campanna_publicitaria_fin-error_local").removeClass("hiden").html("Ingrese una fecha mayor que la fecha de inicio");
+            $("#campanna_publicitaria_inicio-error_local").addClass("hiden").html("");
+            $('.alert-danger').show();
+            $('.alert-success').hide();
+            $('html,body').animate({
+                scrollTop: $(".steps").offset().top-350
+            }, 'slow');
+            event.preventDefault();
+          } else {
+            $("#campanna_publicitaria_inicio-error_local").addClass("hiden").html("");
+            $("#campanna_publicitaria_fin-error_local").addClass("hiden").html("");
+          };
+
+      });
+
+  </script>
+<% end %>

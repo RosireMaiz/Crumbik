@@ -46,12 +46,8 @@ class PortalController < ApplicationController
 		usuario = current_usuario
 	    usuario.current_administrable = true
 	    usuario.save
-		organizacion = Organizacion.where("usuario_id = ?", usuario.id)
-		if organizacion.length > 0
-			redirect_to "http://" + organizacion.firt.subdominio + ".lvh.me:3000"
-		else
-			render "portal/index_principal"
-		end
+		#organizacion = Organizacion.where("usuario_id = ?", usuario.id)
+		render "portal/index_principal"
 	end
 	def desarrolladores
 		render "portal/desarrolladores"
