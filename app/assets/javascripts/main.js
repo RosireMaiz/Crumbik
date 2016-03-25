@@ -1,13 +1,5 @@
 $(document).ready(function(){
 
-	$("#cambiar-rol").click(function(){
-		$("<div id='dialogos'></div>").appendTo('body');
-		React.render(
-		  React.createElement(DialogoRoles, null),
-		  document.getElementById("dialogos")
-		);
-		$("#form-cambio-roles").openModal();
-	});
 
 	var table = $('#rols').DataTable({
 		 "searching": false,
@@ -30,8 +22,6 @@ $(document).ready(function(){
 									});
 					           		request.done(function( data ) {
 					           					window.location.href="/" 
-					           					//$('#change_rol').closeModal();
-												//actualizarMenu();
 										});
 										 
 									request.fail(function( jqXHR, textStatus ) {
@@ -41,7 +31,6 @@ $(document).ready(function(){
 	});
 
 	$('#rols tbody').on('click', 'tr', function () {
-		//alert($(this).attr("data-id"));
 		if ( $(this).hasClass('selected') ) {
 		    $(this).removeClass('selected');
 		}
@@ -73,7 +62,7 @@ $(document).ready(function(){
         labelMonthPrev: 'Mes Anterior',
         labelMonthSelect: 'Selecione Mes',
         labelYearSelect: 'Selecione Año',
-        monthsFull: [ 'Enero', 'Febrero', 'MArzo', 'Abril', 'Mayo', 'Junio', 'Julio', 'Agosto', 'Septiembre', 'Octubre', 'Noviembre', 'Diciembre' ],
+        monthsFull: [ 'Enero', 'Febrero', 'Marzo', 'Abril', 'Mayo', 'Junio', 'Julio', 'Agosto', 'Septiembre', 'Octubre', 'Noviembre', 'Diciembre' ],
         monthsShort: [ 'Ene', 'Feb', 'Mar', 'Abr', 'May', 'Jun', 'Jul', 'Ago', 'Sep', 'Oct', 'Nov', 'Dic' ],
         weekdaysFull: [ 'Domingo', 'Lunes', 'Martes', 'Miercoles', 'Jueves', 'Viernes', 'Sábado' ],
         weekdaysShort: [ 'Dom', 'Lun', 'Mar', 'Mier', 'Jue', 'Vie', 'Sab' ],

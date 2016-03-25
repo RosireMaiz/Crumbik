@@ -26,3 +26,4 @@
 //= require materialize-sprockets
 //= require main
 //= require chat
+//= require materialize.js

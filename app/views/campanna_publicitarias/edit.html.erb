@@ -1,0 +1,209 @@
+<div class="row titulo-seccion banner banner-perfil">
+  <div class="contenedor">
+    <div class="col s6">
+      <h5 class="text-uppercase">
+       Crear Campaña Publicitaria
+      </h5>
+    </div>
+    <div class="col s6 text-right ">
+      <ol class="breadcrumb">
+        <li>
+          <a href="/">Inicio</a>
+        </li>
+        <li class="active">Campaña Publicitaria</li>
+      </ol>
+    </div>
+  </div>
+</div>
+
+<div  id="form" class="row pad30-h"  style="width: 100%">
+
+ <%= form_for @campanna_publicitaria, :url => campanna_publicitaria_editar_path, html:{:method => :post, id: "edit_publicidad", class: "form-horizontal"}, multipart: true do |f| %>
+    <div>
+      <div class="form-body steps">
+        <div class="tab-content">
+          <div class="feedback alert alert-danger display-none">
+            <button class="close" data-dismiss="alert"></button>
+            Algunos campos tienen errores. Por favor revisa abajo.
+          </div>
+          <div class="feedback alert alert-success display-none">
+            <button class="close" data-dismiss="alert"></button>
+            La validación fue exitosa.
+          </div>
+          <div class="panel  hoverable pad30-h">
+
+            <div class="col s12 pad15">
+              <h5>Datos de la Campanña Publicitaria</h5>
+              <div class="row">
+                 <div class="col s6  left ">
+                  <%= f.hidden_field :id %>
+
+                  <div class="input-field col s12">
+                    <label for="campanna_publicitaria_titulo">Título: <span class="required">
+                    * </span>
+                    </label>
+                    <%= f.text_field :titulo, :required=>true, autocomplete: "off", length: "50" %>
+
+                  </div>
+
+                  <div class="input-field col s12">
+                    <label for="campanna_publicitaria_descripcion">Descripción General: <span class="required">
+                    * </span>
+                    </label>
+                    <%= f.text_area :descripcion, :required=>true, autocomplete: "off", class: "materialize-textarea", length: "300", style: "max-height: 20px;overflow-y: auto;" %>
+                  </div>
+                </div>
+                <div class="col s6  left ">
+                  <div class="col s12 row">
+                    <% if request.subdomain.present? %>
+                     <label><%=@organizacion.tipo_organizacion.nombre%> <span class="required">*</span></label>
+                     <%= f.collection_select(:producto_id, Producto.all, :id, :nombre) %> 
+                    <% else %>
+                       <label>Planes <span class="required">*</span></label>
+                         <%= f.collection_select(:producto_id, Plan.all, :id, :nombre) %> 
+                    <%  end -%> 
+                  </div>
+                  <br>
+                  <div class="col s6">
+                    <label>Fecha de Inicio <span class="required">*</span></label>
+                    <input type="date" class="datepicker" id="campanna_publicitaria_inicio" name="campanna_publicitarium[fecha_inicio]" value="<%= @campanna_publicitaria.fecha_inicio.strftime("%d/%m/%Y ") %>"/>
+                    <span id="campanna_publicitaria_inicio-error_local" class="hiden msj-rojo"></span>
+                  </div>
+
+                  <div class="col s6">
+                    <label>Fecha de Finalización <span class="required">*</span></label>
+                    <input type="date" class="datepicker" id="campanna_publicitaria_fin" name="campanna_publicitarium[fecha_fin]" value="<%= @campanna_publicitaria.fecha_fin.strftime("%d/%m/%Y ") %>"/>
+                    <span id="campanna_publicitaria_fin-error_local" class="hiden msj-rojo"></span>
+                  </div>
+                
+               </div>
+            </div>
+            <hr/>
+               
+              <div class="row">
+                <div class="col s12 m6 ">
+                    <h5>Medio de  Difusión</h5>
+                    
+                    <p>Selecciona el/los medio de difusión de su preferencia.</p> 
+                    
+                    <div class="col s12 valign-wrapper">
+                       <div class="col s10">
+                          <select id="select_medio_difusion" class="text-capitalize">
+                            <%= options_for_select(CampannaPublicitariaDetalle.medio_difusions.to_a.map { |w| [w[0].humanize, w[1]] }) %>
+                          </select>
+                        </div>
+                         <a href="javascript:void(0)"  id="agregar-medio-difusion" class="white-text red lighten-1 btn-sm btn-table-action tooltipped waves-effect" data-position="bottom" data-tooltip="Agregar" data-delay="20" style="float: none;"><i class="mdi-content-add"></i></a>
+                    </div>
+                     <span id="campanna_publicitarium_campanna_publicitaria_detalles_attributes-error_local" class="hidden msj-rojo">Debe Seleccionar al menos un medio de difusión.</span>
+                    <div id="medio-difusion">
+
+                    <% if ! @campanna_publicitaria.campanna_publicitaria_detalles.nil?  %>
+                        <% @campanna_publicitaria.campanna_publicitaria_detalles.each do |campanna_publicitaria_detalle| %>
+
+                         <div id="div_<%= CampannaPublicitariaDetalle.medio_difusions[campanna_publicitaria_detalle.medio_difusion] %> " class='col s6' style='padding-bottom: 5px;'> 
+                              <span>
+                                <a href='#!'  id= '<%= CampannaPublicitariaDetalle.medio_difusions[campanna_publicitaria_detalle.medio_difusion]%>_text' class='red-social-add light-blue' >
+                                  <i class= "<%= $ICONOS_DIFUSION[CampannaPublicitariaDetalle.medio_difusions[campanna_publicitaria_detalle.medio_difusion]]%>"></i>
+                                </a> 
+                               <%= campanna_publicitaria_detalle.medio_difusion.humanize%>
+                              </span>
+                              <a onclick='delete_medio_difusion(div_<%= CampannaPublicitariaDetalle.medio_difusions[campanna_publicitaria_detalle.medio_difusion]%>, <%= CampannaPublicitariaDetalle.medio_difusions[campanna_publicitaria_detalle.medio_difusion]%>)' id='delete-difusion' data-id='<%= CampannaPublicitariaDetalle.medio_difusions[campanna_publicitaria_detalle.medio_difusion]%>' href='javascript:void(0)'  class='tooltipped delete-difusion' data-position='right' data-delay='50' data-tooltip='Eliminar'>
+                                <i class='mdi-navigation-close green-text'></i>
+                              </a>  
+                              <input name='campanna_publicitarium[campanna_publicitaria_detalles_attributes][][medio_difusion]' value='<%= campanna_publicitaria_detalle.medio_difusion %>' hidden/>
+                              <input name='campanna_publicitarium[campanna_publicitaria_detalles_attributes][][id]' value='<%= CampannaPublicitariaDetalle.medio_difusions[campanna_publicitaria_detalle.id]%>' hidden/>
+                            </div>
+                        <%  end -%>
+                    <%  end -%>
+                     
+                    </div>
+                </div>
+                <div class="col s12 m6">
+                    <h5>Criterios de  Difusión</h5>
+                    <ul id="lista-redes-sociales" class=" list-inline">
+                      <li>Selecciona el/los criterios de selección de usuarios de su preferencia.</li> 
+                    </ul>
+                    <div class="row">
+                      <div class="col s12 valign-wrapper">
+                         <div class="col s10">
+                            <select id="select_criterio_difusion" name="rol" >
+                                <option value="0" disabled selected>Elija un Criterio</option>
+                                <%= options_from_collection_for_select(CriterioDifusion.all, :id, :nombre) %>
+                            </select>
+                          </div>
+                           <a href="javascript:void(0)" id="agregar-criterio-difusion" class="white-text red lighten-1 btn-sm btn-table-action tooltipped waves-effect" data-position="bottom" data-tooltip="Agregar" data-delay="20" style="float: none;"><i class="mdi-content-add"></i></a>
+                      </div>
+                       <span id="campanna_publicitarium_criterio_campanna_pubs_attributes-error_local" class="hidden msj-rojo">Debe Seleccionar el criterio de difusión.</span>
+                    </div>
+                    <div id="criterios-difusion">
+                      <% if ! @campanna_publicitaria.criterio_campanna_pubs.nil?  %>
+                        <% @campanna_publicitaria.criterio_campanna_pubs.each_with_index do |campanna_publicitaria_pub, index| %>
+                          <div id='div_criterio_<%= campanna_publicitaria_pub.criterio_difusion.id %>_<%= index %>' class='row'>
+                            <input name='campanna_publicitarium[criterio_campanna_pubs_attributes][][criterio_difusion_id]' value="<%= campanna_publicitaria_pub.criterio_difusion.id %>" hidden/>
+                            
+                            <div class='input-field col s3'>
+                              <p><%= campanna_publicitaria_pub.criterio_difusion.nombre %></p>
+                            </div>
+
+                            <div class='input-field col s4  no-margin-v'>
+                              <select id='select_<%= campanna_publicitaria_pub.criterio_difusion.id%>_<%= index %>' name='campanna_publicitarium[criterio_campanna_pubs_attributes][][operador]'>
+                                <option value='=' disabled>Operador</option>
+                                <option value='=' <% if campanna_publicitaria_pub.operador == '=' %> selected <% end %> >Igual a</option>
+                                <option value='>=' <% if campanna_publicitaria_pub.operador == '>=' %> selected  <%end %> >Mayor que</option>
+                                <option value='<=' <% if campanna_publicitaria_pub.operador == '<=' %> selected <% end %> >Menor que</option>
+                                <option value='!=' <% if campanna_publicitaria_pub.operador == '!=' %> selected <% end %> >Diferente a</option>
+                              </select>
+                            </div>
+                            <div class='col s5'>
+                              <div class='input-field input-group no-margin-v'>
+                                <input id='valor' name='campanna_publicitarium[criterio_campanna_pubs_attributes][][valor]' type='text' class='validate' value="<%= campanna_publicitaria_pub.valor %>">
+                                  <a onclick='delete_criterio_difusion(div_criterio_<%= campanna_publicitaria_pub.criterio_difusion.id%>_<%= index %>)' id='delete-criterio' href='javascript:void(0)'  class='tooltipped input-group-addon' data-position='right' data-delay='50' data-tooltip='Eliminar'>
+                                    <i class='mdi-navigation-close green-text'>
+                                    
+                                    </i>
+                                  </a>
+                                  <label for='valor'>Valor</label>
+                                </div> 
+                            </div>
+                             <input name='campanna_publicitarium[criterio_campanna_pubs_attributes][][ide]' value="<%= campanna_publicitaria_pub.id%>" hidden/>
+                          </div>
+                        <%  end -%>
+                      <%  end -%>
+                    </div> 
+
+                  </div>
+                </div>
+              </div>
+            
+              <div class="form-actions">
+                <div class="row pad15">
+                  <div class=" col s12 text-center align-center ">
+                    
+                    <input type="submit" class="btn btn-success " value="Guardar">
+                    <button type="button" onclick="window.location.href='/productos/campanna_publicitaria/consultar'" class="btn btn-danger waves-effect">Cancelar</button>
+
+                  </div>
+                </div>
+              </div>
+          </div>
+          </div>
+
+        </div>
+      </div>
+
+    </div>
+  <% end %>
+</div>
+
+
+<% content_for :javascript_personalizado do %>  
+  <%= javascript_include_tag 'validaciones/campanna_publicitaria' %>
+  <script type="text/javascript">
+    count_criterio = <%= @campanna_publicitaria.criterio_campanna_pubs.size %>;
+    count_medio_difusion = <%= @campanna_publicitaria.campanna_publicitaria_detalles.size %>
+    <% @campanna_publicitaria.campanna_publicitaria_detalles.each do |campanna_publicitaria_detalle| %>
+        var id_difusion_detalle = <%= CampannaPublicitariaDetalle.medio_difusions[campanna_publicitaria_detalle.medio_difusion]%>;
+        medio_difusion_seleted[id_difusion_detalle] = true;
+    <% end -%>
+  </script>
+<% end %>

@@ -1,0 +1,254 @@
+<% content_for :css_personalizado do %>
+    <%= stylesheet_link_tag    "plugins/jquery-ui" %> 
+<style type="text/css">
+  .select-dropdown li img {
+    height: 40px;
+    width: 40px;
+    margin: 10px 10px;
+    float: right;
+}
+.dropdown-content li {
+    clear: both;
+    color: rgba(0,0,0,0.87);
+    cursor: pointer;
+    min-height: 50px;
+    line-height: 1.5rem;
+    width: 100%;
+    text-align: left;
+    text-transform: none;
+}
+.dropdown-content li>a, .dropdown-content li>span {
+    font-size: 16px;
+    display: block;
+    line-height: 22px;
+    padding: 10px 10px;
+}
+</style>
+<% end %>
+
+
+<div class="row titulo-seccion banner banner-perfil">
+  <div class="contenedor">
+    <div class="col s6">
+      <h5 class="text-uppercase">
+       Difundir Campaña Publicitaria
+      </h5>
+    </div>
+    <div class="col s6 text-right ">
+      <ol class="breadcrumb">
+        <li>
+          <a href="/">Inicio</a>
+        </li>
+        <li class="active">Campaña Publicitaria</li>
+      </ol>
+    </div>
+  </div>
+</div>
+
+<div  id="form" class="row pad30-h">
+    <div>
+      <div class="form-body steps">
+        <div class="tab-content">
+          <div class="feedback alert alert-danger display-none">
+            <button class="close" data-dismiss="alert"  aria-label="Close"></button>
+            Algunos campos tienen errores. Por favor revisa abajo.
+          </div>
+          <div class="feedback alert alert-success display-none">
+            <button class="close" data-dismiss="alert"  aria-label="Close"></button>
+            La validación fue exitosa.
+          </div>
+          <div class="pad30-h">
+            <div class="row">
+              <div class="col s12 pad15">
+                <div class="col s4">
+                  <h6 class="form-section">Datos de la Campaña Publicitaria</h6>
+                  
+                    <div class="row no-margin-v pad5-t">
+                      <div class="col s12 m4 right-align ">
+                        <label>Título:</label>
+                      </div>
+                      <div class="col s12 m8 no-padding">
+                        <span class="form-control-static">  <%= @campanna_publicitaria.titulo %></span>
+                      </div>
+                    </div>
+                    
+                    <div class="row no-margin-v pad5-t">
+                       <div class="col s12 m4 right-align">
+                          <label>Descripción:</label>
+                        </div>
+                        <div class="col s12 m8 no-padding">
+                          <span class="form-control-static">  <%= @campanna_publicitaria.descripcion %></span>
+                        </div>
+                    </div>
+                    <div class="row no-margin-v pad5-t">
+                       <div class="col s12 m4 right-align ">
+                          <label>Fecha de Inicio:</label>
+                        </div>
+                        <div class="col s12 m8 no-padding">
+                          <span class="form-control-static">  <%= @campanna_publicitaria.fecha_inicio.strftime("%d/%m/%Y ") %></span>
+                        </div>
+                    </div>
+                    <div class="row no-margin-v pad5-t">
+                       <div class="col s12 m4 right-align">
+                          <label>Fecha de Finalización:</label>
+                        </div>
+                        <div class="col s12 m8 no-padding">
+                          <span class="form-control-static ">  <%= @campanna_publicitaria.fecha_fin.strftime("%d/%m/%Y ") %></span>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="col s8">
+                  <div id="accordion">
+                    <h3>SMS</h3>
+                    <div>
+                      <div>
+                        
+                        <div class="col s4">
+                          <img  src="/assets/phone.png" width="70%">
+                        </div>
+                        <div class="col s8">
+                          <div class="row">
+                            <div clss="col s12">
+                              <div class="input-field input-group">
+                                <select multiple class="icons">
+                                  <option value="" disabled selected>Selecciona los Usuario</option>
+                                  <option value="" data-icon="/assets/avatar/sinfoto.jpg" class="left circle">Usuario 1</option>
+                                  <option value="" data-icon="/assets/avatar/sinfoto.jpg" class="left circle">Usuario 2</option>
+                                  <option value="" data-icon="/assets/avatar/sinfoto.jpg" class="left circle">Usuario 3</option>
+                                  <option value="" data-icon="/assets/avatar/sinfoto.jpg" class="left circle">Usuario 4</option>
+                                  <option value="" data-icon="/assets/avatar/sinfoto.jpg" class="left circle">Usuario 5</option>
+                                </select>
+                                <label>Usuarios</label>
+                                <a href="javascript:void(0)" class="input-group-addon" id="basic-addon2"  role="button" data-toggle="popover"  placement="right" data-container="body">
+                                  <i class="fa fa-edit"></i>
+                                </a>
+                                
+                              </div>
+                  
+                            </div>
+                            
+                          </div>
+                         
+                          <div class="row">
+                            <div class="input-field col s12">
+                              <i class="fa fa-phone  prefix"></i>
+                              <textarea id="icon_prefix2" class="materialize-textarea"></textarea>
+                              <label for="icon_prefix2">First Name</label>
+                            </div>
+                          </div>
+                        </div>
+
+                          
+                      </div>
+                    
+                    </div>
+                    <h3>Llamadas</h3>
+                    <div>
+                        <table id="usuarios" class="display" cellspacing="0" width="100%" >
+                          <thead>
+                            <tr>
+                                <th>Nombre</th>
+                                <th>Teléfono</th>
+                                <th>País</th>
+                                <th>
+                                  Acciones
+                                </th>
+                            </tr>
+                          </thead>
+                          <tbody>
+                            <% @usuarios.each do |usuario| %>
+
+                               <% if ! usuario.nil? %>
+                                  <tr>
+                                      <td data-search="<%= usuario.perfil.nombres %>"> 
+                                        <%= usuario.perfil.nombres %> <%= usuario.perfil.apellidos %> 
+                                      </td>
+                                      <td>
+                                        <%= usuario.perfil.telefono_movil %>
+                                      </td>               
+                                      <td> 
+                                        <%= usuario.pais.nombre %>
+                                      </td> 
+                                      <td> 
+                                       
+                                      </td>
+
+                                  </tr>
+                                <% end %>
+                              <% end %>
+                                  
+                           </tbody>
+                        </table>
+                    </div>
+                    <h3>Email</h3>
+                    <div>
+                        <div class="col s5">
+                          <img  src="/assets/tablet.png" width="100%">
+                        </div>
+                        <div class="col s7">
+                          <p>
+                          Mauris mauris ante, blandit et, ultrices a, suscipit eget, quam. Integer
+                          ut neque. Vivamus nisi metus, molestie vel, gravida in, condimentum sit
+                          amet, nunc. Nam a nibh. Donec suscipit eros. Nam mi. Proin viverra leo ut
+                          odio. Curabitur malesuada. Vestibulum a velit eu ante scelerisque vulputate.
+                          </p>
+                        </div>
+                    </div>
+                    <h3>Redes Sociales</h3>
+                    <div>
+                        <div class="col s5">
+                          <img  src="/assets/tablet.png" width="100%">
+                        </div>
+                        <div class="col s7">
+                          <p>
+                          Mauris mauris ante, blandit et, ultrices a, suscipit eget, quam. Integer
+                          ut neque. Vivamus nisi metus, molestie vel, gravida in, condimentum sit
+                          amet, nunc. Nam a nibh. Donec suscipit eros. Nam mi. Proin viverra leo ut
+                          odio. Curabitur malesuada. Vestibulum a velit eu ante scelerisque vulputate.
+                          </p>
+                        </div>
+                      
+                    </div>
+                  </div>
+
+                </div>
+              </div>
+            </div>
+           
+          </div>
+        </div>
+      </div>
+    </div>
+
+</div>
+
+<% content_for :javascript_personalizado do %>
+  
+  <%= javascript_include_tag 'plugins/jquery-ui' %>
+  <script>
+  $(function() {
+    $( "#accordion" ).accordion({
+            heightStyle: "content"
+    });
+  });
+
+   $(function() {
+    $( "#tabs" ).tabs({
+
+    });
+  });
+
+     $(document).ready(function(){
+      $('#usuarios').dataTable({
+        "select": false, 
+        "pageLength": 10,
+        "lengthChange": false,
+        "language": {
+                "zeroRecords": "No hay datos disponibles en la tabla",
+        }
+      });
+    });
+
+  </script>
+<% end %>

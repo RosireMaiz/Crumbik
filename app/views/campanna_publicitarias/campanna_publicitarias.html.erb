@@ -74,66 +74,24 @@
   </div>
 
   <div class="row">
-        <ul class="tabs">
-          <li class="tab col s12 m3">
-            <a href="#todos" class="grey-text text-darken-2 active">Todas</a>
-          </li>
-          <li class="tab col s12 m3">
-            <a class="grey-text text-darken-2 " href="#ejecucion">En Ejecución</a>
-          </li>
-          <li class="tab col s12 m3 ">
-            <a class="grey-text text-darken-2" href="#proximas">Próximas a Ejecutar</a>
-          </li>
-          <li class="tab col s12 m3">
-            <a class="grey-text text-darken-2 " href="#ejecucion">Ejecutadas</a>
-          </li>
-        </ul>
-     
-    </div>
-
-  <div class="row">
-    <div class="col s4">
-      <div class="panel panel-primary">
-        <div class="panel-heading">
-            <span>Tittle Campanna</span>
-        </div>
-        <div class="panel-body">
-          <h5 class="center-align"> 1212 Interations</h5>
-          <p>Medios de Difusión</p>
-          <ul  class='list-inline'>  
-            <li style="padding-bottom: 5px;"> <span ><a href="#!"  id="<%= CampannaPublicitariaDetalle.tipo_difusions["sms"] %> " class="red-social-add light-blue tooltipped" data-tooltip="SMS"><i class="fa fa-comments"></i></a></span> </li>
-            <li> <span style="padding-bottom: 5px;"><a href="#!"  id="<%= CampannaPublicitariaDetalle.tipo_difusions["llamada"] %> " class="red-social-add  light-blue tooltipped" data-tooltip="Llamadas"><i class="mdi-notification-phone-in-talk "></i></a></span> </li>
-            <li> <span style="padding-bottom: 5px;"><a href="#!"  id="<%= CampannaPublicitariaDetalle.tipo_difusions["email"] %>" class="red-social-add light-blue tooltipped" data-tooltip="Email"><i class="  mdi-communication-email "></i></a></span> </li>
-            <li> <span style="padding-bottom: 5px;"><a href="#!"  id="<%= CampannaPublicitariaDetalle.tipo_difusions["red_social"] %>" class="red-social-add light-blue tooltipped" data-tooltip="Email"><i class="  mdi-communication-email "></i></a></span> </li>
-          </ul>
-          <div class="row">
-            <div class="col">
-              <i class="fa fa-calendar grey-text text-darken-3"></i>
-              <strong>Inicio:</strong> 04/02/2016 
-            </div>
-            <div class="col">
-              <strong>Fin:</strong> 04/04/2016 
-            </div>
-            <div class="secondary-content">
-               <a href="#!" style=" padding: 10px;">
-                  <span>Ver</span>
-                </a>  
-                <a href="#!" style="padding: 10px;">
-                  <span>Editar</span>
-                </a>                 
-                <a href="#!" class="modal-trigger" style="padding: 10px;">
-                    <span>Eliminar</span>
-                </a>
-                <a href="#!" class="modal-trigger" style="padding: 10px;">
-                    <span>Difundir</span>
-                </a>
-            </div>
-            
-          </div>
-        </div>
-            
-
-      </div>
-    </div>
+    <ul class="tabs">
+      <li class="tab col s12 m3">
+        <a href="#todas" class="grey-text text-darken-2 ">Todas</a>
+      </li>
+      <li class="tab col s12 m3">
+        <a class="grey-text text-darken-2 active" href="#ejecucion ">En Ejecución</a>
+      </li>
+      <li class="tab col s12 m3 ">
+        <a class="grey-text text-darken-2" href="#proximas">Próximas a Ejecutar</a>
+      </li>
+      <li class="tab col s12 m3">
+        <a class="grey-text text-darken-2 " href="#ejecutadas">Ejecutadas</a>
+      </li>
+    </ul>
   </div>
+  <%= render "campanna_publicitarias/campannas_publicitarias_todas" %>
+  <%= render "campanna_publicitarias/campannas_publicitarias_ejecucion" %>
+  <%= render "campanna_publicitarias/campannas_publicitarias_proximas" %>
+  <%= render "campanna_publicitarias/campannas_publicitarias_ejecutadas" %>
+  
 </div>

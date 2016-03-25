@@ -234,6 +234,8 @@ Rails.application.routes.draw do
 	#match "/campanas_publicitaria/consultar"  =>  "actividad_publicitaria#consultar", via: :get
 	#match "/actividad_publicitaria/agregar" => "actividad_publicitaria#new", via: :get
 	match "/campanna_publicitaria/crear_campanna_publicitaria" => "campanna_publicitarias#create", via: :post
+    match "/campanna_publicitaria/editar/:id_campanna_publicitaria" => "campanna_publicitarias#edit", via: :get
+    match "/campanna_publicitaria/editar" => "campanna_publicitarias#save_edit", via: :post
 	#match "/campanas_publicitaria/envio_sms" => "actividad_publicitaria#actividad_publicitarias_sms", via: :get
 	#match "/campanas_publicitaria/llamadas" => "actividad_publicitaria#actividad_publicitarias_llamadas", via: :get
 	#match "/campanas_publicitaria/emails" => "actividad_publicitaria#actividad_publicitarias_email", via: :get
@@ -243,6 +245,8 @@ Rails.application.routes.draw do
 	#match "/campanas_publicitaria/email_clientes/:id" => "actividad_publicitaria#enviar_email", via: :get
 	#match "/campanas_publicitaria/enviar_sms" => "actividad_publicitaria#enviar_mensaje", via: :post
 	#match "/campanas_publicitaria/enviar_correo/" => "actividad_publicitaria#enviar_correo", via: :post
+
+	match "/campanas_publicitaria/difusion/:id_campanna_publicitaria" => "interaccion_campanna_pubs#new_difusion", via: :get
 
 	match "/graficas/interaccion_social" => "interaccion_socials#consuta_interaccion_socials", via: :get
 	match "/graficas/interaccion_productos"  => "productos#consulta_interaccion_productos", via: :get

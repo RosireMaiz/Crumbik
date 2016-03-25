@@ -67,7 +67,8 @@ ActiveRecord::Schema.define(version: 20160317031652) do
   create_table "criterio_campanna_pubs", force: :cascade do |t|
     t.integer  "campanna_publicitaria_id", limit: 4
     t.integer  "criterio_difusion_id",     limit: 4
-    t.string   "relacion_campo",           limit: 255
+    t.string   "operador",                 limit: 255
+    t.string   "valor",                    limit: 255
     t.datetime "created_at",                           null: false
     t.datetime "updated_at",                           null: false
   end
