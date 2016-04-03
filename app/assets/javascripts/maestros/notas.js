@@ -1,5 +1,6 @@
   var colorNota = "white";
-    $('#btnGuardar').on('click', function(){
+  $('#btnGuardar').on('click', function(){
+    if ($("#formNew").valid()) {
       var request = $.ajax({
                   url: '/notas/crear_nota',
                       method: "POST",
@@ -16,17 +17,18 @@
                   request.fail(function( jqXHR, textStatus ) {
                       alert( "Request failed: " + textStatus );
                     }); 
-      });
+    }
+});
 
-    function change_color(color_param){
-      colorNota = color_param;
-      $("#modalNew").css("background-color", colorNota);
-    };
+function change_color(color_param){
+  colorNota = color_param;
+  $("#modalNew").css("background-color", colorNota);
+};
 
-    function change_color_edit(color_param, idmodal){
-      colorNota = color_param;
-      $(idmodal).css("background-color", colorNota);
-    };
+function change_color_edit(color_param, idmodal){
+  colorNota = color_param;
+  $(idmodal).css("background-color", colorNota);
+};
 
 function update(nota, idnota, titulo, contenido){
 
@@ -54,10 +56,10 @@ function update(nota, idnota, titulo, contenido){
     }
   };
 
-function cancelar(modal, idnota, titulo, contenido, color){
+function cancelar(modal, idnota, titulo, contenido){
   $(modal).closeModal();
    var request = $.ajax({
-                          url: '/notas/consultar_notas',
+                          url: '/notas/cancelar',
                           method: "POST",
                           data: { idnota: idnota},
                           dataType: "JSON",
@@ -68,9 +70,7 @@ function cancelar(modal, idnota, titulo, contenido, color){
                                     var colorval = data.color ;
                                                
                                     $(titulo).val(tituloval);
-                                    $(contenido).val(contenidoval);
-                                    $(color).val(colorval);
-                                   
+                                    $(contenido).val(contenidoval);                                   
                                     $('.input-field > label').attr("class", 'active');
 
                                     $(titulo).removeClass('msj-error');
@@ -78,10 +78,7 @@ function cancelar(modal, idnota, titulo, contenido, color){
 
                                     $(contenido).removeClass('msj-error');
                                     $(contenido).removeClass('valid');
-
-                                    $(color).removeClass('msj-error');
-                                    $(color).removeClass('valid');               
-                                   
+                                    $(modal).css("background-color", colorval);
                                     $( "span.msj-error" ).remove();
 
                                    }
@@ -102,3 +99,40 @@ function cancelar(modal, idnota, titulo, contenido, color){
                                                     alert( "Request failed: " + textStatus );
                                                    });
   };
+
+  function validar(nota){
+
+      $(nota).validate({
+                        doNotHideMessage: true, //this option enables to show the error/success messages on tab switch.
+                        errorElement: 'span', //default input error message container
+                        errorClass: 'msj-error', // default input error message class
+                        rules: {
+                                "nota[titulo]":{
+                                    required:true,
+                                  },
+                                "nota[contenido]":{
+                                    required:true,
+                                  },
+                                },
+
+                                messages:{
+                                          "nota[titulo]":{
+                                              required:"Indique el titulo.",
+                                            },
+                                          "nota[contenido]":{
+                                              required:"Indique el contenido.",
+                                            },      
+                                          },
+
+                                     errorPlacement: function (error, element) { // render error placement for each input type
+                                                     error.insertAfter(element); // for other inputs, just perform default behavior
+                                                  },
+                                  });
+  };
+
+function limpiar(){
+  $('#tituloNota').val("");
+  $('#contenido').val("");
+  colorNota = white;
+  $("#modalNew").css("background-color", colorNota);
+};

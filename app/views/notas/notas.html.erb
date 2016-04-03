@@ -23,7 +23,7 @@
 
 <div class="row wrapper  pad30-h" >
   <div class="fixed-action-btn " style="top: 250px; bottom: 0px">
-    <a href="#modalNew" class="tooltipped modal-trigger btn-floating btn-sm waves-effect waves-light red left absolute tooltipped" style="margin-bottom: 60px;" data-position="left" data-delay="50" data-tooltip="Agregar Nota">
+    <a href="#modalNew" class="tooltipped modal-trigger btn-floating btn-sm waves-effect waves-light red left absolute tooltipped" style="margin-bottom: 60px;" data-position="left" data-delay="50" data-tooltip="Agregar Nota" onclick="validar('#formNew')">
       <i class=" mdi-av-playlist-add"></i>
     </a>
   </div>
@@ -47,7 +47,7 @@
                 <div class="card-action action-note" style="float:right">
                    <a href="#modalver<%= nota.id %>" class="tooltipped modal-trigger" data-position="bottom"  data-tooltip="Ver" ><i class=" mdi-image-remove-red-eye"></i></a>
 
-                    <a href="#modaleditar<%= nota.id %>" class="tooltipped modal-trigger" data-position="bottom"  data-tooltip="Editar" ><i class="mdi-editor-border-color"></i></a>
+                    <a href="#modaleditar<%= nota.id %>" class="tooltipped modal-trigger" data-position="bottom" data-tooltip="Editar" onclick="validar('#modaleditar<%= nota.id %>')"><i class="mdi-editor-border-color"></i></a>
 
                    <a href="#modaleliminar<%= nota.id %>" class="tooltipped modal-trigger" data-position="bottom"  data-tooltip="Eliminar" ><i class=" mdi-action-delete"></i></a>
                 
@@ -69,22 +69,22 @@
 
 <!-- Modal Agregar -->
     <div id="modalNew" class="modal modal-45">
-      <div class="modal-content">
-        <a href="#" style="float:right;" class="waves-effect btn-flat modal-close"><i class="mdi-content-clear"></i></a>
+      <div id="formNew" form="true" class="modal-content">
+        <a href="#" style="float:right;" class="waves-effect btn-flat modal-close"><i class="mdi-content-clear" onclick="limpiar()"></i></a>
         <h5 id="titulo">Agregar Nota</h5>
         <div class="row " style="padding-top: 35px;">
           <div class="col s12">
             <!-- Nombre --> 
             <div class="row"> 
               <div class="input-field col s12">
-                <input id="tituloNota" name="titulo" type="text" autocomplete="off">
+                <input id="tituloNota" name="nota[titulo]" type="text" autocomplete="off">
                 <label for="titulo">Titulo:</label>
               </div>
             </div>
             <!-- Contenido --> 
             <div class="row"> 
               <div class="input-field col s12">
-                <textarea id="contenido" class="validate materialize-textarea active" length= "255"  name="contenido"></textarea>
+                <textarea id="contenido" class="validate materialize-textarea active" length= "255" name="nota[contenido]"></textarea>
                 <label for="contenido">Contenido:</label>
               </div>
             </div>
@@ -116,10 +116,10 @@
 <% @notas.each do |nota| %>
   <% if ! nota.nil? %>
   <!-- Modal Editar -->
-  <div id="modaleditar<%= nota.id %>" class="modal modal-45" form="true" style="    background-color: <%=nota.color%> !important;">
+  <div id="modaleditar<%= nota.id %>" class="modal modal-45" form="true" style="background-color: <%=nota.color%> !important;">
     <div class="modal-content">
       <a style="float:right;" class="waves-effect btn-flat modal-close"
-      onclick="cancelar(modaleditar<%= nota.id %>, <%= nota.id %>, titulo<%= nota.id %>, contenido<%= nota.id %>, color<%= nota.id %>)"><i class="mdi-content-clear"></i></a>
+      onclick="cancelar(modaleditar<%= nota.id %>, <%= nota.id %>, titulo<%= nota.id %>, contenido<%= nota.id %>)"></i></a>
         <h5>Editar Nota</h5>
           <div class="row" style="padding-top: 35px;">
             <div class="col s12">
@@ -137,23 +137,23 @@
               </div>
             </div>
               <!-- color -->
-              <div class="row ancho">
-                <div class="fixed-action-btn horizontal" style=" bottom: 10%;right: 84%;">
+              <div class="row" style="position:absolute !important;">
+                <div class="fixed-action-btn horizontal" style=" bottom: 8%;right: 84%;">
                   <a class="btn-floating btn-medium pink tooltipped" data-position="button" data-delay="50" data-tooltip="Cambiar color">
                   <i class="mdi-image-color-lens"></i></a>
                   <ul>
                     <li><a class="btn-floating" aria-label="Verde" style="background-color: rgb(193, 219, 170);" onclick="change_color_edit('rgb(193, 219, 170)','#modaleditar<%= nota.id %>')"></a></li>
                     <li><a class="btn-floating" aria-label="Amarillo" style="background-color: rgb(236, 240, 118);" onclick="change_color_edit('rgb(236, 240, 118)','#modaleditar<%= nota.id %>')"></a></li>
                     <li><a class="btn-floating" aria-label="Morado" style="background-color: rgb(204, 155, 180);" onclick="change_color_edit('rgb(204, 155, 180)','#modaleditar<%= nota.id %>')"></a></li>
-                    <li><a class="btn-floating" aria-label="Blanco" style="background-color: rgb(255, 255, 255);" onclick="change_color('rgb(255, 255, 255)')"></a></li>
+                    <li><a class="btn-floating" aria-label="Blanco" style="background-color: rgb(255, 255, 255);" onclick="change_color_edit('rgb(255, 255, 255)','#modaleditar<%= nota.id %>')"></a></li>
                   </ul>
                 </div>
               </div>
            
-              <div class="row">
+              <div class="row" style="position:absolute !important; button:5px; top:99%; left:30%;">
                 <div class="text-center">
                   <input type="button" class="btn btn-success btn-sm" value="Guardar" onclick="update(modaleditar<%= nota.id %>, <%= nota.id %>, titulo<%= nota.id %>, contenido<%= nota.id %>)">
-                  <input type="button" class="btn btn-danger btn-sm" value="Cancelar" onclick="cancelar(modaleditar<%= nota.id %>, <%= nota.id %>, titulo<%= nota.id %>, contenido<%= nota.id %> )">
+                  <input type="button" class="btn btn-danger btn-sm" value="Cancelar" onclick="cancelar(modaleditar<%= nota.id %>, <%= nota.id %>, titulo<%= nota.id %>, contenido<%= nota.id %>)">
                 </div>
               </div>
           </div>       

@@ -336,8 +336,7 @@ Rails.application.routes.draw do
 
 	match "/notas/crear_nota" => "notas#create", via: :post
 	match "/notas/update" => "notas#update", via: :post
-	match "/notas/consultar_notas" => "notas#consultar_notas", via: :post
 	match "/notas/eliminar" => "notas#eliminar", via: :post
-	match "/notas/consultar" => "notas#consultar", via: :post
+	match "/notas/cancelar" => "notas#cancelar", via: :post
 
 end
