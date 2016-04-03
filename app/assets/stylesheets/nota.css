@@ -1,0 +1,45 @@
+.card .card-action a {
+    color: #424242 !important;
+}
+  .action-note{
+    -webkit-box-sizing: border-box;
+    box-sizing: border-box;
+    bottom: 0;
+    opacity: 0;
+    padding: 4px 0;
+    -webkit-transition-duration: .218s;
+    transition-duration: .218s;
+    -webkit-transition-property: opacity;
+    transition-property: opacity;
+    -webkit-transition-timing-function: ease-in;
+    transition-timing-function: ease-in;
+}
+.card:hover .action-note {
+    opacity: 1;
+}
+.card .card-action {
+    border-top: none;
+    padding: 20px;
+}
+.fixed-action-btn.horizontal ul {
+    text-align: left;
+    left: 64px !important;
+    top: 26% !important;
+    -webkit-transform: translateY(-50%);
+    transform: translateY(-50%);
+    height: 100%;
+    right: initial;
+    width: 200px;
+}
+
+.fixed-action-btn.horizontal ul li {
+    display: inline-block;
+    margin: 10px 10px 0 0;
+}
+.fixed-action-btn.horizontal {
+    padding: 0 0 0 10px;
+}
+.ancho{
+    padding-top: 5%;
+    padding-bottom: 5%;
+}
