@@ -58,7 +58,7 @@ Rails.application.config.assets.precompile += %w( maestros/categorias.js )
 Rails.application.config.assets.precompile += %w( maestros/tipo_clientes.js  )
 Rails.application.config.assets.precompile += %w( maestros/criterio_difusions.js  )
 Rails.application.config.assets.precompile += %w( style.css )
-
+Rails.application.config.assets.precompile += %w( difusion.css )
 Rails.application.config.assets.precompile += %w( plugins/star-rating.min.js )
 Rails.application.config.assets.precompile += %w( plugins/star-rating.min.css)
 Rails.application.config.assets.precompile += %w( star-product.css)
@@ -66,9 +66,14 @@ Rails.application.config.assets.precompile += %w( validaciones/cliente.js  )
 Rails.application.config.assets.precompile += %w( validaciones/variable_psicografica.js)
 Rails.application.config.assets.precompile += %w( validaciones/categorium.js)
 Rails.application.config.assets.precompile += %w( validaciones/campanna_publicitaria.js)
+Rails.application.config.assets.precompile += %w( validaciones/difusion.js)
+Rails.application.config.assets.precompile += %w( validaciones/publicidad.js)
+Rails.application.config.assets.precompile += %w( maestros/criterio_difusions_wizard.js)
 
 Rails.application.config.assets.precompile += %w( template/template-rosa.css )
 
 Rails.application.config.assets.precompile += %w( plugins/jquery-ui.css )
 Rails.application.config.assets.precompile += %w( plugins/jquery-ui.js )
 Rails.application.config.assets.precompile += %w( plugins/jquery-ui.min.js  )
+
+Rails.application.config.assets.precompile += %w( tinymce/tinymce.min.js  )

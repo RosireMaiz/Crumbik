@@ -1,0 +1,47 @@
+<div>
+                        
+  <div class="col s4">
+    <img  src="/assets/phone.png" width="100%">
+  </div>
+  <div class="col s8">
+    <div class="row">
+      <span class="form-control-static"> Usuarios:</span>
+      <br/>
+      <div class="col s11" style="max-height: 100px; overflow-y: auto;">
+        <% if ! @usuarios.nil?  %>
+          <% @usuarios.each_with_index do |usuario, index| %>
+            <% if !usuario.perfil.telefono_movil.nil? %>
+                <div  id="div_usuario_mensaje_<%= index %>" class="chip">
+                  <img src="<% if !usuario.perfil.foto.nil? %><%= usuario.perfil.formato_foto %><%= usuario.perfil.foto %><% else %>/assets/avatar/sinfoto.jpg<% end %>" alt="Contact Person">+<%= usuario.pais.codigo_telefono%> <%= usuario.perfil.telefono_movil%>
+                  <a href="javascript:void(0)" class="waves-effect"  onclick="remove_usuario_sms(<%= index.to_i%>,<%= usuario.id %>)"><i class="mdi-content-clear"></i></a>
+                </div>
+            <% end %>
+          <% end %>
+        <% end %>
+         
+      </div>
+      <div class="col s1">
+        <a href="javascript:void(0)" class="input-group-addon" id="basic-addon2"  role="button" data-toggle="popover"  placement="right" data-container="body">
+              <i class="fa fa-expand"></i>
+        </a>
+      </div>
+      <span id="usuarios-sms-error_local" class="hidden msj-rojo">Debe seleccionar al menos un usuario para enviar el SMS</span>
+    </div>
+    <div id="div-sms" form="true">
+      <div class="row no-padding-v">
+        <div class="input-field col s12">
+          <textarea id="text-sms" name="interaccion_sms[mensaje]" class="materialize-textarea" length= "100"></textarea>
+          <label for="text-sms">Mensaje</label>
+        </div>
+      </div>
+      <div class="row">
+        <div class="text-right">
+          <button type="submit" class="btn btn-success btn-submit" onclick="send_sms()">Enviar
+            <i class=" mdi-content-send right"></i>
+          </button>
+        </div>
+      </div>
+    </div>
+
+  </div>
+</div>

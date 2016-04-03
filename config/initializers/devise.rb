@@ -268,7 +268,7 @@ Devise.setup do |config|
   # When using OmniAuth, Devise cannot automatically set OmniAuth path,
   # so you need to do it manually. For the users scope, it would be:
   # config.omniauth_path_prefix = '/my_engine/users/auth'
-  config.omniauth :facebook, "704737316338029", "369fc49320254e2c4db7de3f4e316ec2", {:client_options => {:ssl => {:verify => false}}}
+  config.omniauth :facebook, "704737316338029", "369fc49320254e2c4db7de3f4e316ec2", { :scope => 'publish_actions user_likes', :client_options => {:ssl => {:verify => false}}}
   config.omniauth :twitter, "iLW5ICM65xM9cO7npmEZRTSKz", "qXwz81sGgFPC09nFu9o17vo7HEhlIna9dnJ1xVlMTr9qldWCOm", {:scope => 'r_fullprofile, r_emailaddress'}
   config.omniauth :google_oauth2, "494194995517-uj40t2ou7q19tb7m7g10oknfb59lqh7g.apps.googleusercontent.com", "JAQ0b6dbVawuHFvSoMBfiLOk",  {client_options: {ssl: {ca_file: Rails.root.join('lib/assets/cacert.pem').to_s}}}
   config.omniauth :linkedin,"77d7odwbww3s9v", "dsiCek7fogybeywk", { :scope => 'r_basicprofile r_emailaddress', :client_options => {:ssl => {:ca_file => Rails.root.join('lib/assets/cacert.pem').to_s}}}

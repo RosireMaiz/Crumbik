@@ -1,0 +1,61 @@
+<% if !@publicidads.blank? %>
+    <% @publicidads.each do |publicidad| %>
+      <% if ! publicidad.nil? %>
+
+        <div id="modal_deshabilitar<%= publicidad.id %>" class="modal">
+          <div class="modal-content">
+            <a href="#" style="float:right;" class="waves-effect btn-flat modal-close"><i class="mdi-content-clear"></i></a>
+            <% if (publicidad.estatus == 'A') %>
+            <h5>Deshabilitar Publicidad</h5>
+            <% else %>
+            <h5>Habilitar Publicidad</h5>
+            <% end %>
+
+
+            <div class="row" style="padding-top: 35px;">
+              <div class="col s12 text-center">
+              <% if (publicidad.estatus == 'A') %>
+                <h6 style=" font-size: 20px;"> ¿Seguro que desea Deshabilitar la publicidad seleccionada?</h6>
+                <% else %>
+                <h6 style=" font-size: 20px;"> ¿Seguro que desea Habilitar la publicidad seleccionada? </h6>
+                <% end %>
+                <div style="padding-top: 35px;" class="right">
+                  <% if (publicidad.estatus == 'A') %>
+                    <input type="button" class="btn btn-success btn-sm" value="Aceptar" onclick="update_estatus(<%= publicidad.id %>,'I')">
+                  <% else %>
+                    <input type="button" class="btn btn-success btn-sm" value="Aceptar" onclick="update_estatus(<%= publicidad.id %>,'A')">
+                  <% end %>
+                   <input type="button" class="btn btn-danger btn-sm modal-close" value="Cancelar">
+                </div>
+
+              </div>
+            </div>                
+          </div>
+        </div> 
+
+        <div id="modal_eliminar<%= publicidad.id %>"class="modal">
+          <div class="modal-content">
+            <a style="float:right;" class="waves-effect btn-flat modal-close"><i class="mdi-content-clear"></i></a>
+
+            <h5>Eliminar Publicidad</h5>
+
+            <div class="row pad30-t" >
+              <div class="col s12 text-center">
+
+                <h6 style=" font-size: 20px;"> ¿Seguro que desea eliminar la publicidad seleccionada? </h6>
+
+                <div style="padding-top: 35px;" class="right">
+
+                  <input type="button" class="btn btn-success btn-sm" value="Aceptar" onclick="eliminar(<%= publicidad.id %>)">
+
+                  <input type="button" class="btn btn-danger btn-sm modal-close" value="Cancelar">
+                </div>
+
+              </div>
+            </div>                
+          </div>
+        </div> 
+
+      <% end %>
+    <% end %> <!-- Fin collapse modals -->
+ <% end -%>

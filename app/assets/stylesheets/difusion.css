@@ -1,0 +1,51 @@
+.form-control-static {
+    word-wrap: break-word;
+}
+
+.dropdown-content li {
+    clear: both;
+    color: rgba(0,0,0,0.87);
+    cursor: pointer;
+    min-height: 50px;
+    line-height: 1.5rem;
+    width: 100%;
+    text-align: left;
+    text-transform: none;
+}
+.dropdown-content li>a, .dropdown-content li>span {
+    font-size: 16px;
+    display: block;
+    line-height: 22px;
+    padding: 10px 10px;
+}
+.dropdown-content {
+  max-height: 300px; 
+}
+
+.fixed-action-btn.horizontal ul {
+    text-align: right;
+    right: 64px;
+    top: 50%;
+    -webkit-transform: translateY(-50%);
+    transform: translateY(-50%);
+    height: 100%;
+    left: initial;
+    width: 500px;
+}
+
+.fixed-action-btn.horizontal ul li {
+    display: inline-block;
+    margin: 0px 0px 0 0;
+}
+.fixed-action-btn.horizontal {
+    padding: 0 0 0 15px;
+}
+
+.fixed-action-btn {
+    position: relative;
+    right: 0;
+    bottom: 0;
+    padding-top: 0;
+    margin-bottom: 0;
+    z-index: 2;
+}

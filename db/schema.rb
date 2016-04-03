@@ -131,11 +131,11 @@ ActiveRecord::Schema.define(version: 20160317031652) do
   add_index "interaccion_campanna_pubs", ["usuario_ejercutivo_id"], name: "index_interaccion_campanna_pubs_on_usuario_ejercutivo_id", using: :btree
 
   create_table "interaccion_campanna_socials", force: :cascade do |t|
-    t.integer  "social_id",                   limit: 4
+    t.string   "social_id",                   limit: 255
     t.integer  "organizacion_red_socials_id", limit: 4
     t.integer  "interaccion_campanna_id",     limit: 4
-    t.datetime "created_at",                            null: false
-    t.datetime "updated_at",                            null: false
+    t.datetime "created_at",                              null: false
+    t.datetime "updated_at",                              null: false
   end
 
   add_index "interaccion_campanna_socials", ["interaccion_campanna_id"], name: "index_interaccion_campanna_socials_on_interaccion_campanna_id", using: :btree
@@ -347,11 +347,13 @@ ActiveRecord::Schema.define(version: 20160317031652) do
   add_index "productos", ["categoria_id"], name: "index_productos_on_categoria_id", using: :btree
 
   create_table "publicidads", force: :cascade do |t|
-    t.string   "estatus",        limit: 1,          default: "A"
-    t.binary   "imagen",         limit: 4294967295
-    t.string   "formato_imagen", limit: 255
-    t.datetime "created_at",                                      null: false
-    t.datetime "updated_at",                                      null: false
+    t.date     "fecha_inicio"
+    t.date     "fecha_finalizacion"
+    t.string   "estatus",            limit: 1,          default: "A"
+    t.binary   "imagen",             limit: 4294967295
+    t.string   "formato_imagen",     limit: 255
+    t.datetime "created_at",                                          null: false
+    t.datetime "updated_at",                                          null: false
   end
 
   create_table "red_socials", force: :cascade do |t|

@@ -25,11 +25,12 @@ class MyMailer < Devise::Mailer
   	if Apartment::Tenant.current != "crumbik"
   		@subdominio = Apartment::Tenant.current
   		Apartment::Tenant.switch!()
-  		@organizacion =  Organizacion.where("subdominio = ?", Apartment::Tenant.current.to_s).first
+  		@organizacion =  Organizacion.find_by("subdominio = ?", Apartment::Tenant.current.to_s)
   		@nombre = @organizacion.nombre
   		Apartment::Tenant.switch!(@subdominio)
   	else
-  		@nombre = Apartment::Tenant.current
+      @organizacion =  Organizacion.find_by("id = ?", 0)
+      @nombre = @organizacion.nombre
   	end
   	opts[:from] = I18n.t('devise.mailer.from', name: @nombre)
   end

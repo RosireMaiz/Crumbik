@@ -355,6 +355,5 @@ jQuery(function ($) {
    });
 
   function delete_criterio_difusion(id_div){
-    alert("hola");
      $(id_div).remove();
    };

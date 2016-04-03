@@ -1,0 +1,46 @@
+<div class="row no-margin-v">
+  <div class="row">
+    <span class="form-control-static"> Usuarios:</span>
+    <br/>
+    <div class="col s11" style="max-height: 100px; overflow-y: auto;">
+      <% if ! @usuarios.nil?  %>
+        <% @usuarios.each_with_index do |usuario, index| %>
+              <div id="div_usuario_email_<%= index %>" class="chip">
+                <img src="/assets/avatar/sinfoto.jpg" alt="Contact Person"><%= usuario.email %>
+                <a href="javascript:void(0)" class="waves-effect" onclick="remove_usuario_email(<%= index.to_i%>,<%= usuario.id %>)"><i class="mdi-content-clear"></i></a>
+              </div>
+        <% end %>
+      <% end %>
+      <span id="usuarios-email-error_local" class="hidden msj-rojo">Debe seleccionar al menos un usuario para enviar el Email</span>
+    </div>
+    <div class="col s1">
+      <a href="javascript:void(0)" class="input-group-addon" id="basic-addon2"  role="button" data-toggle="popover"  placement="right" data-container="body">
+            <i class="fa fa-expand"></i>
+      </a>
+    </div>
+  </div>
+  <div id="div-email" class="row " form="true">
+      <div class="input-field col s12">
+        <input  type="text" id="text-asunto" name="interaccion_email[asunto]"  length= "50" class="validate">
+        <label for="text-asunto">Asunto del Email:</label>
+      </div>
+      <div class="row">
+        <div class="col s12">
+          <span class="form-control-static"> <strong> Contenido del Email </strong></span>
+         
+          <textarea id="edit-email" name="interaccion_email[mensaje]" >
+             
+          </textarea>
+          <span id="mensaje_email-error_local" class="hidden msj-rojo">Debe ingresar el mensaje para enviar el Email</span>
+        </div>
+      </div>
+      
+      <div class="row no-margin-v">
+        <div class="text-right">
+          <button type="submit" class="btn btn-success btn-submit" onclick="send_email()">Enviar
+            <i class=" mdi-content-send right"></i>
+          </button>
+        </div>
+      </div>
+  </div>
+</div>

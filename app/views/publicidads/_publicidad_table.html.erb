@@ -1,0 +1,64 @@
+<div>
+  <% if !@publicidads.blank? %>
+    <ul class="collection" >
+      <% @publicidads.each do |publicidad| %>
+        <% if ! publicidad.nil? %>
+          <li class="collection-item">
+
+              <div class=" row no-margin-v">
+                <div class="row">
+                  <div class="col s12 ">
+                    <img class="img-responsive" src="<%= publicidad.formato_imagen %><%= publicidad.imagen %>">
+                  </div>
+                </div>
+                  <div class="col s12 ">                        
+                    <div class="col s12 m4 no-padding">
+                      <p class="no-padding">
+                        <b class="grey-text text-darken-3">Fecha de inicio:</b>
+                        <%= publicidad.fecha_inicio.strftime("%d/%m/%Y ") %>
+                      </p>
+                    </div>
+                    <div class="col s12 m4 no-padding">
+                      <p class="no-padding">
+                        <b class="grey-text text-darken-3">Fecha de vencimiento:</b>
+                        <%= publicidad.fecha_finalizacion.strftime("%d/%m/%Y ") %>
+                      </p>
+                    </div>                        
+                    
+                    <div class="secondary-content">
+                       
+                        <a href="/publicidad/editar/<%= publicidad.id %>" data-delay="50" data-tooltip="Editar" class="tooltipped">
+                          <i class="small fa fa-edit"></i>
+                        </a> 
+                         <% if (publicidad.estatus == 'A') %>
+                          <a href="#modal_deshabilitar<%= publicidad.id %>" data-position="bottom" data-delay="50" data-tooltip="Deshabilitar" class="modal-trigger tooltipped">
+                            <i class="small mdi-content-block"></i>
+                          </a>
+                        <% else %>
+                            <a href="#modal_deshabilitar<%= publicidad.id %>" data-position="bottom" data-delay="50" data-tooltip="Habilitar" class="modal-trigger tooltipped">
+                            <i class="small mdi-action-done"></i>
+                        <% end -%>
+          
+                          <a href="#modal_eliminar<%= publicidad.id %>" data-position="bottom" data-delay="50" data-tooltip="Eliminar" class="modal-trigger tooltipped">
+                            <i class=" small mdi-action-delete"></i>
+                          </a>
+                        </a>
+                    </div>
+                  </div>
+                  
+                
+
+              </div>
+
+          </li>
+        <% end %>
+      <% end %>
+    </ul> <!-- Fin collapse publicidads -->
+
+    <div class="row valign-wrapper">
+      <%= paginate(@publicidads) %>
+    </div>
+
+
+  <% end %>
+</div>

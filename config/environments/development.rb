@@ -39,15 +39,26 @@ Rails.application.configure do
 
   # Raises error for missing translations
   # config.action_view.raise_on_missing_translations = true
+  #config.action_mailer.delivery_method = :smtp
+  #config.action_mailer.smtp_settings = {
+   #     address: "smtp.gmail.com",
+    #    port: 587,
+     #   authentication: "plain",
+      #  enable_starttls_auto: true,
+       # user_name: "crumbikxcrm@gmail.com",
+        #password: "crumbik12345"
+
+    #}
+
+  config.action_mailer.raise_delivery_errors = true
   config.action_mailer.delivery_method = :smtp
   config.action_mailer.smtp_settings = {
-        address: "smtp.gmail.com",
-        port: 587,
-        authentication: "plain",
-        enable_starttls_auto: true,
-        user_name: "crumbikxcrm@gmail.com",
-        password: "crumbik12345"
-
-    }
+    address:              'smtp.mailgun.org',
+    port:                 587,
+    domain:               'mysupperapp.com',
+    user_name:            'daniel@app451083d398404ffb888d1ed7d6f02be5.mailgun.org',
+    password:             'abcd1234',
+    authentication:       'plain',
+    enable_starttls_auto: true  }
 
 end

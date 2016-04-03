@@ -23,7 +23,7 @@
 //= require additional-methods.min
 //= require plugins/sweet-alert.min.js
 //= require validaciones
-//= require materialize-sprockets
+
 //= require main
 //= require chat
 //= require materialize.js

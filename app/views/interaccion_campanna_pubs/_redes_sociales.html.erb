@@ -1,0 +1,64 @@
+<div class="row">
+  <div class="col s10">
+    <ul id="lista-redes-sociales" class="vacia list-inline">
+    <% if @redes_sociales.blank? %>
+      <li> Asocia tus redes sociales para difundir en ellas la información. Usa el botón a la derecha para hacerlo. </li>
+    <% else %>
+      <li>Falta agregar alguna red social. Usa el botón a la derecha para hacerlo.</li>
+
+        <% @redes_sociales.each_with_index do |red, index| %>
+
+          <% if ! red.nil? %>
+            <li  id="social_<%= index %>" > 
+               <a href="<%= red.url.to_s%>" target="_blank"><span class="input-group-addon red-social-add " style="background: <%= red.red_social.color %>; border-bottom-left-radius: 100%; border-top-left-radius: 100%; display: inline-block; margin-bottom: 12px !important">
+                  <i class="<%= red.red_social.icono %>" style="margin-top: 4px;"></i></span>
+                  <span><%= red.url.truncate(20)%></span>
+                </a>
+                 <a href="javascript:void(0)" onclick="remove_social(<%= index.to_i%>,<%= red.id %>)"><span><i class="mdi-navigation-close red-text"></i></span></a>
+            </li>
+
+          <% end %>
+        <% end %>
+
+
+      <% end -%>
+    </ul>
+     <span id="redes_sociales-error_local" class="hidden msj-rojo">Debe agregar al menos una red social para publicar</span>
+  </div>
+  <div class="col s2 text-center">
+    <div class="fixed-action-btn horizontal">
+      <a class="btn-floating red">
+       <i class="mdi-content-add"></i>
+      </a>
+      <ul>
+        <% @red_socials.each do |red_social| %>
+
+          <% if ! red_social.nil? %>
+             <li> <a  href="/link_social_organizacion/<%= red_social.id %>"  id="<%= red_social.id %>" class="r btn-floating " style="background: <%= red_social.color %>;"><i class="<%= red_social.icono %>"></i></a> </li>
+          <% end %>
+        <% end %>
+
+      </ul>
+      
+    </div>
+
+                               
+  </div>
+  <div id="div-social" form="true">
+    <div class="row no-padding-v">
+      <div class="input-field col s12">
+        <input  type="text" id="text-social" name="interaccion_social[mensaje]"  length= "50" class="validate">
+        <label for="text-social">Mensaje de la Publicación</label>
+      </div>
+      <div class="input-field col s12">
+        <input type="url" id="url_social" name="interaccion_social[url]" length= "50" class="validare" />
+        <label for="url_social">URL</label>
+      </div>
+    </div>
+    <div class="row">
+      <div class="text-right">
+        <button id="red-social-share" type="submit" class="btn btn-success btn-submit"  onclick="share_red_social()">Publicar <i class="right mdi-social-share"></i></button>
+      </div>
+    </div>
+  </div>
+</div>

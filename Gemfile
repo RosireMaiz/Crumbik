@@ -81,3 +81,7 @@ gem 'closure_tree'
 gem 'seed_dump'
 gem 'twilio-ruby'
 gem 'authy'
+
+gem 'fb_graph'
+
+gem 'tinymce-rails'

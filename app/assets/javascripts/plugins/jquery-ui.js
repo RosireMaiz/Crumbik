@@ -17612,7 +17612,7 @@ var widgetsTabs = $.ui.tabs;
 //>>css.structure: ../../themes/base/core.css
 //>>css.structure: ../../themes/base/tooltip.css
 //>>css.theme: ../../themes/base/theme.css
-
+/*
 
 
 $.widget( "ui.tooltip", {
@@ -18069,6 +18069,7 @@ $.widget( "ui.tooltip", {
 		this.liveRegion.remove();
 	}
 } );
+*/
 
 // DEPRECATED
 // TODO: Switch return back to widget declaration at top of file when this is removed

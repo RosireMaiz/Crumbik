@@ -198,10 +198,10 @@
 }
 
 /* no icon support for input elements */
-input.ui-button.ui-button-icon-only {
+/*input.ui-button.ui-button-icon-only {
 	text-indent: 0;
 }
-
+*/
 /* button icon element(s) */
 .ui-button-icon-only .ui-icon {
 	position: absolute;
@@ -220,21 +220,21 @@ input.ui-button.ui-button-icon-only {
 
 }
 
-input.ui-button.ui-icon-notext .ui-icon {
+/*input.ui-button.ui-icon-notext .ui-icon {
 	width: auto;
 	height: auto;
 	text-indent: 0;
 	white-space: normal;
 	padding: .4em 1em;
 }
-
+*/
 /* workarounds */
 /* Support: Firefox 5 - 40 */
-input.ui-button::-moz-focus-inner,
+/*input.ui-button::-moz-focus-inner,
 button.ui-button::-moz-focus-inner {
 	border: 0;
 	padding: 0;
-}
+}*/
 .ui-controlgroup {
 	vertical-align: middle;
 	display: inline-block;
@@ -880,19 +880,18 @@ body .ui-tooltip {
 /* Component containers
 ----------------------------------*/
 .ui-widget {
-	font-family: Arial,Helvetica,sans-serif;
 	font-size: 1em;
 }
 .ui-widget .ui-widget {
 	font-size: 1em;
 }
-.ui-widget input,
+/*.ui-widget input,
 .ui-widget select,
 .ui-widget textarea,
 .ui-widget button {
 	font-family: Arial,Helvetica,sans-serif;
 	font-size: 1em;
-}
+}*/
 .ui-widget.ui-widget-content {
 	border: 1px solid #c5c5c5;
 }

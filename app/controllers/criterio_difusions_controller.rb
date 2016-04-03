@@ -20,11 +20,18 @@ def validar_criterio_difusion
 			redirect_to root_path
 		else
 			@criterio_difusion = CriterioDifusion.new
-			if request.subdomain.present?
-				redirect_to root_path
-			else
-				render "criterio_difusions/new"
-			end
+			@tables = ActiveRecord::Base.connection.tables
+			@columns_subconsulta = ActiveRecord::Base.connection.columns(@tables.first)
+			@tables_filter ||= Array.new
+			@tables_filter.push("usuarios")
+			@columns = ActiveRecord::Base.connection.columns("usuarios")
+			@tables.each.each do |table|
+				if ActiveRecord::Base.connection.column_exists?(table, "usuario_id") 
+					@tables_filter.push(table)
+				end 
+			end 
+
+			render "criterio_difusions/new"
 		end
 	end
 
@@ -82,6 +89,12 @@ def validar_criterio_difusion
 		id = params[:id_criterio_difusion]
 		@criterio_difusion = CriterioDifusion.where(id: id).first
 		render :json => @criterio_difusion
+	end
+
+	def update_columns
+		table = params[:table]
+		@columns = ActiveRecord::Base.connection.columns(table)
+		render :json => @columns	
 	end
 
 

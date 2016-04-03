@@ -1,29 +1,7 @@
 <% content_for :css_personalizado do %>
     <%= stylesheet_link_tag    "plugins/jquery-ui" %> 
-<style type="text/css">
-  .select-dropdown li img {
-    height: 40px;
-    width: 40px;
-    margin: 10px 10px;
-    float: right;
-}
-.dropdown-content li {
-    clear: both;
-    color: rgba(0,0,0,0.87);
-    cursor: pointer;
-    min-height: 50px;
-    line-height: 1.5rem;
-    width: 100%;
-    text-align: left;
-    text-transform: none;
-}
-.dropdown-content li>a, .dropdown-content li>span {
-    font-size: 16px;
-    display: block;
-    line-height: 22px;
-    padding: 10px 10px;
-}
-</style>
+    <%= stylesheet_link_tag    "style" %> 
+    <%= stylesheet_link_tag    "difusion" %> 
 <% end %>
 
 
@@ -45,24 +23,23 @@
   </div>
 </div>
 
-<div  id="form" class="row pad30-h">
+<div id="form" class="row pad15-h">
     <div>
       <div class="form-body steps">
         <div class="tab-content">
           <div class="feedback alert alert-danger display-none">
-            <button class="close" data-dismiss="alert"  aria-label="Close"></button>
+            <button class="close" data-dismiss="alert"  aria-label="Close">&times;</button>
             Algunos campos tienen errores. Por favor revisa abajo.
           </div>
           <div class="feedback alert alert-success display-none">
-            <button class="close" data-dismiss="alert"  aria-label="Close"></button>
+            <button class="close" data-dismiss="alert"  aria-label="Close">&times;</button>
             La validación fue exitosa.
           </div>
           <div class="pad30-h">
             <div class="row">
               <div class="col s12 pad15">
-                <div class="col s4">
+                <div class="col s12 m4">
                   <h6 class="form-section">Datos de la Campaña Publicitaria</h6>
-                  
                     <div class="row no-margin-v pad5-t">
                       <div class="col s12 m4 right-align ">
                         <label>Título:</label>
@@ -98,118 +75,75 @@
                     </div>
                 </div>
 
-                <div class="col s8">
+                <div class="col s12 m8">
                   <div id="accordion">
-                    <h3>SMS</h3>
-                    <div>
+                    <%if @medio_difusions.include? CampannaPublicitariaDetalle.medio_difusions['sms'] %>
+                      <h3>SMS</h3>
                       <div>
-                        
-                        <div class="col s4">
-                          <img  src="/assets/phone.png" width="70%">
-                        </div>
-                        <div class="col s8">
-                          <div class="row">
-                            <div clss="col s12">
-                              <div class="input-field input-group">
-                                <select multiple class="icons">
-                                  <option value="" disabled selected>Selecciona los Usuario</option>
-                                  <option value="" data-icon="/assets/avatar/sinfoto.jpg" class="left circle">Usuario 1</option>
-                                  <option value="" data-icon="/assets/avatar/sinfoto.jpg" class="left circle">Usuario 2</option>
-                                  <option value="" data-icon="/assets/avatar/sinfoto.jpg" class="left circle">Usuario 3</option>
-                                  <option value="" data-icon="/assets/avatar/sinfoto.jpg" class="left circle">Usuario 4</option>
-                                  <option value="" data-icon="/assets/avatar/sinfoto.jpg" class="left circle">Usuario 5</option>
-                                </select>
-                                <label>Usuarios</label>
-                                <a href="javascript:void(0)" class="input-group-addon" id="basic-addon2"  role="button" data-toggle="popover"  placement="right" data-container="body">
-                                  <i class="fa fa-edit"></i>
-                                </a>
-                                
-                              </div>
-                  
-                            </div>
-                            
-                          </div>
-                         
-                          <div class="row">
-                            <div class="input-field col s12">
-                              <i class="fa fa-phone  prefix"></i>
-                              <textarea id="icon_prefix2" class="materialize-textarea"></textarea>
-                              <label for="icon_prefix2">First Name</label>
-                            </div>
-                          </div>
-                        </div>
-
-                          
-                      </div>
-                    
-                    </div>
-                    <h3>Llamadas</h3>
-                    <div>
-                        <table id="usuarios" class="display" cellspacing="0" width="100%" >
-                          <thead>
-                            <tr>
-                                <th>Nombre</th>
-                                <th>Teléfono</th>
-                                <th>País</th>
-                                <th>
-                                  Acciones
-                                </th>
-                            </tr>
-                          </thead>
-                          <tbody>
-                            <% @usuarios.each do |usuario| %>
-
-                               <% if ! usuario.nil? %>
-                                  <tr>
-                                      <td data-search="<%= usuario.perfil.nombres %>"> 
-                                        <%= usuario.perfil.nombres %> <%= usuario.perfil.apellidos %> 
-                                      </td>
-                                      <td>
-                                        <%= usuario.perfil.telefono_movil %>
-                                      </td>               
-                                      <td> 
-                                        <%= usuario.pais.nombre %>
-                                      </td> 
-                                      <td> 
-                                       
-                                      </td>
-
-                                  </tr>
-                                <% end %>
-                              <% end %>
-                                  
-                           </tbody>
-                        </table>
-                    </div>
-                    <h3>Email</h3>
-                    <div>
-                        <div class="col s5">
-                          <img  src="/assets/tablet.png" width="100%">
-                        </div>
-                        <div class="col s7">
-                          <p>
-                          Mauris mauris ante, blandit et, ultrices a, suscipit eget, quam. Integer
-                          ut neque. Vivamus nisi metus, molestie vel, gravida in, condimentum sit
-                          amet, nunc. Nam a nibh. Donec suscipit eros. Nam mi. Proin viverra leo ut
-                          odio. Curabitur malesuada. Vestibulum a velit eu ante scelerisque vulputate.
-                          </p>
-                        </div>
-                    </div>
-                    <h3>Redes Sociales</h3>
-                    <div>
-                        <div class="col s5">
-                          <img  src="/assets/tablet.png" width="100%">
-                        </div>
-                        <div class="col s7">
-                          <p>
-                          Mauris mauris ante, blandit et, ultrices a, suscipit eget, quam. Integer
-                          ut neque. Vivamus nisi metus, molestie vel, gravida in, condimentum sit
-                          amet, nunc. Nam a nibh. Donec suscipit eros. Nam mi. Proin viverra leo ut
-                          odio. Curabitur malesuada. Vestibulum a velit eu ante scelerisque vulputate.
-                          </p>
+                        <div id="sms">
+                          <%= render "interaccion_campanna_pubs/sms" %>
                         </div>
                       
-                    </div>
+                      </div>
+
+                    <% end %>
+                    
+                    <%if @medio_difusions.include? CampannaPublicitariaDetalle.medio_difusions['llamada'] %>
+                      <h3>Llamadas</h3>
+                      <div>
+                          <%= audio_tag "skype.mp3", class: "audio-play" %>
+                          <table id="usuarios" class="display" cellspacing="0" width="100%" >
+                            <thead>
+                              <tr>
+                                  <th>Nombre</th>
+                                  <th>Teléfono</th>
+                                  <th>País</th>
+                                  <th class="text-center">
+                                    Acciones
+                                  </th>
+                              </tr>
+                            </thead>
+                            <tbody>
+                              <% @usuarios.each do |usuario| %>
+
+                                 <% if ! usuario.nil? %>
+                                    <tr>
+                                        <td data-search="<%= usuario.perfil.nombres %>"> 
+                                          <%= usuario.perfil.nombres %> <%= usuario.perfil.apellidos %> 
+                                        </td>
+                                        <td>
+                                          +<%= usuario.pais.codigo_telefono %> <%= usuario.perfil.telefono_movil %>
+                                        </td>               
+                                        <td> 
+                                          <%= usuario.pais.nombre %>
+                                        </td> 
+                                        <td class="text-center"> 
+                                         
+                                          <a  href="#card-container" class="red-social-add light-blue tooltipped modal-trigger call" data-tooltip="Llamar"><i class="mdi-notification-phone-in-talk"></i></a>
+                                        </td>
+
+                                    </tr>
+                                  <% end %>
+                                <% end %>
+                                    
+                             </tbody>
+                          </table>
+                      </div>
+                    <% end %>
+                    <%if @medio_difusions.include? CampannaPublicitariaDetalle.medio_difusions['email'] %>
+                      <h3>Email</h3>
+                      <div>
+                         <div id="email">
+                            <%= render "interaccion_campanna_pubs/email" %>
+                         </div>
+                      </div>
+                    <% end %>
+                    <%if @medio_difusions.include? CampannaPublicitariaDetalle.medio_difusions['red_social'] %>
+                      <h3>Redes Sociales</h3>
+                      <div id="redes_sociales">
+                          <%= render "interaccion_campanna_pubs/redes_sociales" %>
+                      </div>
+                    <% end %>
                   </div>
 
                 </div>
@@ -220,35 +154,319 @@
         </div>
       </div>
     </div>
+</div>
 
+<div class="row">
+  <%= render "interaccion_campanna_pubs/llamada_modal" %>
+</div>
+
+<div id="notificacion" class="modal text-center">
 </div>
 
 <% content_for :javascript_personalizado do %>
-  
+
+  <%= javascript_include_tag 'tinymce/tinymce.min' %>
   <%= javascript_include_tag 'plugins/jquery-ui' %>
+  <%= javascript_include_tag 'validaciones/difusion' %>
+  
   <script>
-  $(function() {
-    $( "#accordion" ).accordion({
-            heightStyle: "content"
-    });
-  });
 
-   $(function() {
-    $( "#tabs" ).tabs({
+    var id_campanna_publicitaria = <%= @campanna_publicitaria.id %>;
+    var social_ids = <%= @redes_sociales.pluck(:id) %>;
+    var usuarios_mensaje_ids = <%= @usuarios.pluck(:id) %>;
+    var usuarios_email_ids = <%= @usuarios.pluck(:id) %>;
+    var social_remove_ids = new Array();
+    var usuarios_mensaje_remove_ids = new Array();
+    var usuarios_email_remove_ids = new Array();
 
-    });
-  });
 
-     $(document).ready(function(){
-      $('#usuarios').dataTable({
-        "select": false, 
-        "pageLength": 10,
-        "lengthChange": false,
-        "language": {
-                "zeroRecords": "No hay datos disponibles en la tabla",
-        }
-      });
-    });
+    function share_red_social(){
+
+      $("#div-social").validate({
+          doNotHideMessage: true, //this option enables to show the error/success messages on tab switch.
+          errorElement: 'span', //default input error message container
+          errorClass: 'msj-error', // default input error message class
+          rules: {
+            "interaccion_social[url]":{
+                url:true,
+                required:true,
+                
+            },
+
+            "interaccion_social[mensaje]":{
+               
+                required:true,
+            },
+
+          },
+          messages:{
+            "interaccion_social[url]":{
+              required:"Indica el mensaje para la pubicación.",
+              url:"Indica una URL válida",
+              
+            },
+             "interaccion_social[mensaje]":{
+               
+                required:"Indica el mensaje de la pubicación.",
+                
+            },
+                     
+          },
+
+           errorPlacement: function (error, element) { // render error placement for each input type
+                           error.insertAfter(element); // for other inputs, just perform default behavior
+                        },
+        });
+      if (social_ids.length == social_remove_ids.length) {
+          $("#redes_sociales-error_local").removeClass("hidden");
+          return true;
+      } else {
+          $("#redes_sociales-error_local").addClass("hidden");
+         
+          if ($("#div-social").valid()) {
+            for (var i = social_remove_ids.length - 1; i >= 0; i--) {
+              var id_remove = social_remove_ids[i];
+              var indexof = social_ids.indexOf(id_remove);
+              if (indexof > -1) {
+                  social_ids.splice(indexof, 1);
+              }
+            }
+            var html = "<div><div class='progress'><div class='indeterminate'></div></div>"+
+                          "</div><h5>Espera mientras realizamos su publicación.</h5>"
+            $("#notificacion").html(html);
+            $('#notificacion').openModal();
+            var mensaje = $("#text-social").val();
+            var url = $("#url_social").val();
+            var request = $.ajax({
+                                  url: '/campanna_publicitarias/difusion_social',
+                                  method: "POST",
+                                  data: { red_social_ids: social_ids, 
+                                          mensaje: mensaje,
+                                          url: url,
+                                          id_campanna_publicitaria: id_campanna_publicitaria
+                                        },
+                                  dataType: "JSON",
+                                  success: function( data ) {
+                                    
+                                     var html = "<div><i class='large mdi-action-done  "+
+                                      "light-blue-text darken-2'></i></div><h5>Su pubicación  "+
+                                      "se ha realizado exitosamente</h5>"
+                                      $("#notificacion").html(html);
+                                     $('#notificacion').slideDown(250);
+                                     setTimeout(function(){
+                                             $('#notificacion').closeModal();
+                                          }, 5000);
+
+                                     jQuery("#redes_sociales").html("<%= escape_javascript(render(:partial => 'interaccion_campanna_pubs/redes_sociales')) %>");
+                                        
+                                        social_ids = <%= @redes_sociales.pluck(:id) %>;
+                                        social_remove_ids = new Array();
+                                  }
+
+                                });   
+              request.fail(function( jqXHR, textStatus ) {
+                                                          alert( "Request failed: " + textStatus );
+                                                         });
+
+           }
+
+      }
+    };
+
+    function send_sms(){
+
+      $("#div-sms").validate({
+
+          doNotHideMessage: true, //this option enables to show the error/success messages on tab switch.
+          errorElement: 'span', //default input error message container
+          errorClass: 'msj-error', // default input error message class
+          rules: {
+            "interaccion_sms[mensaje]":{
+               
+                required:true,
+            },
+
+          },
+          messages:{
+             "interaccion_sms[mensaje]":{
+               
+                required:"Indica el mensaje a enviar.",
+                
+            },
+                     
+          },
+
+           errorPlacement: function (error, element) { // render error placement for each input type
+                           error.insertAfter(element); // for other inputs, just perform default behavior
+                        },
+        });
+      if (usuarios_mensaje_ids.length == usuarios_mensaje_remove_ids.length) {
+          $("#sms-error_local").removeClass("hidden");
+          return true;
+      } else {
+          $("#sms-error_local").addClass("hidden");
+         
+          if ($("#div-sms").valid()) {
+            for (var i = usuarios_mensaje_remove_ids.length - 1; i >= 0; i--) {
+              var id_remove = usuarios_mensaje_remove_ids[i];
+              var indexof = usuarios_mensaje_ids.indexOf(id_remove);
+              if (indexof > -1) {
+                  usuarios_mensaje_ids.splice(indexof, 1);
+              }
+            }
+            var html = "<div><div class='progress'><div class='indeterminate'></div></div>"+
+                          "</div><h5>Espera mientras enviamos sus SMS.</h5>"
+            $("#notificacion").html(html);
+            $('#notificacion').openModal();
+            var mensaje = $("#text-sms").val();
+            var request = $.ajax({
+                              url: '/campanna_publicitarias/difusion_sms',
+                              method: "POST",
+                              data: { usuarios_mensaje_ids: usuarios_mensaje_ids, 
+                                      mensaje: mensaje,
+                                      id_campanna_publicitaria: id_campanna_publicitaria
+                                    },
+                              dataType: "JSON",
+                              success: function( data ) {
+                                
+                                 var html = "<div><i class='large mdi-action-done  "+
+                                  "light-blue-text darken-2'></i></div><h5>Sus SMS  "+
+                                  "se han enviado exitosamente</h5>"
+                                  $("#notificacion").html(html);
+                                 $('#notificacion').slideDown(250);
+                                 setTimeout(function(){
+                                         $('#notificacion').closeModal();
+                                      }, 5000);
+
+                                 jQuery("#sms").html("<%= escape_javascript(render(:partial => 'interaccion_campanna_pubs/sms')) %>");
+                                    
+                                    usuarios_mensaje_ids = <%= @usuarios.pluck(:id) %>;
+                                    usuarios_mensaje_remove_ids = new Array();
+                              }
+
+                            });   
+              request.fail(function( jqXHR, textStatus ) {
+                                                          alert( "Request failed: " + textStatus );
+                                                         });
+
+           }
+
+      }
+    }
+
+  function send_email(){
+
+      $("#div-email").validate({
+
+          doNotHideMessage: true, //this option enables to show the error/success messages on tab switch.
+          errorElement: 'span', //default input error message container
+          errorClass: 'msj-error', // default input error message class
+          rules: {
+            "interaccion_email[mensaje]":{
+               
+                required:true,
+            },
+            "interaccion_email[asunto]":{
+               
+                required:true,
+            },
+
+
+          },
+          messages:{
+             "interaccion_email[mensaje]":{
+               
+                required:"Indica el mensaje del email.",
+                
+            },
+            "interaccion_email[asunto]":{
+               
+                required:"Indica el asunto del email",
+            },
+
+                     
+          },
+
+           errorPlacement: function (error, element) { // render error placement for each input type
+                           error.insertAfter(element); // for other inputs, just perform default behavior
+                        },
+        });
+      if (usuarios_email_ids.length == usuarios_email_remove_ids.length) {
+          $("#usuarios-email-error_local").removeClass("hidden");
+          return true;
+      } else {
+          
+            $("#usuarios-email-error_local").addClass("hidden");
+            
+            var mensaje = tinyMCE.activeEditor.getContent();
+
+            if (mensaje == null || mensaje == "") {
+              $("#mensaje_email-error_local").removeClass("hidden");
+            } else {
+               $("#mensaje_email-error_local").addClass("hidden");
+            }
+
+          if ($("#div-email").valid() && mensaje == null && mensaje == "") {
+
+            for (var i = usuarios_email_remove_ids.length - 1; i >= 0; i--) {
+              var id_remove = usuarios_email_remove_ids[i];
+              var indexof = usuarios_email_ids.indexOf(id_remove);
+              if (indexof > -1) {
+                  usuarios_email_ids.splice(indexof, 1);
+              }
+            }
+            var html = "<div><div class='progress'><div class='indeterminate'></div></div>"+
+                          "</div><h5>Espera mientras enviamos sus emails.</h5>"
+            $("#notificacion").html(html);
+            $('#notificacion').openModal();
+            var asunto = $("#text-asunto").val();
+            
+            var request = $.ajax({
+                              url: '/campanna_publicitarias/difusion_email',
+                              method: "POST",
+                              data: { usuarios_email_ids: usuarios_email_ids, 
+                                      mensaje: mensaje,
+                                      asunto: asunto,
+                                      id_campanna_publicitaria: id_campanna_publicitaria
+                                    },
+                              dataType: "JSON",
+                              success: function( data ) {
+                                
+                                 var html = "<div><i class='large mdi-action-done  "+
+                                  "light-blue-text darken-2'></i></div><h5>Sus emails "+
+                                  "se han enviado exitosamente</h5>"
+                                  $("#notificacion").html(html);
+                                 $('#notificacion').slideDown(250);
+                                 setTimeout(function(){
+                                         $('#notificacion').closeModal();
+                                      }, 5000);
+
+                                 jQuery("#email").html("<%= escape_javascript(render(:partial => 'interaccion_campanna_pubs/email')) %>");
+                                    tinymce.remove();
+                                    usuarios_email_ids = <%= @usuarios.pluck(:id) %>;
+                                    usuarios_email_remove_ids = new Array();
+                                    tinymce.init({
+                                        selector: 'textarea#edit-email',
+                                        height: 250,
+                                        I18n: ['es'],
+                                        plugins: ['advlist autolink lists link image charmap print preview anchor',
+                                                  'searchreplace visualblocks code fullscreen',
+                                                  'insertdatetime media table contextmenu paste code'
+                                        ],
+                                        toolbar: 'insertfile undo redo | styleselect | bold italic | alignleft aligncenter alignright alignjustify | bullist numlist outdent indent | link image',
+                                    });
+
+                              }
+
+                            });   
+              request.fail(function( jqXHR, textStatus ) {
+                                                          alert( "Request failed: " + textStatus );
+                                                         });
+
+           }
+
+      }
+    }
 
   </script>
 <% end %>

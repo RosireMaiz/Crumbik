@@ -25,7 +25,7 @@
   </div>
 </div>
 
-<div  id="form_wizard_1" class="row pad30-h"  style="width: 100%">
+<div  id="form" class="row pad30-h"  style="width: 100%">
 
   <%= form_for @publicidad, :url => publicidad_editar_path, html:{:method => :post, id: "add_publicidad", class: "form-horizontal"}, multipart: true do |f| %>
       <div class="form-wizard">
@@ -33,30 +33,18 @@
 
         <div class="tab-content">
           <div class="feedback alert alert-danger display-none">
-            <button class="close" data-dismiss="alert"></button>
+            <button class="close" data-dismiss="alert">&times;</button>
             Algunos campos tienen errores. Por favor revisa abajo.
           </div>
-          <div class="feedback alert-success display-none">
-            <button class="close" data-dismiss="alert"></button>
+          <div class="feedback alert alert-success display-none">
+            <button class="close" data-dismiss="alert">&times;</button>
             La validación fue exitosa.
           </div>
           <div class="panel  hoverable pad30-h">
 
             <div class="row">
               
-              <div class="col s12">
-                  <h5>Imagen de la Publicidad</h5>
 
-                  
-                  <div id="imagen" class="<%= @publicidad.formato_imagen %><%= @publicidad.imagen %>" > </div>
-                  
-
-                  <input id="imagen_id" name="imagen_id" type="file" class="file"  />
-
-                  
-                  <div class="pad15"></div>
-              </div>
-            </div>
             <div class="row pad15">
               <div class="col s12  left ">
                 <h5>Datos de la Publicidad </h5>
@@ -64,26 +52,7 @@
                 <%= f.hidden_field :id %>
                 <%= f.hidden_field :imagen, :required=>true, autocomplete: "off" %>
                 <%= f.hidden_field :formato_imagen, :required=>true, autocomplete: "off" %>
-            
-                <div class="input-field col s12">
-                  <label for="publicidad_descripcion">Título <span class="required">
-                  * </span>
-                  </label>
-                  <%= f.text_field :titulo, :required=>true, autocomplete: "off", length: "50" %>
-                </div>
 
-                <div class="input-field col s12">
-                  <label for="publicidad_descripcion">Descripción <span class="required">
-                  * </span>
-                  </label>
-                  <%= f.text_area :descripcion, :required=>true, autocomplete: "off", class: "materialize-textarea", length: "300" %>
-
-                </div>
-
-                <div class="col s12">
-                  <label>Producto <span class="required">*</span></label>
-                  <%= f.collection_select(:producto_id, Producto.all, :id, :nombre) %>  
-                </div>
 
                 <div class="col s6">
                   <label>Fecha de Inicio <span class="required">*</span></label>
@@ -99,8 +68,20 @@
                 </div>
               
               </div>
+            </div>
 
+            <div class="col s12">
+              <h6>Imagen de la Publicidad</h6>
 
+              
+              <div id="imagen" class="<%= @publicidad.formato_imagen %><%= @publicidad.imagen %>" > </div>
+              
+
+              <input id="imagen_publicidad" name="imagen_publicidad" type="file" class="file"  />
+
+              
+              <div class="pad15"></div>
+              </div>
             </div>
 
             <div class="form-actions">
@@ -108,7 +89,7 @@
                 <div class="offset-s4 col s8">
                   
                   <input type="submit" class="btn btn-success " value="Guardar">
-                  <button type="button" onclick="window.location.href='/productos/publicidad/consultar'" class="btn btn-danger waves-effect">Cancelar</button>
+                  <button type="button" onclick="window.location.href='/publicidad/consultar'" class="btn btn-danger waves-effect">Cancelar</button>
                 </div>
               </div>
             </div>
@@ -122,157 +103,9 @@
   <% end %>
 </div>
 
-
-
 <% content_for :javascript_personalizado do %>
   <%= javascript_include_tag "plugins/pwstrength-bootstrap-1.2.4.min" %>
   <%= javascript_include_tag 'plugins/fileinput.js' %>
-  
-  <script>
+  <%= javascript_include_tag 'validaciones/publicidad' %>
 
-    $("#imagen_id").fileinput({
-      'browseLabel':'cambiar',
-      'showCaption':false,
-      'initialPreview': [ "<img src='" + $("#imagen").attr("class") +"' class='file-preview-image img-responsive' alt='Avatar' title='Imagen de publicidad'>"],
-      'initialPreviewShowDelete':false,
-      'initialCaption':'archivo(s) seleccionado(s)',
-      'allowedFileTypes':['image'],
-      'allowedFileExtensions':['jpg', 'png', 'jpeg'],
-      'browseClass':'btn btn-primary right',
-      'browseIcon':'<i class="mdi-file-attachment"></i>',
-      'showRemove':false,
-      'showUpload':false,
-      'uploadLabel':'Subir',
-      'uploadIcon':'<i class="mdi-file-file-upload"></i>',
-      'uploadClass':'btn btn-success ',
-      'showClose':false
-    });
-
-  function readImage() {
-      if ( this.files && this.files[0] ) {
-          var FR = new FileReader();
-          FR.onload = function(e) {
-            var formato = e.target.result.split(";base64,")[0] + ";base64,";
-            var base64 = e.target.result.split( formato)[1];
-            $("#publicidad_imagen").val(base64);
-            $("#publicidad_formato_imagen").val(formato);
-          };       
-          FR.readAsDataURL( this.files[0] );
-      }
-  }
-
-  $("#imagen_id").change( readImage );
-
-  $('#publicidad_fecha_inicio').pickadate({
-        selectMonths: true, // Creates a dropdown to control month
-        selectYears: true, // Creates a dropdown of 15 years to control year
-        labelMonthNext: 'Próximo Mes',
-        labelMonthPrev: 'Mes Anterior',
-        labelMonthSelect: 'Selecione Mes',
-        labelYearSelect: 'Selecione Año',
-        monthsFull: [ 'Enero', 'Febrero', 'MArzo', 'Abril', 'Mayo', 'Junio', 'Julio', 'Agosto', 'Septiembre', 'Octubre', 'Noviembre', 'Diciembre' ],
-        monthsShort: [ 'Ene', 'Feb', 'Mar', 'Abr', 'May', 'Jun', 'Jul', 'Ago', 'Sep', 'Oct', 'Nov', 'Dic' ],
-        weekdaysFull: [ 'Domingo', 'Lunes', 'Martes', 'Miercoles', 'Jueves', 'Viernes', 'Sábado' ],
-        weekdaysShort: [ 'Dom', 'Lun', 'Mar', 'Mier', 'Jue', 'Vie', 'Sab' ],
-        weekdaysLetter: [ 'D', 'L', 'M', 'X', 'J', 'V', 'S' ],
-        today: 'Hoy',
-        clear: 'Limpiar',
-        close: 'Cerrar',
-        format: 'dd/mm/yyyy',
-        showClear: false,
-        closeOnSelect: true,
-        closeOnClear: false,
-        onSet: function () {
-          this.close();
-          },
-
-        onClose:function(){
-
-                  var fecha_inicio = $("#publicidad_fecha_inicio").val();
-                  var  fecha_finalizacion = $("#publicidad_fecha_finalizacion").val();
-                  if (fecha_inicio != "" && fecha_inicio != null && fecha_finalizacion != "" 
-                      && fecha_finalizacion != null) {
-                      
-                      if (fecha_inicio > fecha_finalizacion) {
-                          $("#publicidad_fecha_inicio-error").addClass("valid").html("");;
-                          $("#publicidad_fecha_inicio-error_local").removeClass("hiden").html("Ingrese una fecha menor que la fecha de finalización");
-                          $("#publicidad_fecha_finalizacion-error_local").addClass("hiden").html("");
-                      } else {
-                          $("#publicidad_fecha_inicio-error").addClass("valid").html("");
-                          $("#publicidad_fecha_inicio-error_local").addClass("hiden").html("");
-                          $("#publicidad_fecha_finalizacion-error_local").addClass("hiden").html("");
-                      };
-                  }
-
-                }           
-      });
-
-
-  $('#publicidad_fecha_finalizacion').pickadate({
-        selectMonths: true, // Creates a dropdown to control month
-        selectYears: true, // Creates a dropdown of 15 years to control year
-        labelMonthNext: 'Próximo Mes',
-        labelMonthPrev: 'Mes Anterior',
-        labelMonthSelect: 'Selecione Mes',
-        labelYearSelect: 'Selecione Año',
-        monthsFull: [ 'Enero', 'Febrero', 'MArzo', 'Abril', 'Mayo', 'Junio', 'Julio', 'Agosto', 'Septiembre', 'Octubre', 'Noviembre', 'Diciembre' ],
-        monthsShort: [ 'Ene', 'Feb', 'Mar', 'Abr', 'May', 'Jun', 'Jul', 'Ago', 'Sep', 'Oct', 'Nov', 'Dic' ],
-        weekdaysFull: [ 'Domingo', 'Lunes', 'Martes', 'Miercoles', 'Jueves', 'Viernes', 'Sábado' ],
-        weekdaysShort: [ 'Dom', 'Lun', 'Mar', 'Mier', 'Jue', 'Vie', 'Sab' ],
-        weekdaysLetter: [ 'D', 'L', 'M', 'X', 'J', 'V', 'S' ],
-        today: 'Hoy',
-        clear: 'Limpiar',
-        close: 'Cerrar',
-        format: 'dd/mm/yyyy',
-        showClear: false,
-        closeOnSelect: true,
-        closeOnClear: false,
-        onSet: function () {
-          this.close();
-          },
-
-          onClose:function(){
-                    var fecha_inicio = $("#publicidad_fecha_inicio").val();
-                    var  fecha_finalizacion = $("#publicidad_fecha_finalizacion").val();
-                    if (fecha_inicio != "" && fecha_inicio != null && fecha_finalizacion != "" 
-                        && fecha_finalizacion != null) {
-                      if (fecha_inicio > fecha_finalizacion) {
-                          $("#publicidad_fecha_finalizacion-error").addClass("valid").html("");;
-                          $("#publicidad_fecha_finalizacion-error_local").removeClass("hiden").html("Ingrese una fecha mayor que la fecha de inicio");
-                          $("#publicidad_fecha_inicio-error_local").addClass("hiden").html("");
-                          
-                      }else{
-                          $("#publicidad_fecha_finalizacion-error").addClass("valid").html("");
-                          $("#publicidad_fecha_inicio-error_local").addClass("hiden").html("");
-                          $("#publicidad_fecha_finalizacion-error_local").addClass("hiden").html("");
-                      };
-                    }
-
-
-                  }           
-      });
-  
-      $('#add_publicidad').submit(function(event){
-         
-          var fecha_inicio = $("#publicidad_fecha_inicio").val();
-          var  fecha_finalizacion = $("#publicidad_fecha_finalizacion").val();
-         
-          if ( fecha_inicio != "" && fecha_inicio != null && fecha_finalizacion != "" && fecha_finalizacion != null   && fecha_inicio > fecha_finalizacion) {
-            $("#publicidad_fecha_finalizacion-error_local").removeClass("hiden").html("Ingrese una fecha mayor que la fecha de inicio");
-            $("#publicidad_fecha_inicio-error_local").addClass("hiden").html("");
-            $('.alert-danger').show();
-            $('.alert-success').hide();
-            $('html,body').animate({
-                scrollTop: $(".steps").offset().top-350
-            }, 'slow');
-            event.preventDefault();
-          } else {
-            $("#publicidad_fecha_inicio-error_local").addClass("hiden").html("");
-            $("#publicidad_fecha_finalizacion-error_local").addClass("hiden").html("");
-          };
-
-      });
-
-
-</script>
 <% end %>
