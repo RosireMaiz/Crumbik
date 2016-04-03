@@ -39,7 +39,7 @@ $(document).ready(function(){
 
     //PErsonalizada
     var personalizada = $("#criterio_difusion_where").val();
-        $("#where_column_parametro_personalizada").html(personalizada);
+    $("#where_column_parametro_personalizada").html(personalizada);
 
     $("#consulta-basica, #subconsulta, #personalizada").click(function(){
         if($(this).attr("id") == "consulta-basica"){

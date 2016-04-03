@@ -1,5 +1,6 @@
 class CriterioDifusionsController < ApplicationController
-def validar_criterio_difusion
+	
+	def validar_criterio_difusion
 	    if CriterioDifusion.exists?(nombre: params[:criterio_difusion][:nombre])
 	    	render json: false
 	    else
@@ -52,6 +53,7 @@ def validar_criterio_difusion
 		if !usuario_signed_in?
         	render "portal/index"
      	else
+     		
 				@criterio_difusions = CriterioDifusion.order('id ASC')
 				@tables = ActiveRecord::Base.connection.tables
 				@columns_subconsulta = ActiveRecord::Base.connection.columns(@tables.first)
@@ -83,10 +85,11 @@ def validar_criterio_difusion
 		descripcion = params[:descripcion]
 		tabla = params[:tabla]
 		campo_comparacion = params[:campo_comparacion]
-		if CriterioDifusion.update(id, :nombre => nombre,  :tabla => tabla,  :descripcion => descripcion,  :campo_comparacion => campo_comparacion,  :tabla => tabla )
+		campo_seleccion = params[:campo_seleccion]
+		tipo_consulta = CriterioDifusion.tipo_consulta["personalizada"]	
+		if CriterioDifusion.update(id, :nombre => nombre,  :tabla => tabla,  :descripcion => descripcion ,  :campo_seleccion => campo_seleccion,  :campo_comparacion => campo_comparacion,  :tabla => tabla, :tipo_consulta => tipo_consulta )
 			render :text =>'{ "success" : "true"}'
 		else
-
 			render :text => '{ "success" : "false"}'
 		end
 	end

@@ -5,7 +5,6 @@ class CreateEventos < ActiveRecord::Migration
       t.text :descripcion
       t.string :url
       t.string :color
-      t.boolean :dia_completo , null: false, default: true
       t.datetime :inicio
       t.datetime :fin
       t.references :usuario, index: true

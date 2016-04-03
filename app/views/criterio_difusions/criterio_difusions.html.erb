@@ -1,5 +1,10 @@
 <% content_for :css_personalizado do %>
  <%= stylesheet_link_tag    "jquery.dataTables" %> 
+    <style type="text/css">
+     .dropdown-content {
+        max-height: 200px; 
+    }
+    </style>
 <% end %>
 
 <div class="row titulo-seccion banner banner-perfil">
@@ -59,7 +64,7 @@
                  <a  href="#modal<%= criterio_difusion.id %>" class=" modal-trigger btn-warning btn-sm">Deshabilitar</a>
               <% end %>
                 <a href="#modalver<%= criterio_difusion.id %>" class="modal-trigger purple btn-primary btn-sm">Ver</a>
-                <a href="#modaleditar<%= criterio_difusion.id %>" class="modal-trigger btn-primary btn-sm" onclick="validar(modaleditar<%= criterio_difusion.id %>, <%= criterio_difusion.id %>)">Editar</a>
+                <a href="#modaleditar<%= criterio_difusion.id %>" class="modal-trigger btn-primary btn-sm" onclick="load_table_criterio('<%= criterio_difusion.id %>')">Editar</a>
 
                 <a  href="#modaleliminar<%= criterio_difusion.id %>" class="modal-trigger btn-danger btn-sm">Eliminar</a>
               </td>
@@ -72,30 +77,30 @@
      </tbody>
   </table>
 
-  <% @criterio_difusions.each do |criterio_difusions| %>
-    <% if ! criterio_difusions.nil? %>
+  <% @criterio_difusions.each do |criterio_difusion| %>
+    <% if ! criterio_difusion.nil? %>
         <!-- Modal Structure -->
-       <div id="modal<%= criterio_difusions.id %>" class="modal">
+       <div id="modal<%= criterio_difusion.id %>" class="modal">
           <div class="modal-content">
               <a style="float:right;" class="waves-effect btn-flat modal-close"><i class="mdi-content-clear"></i></a>
-              <% if (criterio_difusions.estatus == 'A') %>
+              <% if (criterio_difusion.estatus == 'A') %>
                 <h5>Deshabilitar Criterio de Difusión</h5>
               <% else %>
                 <h5>Habilitar Criterio de Difusión</h5>
               <% end %>
               <div class="row pad30-t" >
                 <div class="col s12 text-center">
-                  <% if (criterio_difusions.estatus == 'A') %>
+                  <% if (criterio_difusion.estatus == 'A') %>
                     <h6 style=" font-size: 20px;">¿Seguro que desea Deshabilitar el Criterio de Difusión seleccionado? 
                     </h6>
                   <% else %>
                     <h6 style=" font-size: 20px;">¿Seguro que desea Habilitar el Criterio de Difusión seleccionado?</h6>
                   <% end %>
                   <div style="padding-top: 35px;" class="right">
-                    <% if (criterio_difusions.estatus == 'A') %>
-                       <input type="button" class="btn btn-success btn-sm" value="Aceptar" onclick="update_estatus(<%= criterio_difusions.id %>,'I')">
+                    <% if (criterio_difusion.estatus == 'A') %>
+                       <input type="button" class="btn btn-success btn-sm" value="Aceptar" onclick="update_estatus(<%= criterio_difusion.id %>,'I')">
                     <% else %>
-                      <input type="button" class="btn btn-success btn-sm" value="Aceptar" onclick="update_estatus(<%= criterio_difusions.id %>,'A')">
+                      <input type="button" class="btn btn-success btn-sm" value="Aceptar" onclick="update_estatus(<%= criterio_difusion.id %>,'A')">
                     <% end %>
                     <input type="button" class="btn btn-danger btn-sm modal-close" value="Cancelar">
                   </div>
@@ -104,7 +109,7 @@
           </div>
         </div> 
 
-        <div id="modaleliminar<%= criterio_difusions.id %>" class="modal">
+        <div id="modaleliminar<%= criterio_difusion.id %>" class="modal">
           <div class="modal-content">
                 <a style="float:right;" class="waves-effect btn-flat modal-close"><i class="mdi-content-clear"></i></a>
                
@@ -117,7 +122,7 @@
                       
                       <div style="padding-top: 35px;" class="right">
                       
-                        <input type="button" class="btn btn-success btn-sm" value="Aceptar" onclick="eliminar(<%= criterio_difusions.id %>)">
+                        <input type="button" class="btn btn-success btn-sm" value="Aceptar" onclick="eliminar(<%= criterio_difusion.id %>)">
                       
                         <input type="button" class="btn btn-danger btn-sm modal-close" value="Cancelar">
                       </div>
@@ -127,7 +132,7 @@
           </div>
         </div> 
 
-        <div id="modalver<%= criterio_difusions.id %>" class="modal modal-45">
+        <div id="modalver<%= criterio_difusion.id %>" class="modal modal-45">
           <div class="modal-content">
             <a href="#" style="float:right;" class="waves-effect btn-flat modal-close"><i class="mdi-content-clear"></i></a>
             <h5>Ver Criterio de Difusión</h5>
@@ -137,22 +142,22 @@
                 <div class="row">
                  <p><b style="color: #9E9E9E">Nombre:</b></p>
                  <p>
-                   <%= criterio_difusions.nombre %></p>
+                   <%= criterio_difusion.nombre %></p>
 
                  </div>
 
                  <div class="row ">
                    <p><b style="color: #9E9E9E">Decripci&oacute;n:</b></p>
-                   <p><%= criterio_difusions.descripcion %></p> 
+                   <p><%= criterio_difusion.descripcion %></p> 
                  </div>
                  <div class="row ">
                    <p><b style="color: #9E9E9E">Tipo de Consulta:</b></p>
-                   <p><%= criterio_difusions.tipo_consulta.humanize %></p> 
+                   <p><%= criterio_difusion.tipo_consulta.humanize %></p> 
                  </div>
                  <div class="row ">
                    <p><b style="color: #9E9E9E">Búsqueda de Usuarios:</b></p>
-                   <span id="sentencia" style="color: #03A9F4;"><strong>SELECT</strong><%= criterio_difusions.campo_seleccion %><strong>FROM </strong><%= criterio_difusions
-                   .tabla %> </span><span id="where_consulta" style="color: #03A9F4;"><strong>WHERE</strong> <%= criterio_difusions.campo_comparacion %></span>
+                   <span id="sentencia" style="color: #03A9F4;"><strong>SELECT</strong><%= criterio_difusion.campo_seleccion %><strong>FROM </strong><%= criterio_difusion
+                   .tabla %> </span><span id="where_consulta" style="color: #03A9F4;"><strong>WHERE</strong> <%= criterio_difusion.campo_comparacion %></span>
                    
                  </div>
                </div>
@@ -161,29 +166,30 @@
            </div>                
         </div>
 
-        <div id="modaleditar<%= criterio_difusions.id %>" class="modal modal-fixed-footer" form="true">
+        <div id="modaleditar<%= criterio_difusion.id %>" class="modal modal-fixed-footer" form="true">
           <div class="modal-content">
-                <a style="float:right;" class="waves-effect btn-flat modal-close" onclick="cancelar(modaleditar<%= criterio_difusions.id %>, <%= criterio_difusions.id %>, nombre<%= criterio_difusions.id %> )"><i class="mdi-content-clear"></i></a>
+                <a style="float:right;" class="waves-effect btn-flat modal-close" onclick="cancelar(<%= criterio_difusion.id %>)"><i class="mdi-content-clear"></i></a>
                 <h5>Editar Criterio de Disfusión</h5>
                 
                 <div class="row no-margin-v" style="padding-top: 10px;">
                     <div class="col s12">
                       <div class="row no-margin-v">
                         <div class=" input-field col s12 m6 ">
-                          <input id="nombre<%= criterio_difusions.id %>" type="text" class="validate" value="<%= criterio_difusions.nombre %>" name="criterio_difusion[nombre]"> 
-                          <label for="nombre<%= criterio_difusions.id %>">Nombre:</label>
+                          <input id="nombre<%= criterio_difusion.id %>" type="text" class="validate" value="<%= criterio_difusion.nombre %>" name="criterio_difusion[nombre]"> 
+                          <label for="nombre<%= criterio_difusion.id %>">Nombre:</label>
+                        </div>
+                        <div class="col s12 m6">
+                           <span id="sentencia" style="color: #03A9F4;"><strong>SELECT </strong> <span id="select_column_table<%= criterio_difusion.id %>" class="form-control-static"> <%= criterio_difusion.campo_seleccion %></span> <strong> FROM </strong><span class="form-control-static" id="from_table<%= criterio_difusion.id %>"> <%= criterio_difusion.tabla %> </span><strong> WHERE </strong> <span id="where_text<%= criterio_difusion.id %>" class="form-control-static"> <%= criterio_difusion.campo_comparacion %></span> </span> 
                         </div>
                         <div class=" input-field col s12 ">
-                          <textarea id="descripcion<%= criterio_difusions.id %>" type="text" class="validate materialize-textarea" name="criterio_difusion[descripcion]"> <%= criterio_difusions.descripcion %>
+                          <textarea id="descripcion<%= criterio_difusion.id %>" type="text" class="validate materialize-textarea" name="criterio_difusion[descripcion]"> <%= criterio_difusion.descripcion %>
                           </textarea>
-                          <label for="descripcion<%= criterio_difusions.id %>">Descripción:</label>
+                          <label for="descripcion<%= criterio_difusion.id %>">Descripción:</label>
                         </div>
-                        <div>
-                           <span id="sentencia" style="color: #03A9F4;"><strong>SELECT</strong> <span id="select_column_table" class="form-control-static"></span> <strong>FROM </strong><span class="form-control-static" id="from_table" ></span><strong>WHERE</strong> <span id="where_column_parametro_personalizada" class="form-control-static"></span> </span> 
-                        </div>
+                        
                          <div class="input-group col s12 m6">
                             <label>Tabla Referencia<span class="required">*</span></label>
-                            <select id="select_tabla<%= criterio_difusions.id %>" class="text-capitalize"  name="criterio_difusion[tabla]">
+                            <select id="select_tabla<%= criterio_difusion.id %>" class="text-capitalize"  name="criterio_difusion[tabla]" onchange="change_select_table(<%= criterio_difusion.id %>)">
                              <%= options_for_select(@tables_filter, class: "text-capitalize") %>
                                   </select>
                             <a href="javascript:void(0)" class="input-group-addon" id="basic-addon2"  role="button" data-toggle="popover" data-trigger="hover" data-title="¿Qué es Tabla Referencia?" data-content="Tabla que contiene un campo asociado a Usuario y el campo para la definición del criterio" placement="right" data-container="body">
@@ -194,7 +200,7 @@
                         </div>
                         <div class="input-group col s12 m6">
                             <label>Columna Referencia<span class="required">*</span></label>
-                               <select id="select_column<%= criterio_difusions.id %>" class="text-capitalize" name="criterio_difusion[campo_seleccion]">
+                               <select id="select_column<%= criterio_difusion.id %>" class="text-capitalize" name="criterio_difusion[campo_seleccion]" onchange="change_select_column(<%= criterio_difusion.id %>)">
                              <%= options_for_select(@columns.collect { |column|
             [column.name, column.name.to_s] }, class: "text-capitalize") %>
                                   </select> 
@@ -207,7 +213,7 @@
                           <label for="criterio_difusion_where">Where <span class="required">
                           * </span>
                           </label>
-                          <textarea class="materialize-textarea" name="criterio_difusion[where]" id="criterio_difusion_where" length="220"><%= criterio_difusions.campo_comparacion %></textarea>
+                          <textarea class="materialize-textarea" name="criterio_difusion[where]" id="criterio_difusion_where<%= criterio_difusion.id %>" length="220" onchange="change_where(<%= criterio_difusion.id %>)"><%= criterio_difusion.campo_comparacion %></textarea>
                         </div>
                       </div>
                     </div>
@@ -216,10 +222,10 @@
           </div>  
           <div class="modal-footer right-align">
             <div class="col right">
-              <input type="button" class="btn btn-danger btn-sm" value="Cancelar" onclick="cancelar(modaleditar<%= criterio_difusions.id %>, <%= criterio_difusions.id %>, nombre<%= criterio_difusions.id %>,descripcion<%= criterio_difusions.id %>, tabla<%= criterio_difusions.id %>, campo_comparacion<%= criterio_difusions.id %> )">
+              <input type="button" class="btn btn-danger btn-sm" value="Cancelar" onclick="cancelar(<%= criterio_difusion.id %> )">
             </div>
             <div class="col right">
-              <input type="button" class="btn btn-success btn-sm" value="Guardar" onclick="update(modaleditar<%= criterio_difusions.id %>, <%= criterio_difusions.id %>, nombre<%= criterio_difusions.id %>,descripcion<%= criterio_difusions.id %>, tabla<%= criterio_difusions.id %>, campo_comparacion<%= criterio_difusions.id %>)">
+              <input type="button" class="btn btn-success btn-sm" value="Guardar" onclick="update( <%= criterio_difusion.id %>)">
                       
             </div>
 
@@ -236,26 +242,4 @@
 <% content_for :javascript_personalizado do %>
   <%= javascript_include_tag 'maestros/criterio_difusions' %>
   <%= javascript_include_tag 'jquery.dataTables.min' %>
-  <script type="text/javascript">
-    $(document).ready(function(){
-      $('#criterio_difusions').dataTable({
-        "select": false, 
-        "pageLength": 4,
-        "lengthChange": false,
-        "language": {
-            "zeroRecords": "No hay datos disponibles en la tabla",
-            "infoEmpty": "No hay datos disponibles en la tabla",
-            
-        }
-
-      });
-    });
-
-function load_table_criterio(){
-  
-}
-
-
-
-  </script>
 <% end %>

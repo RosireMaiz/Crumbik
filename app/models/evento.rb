@@ -15,7 +15,7 @@ class Evento < ActiveRecord::Base
       :end => self.fin.strftime("%m/%d/%Y"),
       #:start => self.inicio.rfc822,
       #:end => self.fin.rfc822,
-      :allDay =>  self.dia_completo,
+      #:allDay =>  self.dia_completo,
       :description =>  self.descripcion,
       #:user_name => self.user_name,
       #:url => Rails.application.routes.url_helpers.events_path(id),
