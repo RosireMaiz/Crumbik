@@ -79,6 +79,7 @@ ActiveRecord::Schema.define(version: 20160317031652) do
   create_table "criterio_difusions", force: :cascade do |t|
     t.string   "nombre",            limit: 255
     t.text     "descripcion",       limit: 65535
+    t.string   "campo_seleccion",   limit: 255
     t.string   "tabla",             limit: 255
     t.string   "campo_comparacion", limit: 255
     t.string   "estatus",           limit: 1,     default: "A"

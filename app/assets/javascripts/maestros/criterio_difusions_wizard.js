@@ -15,16 +15,14 @@ $(document).ready(function(){
     var tabla = $("#select_tabla").val();
     var column_referencia = $("#select_column").val();
 
-    var tipo_column_parametro = $("#select_column_parameter").val().split('*')[1];
-    var column_parametro = $("#select_column_parameter").val().split('*')[0];
+    var column_parametro = $("#select_column_parameter").val();
 
     //Subconsulta
     var operador = $("#select_operador").val();
     var tabla_subconsulta = $("#select_tabla_subconsulta").val();
     var column_base = $("#select_column_base").val();
     var column_referencia_subconsulta = $("#select_column_subconsulta").val();
-    var tipo_column_parametro_subconsulta = $("#select_column_parameter_subconsulta").val().split('*')[1];
-    var column_parametro_subconsulta = $("#select_column_parameter_subconsulta").val().split('*')[0];
+    var column_parametro_subconsulta = $("#select_column_parameter_subconsulta").val();
 
     $("#select_column_table").html(column_referencia);
     $("#from_table").html(tabla);
@@ -104,8 +102,8 @@ $(document).ready(function(){
                                   $("#select_column_base").material_select();
                                   tabla = $("#select_tabla").val();
                                   column_referencia = $("#select_column").val();
-                                  tipo_columna_parametro = $("#select_column_parameter").val().split('*')[1];
-                                  column_parametro = $("#select_column_parameter").val().split('*')[0];
+                                  
+                                  column_parametro = $("#select_column_parameter").val();
                                   column_base = $("#select_column_base").val();
                                   $("#select_column_table").html(column_referencia);
                                   $("#from_table").html(tabla);
@@ -123,8 +121,7 @@ $(document).ready(function(){
     
   $(".tab-pane").on("change","#select_column_parameter",
       function(){
-        tipo_columna_parametro = $("#select_column_parameter").val().split('*')[1];
-        column_parametro = $("#select_column_parameter").val().split('*')[0];
+        column_parametro = $("#select_column_parameter").val();
         $("#where_column_parametro").html(column_parametro);
   }); 
 
@@ -172,8 +169,7 @@ $(document).ready(function(){
                                   tabla_subconsulta = $("#select_tabla_subconsulta").val();
                                   column_base = $("#select_column_base").val();
                                   column_referencia_subconsulta = $("#select_column_subconsulta").val();
-                                  tipo_column_parametro_subconsulta = $("#select_column_parameter_subconsulta").val().split('*')[1];
-                                  column_parametro_subconsulta = $("#select_column_parameter_subconsulta").val().split('*')[0];
+                                  column_parametro_subconsulta = $("#select_column_parameter_subconsulta").val();
 
                                   $("#where_column_base").html(column_base);
                                   $("#operador_where").html(operador);
@@ -200,7 +196,7 @@ $(document).ready(function(){
 
   $(".tab-pane").on("change","#select_column_parameter_subconsulta",
       function(){
-          column_parametro_subconsulta = $("#select_column_parameter_subconsulta").val().split('*')[0];
+          column_parametro_subconsulta = $("#select_column_parameter_subconsulta").val();
           $("#where_column_parametro_subconsulta").html(column_parametro_subconsulta);  
   });
 
@@ -388,12 +384,29 @@ $(document).ready(function(){
                     evt.preventDefault();
                     success.show();
                     error.hide();
+                    tipo_consulta = $("input:radio[name=tipo_consulta]:checked").val() +" #{operador_parametro} #{valor_parametro}";
+                    if (tipo_consulta == 1) {
+                        $("#criterio_difusion_campo_comparacion").val(column_parametro);
+                         $("#criterio_difusion_tipo_consulta").val("basica");
+                        
+                    } else if (tipo_consulta == 2) {
+                      var where_concat = column_base + " " + operador + " (SELECT " 
+                      + column_referencia_subconsulta + " FROM " + tabla_subconsulta + " WHERE "
+                      + column_parametro_subconsulta + " #{operador_parametro} #{valor_parametro} )"
+                       $("#criterio_difusion_campo_comparacion").val(where_concat);
+                         $("#criterio_difusion_tipo_consulta").val("subconsulta");
+                    } else {
+                      $("#criterio_difusion_campo_comparacion").val($("#criterio_difusion_where").val() + " #{operador_parametro} #{valor_parametro}");
+                      $("#criterio_difusion_tipo_consulta").val("personalizada");
+                    };
                     var data = $(form).serializeArray();
 
                     var action = $(form).attr("action");
+                    
+                                        
                     //procesar pago
                     var html = "<div><div class='progress'><div class='indeterminate'></div></div>"+
-                                "</div><h5>Espera mientras creamos y configuramos tu cuenta.</h5>"
+                                "</div><h5>Espera mientras creamos el Criterio de Difusión.</h5>"
                     $("#notificacion").html(html);
                     $('#notificacion').openModal();
 
@@ -402,21 +415,19 @@ $(document).ready(function(){
                         function(response){
                             if(response["codigo"] == 200){
                                 var html = "<div><i class='large mdi-action-done  "+
-                                "light-blue-text darken-2'></i></div><h5>Tu cuenta y "+
-                                "subdominio han sido creados</h5><p class='lead'>Gracias"+
-                                " por elegirnos, serás redirigido a tu subdominio en unos segundos.</p>"
+                                "light-blue-text darken-2'></i></div><h5>Tu criterio "+
+                                "han sido creado exitosamente</h5>"
                                 $("#notificacion").html(html);
                                 $('#notificacion').openModal();
                                 setTimeout(function(){
-                                        window.location.href=response["url"]
-                                    }, 8000);
+                                        window.location.href = response["url"]
+                                    }, 1000);
                             }else{
                                 var html = "<div><i class='large mdi-content-clear  "+
                                 "red-text darken-2'></i></div><h5>Ha ocurrido un error al momento "+
                                 "de procesar tu suscripción</h5><p class='lead'>"+
                                 response["errores"]+"</p>"
                                 $("#notificacion").html(html);
-                                //$('#notificacion').openModal();
                             }
                             
                         },
@@ -425,54 +436,6 @@ $(document).ready(function(){
                     return false;
                 });
 
-                   $(".confirmacion").click(function(evt){
-                    evt.preventDefault();
-                    success.show();
-                    error.hide();
-                    var data = $(form).serializeArray();
-
-                    var action = $(form).attr("action");
-                    console.log(data);
-                    //procesar pago
-                   //data[12]["tarjeta[nombre]"] = "";
-                    //data[14]["tarjeta[cvc]"] = "";
-   //                 data[15]["tarjeta[fecha_expiracion]"]  = "";
-                    var html = "<div><div class='progress'><div class='indeterminate'></div></div>"+
-                                "</div><h5>Espera mientras validamos tu pago.</h5>"
-                    $("#notificacion").html(html);
-                    $('#notificacion').openModal();
-
-                    $.post(action, 
-                        data,
-                        function(response){
-                            if(response["codigo"] == 200){
-                                var html = "<div><i class='large mdi-action-done  "+
-                                "light-blue-text darken-2'></i></div><h5>Tu pago "+
-                                "se ha realizado exitosamente</h5><p class='lead'>Gracias"+
-                                " por elegirnos.</p>"
-                                $("#notificacion").html(html);
-                                $('#notificacion').openModal();
-                               setTimeout(function(){
-                                        window.location.href=response["url"]
-                                    }, 8000);
-                            }else{
-                                var html = "<div><i class='large mdi-content-clear  "+
-                                "red-text darken-2'></i></div><h5>Ha ocurrido un error al momento "+
-                                "de procesar tu suscripción</h5><p class='lead'>"+
-                                response["errores"]+"</p>"
-                                $("#notificacion").html(html);
-                                //$('#notificacion').openModal();
-                            }
-                            
-                        },
-                        "json"
-                    );
-                    return false;
-                });
-                //apply validation on select2 dropdown value change, this only needed for chosen dropdown integration.
-                // $('#country_list', form).change(function () {
-                //     form.validate().element($(this)); //revalidate the chosen dropdown value and show error or success message for the input
-                // });
             }
 
         };

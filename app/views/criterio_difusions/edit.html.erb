@@ -1,0 +1,311 @@
+<% content_for :css_personalizado do %>
+   <%= stylesheet_link_tag    "usuarios" %>
+    <%= stylesheet_link_tag    "organizacion" %>
+   <style type="text/css">
+     .dropdown-content {
+        max-height: 200px; 
+    }
+  </style>
+<% end %>
+<div class="row titulo-seccion banner banner-perfil">
+  <div class="contenedor">
+    <div class="col s6">
+      <h5 class="text-capitalize">
+       Crear Nuevo Criterio de Difusión
+      </h5>
+    </div>
+    <div class="col s6 text-right ">
+      <ol class="breadcrumb">
+        <li>
+          <a href="/">Inicio</a>
+        </li>
+        <li class="active">Crear Criterio de Difusión</li>
+      </ol>
+    </div>
+  </div>
+</div>
+
+<div id="form_wizard_1" class="center-block">
+  <%= form_for @criterio_difusion, :url => criterio_difusions_crear_criterio_difusion_path, html:{id: "submit_form", class: "form-horizontal"} do |f| %>
+    <div class="form-wizard">
+      <div class="form-body">
+        <div class="pad30-h">
+          <ul class="nav nav-pills nav-justified steps ">
+            <li class="active">
+              <a href="#tab1" data-toggle="tab" class="step active">
+              <span class="number">
+              1 </span>
+              <span class="desc">
+              <i class="fa fa-check"></i> Información Básica </span>
+              </a>
+            </li>
+            <li >
+              <a href="#tab2" data-toggle="tab" class="step">
+              <span class="number">
+              2 </span>
+              <span class="desc">
+              <i class="fa fa-check"></i> Detalles del Criterio </span>
+              </a>
+            </li>
+            <li>
+              <a href="#tab3" data-toggle="tab" class="step ">
+              <span class="number">
+              3 </span>
+              <span class="desc">
+              <i class="fa fa-check"></i> Condición del Criterio </span>
+              </a>
+            </li>
+            <li>
+              <a href="#tab4" data-toggle="tab" class="step">
+              <span class="number">
+              4 </span>
+              <span class="desc">
+              <i class="fa fa-check"></i> Confirmación </span>
+              </a>
+            </li>
+          </ul>
+          <div id="bar" class="progress progress-striped" role="progressbar">
+            <div id="progress-bar-wizard" class="progress-bar progress-bar-success" >
+            </div>
+          </div>
+          <div id="sentencia_wizard">
+                  <span id="sentencia" style="color: #03A9F4;"><strong>SELECT</strong> <span id="select_column_table" class="form-control-static"></span> <strong>FROM </strong><span class="form-control-static" id="from_table" ></span></span> 
+                  <span id="where_consulta" style="color: #03A9F4;"><strong>WHERE</strong> <span id="where_column_parametro" class="form-control-static"></span> <strong>#{operador_parametro} #{valor_parametro}</strong> </span>  
+
+                  <span id="where_subconsulta" style="color: #03A9F4;"><strong>WHERE</strong> <span id="where_column_base" class="form-control-static"></span> <span id="operador_where" class="form-control-static"></span> (<strong>SELECT</strong> <span id="select_columna_subconsulta" class="form-control-static"></span> <strong>FROM</strong> <span id="from_tabla_subconsulta" class="form-control-static"></span> <strong>WHERE</strong> <span id="where_column_parametro_subconsulta" class="form-control-static"></span> <strong>#{operador_parametro} #{valor_parametro}</strong> )</span>   
+                  
+                  <span id="where_personalizada" style="color: #03A9F4;"><strong>WHERE</strong> <span id="where_column_parametro_personalizada" class="form-control-static"></span> <strong>#{operador_parametro} #{valor_parametro}</strong> </span> 
+          </div>
+          
+        </div>
+        
+        
+        <div class="tab-content">
+          
+          <div class="pad150-h">
+            <div class="feedback alert alert-danger display-none">
+              <button class="close" data-dismiss="alert">&times;</button>
+              Algunos campos tienen errores. Por favor revisa abajo.
+            </div>
+            <div class="feedback alert alert-success display-none">
+              <button class="close" data-dismiss="alert">&times;</button>
+              La validación fue exitosa.
+            </div>
+          </div>
+          <input id="criterio_difusion_tipo_consulta" name="criterio_difusion[tipo_consulta]" class="file" hidden />
+          <input id="criterio_difusion_campo_comparacion" name="criterio_difusion[campo_comparacion]" class="file" hidden />
+          <div class="tab-pane active" id="tab1">
+            <div class="row">
+              <div class="col s8 offset-s2 left">
+                <h5 >Datos del Criterio</h5>
+                <div class="input-field col s10">
+                  <label for="criterio_difusion_nombre">Nombre: <span class="required">
+                  * </span>
+                  </label>
+                  <%= f.text_field :nombre, :required=>true, autocomplete: "off", length:"50" %>
+                </div>
+                <div class="input-field col s10">
+                  <label for="criterio_difusion_decripcion">Descripción: <span class="required">
+                  * </span>
+                  </label>
+                  <%= f.text_area :descripcion, :required=>true, autocomplete: "off", class:"materialize-textarea",length:"220" %>
+                </div>
+
+              </div>
+            </div>
+          </div>
+          <div class="tab-pane" id="tab2">
+            <div class="row ">
+              <div class="col s8 offset-s2">
+
+                <h5 class="block">Detalles del Criterio</h5>
+                <div class="row input-group">
+                    <label>Tabla Referencia<span class="required">*</span></label>
+                    <select id="select_tabla" class="text-capitalize"  name="criterio_difusion[tabla]">
+                     <%= options_for_select(@tables_filter, class: "text-capitalize") %>
+                          </select>
+                    <a href="javascript:void(0)" class="input-group-addon" id="basic-addon2"  role="button" data-toggle="popover" data-trigger="hover" data-title="¿Qué es Tabla Referencia?" data-content="Tabla que contiene un campo asociado a Usuario y el campo para la definición del criterio" placement="right" data-container="body">
+                      <i class="mdi-action-help"></i>
+                      <abbr>¿Qué es esto?</abbr>
+                    </a>
+                    
+                </div>
+                 <div class="row input-group">
+                    <label>Columna Referencia<span class="required">*</span></label>
+                       <select id="select_column" class="text-capitalize" name="criterio_difusion[campo_seleccion]">
+                     <%= options_for_select(@columns.collect { |column|
+    [column.name, column.name.to_s] }, class: "text-capitalize") %>
+                          </select> 
+                    <a href="javascript:void(0)" class="input-group-addon" id="basic-addon2"  role="button" data-toggle="popover" data-trigger="hover" data-title="¿Qué es Columna Referencia?" data-content="Columna asociada con la tabla usuarios" placement="right" data-container="body">
+                      <i class="mdi-action-help"></i>
+                      <abbr>¿Qué es esto?</abbr>
+                    </a>
+                    
+                </div>
+
+              </div>
+            </div>
+          </div>
+          <div class="tab-pane " id="tab3">
+            <div class="row">
+              <div class="col s8 offset-s2 ">
+
+                <h5 class="block">Condición del Criterio</h5>
+                <div>
+                  Tipo de Consulta<br/>
+                  <input name="tipo_consulta" type="radio" id="consulta-basica" value="1" checked/>
+                  <label for="consulta-basica">Básica</label>
+                  <input name="tipo_consulta" type="radio" id="subconsulta" value="2"/>
+                  <label for="subconsulta">Subconsulta Básica</label>
+                  <input name="tipo_consulta" type="radio" id="personalizada" value="2"/>
+                  <label for="personalizada">Personalizada</label>
+                </div>
+                <div id="form-consulta">
+                  <div class="row input-group">
+                      <label>Columna Parámetro<span class="required">*</span></label>
+                         <select id="select_column_parameter" class="text-capitalize" >
+                       <%= options_for_select(@columns.collect { |column|
+      [column.name, column.name.to_s] }, class: "text-capitalize") %>
+                            </select> 
+                      <a href="javascript:void(0)" class="input-group-addon" id="basic-addon2"  role="button" data-toggle="popover" data-trigger="hover" data-title="¿Qué es la Columna Parámetro?" data-content="Columna que cumplirá con el valor ingresado por el usuario" placement="right" data-container="body">
+                        <i class="mdi-action-help"></i>
+                        <abbr>¿Qué es esto?</abbr>
+                      </a>
+                      
+                  </div>
+                </div>
+                <div id="form-subconsulta">
+                  <div class="row input-group">
+                      <label>Columna Base<span class="required">*</span></label>
+                         <select id="select_column_base" class="text-capitalize" >
+                       <%= options_for_select(@columns.collect { |column|
+      [column.name, column.name.to_s] }, class: "text-capitalize") %>
+                            </select> 
+                      <a href="javascript:void(0)" class="input-group-addon" id="basic-addon2"  role="button" data-toggle="popover" data-trigger="hover" data-title="¿Qué es la Columna Base?" data-content="Columna que se comparará con los valores arrojados por la subconsulta" placement="right" data-container="body">
+                        <i class="mdi-action-help"></i>
+                        <abbr>¿Qué es esto?</abbr>
+                      </a>
+                  </div>
+                  <div class="row input-group">
+                      <label>Operador de Comparación<span class="required">*</span></label>
+                         <select id="select_operador" class="text-capitalize" >
+                            <option value="EXISTS">EXISTS</option>
+                            <option value="IN">IN</option>
+                            <option value="LIKE">LIKE</option>
+                            <option value="NOT IN">NOT IN</option>
+                            <option value="ANY">ANY</option>
+                          </select> 
+                  </div>
+                  <h5>Información de la Subconsulta</h5>
+                  <div class="row input-group">
+                    <label>Tabla Subconsulta<span class="required">*</span></label>
+                    <select id="select_tabla_subconsulta" class="text-capitalize" >
+                     <%= options_for_select(@tables, class: "text-capitalize") %>
+                          </select>
+                    <a href="javascript:void(0)" class="input-group-addon" id="basic-addon2"  role="button" data-toggle="popover" data-trigger="hover" data-title="¿Qué es Tabla Subconsulta?" data-content="Tabla que se ultilizará en la subconsulta" placement="right" data-container="body">
+                      <i class="mdi-action-help"></i>
+                      <abbr>¿Qué es esto?</abbr>
+                    </a>
+                  </div>
+                  <div class="row input-group">
+                      <label>Columna Referencia Subconsulta<span class="required">*</span></label>
+                         <select id="select_column_subconsulta" class="text-capitalize" >
+                       <%= options_for_select(@columns_subconsulta.collect { |column|
+      [column.name, column.name.to_s] }, class: "text-capitalize") %>
+                            </select> 
+                      <a href="javascript:void(0)" class="input-group-addon" id="basic-addon2"  role="button" data-toggle="popover" data-trigger="hover" data-title="¿Qué es la Columna Referencia Subconsulta?" data-content="Columna que se comparará con la columna base" placement="right" data-container="body">
+                        <i class="mdi-action-help"></i>
+                        <abbr>¿Qué es esto?</abbr>
+                      </a>
+                  </div>
+                  <div class="row input-group">
+                      <label>Columna Parámetro<span class="required">*</span></label>
+                         <select id="select_column_parameter_subconsulta" class="text-capitalize" >
+                       <%= options_for_select(@columns_subconsulta.collect { |column|
+      [column.name, column.name.to_s] }, class: "text-capitalize") %>
+                            </select> 
+                      <a href="javascript:void(0)" class="input-group-addon" id="basic-addon2"  role="button" data-toggle="popover" data-trigger="hover" data-title="¿Qué es la Columna Parámetro?" data-content="Columna de la subconsulta que cumplirá con el valor ingresado por el usuario" placement="right" data-container="body">
+                        <i class="mdi-action-help"></i>
+                        <abbr>¿Qué es esto?</abbr>
+                      </a>
+                      
+                  </div>
+                  
+                </div>
+                <div id="form-personalizada">
+                  <div class="input-field col s10">
+                    <label for="criterio_difusion_where">Where <span class="required">
+                    * </span>
+                    </label>
+                    <textarea class="materialize-textarea" name="criterio_difusion[where]" id="criterio_difusion_where" length="220"></textarea>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="tab-pane" id="tab4">
+            <div class="row">
+              <div class="col s8 offset-s2 ">
+                <h5 class="block">Confirma tu cuenta</h5>
+                <h6 class="form-section">Datos de la cuenta</h6>
+                <div class="form-group">
+                  <div class="col-md-3 right-align">
+                    <label>Nombre:</label>
+                  </div>
+                  <div class="col-md-4">
+                    <span class="form-control-static" data-display="criterio_difusion[nombre]"></span>
+                  </div>
+                </div>
+                <div class="form-group">
+                  <div class="col-md-3 right-align">
+                    <label>Descripción:</label>
+                  </div>
+                  <div class="col-md-4">
+                    <span class="form-control-static" data-display="criterio_difusion[descripcion]"></span>
+                  </div>
+                </div>
+
+              </div>
+            </div>
+             
+          </div>
+        </div>
+      </div>
+      <div class="form-actions">
+        <div class="row">
+          <div class="col s12 text-center">
+            <a href="javascript:;" class="btn  button-previous waves-effect">
+            <i class="mdi-navigation-arrow-back"></i> Atrás </a>
+            <a href="javascript:;" class="btn pink button-next waves-effect">
+            Continuar <i class="mdi-navigation-arrow-forward"></i>
+            </a>
+            <input type="submit" class="btn blue button-submit" value="Confirmar">
+          </div>
+        </div>
+      </div>
+    </div>
+  <% end %>
+</div>
+<div id="notificacion" class="modal text-center">
+</div>
+
+<% content_for :javascript_personalizado do %>
+  <%= javascript_include_tag 'maestros/criterio_difusions_wizard' %>
+  <%= javascript_include_tag "plugins/jquery.bootstrap.wizard.min" %>
+  <%= javascript_include_tag "plugins/pwstrength-bootstrap-1.2.4.min" %>
+  <script type="text/javascript">
+  $("#select_tabla").val("<%= @criterio_difusion.table %>");
+   $("#select_column").val("<%= @criterio_difusion.campo_seleccion %>");
+   var tipo = "<%= @criterio_difusion.tipo_consulta %>"
+   if (tipo == "basica") {
+     $("input:radio[name=tipo_consulta]").val(tipo_consulta);
+     $("#select_column_parameter").val("<%= @criterio_difusion.campo_comparacion %>")
+   }else if (tipo == "subconsulta") {
+
+   }else{
+       $("#criterio_difusion_where").val("<%= @criterio_difusion.campo_comparacion %>");
+   }
+
+
+  </script>
+<% end %>

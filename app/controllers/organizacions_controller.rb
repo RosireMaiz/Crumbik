@@ -11,7 +11,7 @@ class OrganizacionsController < ApplicationController
 
   	def consultar
 		if !usuario_signed_in?
-        	render "portal/index"
+        	redirect_to root_path
      	else
      		@tipo_organizacions = TipoOrganizacion.order('id ASC')
      		@usuario = current_usuario
@@ -173,7 +173,7 @@ class OrganizacionsController < ApplicationController
 
 	def contrato_show
 		if  !usuario_signed_in?
-			
+			redirect_to root_path
 		else
 			if  params[:subdominio].present?
 				subdominio = params[:subdominio]
@@ -191,7 +191,7 @@ class OrganizacionsController < ApplicationController
 
 	def pago_plan
 		if  !usuario_signed_in?
-			
+			redirect_to root_path
 		else
 			@contrato = Contrato.new
 			@contrato.pagos.build

@@ -37,16 +37,33 @@ def validar_criterio_difusion
 
 	def create
 		@criterio_difusion = CriterioDifusion.new(criterio_difusion_params)
-	   	@criterio_difusion.save
-		redirect_to :controller => 'criterio_difusions', :action => 'consultar'
+		@respuesta = Hash.new
+	   	if @criterio_difusion.save
+	   		@respuesta["codigo"] = 200
+	       	@respuesta["url"] = "/criterios_difusion"
+	   	else
+	   		@respuesta["codigo"] = 500
+	       @respuesta["errores"] = @criterio_difusion.errors.full_messages
+	   	end
+	    render json: @respuesta
 	end
 
 	def consultar
 		if !usuario_signed_in?
         	render "portal/index"
      	else
-	           @criterio_difusions = CriterioDifusion.order('id ASC')
-	           render "criterio_difusions/criterio_difusions"	
+				@criterio_difusions = CriterioDifusion.order('id ASC')
+				@tables = ActiveRecord::Base.connection.tables
+				@columns_subconsulta = ActiveRecord::Base.connection.columns(@tables.first)
+				@tables_filter ||= Array.new
+				@tables_filter.push("usuarios")
+				@columns = ActiveRecord::Base.connection.columns("usuarios")
+				@tables.each.each do |table|
+					if ActiveRecord::Base.connection.column_exists?(table, "usuario_id") 
+						@tables_filter.push(table)
+					end 
+				end 
+				   render "criterio_difusions/criterio_difusions"	
      	end
 	end
 
@@ -100,7 +117,7 @@ def validar_criterio_difusion
 
 private
 	def criterio_difusion_params
-      accessible = [ :nombre, :descripcion, :tabla, :campo_comparacion ] # extend with your own params
+      accessible = [ :nombre, :descripcion, :tabla, :campo_comparacion, :campo_seleccion, :tipo_consulta ] # extend with your own params
       params.require(:criterio_difusion).permit(accessible)
     end
 

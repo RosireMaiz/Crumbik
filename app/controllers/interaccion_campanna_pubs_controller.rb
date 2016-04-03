@@ -13,13 +13,38 @@ class InteraccionCampannaPubsController < ApplicationController
 			id = params[:id_campanna_publicitaria]
 			@campanna_publicitaria = CampannaPublicitarium.where("id = ?", id).first	
 			@medio_difusions = @campanna_publicitaria.campanna_publicitaria_detalles.pluck(:medio_difusion)
-			tabla = "perfils"
-			sql = "Select usuario_id from "+ tabla.to_s+" where sexo = 'femenino' "
-			records_array = ActiveRecord::Base.connection.execute(sql)
-     		ids =[]
-     		records_array.each do |row|
-				ids =row[0].to_s
+			id_usuarios = Usuario.order('id ASC').pluck(:id)
+			id_filtrado ||= Array.new
+			
+			@campanna_publicitaria.criterio_campanna_pubs.each do |criterio|
+				operador_parametro = criterio.operador
+				valor_parametro = criterio.valor
+				campo_seleccion = criterio.criterio_difusion.campo_seleccion
+				tabla = criterio.criterio_difusion.tabla
+				campo_comparacion = criterio.criterio_difusion.campo_comparacion.split("#")[0]
+				if criterio.criterio_difusion.tipo_consulta == "subconsulta"
+					sql = "Select " +  campo_seleccion.to_s + " from " + tabla.to_s + " where " + campo_comparacion.to_s + operador_parametro.to_s + " '" + valor_parametro.to_s + "' )"	
+				else
+					sql = "Select " +  campo_seleccion.to_s + " from " + tabla.to_s + " where " + campo_comparacion.to_s + operador_parametro.to_s + " '" + valor_parametro.to_s + "'"
+				end
+				
+				records_array = ActiveRecord::Base.connection.execute(sql)
+	     		id_criterio ||= Array.new
+
+	     		records_array.each do |row|
+					id_criterio.push(row[0])
+				end
+
+				id_filtrado = id_usuarios & id_criterio
+				id_usuarios = id_filtrado
 			end
+
+			#criterio = @campanna_publicitaria.criterio_campanna_pubs.first
+
+			
+
+			@usuarios = Usuario.where(:id => id_filtrado)
+				
 
 			if !request.subdomain.present?
 				organizacion = Organizacion.find_by(id: 0)
@@ -28,7 +53,7 @@ class InteraccionCampannaPubsController < ApplicationController
 			end
          	@redes_sociales = OrganizacionRedSocial.includes(:red_social).where(["red_social_id in (?) ",  RedSocial.select(:id).where("difusion = ? ", 1)]).where(["organizacion_id = ?", organizacion.id])
          	@red_socials = RedSocial.where(["difusion = ?", true])
-			@usuarios = Usuario.order('id ASC')
+			
 		end
 	end
 

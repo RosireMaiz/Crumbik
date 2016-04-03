@@ -1,6 +1,6 @@
 <% content_for :css_personalizado do %>
    <%= stylesheet_link_tag    "usuarios" %>
-      <%= stylesheet_link_tag    "organizacion" %>
+    <%= stylesheet_link_tag    "organizacion" %>
    <style type="text/css">
      .dropdown-content {
         max-height: 200px; 
@@ -87,12 +87,13 @@
               <button class="close" data-dismiss="alert">&times;</button>
               Algunos campos tienen errores. Por favor revisa abajo.
             </div>
-            <div class="feedback alert-success display-none">
+            <div class="feedback alert alert-success display-none">
               <button class="close" data-dismiss="alert">&times;</button>
               La validación fue exitosa.
             </div>
           </div>
-          
+          <input id="criterio_difusion_tipo_consulta" name="criterio_difusion[tipo_consulta]" class="file" hidden />
+          <input id="criterio_difusion_campo_comparacion" name="criterio_difusion[campo_comparacion]" class="file" hidden />
           <div class="tab-pane active" id="tab1">
             <div class="row">
               <div class="col s8 offset-s2 left">
@@ -120,7 +121,7 @@
                 <h5 class="block">Detalles del Criterio</h5>
                 <div class="row input-group">
                     <label>Tabla Referencia<span class="required">*</span></label>
-                    <select id="select_tabla" name="from_table" class="text-capitalize"  name="criterio_difusion[select_column_table]">
+                    <select id="select_tabla" class="text-capitalize" value="<%= @criterio_difusion.campo_tabla %>"  name="criterio_difusion[tabla]">
                      <%= options_for_select(@tables_filter, class: "text-capitalize") %>
                           </select>
                     <a href="javascript:void(0)" class="input-group-addon" id="basic-addon2"  role="button" data-toggle="popover" data-trigger="hover" data-title="¿Qué es Tabla Referencia?" data-content="Tabla que contiene un campo asociado a Usuario y el campo para la definición del criterio" placement="right" data-container="body">
@@ -131,7 +132,7 @@
                 </div>
                  <div class="row input-group">
                     <label>Columna Referencia<span class="required">*</span></label>
-                       <select id="select_column" class="text-capitalize" name="criterio_difusion[select_column_table]" >
+                       <select id="select_column" class="text-capitalize" name="criterio_difusion[campo_seleccion]" val="<%= @criterio_difusion.campo_seleccion %>" >
                      <%= options_for_select(@columns.collect { |column|
     [column.name, column.name.to_s] }, class: "text-capitalize") %>
                           </select> 
@@ -164,7 +165,7 @@
                       <label>Columna Parámetro<span class="required">*</span></label>
                          <select id="select_column_parameter" class="text-capitalize" >
                        <%= options_for_select(@columns.collect { |column|
-      [column.name, column.name.to_s+ "*" + column.type.to_s] }, class: "text-capitalize") %>
+      [column.name, column.name.to_s] }, class: "text-capitalize") %>
                             </select> 
                       <a href="javascript:void(0)" class="input-group-addon" id="basic-addon2"  role="button" data-toggle="popover" data-trigger="hover" data-title="¿Qué es la Columna Parámetro?" data-content="Columna que cumplirá con el valor ingresado por el usuario" placement="right" data-container="body">
                         <i class="mdi-action-help"></i>
@@ -221,7 +222,7 @@
                       <label>Columna Parámetro<span class="required">*</span></label>
                          <select id="select_column_parameter_subconsulta" class="text-capitalize" >
                        <%= options_for_select(@columns_subconsulta.collect { |column|
-      [column.name, column.name.to_s+ "*" + column.type.to_s] }, class: "text-capitalize") %>
+      [column.name, column.name.to_s] }, class: "text-capitalize") %>
                             </select> 
                       <a href="javascript:void(0)" class="input-group-addon" id="basic-addon2"  role="button" data-toggle="popover" data-trigger="hover" data-title="¿Qué es la Columna Parámetro?" data-content="Columna de la subconsulta que cumplirá con el valor ingresado por el usuario" placement="right" data-container="body">
                         <i class="mdi-action-help"></i>
@@ -292,8 +293,4 @@
   <%= javascript_include_tag 'maestros/criterio_difusions_wizard' %>
   <%= javascript_include_tag "plugins/jquery.bootstrap.wizard.min" %>
   <%= javascript_include_tag "plugins/pwstrength-bootstrap-1.2.4.min" %>
-  <script type="text/javascript">
-
-  </script>
-
 <% end %>
