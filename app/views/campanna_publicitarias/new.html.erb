@@ -23,11 +23,11 @@
       <div class="form-body steps">
         <div class="tab-content">
           <div class="feedback alert alert-danger display-none">
-            <button class="close" data-dismiss="alert"  aria-label="Close"></button>
+            <button class="close" data-dismiss="alert"  aria-label="Close">&times;</button>
             Algunos campos tienen errores. Por favor revisa abajo.
           </div>
           <div class="feedback alert alert-success display-none">
-            <button class="close" data-dismiss="alert"  aria-label="Close"></button>
+            <button class="close" data-dismiss="alert"  aria-label="Close">&times;</button>
             La validación fue exitosa.
           </div>
           <div class="panel  hoverable pad30-h">
@@ -88,11 +88,13 @@
                     <div class="col s12 valign-wrapper">
                        <div class="col s10">
                           <select id="select_medio_difusion" class="text-capitalize">
+                          <option value="todos">Seleccionar Todos</option>
                             <%= options_for_select(CampannaPublicitariaDetalle.medio_difusions.to_a.map { |w| [w[0].humanize, w[1]] }) %>
                           </select>
                         </div>
                          <a href="javascript:void(0)"  id="agregar-medio-difusion" class="white-text red lighten-1 btn-sm btn-table-action tooltipped waves-effect" data-position="bottom" data-tooltip="Agregar" data-delay="20" style="float: none;"><i class="mdi-content-add"></i></a>
                     </div>
+
                      <span id="campanna_publicitarium_campanna_publicitaria_detalles_attributes-error_local" class="hidden msj-rojo">Debe Seleccionar al menos un medio de difusión.</span>
                     <div id="medio-difusion">
                       

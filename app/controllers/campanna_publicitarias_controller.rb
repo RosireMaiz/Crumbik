@@ -27,6 +27,16 @@ class CampannaPublicitariasController < ApplicationController
 		@campanna_publicitaria.save
 		redirect_to :controller => 'campanna_publicitarias', :action => 'dashboard_campanna'
 	end
+
+	def show
+		if !usuario_signed_in?
+			redirect_to root_path
+		else
+			id = params[:id_campanna_publicitaria]
+			@campanna_publicitaria = CampannaPublicitarium.where("id = ?", id).first	
+			render "campanna_publicitarias/show"
+		end
+	end
 	
 	def edit
 		if !usuario_signed_in?

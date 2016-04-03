@@ -21,7 +21,9 @@ class Usuario < ActiveRecord::Base
   accepts_nested_attributes_for :perfil
   accepts_nested_attributes_for :pais
 
-  
+  has_many :interaccion_campanna_social, class_name: "InteraccionCampannaSocial", foreign_key: "usuario_id"
+  has_many :interaccion_campanna_pub, :through => :interaccion_campanna_social, foreign_key: "usuario_id"
+
 
   attr_accessor :rol_actual
   @rol_actual

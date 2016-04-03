@@ -8,7 +8,7 @@
                   <span> <%= campanna_publicitaria.titulo %></span>
               </div>
               <div class="panel-body">
-                <h5 class="center-align"> 1212 Interations</h5>
+                <h5 class="center-align"><%= campanna_publicitaria.cantidad_difusion %> Interacciones</h5>
                 <div class="row no-margin-v">
                   
                     <p>Medios de Difusión:</p>
@@ -38,7 +38,7 @@
                 <div class="row no-margin-v">
                 
                   <div class="secondary-content">
-                     <a href="#!" style=" padding: 10px;">
+                     <a  href="/campanna_publicitaria/ver/<%= campanna_publicitaria.id %>" style=" padding: 10px;">
                         <span>Ver</span>
                       </a>  
                       <a href="/campanna_publicitaria/editar/<%= campanna_publicitaria.id %>" style="padding: 10px;">

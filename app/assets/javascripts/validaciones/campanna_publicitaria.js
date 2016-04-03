@@ -295,7 +295,25 @@ jQuery(function ($) {
 
   $("#agregar-medio-difusion").click(function(){
     var source = $("#select_medio_difusion");
-    var id_difusion = source.val(),
+    var id_difusion = source.val();
+    if (id_difusion == "todos") {
+    	for (var i = 0; i < medio_difusion_seleted.length; i++) {
+    		medio = medio_difusion_seleted[i];
+    		if (!medio) {
+	          var icon = icon_difusion[i],
+	              text = text_difusion[i]
+	              value = value_difusion[i];
+	          medio_difusion_seleted[i] = true;
+	          $("#medio-difusion").append("<div id='div_"+ i+ "' class='col s6' style='padding-bottom: 5px;'> <span><a href='#!'  id= '"+ i + "_text' class='red-social-add light-blue' ><i class= '"+ icon + "'></i></a> "+ text + "</span> <a onclick='delete_medio_difusion(div_"+ i+ ", "+i+")' id='delete-difusion' data-id='"+ i + "' href='javascript:void(0)'  class='tooltipped delete-difusion' data-position='right' data-delay='50' data-tooltip='Eliminar'><i class='mdi-navigation-close green-text'></i></a>  <input name='campanna_publicitarium[campanna_publicitaria_detalles_attributes][][medio_difusion]' value='"+ value + "' hidden/></div>");
+	          count_medio_difusion++;
+	          if(count_medio_difusion == 1){
+	          	$("#campanna_publicitarium_campanna_publicitaria_detalles_attributes-error_local").addClass("hidden");	
+	          }
+	          
+	        }
+    	}
+
+    }else{
         medio = medio_difusion_seleted[id_difusion];
         if (!medio) {
           var icon = icon_difusion[id_difusion],
@@ -309,6 +327,7 @@ jQuery(function ($) {
           }
           
         }
+    }
     
   });
   function delete_medio_difusion(id_div, id_difusion){
@@ -327,7 +346,6 @@ jQuery(function ($) {
           var source = $("#select_criterio_difusion");
           var id_criterio_difusion = source.val();
           var id_select = "#select_"+id_criterio_difusion +"_"+ count_criterio;
-          alert(id_criterio_difusion);
           if (id_criterio_difusion != null) {
           	var request = $.ajax({
                         url: '/criterio_difusions/consultar_criterio_difusion',

@@ -107,9 +107,6 @@
                                 </a> 
                                <%= campanna_publicitaria_detalle.medio_difusion.humanize%>
                               </span>
-                              <a onclick='delete_medio_difusion(div_<%= CampannaPublicitariaDetalle.medio_difusions[campanna_publicitaria_detalle.medio_difusion]%>, <%= CampannaPublicitariaDetalle.medio_difusions[campanna_publicitaria_detalle.medio_difusion]%>)' id='delete-difusion' data-id='<%= CampannaPublicitariaDetalle.medio_difusions[campanna_publicitaria_detalle.medio_difusion]%>' href='javascript:void(0)'  class='tooltipped delete-difusion' data-position='right' data-delay='50' data-tooltip='Eliminar'>
-                                <i class='mdi-navigation-close green-text'></i>
-                              </a>  
                               <input name='campanna_publicitarium[campanna_publicitaria_detalles_attributes][][medio_difusion]' value='<%= campanna_publicitaria_detalle.medio_difusion %>' hidden/>
                               <input name='campanna_publicitarium[campanna_publicitaria_detalles_attributes][][id]' value='<%= CampannaPublicitariaDetalle.medio_difusions[campanna_publicitaria_detalle.id]%>' hidden/>
                             </div>
@@ -157,11 +154,6 @@
                             <div class='col s5'>
                               <div class='input-field input-group no-margin-v'>
                                 <input id='valor' name='campanna_publicitarium[criterio_campanna_pubs_attributes][][valor]' type='text' class='validate' value="<%= campanna_publicitaria_pub.valor %>">
-                                  <a onclick='delete_criterio_difusion(div_criterio_<%= campanna_publicitaria_pub.criterio_difusion.id%>_<%= index %>)' id='delete-criterio' href='javascript:void(0)'  class='tooltipped input-group-addon' data-position='right' data-delay='50' data-tooltip='Eliminar'>
-                                    <i class='mdi-navigation-close green-text'>
-                                    
-                                    </i>
-                                  </a>
                                   <label for='valor'>Valor</label>
                                 </div> 
                             </div>

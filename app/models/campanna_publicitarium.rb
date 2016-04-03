@@ -9,4 +9,12 @@ class CampannaPublicitarium < ActiveRecord::Base
   	accepts_nested_attributes_for :campanna_publicitaria_detalles
   	accepts_nested_attributes_for :criterio_campanna_pubs
   	
+  	def cantidad_difusion
+  		cantidad = 0
+  		self.campanna_publicitaria_detalles.each do |campanna_publicitaria_detalle|
+  			cantidad = cantidad + campanna_publicitaria_detalle.cantidad_difusion_detalle
+  		end
+  		cantidad
+  	end
+  	
  end

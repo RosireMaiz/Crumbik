@@ -6,10 +6,6 @@ end
 
 
 Rails.application.routes.draw do
-	post 'token/generate' => 'token#generate'
-	post 'call/connect' => 'call#connect'
-	get 'dashboard' => 'interaccion_campanna_pubs#index'
-
 	root 'portal#index'
 
 	match "/inicio_administrable" => "portal#index_administrable", via: :get
@@ -240,6 +236,7 @@ Rails.application.routes.draw do
 	match "/campanna_publicitaria/crear_campanna_publicitaria" => "campanna_publicitarias#create", via: :post
     match "/campanna_publicitaria/editar/:id_campanna_publicitaria" => "campanna_publicitarias#edit", via: :get
     match "/campanna_publicitaria/editar" => "campanna_publicitarias#save_edit", via: :post
+    match "/campanna_publicitaria/ver/:id_campanna_publicitaria" => "campanna_publicitarias#show", via: :get
 	#match "/campanas_publicitaria/envio_sms" => "actividad_publicitaria#actividad_publicitarias_sms", via: :get
 	#match "/campanas_publicitaria/llamadas" => "actividad_publicitaria#actividad_publicitarias_llamadas", via: :get
 	#match "/campanas_publicitaria/emails" => "actividad_publicitaria#actividad_publicitarias_email", via: :get

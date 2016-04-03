@@ -83,10 +83,8 @@
                       ],
         selectable: true,
         select: function(start, end, allDay) {
-          endtime = $.fullCalendar.formatDate(end,'h:mm tt');
-          starttime = $.fullCalendar.formatDate(start,'ddd, MMM d, h:mm tt');
-          var mywhen = starttime + ' - ' + endtime;
-          alert(mywhen);
+          var date =  $.fullCalendar.formatDate(start,'yyyy-MM-d');
+
        }
     });
   </script>

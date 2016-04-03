@@ -3,6 +3,10 @@ class OrganizacionRedSocial < ActiveRecord::Base
 	belongs_to :organizacion
   	belongs_to :red_social
 
+  	has_many :interaccion_campanna_social, class_name: "InteraccionCampannaSocial", foreign_key: "organizacion_red_socials_id"
+  	has_many :interaccion_campanna_pub, :through => :interaccion_campanna_social, foreign_key: "organizacion_red_socials_id"
+
+
   	def self.find_for_oauth(auth, idRedSocial, subdominio)
   		organizacion = Organizacion.where(["subdominio = ?", subdominio]).first
     	organizacion_red_social = OrganizacionRedSocial.find_by(uid: auth.uid, provider: auth.provider, organizacion_id: organizacion.id)

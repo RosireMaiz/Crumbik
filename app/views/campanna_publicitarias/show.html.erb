@@ -1,0 +1,107 @@
+<div class="row titulo-seccion banner banner-perfil">
+  <div class="contenedor">
+    <div class="col s6">
+      <h5 class="text-uppercase">
+       Campaña Publicitaria
+      </h5>
+    </div>
+    <div class="col s6 text-right ">
+      <ol class="breadcrumb">
+        <li>
+          <a href="/">Inicio</a>
+        </li>
+        <li class="active">Campaña Publicitaria</li>
+      </ol>
+    </div>
+  </div>
+</div>
+
+<div id="form" class="row pad15-h">
+    <div>
+      <div class="form-body steps">
+        <div class="tab-content">
+          <div class="pad30-h">
+            <div class="row">
+              <div class="col s12 pad15">
+                <div class="col s12">
+                  <h5 class="form-section">Datos de la Campaña Publicitaria</h5>
+                    <div class="row no-margin-v pad5-t">
+                      <div class="col s12 m4 right-align ">
+                        <label>Título:</label>
+                      </div>
+                      <div class="col s12 m8 no-padding">
+                        <span class="form-control-static">  <%= @campanna_publicitaria.titulo %></span>
+                      </div>
+                    </div>
+                    
+                    <div class="row no-margin-v pad5-t">
+                       <div class="col s12 m4 right-align">
+                          <label>Descripción:</label>
+                        </div>
+                        <div class="col s12 m8 no-padding">
+                          <span class="form-control-static">  <%= @campanna_publicitaria.descripcion %></span>
+                        </div>
+                    </div>
+                    <div class="row no-margin-v pad5-t">
+                       <div class="col s12 m4 right-align ">
+                          <label>Fecha de Inicio:</label>
+                        </div>
+                        <div class="col s12 m8 no-padding">
+                          <span class="form-control-static">  <%= @campanna_publicitaria.fecha_inicio.strftime("%d/%m/%Y ") %></span>
+                        </div>
+                    </div>
+                    <div class="row no-margin-v pad5-t">
+                       <div class="col s12 m4 right-align">
+                          <label>Fecha de Finalización:</label>
+                        </div>
+                        <div class="col s12 m8 no-padding">
+                          <span class="form-control-static ">  <%= @campanna_publicitaria.fecha_fin.strftime("%d/%m/%Y ") %></span>
+                        </div>
+                    </div>
+                    <div class="row no-margin-v pad5-t">
+                       <div class="col s12 m4 right-align">
+                          <label>Medios de Difusión:</label>
+                        </div>
+                        <div class="col s12 m8 no-padding">
+                          <span class="form-control-static"> 
+                            <% if ! @campanna_publicitaria.campanna_publicitaria_detalles.nil?  %>
+                              <ul  class='list-inline'> 
+                                <% @campanna_publicitaria.campanna_publicitaria_detalles.each do |campanna_publicitaria_detalle| %>
+                                     <li style="padding-bottom: 5px;"> <span ><a href="#!" class="red-social-add light-blue tooltipped" data-tooltip="<%= campanna_publicitaria_detalle.medio_difusion.humanize %>">
+                                     <i class="<%= $ICONOS_DIFUSION[CampannaPublicitariaDetalle.medio_difusions[campanna_publicitaria_detalle.medio_difusion]] %>"></i></a></span> 
+
+                                     </li>
+                                <% end %>
+                              </ul>
+                            <% end %>
+                          </span>
+                        </div>
+                    </div>
+                    <div class="row no-margin-v pad5-t">
+                       <div class="col s12 m4 right-align">
+                          <label>Criterios:</label>
+                        </div>
+                        <div class="col s12 m8 no-padding">
+                          <span class="form-control-static"> 
+                            <% if ! @campanna_publicitaria.criterio_campanna_pubs.nil?  %>
+                              <ul > 
+                                <% @campanna_publicitaria.criterio_campanna_pubs.each do |campanna_criterio_difusion| %>
+                                     <li style="padding-bottom: 5px;"> <span ><%= campanna_criterio_difusion.criterio_difusion.nombre %> <%= campanna_criterio_difusion.operador %> <%= campanna_criterio_difusion.valor %></span> 
+
+                                     </li>
+                                <% end %>
+                              </ul>
+                            <% end %>
+                          </span>
+                        </div>
+                    </div>
+
+                </div>
+              </div>
+            </div>
+           
+          </div>
+        </div>
+      </div>
+    </div>
+</div>

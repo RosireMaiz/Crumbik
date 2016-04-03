@@ -27,6 +27,10 @@ class InteraccionCampannaPubsController < ApplicationController
 				else
 					sql = "Select " +  campo_seleccion.to_s + " from " + tabla.to_s + " where " + campo_comparacion.to_s + operador_parametro.to_s + " '" + valor_parametro.to_s + "'"
 				end
+
+				if campo_comparacion.to_s['('] && !campo_comparacion.to_s[")"]
+					sql = sql + ")"
+				end
 				
 				records_array = ActiveRecord::Base.connection.execute(sql)
 	     		id_criterio ||= Array.new
