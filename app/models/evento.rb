@@ -19,7 +19,7 @@ class Evento < ActiveRecord::Base
       :description =>  self.descripcion,
       #:user_name => self.user_name,
       #:url => Rails.application.routes.url_helpers.events_path(id),
-      	:color => self.color
+      #	:color => self.color
       
     }
   end

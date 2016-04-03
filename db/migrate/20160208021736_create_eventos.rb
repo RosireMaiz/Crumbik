@@ -3,8 +3,6 @@ class CreateEventos < ActiveRecord::Migration
     create_table :eventos do |t|
       t.string :titulo
       t.text :descripcion
-      t.string :url
-      t.string :color
       t.datetime :inicio
       t.datetime :fin
       t.references :usuario, index: true
