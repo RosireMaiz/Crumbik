@@ -39,6 +39,12 @@ class NotasController < ApplicationController
 		end
 	end
 
+	def cancelar
+		id = params[:idnota]
+		@nota = Notum.where(id: id).first
+		render :json => @nota
+	end		
+
 	def eliminar
 		id = params[:idnota]
 		nota = Notum.where(id: id).first
@@ -50,9 +56,4 @@ class NotasController < ApplicationController
 	   	end
 	end
 
-	def consultar
-		id = params[:idnota]
-		@nota = Notum.where(id: id).first
-		render :json => @nota
-	end
 end

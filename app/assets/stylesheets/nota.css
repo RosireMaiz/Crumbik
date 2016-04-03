@@ -24,7 +24,7 @@
 .fixed-action-btn.horizontal ul {
     text-align: left;
     left: 64px !important;
-    top: 26% !important;
+    top: 50% !important;
     -webkit-transform: translateY(-50%);
     transform: translateY(-50%);
     height: 100%;
@@ -38,8 +38,4 @@
 }
 .fixed-action-btn.horizontal {
     padding: 0 0 0 10px;
-}
-.ancho{
-    padding-top: 5%;
-    padding-bottom: 5%;
 }
