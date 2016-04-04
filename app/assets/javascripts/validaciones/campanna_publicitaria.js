@@ -375,3 +375,20 @@ jQuery(function ($) {
   function delete_criterio_difusion(id_div){
      $(id_div).remove();
    };
+
+  function eliminar(id_campanna){
+    var request = $.ajax({
+                            url: '/campanna_publicitaria/eliminar',
+                            method: "POST",
+                            data: { id_campanna_publicitaria: id_campanna},
+                            dataType: "JSON"
+                          });
+
+        request.done(function( data ) {
+                                        location.reload(); 
+                                      });
+                     
+        request.fail(function( jqXHR, textStatus ) {
+                                                    alert( "Request failed: " + textStatus );
+                                                   });
+  }

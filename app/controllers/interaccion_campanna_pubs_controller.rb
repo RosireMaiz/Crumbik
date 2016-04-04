@@ -2,8 +2,6 @@ class InteraccionCampannaPubsController < ApplicationController
 
 	def index
 		@usuarios = Usuario.all
-
-
 	end
 
 	def new_difusion

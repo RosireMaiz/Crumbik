@@ -48,6 +48,25 @@ class CampannaPublicitariasController < ApplicationController
 		end
 	end
 
+	def eliminar
+		id = params[:id_campanna_publicitaria]
+		campanna_publicitaria = CampannaPublicitarium.where(id: id).first
+		
+		detalles = campanna_publicitaria.campanna_publicitaria_detalles
+		if ! detalles.nil?
+			detalles.each do |detalle|
+				detalle.destroy
+			end
+		end
+		
+		campanna_publicitaria.destroy
+      if campanna_publicitaria.destroyed?
+      	render :text =>'{ "success" : "true"}'
+	  else
+		render :text => '{ "success" : "false"}'
+	   end
+	end
+
 	def save_edit
 		id = params[:campanna_publicitarium][:id]
 

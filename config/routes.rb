@@ -223,30 +223,15 @@ Rails.application.routes.draw do
 	match "/organizacion/gestionplanes/pagar" => "organizacions#pago_plan", via: :get
 	match "/organizacion/procesar_pago" => "organizacions#procesar_pago", via: :post
 
-	#match "/publicidad/interaccion_social/:id_publicidad" => "publicidads#interaccion_social", via: :get
-	#match "/resultados_social" => "interaccion_socials#consuta_interaccion_socials", via: :get
-	#match "/interaccion_social" => "interaccion_socials#consuta_interaccion_socials", via: :get
-	#match "/publicidad_social" => "publicidads#consultar", via: :get
-
 	match "/mercadeo/actividades_publicitarias" =>  "campanna_publicitarias#dashboard_campanna", via: :get
 	match "/actividad_publicitaria/agregar" => "campanna_publicitarias#new", via: :get
-	#match "/mercadeo/actividades_publicitarias" =>  "actividad_publicitaria#consultar", via: :get
-	#match "/campanas_publicitaria/consultar"  =>  "actividad_publicitaria#consultar", via: :get
-	#match "/actividad_publicitaria/agregar" => "actividad_publicitaria#new", via: :get
+
 	match "/campanna_publicitaria/crear_campanna_publicitaria" => "campanna_publicitarias#create", via: :post
     match "/campanna_publicitaria/editar/:id_campanna_publicitaria" => "campanna_publicitarias#edit", via: :get
     match "/campanna_publicitaria/editar" => "campanna_publicitarias#save_edit", via: :post
     match "/campanna_publicitaria/ver/:id_campanna_publicitaria" => "campanna_publicitarias#show", via: :get
-	#match "/campanas_publicitaria/envio_sms" => "actividad_publicitaria#actividad_publicitarias_sms", via: :get
-	#match "/campanas_publicitaria/llamadas" => "actividad_publicitaria#actividad_publicitarias_llamadas", via: :get
-	#match "/campanas_publicitaria/emails" => "actividad_publicitaria#actividad_publicitarias_email", via: :get
-	#match "/campanas_publicitaria/llamadas_clientes/:id" => "actividad_publicitaria#actividad_publicitarias_llamadas_clientes", via: :get
-	#match "/llamada" => "actividad_publicitaria#llamada", via: :get
-	#match "/campanas_publicitaria/sms_clientes/:id" => "actividad_publicitaria#enviar_sms", via: :get
-	#match "/campanas_publicitaria/email_clientes/:id" => "actividad_publicitaria#enviar_email", via: :get
-	#match "/campanas_publicitaria/enviar_sms" => "actividad_publicitaria#enviar_mensaje", via: :post
-	#match "/campanas_publicitaria/enviar_correo/" => "actividad_publicitaria#enviar_correo", via: :post
-
+ 	match "/campanna_publicitaria/eliminar" => "campanna_publicitarias#eliminar", via: :post
+	
 	match "/campanas_publicitaria/difusion/:id_campanna_publicitaria" => "interaccion_campanna_pubs#new_difusion", via: :get
 	match "/campanna_publicitarias/difusion_social" => "interaccion_campanna_pubs#red_social", via: :post
 	match "/campanna_publicitarias/difusion_sms" => "interaccion_campanna_pubs#sms", via: :post
@@ -256,7 +241,6 @@ Rails.application.routes.draw do
 	match "/graficas/interaccion_productos"  => "productos#consulta_interaccion_productos", via: :get
 
 	match "/dessarroladores" => "portal#desarrolladores", via: :get
-	match "/rendimiento_sistema" => "portal#desarrolladores", via: :get
 
     match "/publicidad/crear_publicidad" => "publicidads#create", via: :post
     match "/publicidad/editar/:id_publicidad" => "publicidads#edit", via: :get
@@ -274,6 +258,17 @@ Rails.application.routes.draw do
 	match "/tipo_clientes/consultar_tipo_cliente" => "tipo_clientes#consultar_tipo_cliente", via: :post
 	match "/tipo_clientes/eliminar" => "tipo_clientes#eliminar", via: :post
 
+
+	match "/mercadeo/variablespsicograficas/agregar" => "variable_psicograficas#new", via: :get
+	match "/variable_psicografica/crear_variable_psicografica" => "variable_psicograficas#create", via: :post
+	match "/mercadeo/variablespsicograficas/consultar" => "variable_psicograficas#consultar", via: :get
+	match "/variable_psicografica/editar/:id_variable_psicografica" => "variable_psicograficas#edit", via: :get
+	match "/variable_psicografica/editar" => "variable_psicograficas#save_edit", via: :post
+	match "/mercadeo/variablespsicograficas/eliminar" => "variable_psicograficas#eliminar", via: :post
+	match "/mercadeo/variablespsicograficas/update_estatus" => "variable_psicograficas#update_estatus", via: :post
+
+	match "/comentarios/crear_comentario" => "comentarios#create", via: :post
+	
 	devise_scope :usuario do
 	    post "/entrar" => "devise/sessions#create"
 	    get "/entrar" => "devise/sessions#new"
@@ -320,15 +315,7 @@ Rails.application.routes.draw do
 		
 		match "/catalogo" => "productos#catalogo", via: :get
 		match "/catalogo/:id_producto" => "productos#show", via: :get
-		match "/comentarios/crear_comentario" => "comentarios#create", via: :post
 
-		match "/mercadeo/variablespsicograficas/agregar" => "variable_psicograficas#new", via: :get
-    	match "/variable_psicografica/crear_variable_psicografica" => "variable_psicograficas#create", via: :post
-		match "/mercadeo/variablespsicograficas/consultar" => "variable_psicograficas#consultar", via: :get
-		match "/variable_psicografica/editar/:id_variable_psicografica" => "variable_psicograficas#edit", via: :get
-		match "/variable_psicografica/editar" => "variable_psicograficas#save_edit", via: :post
-		match "/mercadeo/variablespsicograficas/eliminar" => "variable_psicograficas#eliminar", via: :post
-		match "/mercadeo/variablespsicograficas/update_estatus" => "variable_psicograficas#update_estatus", via: :post
 	end
 
 	match "/notas/crear_nota" => "notas#create", via: :post

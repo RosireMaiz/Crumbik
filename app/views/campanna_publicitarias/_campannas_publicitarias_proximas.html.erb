@@ -44,7 +44,7 @@
                       <a href="/campanna_publicitaria/editar/<%= campanna_publicitaria.id %>" style="padding: 10px;">
                         <span>Editar</span>
                       </a>                 
-                      <a href="#!" class="modal-trigger" style="padding: 10px;">
+                      <a href="#modaleliminar<%= campanna_publicitaria.id %>" class="modal-trigger" style="padding: 10px;">
                           <span>Eliminar</span>
                       </a>
                   </div>
@@ -53,6 +53,28 @@
               </div>
             </div>
           </div>
+        <div id="modaleliminar<%= campanna_publicitaria.id %>" class="modal">
+          <div class="modal-content">
+                <a style="float:right;" class="waves-effect btn-flat modal-close"><i class="mdi-content-clear"></i></a>
+               
+                <h5>Eliminar Campaña Publicitaria</h5>
+               
+                <div class="row pad30-t" >
+                    <div class="col s12 text-center">
+                     
+                        <h6 style=" font-size: 20px;"> ¿Seguro que desea eliminar la Campaña Publicitaria? </h6>
+                      
+                      <div style="padding-top: 35px;" class="right">
+                      
+                        <input type="button" class="btn btn-success btn-sm" value="Aceptar" onclick="eliminar(<%= campanna_publicitaria.id %>)">
+                      
+                        <input type="button" class="btn btn-danger btn-sm modal-close" value="Cancelar">
+                      </div>
+
+                    </div>
+                </div>                
+          </div>
+        </div> 
         <%  end -%>
     <%  end -%>
     <div class="row valign-wrapper">

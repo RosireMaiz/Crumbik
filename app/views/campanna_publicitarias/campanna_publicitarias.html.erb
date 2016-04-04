@@ -95,3 +95,6 @@
   <%= render "campanna_publicitarias/campannas_publicitarias_ejecutadas" %>
   
 </div>
+<% content_for :javascript_personalizado do %>  
+  <%= javascript_include_tag 'validaciones/campanna_publicitaria' %>
+<% end %>
