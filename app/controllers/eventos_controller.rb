@@ -1,20 +1,52 @@
 class EventosController < ApplicationController
 
-	def new
-		if !usuario_signed_in?
-			redirect_to root_path
-		else
-			@evento = Evento.new
-				render "eventos/new"
-		
-		end
+	def create
+	   	titulo = params[:titulo]
+		descripcion = params[:descripcion]
+		inicio = params[:inicio]
+		fin = params[:fin]
+	  	@evento = Evento.new
+	   	@evento.titulo = titulo
+	   	@evento.descripcion = descripcion
+	   	@evento.inicio = inicio
+	   	@evento.fin = fin
+	   	@evento.usuario_id = current_usuario.id
+	   	if @evento.save
+	   		render :text =>'{ "success" : "true"}'
+	  	else
+			render :text => '{ "success" : "false"}'
+	   	end
 	end
 
-	def create
-		@evento = Evento.new(evento_params)
-		@evento.usuario_id = current_usuario.id
-	    @evento.save
-	  	redirect_to :controller => 'eventos', :action => 'calendario'
+
+	def cancelar
+		id = params[:idevento]
+		@evento = Evento.where(id: id).first
+		render :json => @evento
+	end	
+
+	def eliminar
+		id = params[:idevento]
+		evento = Evento.where(id: id).first
+		evento.destroy
+		if evento.destroyed?
+			render :text =>'{ "success" : "true"}'
+	  	else
+			render :text => '{ "success" : "false"}'
+	 	end
+	end
+
+	def update
+		id = params[:idevento]
+		titulo = params[:titulo]
+		descripcion = params[:descripcion]
+		inicio = params[:inicio]
+		fin = params[:fin]
+		if Evento.update(id, :titulo => titulo, :descripcion => descripcion, :inicio => inicio, :fin => fin)
+			render :text =>'{ "success" : "true"}'
+		else
+			render :text => '{ "success" : "false"}'
+		end
 	end
 
 	def calendario
