@@ -73,9 +73,6 @@ $(document).ready(function(){
         format: 'dd/mm/yyyy',
         closeOnSelect: true,
         closeOnClear: false,
-        onSet: function () {
-          this.close();
-          },
       });
 
 	$(function () {

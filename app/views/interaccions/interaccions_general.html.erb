@@ -1,0 +1,209 @@
+<div class="row titulo-seccion no-margin-v banner banner-perfil">
+  <div class="contenedor">
+    <div class="col s6">
+      <h5 class="text-uppercase">
+       Interacciones 
+      </h5>
+    </div>
+    <div class="col s6 text-right ">
+      <ol class="breadcrumb" style="margin-bottom: 0px !important">
+        <li>
+          <a href="/">Inicio</a>
+        </li>
+        <li class="active">Interacciones</li>
+      </ol>
+    </div>
+  </div>
+</div>
+
+<div class="row pad30-h " style="padding-top: 15px;">
+
+  <div class="row">
+    <div class="col s12 ">
+       
+      <div class="valign-wrapper">
+
+            <% if request.subdomain.present? %>
+              <div class="input-field col m5 s12">
+                <select id="select_producto" name="rol" >
+                  <option value="-1">Elija un Producto</option>
+                  <%= options_from_collection_for_select(Producto.all, :id, :nombre) %>
+                </select>
+                <label>Producto</label>
+              </div>
+              <a class="waves-effect waves-light btn z-depth-1" id="buscar_producto" style = "margin-left: 27px;">Buscar</a>
+            <% else %>
+              <div class="input-field col m5 s12">
+                <select id="select_plan" name="rol" >
+                  <option value="-1" selected>Elija un Plan</option>
+                  <%= options_from_collection_for_select(Plan.all, :id, :nombre) %>
+                </select>
+                <label>Plan</label>
+              </div>
+              <a class="waves-effect waves-light btn z-depth-1 " id="buscar_plar" style = "margin-left: 27px;">Buscar </a>
+            <% end %>
+      </div>
+            
+    </div>  
+  </div>
+
+  <div class="row">
+    <div class="col s10 offset-s1">
+      <ul class="tabs">
+        <li class="tab col s12 m3">
+          <a class="grey-text text-darken-2 active" href="#comentarios">Comentarios</a>
+        </li>
+        <li class="tab col s12 m3">
+          <a class="grey-text text-darken-2" href="#puntuaciones">Puntuaciones</a>
+        </li>
+        <li class="tab col s12 m3">
+          <a class="grey-text text-darken-2 " href="#me_gusta">Me Gusta</a>
+        </li>
+        <li class="tab col s12 m3">
+          <a class="grey-text text-darken-2 " href="#compartir">Compartir</a>
+        </li>
+      </ul>
+    </div>
+  </div>
+
+  <div class="col s10 offset-s1">
+  <span class="negrita"> <%if !@producto.nil? %>  <%= @producto.nombre %> <% end %> </span>
+  <span class="negrita"> <%if !@plan.nil? %>  <%= @plan.nombre %> <% end %> </span>
+    <div class="row" id="comentarios">
+
+      <div class="col s8 offset-s2 ">
+        <div>
+          <canvas id="canvas" height="350" width="600"></canvas>
+        </div>
+      </div>
+      
+    </div>
+    <div class="row" id="puntuaciones">
+      <div class="col s8 offset-s2">
+      <div>
+        <canvas id="canvas_bar" height="350" width="600"></canvas>
+        </div>
+      </div>
+      
+    </div>
+    <div class="row" id="me_gusta">
+      <div class="col s8 offset-s2">
+        <div>
+          <canvas id="canvas_megusta" height="350" width="600"></canvas>
+        </div>
+      </div>
+      
+    </div>
+    <div class="row" id="compartir">
+      <div class="col s8 offset-s2">
+        <div>
+          <canvas id="canvas_compartir" height="350" width="600"></canvas>
+        </div>
+      </div>
+      
+    </div>
+  </div>
+</div>
+
+<% content_for :javascript_personalizado do %>
+  <%= javascript_include_tag 'plugins/chart/Chart' %>
+  <script type="text/javascript">
+
+
+                $("#buscar_producto").click(function(evt){
+                   id_producto = $("#select_producto").val();
+                   window.location.href = "/interacciones/producto/"+id_producto;
+                });
+
+                $("#buscar_plan").click(function(evt){
+                    id_plan = $("#select_plan").val();
+                    window.location.href = "/interacciones/plan/"+id_plan;
+                });
+
+
+    var lineChartDataComment = {
+      labels : ["Enero","Febrero","Marzo","Abril","Mayo","Junio","Julio","Agosto", "Septiembre", "Octubre", "Noviembre", "Diciembre"],
+      datasets : [
+        {
+          label: "Comentarios",
+          fillColor : "rgba(151,187,205,0.2)",
+          strokeColor : "rgba(151,187,205,1)",
+          pointColor : "rgba(151,187,205,1)",
+          pointStrokeColor : "#fff",
+          pointHighlightFill : "#fff",
+          pointHighlightStroke : "rgba(220,220,220,1)",
+          data : <%= @comentarios_count %>
+        },
+      ]
+
+    };
+    var lineChartDataLike = {
+      labels : ["Enero","Febrero","Marzo","Abril","Mayo","Junio","Julio","Agosto", "Septiembre", "Octubre", "Noviembre", "Diciembre"],
+      datasets : [
+        {
+          label: "Me Gusta",
+          fillColor : "rgba(151,187,205,0.2)",
+          strokeColor : "rgba(151,187,205,1)",
+          pointColor : "rgba(151,187,205,1)",
+          pointStrokeColor : "#fff",
+          pointHighlightFill : "#fff",
+          pointHighlightStroke : "rgba(220,220,220,1)",
+          data : <%= @like_count %>
+        },
+      ]
+
+    };
+    var lineChartDataShare = {
+      labels : ["Enero","Febrero","Marzo","Abril","Mayo","Junio","Julio","Agosto", "Septiembre", "Octubre", "Noviembre", "Diciembre"],
+      datasets : [
+        {
+          label: "Compartir",
+          fillColor : "rgba(151,187,205,0.2)",
+          strokeColor : "rgba(151,187,205,1)",
+          pointColor : "rgba(151,187,205,1)",
+          pointStrokeColor : "#fff",
+          pointHighlightFill : "#fff",
+          pointHighlightStroke : "rgba(220,220,220,1)",
+          data : <%= @share_count %>
+        },
+      ]
+
+    };
+      var barChartData = {
+      labels : ["Enero","Febrero","Marzo","Abril","Mayo","Junio","Julio","Agosto", "Septiembre", "Octubre", "Noviembre", "Diciembre"],
+    datasets : [
+      {
+        fillColor : "rgba(151,187,205,0.2)",
+        strokeColor : "rgba(151,187,205,1)",
+        highlightFill: "rgba(220,220,220,0.75)",
+        highlightStroke: "rgba(151,187,205,1)",
+        data : <%= @average_count %>
+      },
+    ]
+
+  };
+
+
+    var ctx = document.getElementById("canvas").getContext("2d");
+    myLine = new Chart(ctx).Line(lineChartDataComment, {
+      responsive: true
+    });
+    var ctx2 = document.getElementById("canvas_bar").getContext("2d");
+    myBar = new Chart(ctx2).Bar(barChartData, {
+      responsive : true
+    });
+
+    var ctx3 = document.getElementById("canvas_megusta").getContext("2d");
+    myLine = new Chart(ctx3).Line(lineChartDataLike, {
+      responsive: true
+    });
+
+    var ctx4 = document.getElementById("canvas_compartir").getContext("2d");
+    myLine = new Chart(ctx4).Line(lineChartDataShare, {
+      responsive: true
+    });
+
+
+
+  </script>
+<% end %>

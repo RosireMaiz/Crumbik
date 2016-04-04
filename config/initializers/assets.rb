@@ -79,3 +79,5 @@ Rails.application.config.assets.precompile += %w( plugins/jquery-ui.js )
 Rails.application.config.assets.precompile += %w( plugins/jquery-ui.min.js  )
 
 Rails.application.config.assets.precompile += %w( tinymce/tinymce.min.js  )
+Rails.application.config.assets.precompile += %w( plugins/chart/Chart.js )
+Rails.application.config.assets.precompile += %w( plugins/chart/Chart.min.js )

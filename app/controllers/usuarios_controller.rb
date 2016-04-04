@@ -170,8 +170,31 @@ class UsuariosController < ApplicationController
 		 @perfil.apellidos = params[:usuario][:perfil_attributes][:apellidos]
 		 @perfil.sexo = params[:usuario][:perfil_attributes][:sexo]
 		 @perfil.ocupacion = params[:usuario][:perfil_attributes][:ocupacion]
+		 @perfil.fecha_nacimiento = params[:usuario][:perfil_attributes][:fecha_nacimiento]
 		 movil = params[:usuario][:perfil_attributes][:telefono_movil]
 		 pais = Pais.find_by("id = ?" ,params[:usuario][:pais_id])
+
+
+		 variable_usuario = @usuario.variable_usuario
+		if ! variable_usuario.nil?
+			variable_usuario.each do |variable_usuario|
+				variable_usuario.destroy
+			end
+		end
+
+		variable_psicograficas = params[:usuario][:variable_psicografica_ids]
+
+		usuario_id = @usuario.id
+		if ! variable_psicograficas.nil?
+			variable_psicograficas.each do |variable_psicografica|
+				if !variable_psicografica.blank?
+			 		@variable_usuario = VariableUsuario.new
+			 		@variable_usuario.usuario_id = usuario_id
+			 		@variable_usuario.variable_psicografica_id = variable_psicografica
+					@variable_usuario.save
+				end
+			end
+		end
 
 		 if !(movil == @perfil.telefono_movil)
 		 	@perfil.telefono_movil = params[:usuario][:perfil_attributes][:telefono_movil]

@@ -30,14 +30,10 @@ class ProductosController < ApplicationController
 		if !usuario_signed_in?
         	render "portal/index"
      	else
-
-	       
-	           @productos = Producto.order('nombre ASC').page(params[:page]).per(9)
-	           @categorias = Categorium.order('nombre ASC')
-	           @valor = true;
-	           render "productos/productos"	
-
-         
+           @productos = Producto.order('nombre ASC').page(params[:page]).per(9)
+           @categorias = Categorium.order('nombre ASC')
+           @valor = true;
+           render "productos/productos"	
      	end
 	end
 
@@ -125,19 +121,21 @@ class ProductosController < ApplicationController
 		
 		if usuario_signed_in?
 			usuario_id = current_usuario.id
-			#@puntuacion = Puntuacion.where( ["producto_id = ? AND usuario_id = ? ", id_producto, usuario_id] ).first
+			@puntuacion =  Interaccion.where("producto_id = ?  AND tipo_interaccion = ? AND usuario_id = ? ", id_producto, Interaccion.tipo_interaccions["puntuacion"], usuario_id).first
 		end
 
 		if @puntuacion.nil?
-			#@puntuacion =  Puntuacion.new
-			#@puntuacion.puntuacion = 0
+			@puntuacion =  Interaccion.new
+			@puntuacion.contenido = 0
 		end
 
-		#@promedio = Puntuacion.where("producto_id = ? ", id_producto).average(:puntuacion)
-
+		@top_puntuacion = Producto.new.top_puntuacion
+		@top_popular = Producto.new.top_popular
+		@promedio =  Interaccion.where("producto_id = ?  AND tipo_interaccion = ? ", id_producto, Interaccion.tipo_interaccions["puntuacion"]).average(:contenido)
+		@like = Interaccion.where( ["producto_id = ? AND usuario_id = ? AND tipo_interaccion = ?", id_producto, usuario_id, Interaccion.tipo_interaccions["me_gusta"]] ).first
 		@producto = Producto.where("id = ?", id_producto).first	
-		#@comentarios = Comentario.includes(:usuario).where("producto_id = ?", id_producto).order("created_at ASC")
-		#@comentario = Comentario.new
+		@comentarios = Interaccion.includes(:usuario).where("producto_id = ? and tipo_interaccion = ?", id_producto, Interaccion.tipo_interaccions["comentario"]).order("created_at ASC")
+		@comentario = Interaccion.new()
 		
 		render "productos/show"
 	end
@@ -146,32 +144,78 @@ class ProductosController < ApplicationController
 		id_producto = params[:idproducto]
 		puntuacion = params[:puntuacion]
 		usuario_id = current_usuario.id
-		#@puntuacion = Puntuacion.where( ["producto_id = ? AND usuario_id = ? ", id_producto, usuario_id] ).first
+		@puntuacion = Interaccion.where( ["producto_id = ? AND usuario_id = ? AND tipo_interaccion = ?", id_producto, usuario_id, Interaccion.tipo_interaccions["puntuacion"]] ).first
+		 
+		if @puntuacion.nil?
+			@puntuacion = Interaccion.new
+			@puntuacion.producto_id = id_producto
+			@puntuacion.usuario_id = usuario_id
+			@puntuacion.contenido = puntuacion.to_s
+			@puntuacion.tipo_interaccion =  Interaccion.tipo_interaccions["puntuacion"]
+		else
+			@puntuacion.contenido = puntuacion.to_s
+		end
 		
-		#if @puntuacion.nil?
-			#@puntuacion = Puntuacion.new
-			#@puntuacion.producto_id = id_producto
-			#@puntuacion.usuario_id = usuario_id
-			#@puntuacion.puntuacion = puntuacion
-		#else
-			#@puntuacion.puntuacion = puntuacion	
-		#end
 		
-		
-		#if @puntuacion.save
-			@promedio = 0 # Puntuacion.where("producto_id = ? ", id_producto).average(:puntuacion)
+		if @puntuacion.save
+			@promedio =  Interaccion.where("producto_id = ?  AND tipo_interaccion = ? ", id_producto, Interaccion.tipo_interaccions["puntuacion"]).average(:contenido)
       		render :text =>'{ "success" : "true", "promedio" : ' + @promedio.to_s + '}'
-		#else
+		else
 			render :text => '{ "success" : "false"}'
-		#end
+		end
+	end
+
+	def share
+		id_producto = params[:idproducto]
+		
+		@share = Interaccion.new
+		@share.producto_id = id_producto
+		@share.usuario_id =  current_usuario.id
+		@share.tipo_interaccion =  Interaccion.tipo_interaccions["compartir"]
+		@share.save
+		
+		if @share.save
+      		render :text =>'{ "success" : "true" }'
+		else
+			render :text => '{ "success" : "false"}'
+		end
+		
+	end
+
+	def like
+		id_producto = params[:idproducto]
+		puntuacion = params[:puntuacion]
+		usuario_id = current_usuario.id
+		@like = Interaccion.where( ["producto_id = ? AND usuario_id = ? AND tipo_interaccion = ?", id_producto, usuario_id, Interaccion.tipo_interaccions["me_gusta"]] ).first
+		 
+		if @like.nil?
+			@like = Interaccion.new
+			@like.producto_id = id_producto
+			@like.usuario_id = usuario_id
+			@like.tipo_interaccion =  Interaccion.tipo_interaccions["me_gusta"]
+			if @like.save
+				icon =  "fa fa-thumbs-up"
+	      		render :text =>'{ "success" : "true", "icon" : "fa fa-thumbs-up" }'
+			else
+				render :text => '{ "success" : "false"}'
+			end
+		else
+			@like.destroy
+			if @like.destroyed?
+				icon =  "fa fa-thumbs-o-up "
+				render :text =>'{ "success" : "true", "icon" : "fa fa-thumbs-o-up " }'
+			else
+			render :text => '{ "success" : "false"}'
+			end
+		end
+
 	end
 
 	def consulta_interaccion_productos
 		if !usuario_signed_in?
 			redirect_to root_path
 		else
-
-				render "productos/graficas"
+			render "productos/graficas"
 		end
 	end
 

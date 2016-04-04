@@ -180,7 +180,7 @@ jQuery(function ($) {
 				                    errorClass: 'msj-error', // default input error message class
 				                    focusInvalid: false, // do not focus the last invalid input
 									rules: {
-										"comentario[comentario]":{
+										"comentario[contenido]":{
 											required:true,
 											minlength: 8,
 											maxlength: 255
@@ -188,7 +188,7 @@ jQuery(function ($) {
 										
 									},
 									messages:{
-										"comentario[comentario]":{
+										"comentario[contenido]":{
 											
 											required:"Indica tu ccomentario",
 											minlength:"Tu comentario debe tener mínimo 50 caracteres",

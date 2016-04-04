@@ -99,8 +99,8 @@
             <div class="row">
                 <div class="col s6">
                   <label>Fecha de Nacimiento<span class="required">*</span></label>
-                  <input type="date" class="datepicker" id="publicidad_fecha_nacimiento" name="publicidad[fecha_nacimiento]">
-                  <span id="publicidad_fecha_nacimiento-error_local" class="hiden msj-rojo"></span>
+                  <input type="date" class="datepicker" id="usuario_perfil_attributes_fecha_nacimiento" name="usuario[perfil_attributes][fecha_nacimiento]" value="<%= @usuario.perfil.fecha_nacimiento.strftime("%d/%m/%Y") %>">
+                  <span id="publicidad_fecha_nacimiento-error_local" class="hiden msj-rojo" ></span>
                 </div>
             </div>
             <hr/>
@@ -110,7 +110,8 @@
                       <h5>Mis Intereses:</h5>
                       <p> Elige los tópicos de interés de nuestra organización</p>
                         <div class="checkbox-list" >
-                          <%= collection_check_boxes( :categorium, :variable_psicograficas_ids, VariablePsicografica.all, :id, :nombre) %>
+                          <%= f.collection_check_boxes( :variable_psicografica_ids, VariablePsicografica.all, :id, :nombre) %>
+
                         </div>
                         <span id='variable_psicografica_categorium_ids-error' class="hidden span-error-input">Debe Seleccionar una categoria.</span>
                     </div> 

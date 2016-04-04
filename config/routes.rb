@@ -268,6 +268,10 @@ Rails.application.routes.draw do
 	match "/mercadeo/variablespsicograficas/update_estatus" => "variable_psicograficas#update_estatus", via: :post
 
 	match "/comentarios/crear_comentario" => "comentarios#create", via: :post
+
+	match "/interacciones" => "interaccions#consultar", via: :get
+	match "/interacciones/producto/:id_producto" => "interaccions#consultar_producto", via: :get
+	match "/interacciones/producto/:id_plan" => "interaccions#consultar_plan", via: :get
 	
 	devise_scope :usuario do
 	    post "/entrar" => "devise/sessions#create"
@@ -312,6 +316,8 @@ Rails.application.routes.draw do
 
 
 		match "/productos/puntuacion" => "productos#puntuacion", via: :post
+		match "/productos/share_twitter" => "productos#share", via: :post
+		match "/productos/like" => "productos#like", via: :post
 		
 		match "/catalogo" => "productos#catalogo", via: :get
 		match "/catalogo/:id_producto" => "productos#show", via: :get
