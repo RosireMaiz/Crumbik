@@ -329,4 +329,12 @@ Rails.application.routes.draw do
 	match "/notas/eliminar" => "notas#eliminar", via: :post
 	match "/notas/cancelar" => "notas#cancelar", via: :post
 
+	match "/herramientas/notas" => "notas#notas", via: :get
+	match "/herramientas/calendario" => "eventos#calendario", via: :get
+	match "/eventos/crear_evento" => "eventos#create", via: :post
+	match "/eventos/cancelar" => "eventos#cancelar", via: :post
+	match "/eventos/eliminar" => "eventos#eliminar", via: :post
+	match "/eventos/update" => "eventos#update", via: :post
+	match "/eventos" => "eventos#eventos", via: :get
+
 end

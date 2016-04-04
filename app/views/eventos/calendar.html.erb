@@ -1,5 +1,5 @@
 <% content_for :css_personalizado do %>
-   <%= stylesheet_link_tag    "fullcalendar" %>
+  <%= stylesheet_link_tag    "fullcalendar" %>
 <% end %>
 
 <div class="row titulo-seccion banner banner-perfil">
@@ -11,9 +11,7 @@
     </div>
     <div class="col s6 text-right ">
       <ol class="breadcrumb">
-        <li>
-          <a href="/">Inicio</a>
-        </li>
+        <li>Herramientas</li>
         <li class="active">Calendario</li>
       </ol>
     </div>
@@ -21,33 +19,169 @@
 </div>
 
 <div class="row ">
-	<div class="col-md-2"> </div>
+  <div class="col-md-2"> </div>
   <div class="col-md-8 white pad45">
     <div id='calendar'></div>
   </div>  
   <div class="col-md-2"> </div>
    <div class="fixed-action-btn " style="top: 250px; bottom: 0px">
-    <a href="/evento/agregar" class="btn-floating btn-sm waves-effect waves-light red tooltipped" style="margin-bottom: 60px;" data-position="left" data-delay="50" data-tooltip="Agregar Evento">
+    <a onclick="validar('#formNew')" class="modal-trigger btn-floating btn-sm waves-effect waves-light red tooltipped" style="margin-bottom: 60px;" href="#modalNew" data-position="left" data-delay="50" data-tooltip="Agregar Evento">
       <i class=" mdi-av-playlist-add"></i>
     </a>
   </div>
 
-</div>	
+</div>  
 
+<!-- Modal Agregar -->
+    <div id="modalNew" class="modal">
+      <div id="formNew" form="true" class="modal-content">
+        <a href="#" style="float:right;" class="waves-effect btn-flat modal-close" ><i class="mdi-content-clear" onclick="limpiar()"></i></a>
+        <h5 id="titulo">Agregar Evento</h5>
+        <div class="row " style="padding-top: 35px;">
+          <div class="col s12">
+            <!-- Nombre --> 
+            <div class="row col s12"> 
+              <div class="input-field col s12">
+                <input id="titulo_evento" name="evento[titulo_evento]" type="text" autocomplete="off">
+                <label for="titulo">Titulo:</label>
+              </div>
+            </div>
+            <!-- Descripcion --> 
+            <div class="row col s12"> 
+              <div class="input-field col s12">
+                <textarea id="descripcion" class="validate materialize-textarea active" length= "255" name="evento[descripcion]"></textarea>
+                <label for="descripcion">Descripción:</label>
+              </div>
+            </div>
+            <!-- Fecha -->
+            <div class="row">
+              <div class="col s12 m6"> 
+                <label>Fecha de Inicio <span class="required">*</span></label>
+                <input id="inicio" name="evento[inicio]" type="date" class="datepicker">
+              </div>
+              <div class="col s12 m6">
+                <label>Fecha de Finalización <span class="required">*</span></label>
+                <input id="fin" name="evento[fin]" type="date" class="datepicker">
+              </div>
+            </div>
+            <!-- Boton -->
+            <div class="row" style="padding-top:50px"> 
+              <div align="center">
+                <input id="btnGuardar" type="submit" class="btn btn-success " value="Guardar">
+                <button type="button" onclick="limpiar()" class="btn btn-danger waves-effect modal-close">
+                Cancelar</button>
+              </div>
+            </div>
 
-<% content_for :javascript_personalizado do %>
+            </div>
+          </div> 
+        </div>
+      </div>
+    </div>
+
+<% @eventos.each do |evento| %>
+  <% if ! evento.nil? %>
+  <!-- Modal Editar -->
+  <div id="modaleditar<%= evento.id %>" class="modal modal-45" form="true">
+    <div class="modal-content">
+      <a style="float:right;" class="waves-effect btn-flat modal-close"
+      onclick="cancelar(modaleditar<%= evento.id %>, <%= evento.id %>, titulo<%= evento.id %>, descripcion<%= evento.id %>, inicio<%= evento.id %>, fin<%= evento.id %>)"></i></a>
+        <h5>Editar Evento</h5>
+          <div class="row" style="padding-top: 35px;">
+            <div class="col s12">
+              <div class="row">
+                <!-- titulo -->
+                <div class=" input-field col s10 offset-s1 ">
+                  <input id="titulo<%= evento.id %>" type="text" class="validate" value="<%= evento.titulo %>" name="evento[titulo_evento]"> 
+                  <label for="titulo<%= evento.id %>" >Titulo:</label>
+                </div>
+                <!-- descripcion -->
+                <div class=" input-field col s10 offset-s1 ">
+                  <textarea id="descripcion<%= evento.id %>" class="validate materialize-textarea active" length= "255"  name="evento[descripcion]"><%= evento.descripcion %></textarea>
+                  <label for="descripcion<%= evento.id %>" >Contenido:</label>
+                </div>
+              </div>
+              <!-- fechas -->
+              <div class="row">
+                <div class="col s12 m6">
+                  <label for="inicio<%= evento.id %>" >Fecha de Inicio:</label>
+                  <input id="inicio<%= evento.id %>" name="evento[inicio]" type="date" class="validate datepicker" value="<%= evento.inicio.strftime("%Y-%m-%d ") %>">
+                </div>
+                <div class="col s12 m6">
+                  <label for="fin<%= evento.id %>" >Fecha de Finalización:</label>
+                  <input id="fin<%= evento.id %>" type="date" class="validate datepicker" 
+                  name="evento[fin]" value="<%= evento.fin.strftime("%Y-%m-%d ") %>"> 
+                </div>
+              </div>
+              <!-- botones -->
+              <div class="row">
+                <div class="text-center">
+                  <input type="button" class="btn btn-success btn-sm" value="Guardar" onclick="update(modaleditar<%= evento.id %>, <%= evento.id %>, titulo<%= evento.id %>, descripcion<%= evento.id %>, inicio<%= evento.id %>, fin<%= evento.id %>)">
+                  <input type="button" class="btn btn-danger btn-sm" value="Cancelar" onclick="cancelar(modaleditar<%= evento.id %>, <%= evento.id %>, titulo<%= evento.id %>, descripcion<%= evento.id %>, inicio<%= evento.id %>, fin<%= evento.id %>)">
+                </div>
+              </div>
+            </div>      
+          </div>
+    </div>
+  </div>
+
+<!-- Modal Ver -->
+  <div id="modalver<%= evento.id %>" class="modal modal-45">
+    <div class="modal-content">
+      <a href="#" style="float:right;" class="waves-effect btn-flat modal-close"><i class="mdi-content-clear"></i></a>
+      <div class="row" style="padding-top: 35px;">
+        <div class="col 12 " align="justify">
+          <div class="row">
+            <h5 style="padding-left:10px"><%= evento.titulo %></h5>
+            <p style="Word-wrap:break-word; padding-left:10px;"><%= evento.descripcion %></p>
+            <br />
+            <div class="col s12 m6">
+              <p><b>Fecha de Inicio:</b><%= evento.inicio.strftime("%Y-%m-%d ") %></p>
+            </div>
+            <div class="col s12 m6">
+              <p><b>Fecha de Finalización:</b> <%= evento.fin.strftime("%Y-%m-%d ") %></p>
+            </div>
+
+            <div class="row" style="float: right; margin-top:10%; padding-right:16px;">
+              <div class="text-center">
+                <input type="button" class="modal-close modal-trigger btn btn-success btn-sm" value="Editar" onclick="validar('#modaleditar<%= evento.id %>')" href="#modaleditar<%= evento.id %>">
+                <input type="button" class="modal-close modal-trigger btn btn-danger btn-sm" value="Eliminar" href="#modaleliminar<%= evento.id %>">
+              </div>
+            </div>    
+
+          </div>
+        </div>
+      </div>
+    </div>                
+  </div>
+
+  <!-- Modal Eliminar -->
+  <div id="modaleliminar<%= evento.id %>" class="modal">
+    <div class="modal-content">
+      <a style="float:right;" class="waves-effect btn-flat modal-close"><i class="mdi-content-clear"></i></a>
+      <div class="row pad30-t" >
+        <div class="col s12 text-center">
+          <h6 style=" font-size: 20px;"> ¿Seguro que desea eliminar el evento seleccionado? </h6>
+          <div style="padding-top: 35px;" class="right">
+            <input type="button" class="btn btn-success btn-sm" value="Aceptar" onclick="eliminar(<%= evento.id %>)">
+            <input type="button" class="btn btn-danger btn-sm modal-close" value="Cancelar">
+          </div>
+        </div>
+      </div>                
+    </div>
+  </div>
+
+  <%end%>
+<%end%>
+
+<% content_for :javascript_personalizado do %> 
+  <%= javascript_include_tag 'maestros/eventos' %> 
   <%= javascript_include_tag 'fullcalendar.min' %>
- 
-
   <script type="text/javascript">
-  
-     $('#calendar').fullCalendar({
-
+    $('#calendar').fullCalendar({
       eventClick: function(calEvent, jsEvent, view) {
-         var html = "<h4>"+ calEvent.title + "</h4>" + "<p>" + calEvent.description + "</p>";
-        $('#modal1 > .modal-content').html(html);
-        $('#modal1').openModal();
-        // alert('Evento: ' + calEvent.title + "\n\nDescripcion: " + calEvent.description);
+        var idmodal = "#modalver"+calEvent.id;
+        $(idmodal).openModal();
         },
         header: {
           left: 'prev,next today',
@@ -58,22 +192,20 @@
         defaultDate: Date(),
         editable: false,
         eventLimit: true, // allow "more" link when too many events
-         eventSources: [
+        eventSources: [
       {
         url: '/eventos'
       }
     ],
-    });
+    selectable: true,
+    select: function(start, end, allDay) {
+    var date =  $.fullCalendar.formatDate(start,'d/MM/yyyy');
+                $("#inicio").val(date);
+                $("#fin").val(date);
+                $("#modalNew").openModal();
 
-</script>
-<!-- Modal Structure -->
-  <div id="modal1" class="modal modal-fixed-footer">
-    <div class="modal-content">
-  </div>
-      <div class="modal-footer">
-        <input class="btn btn-danger btn-sm modal-close" value="Borrar" type="button">
-          <a href="#!" class="modal-action modal-close waves-effect waves-green btn-flat">Aceptar</a>
-      </div>
-    </div>
-    <link href='https://cdnjs.cloudflare.com/ajax/libs/jqueryui/1.11.3/jquery-ui.css' rel='stylesheet' />
+               }
+
+});
+  </script>
 <% end %>
