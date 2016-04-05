@@ -1,0 +1,119 @@
+<% if !@plans.blank? %>
+  <div  class="pad15"></div>
+    <div class="row pad30-h">
+      <div class="col s12 m9">
+        <div class="row valign-wrapper">
+          <div id="todos">
+
+            <% for plan in @plans %>
+
+              <div class = "col s12 m4" >
+                <div class="card hoverable">
+
+                  <div class="card-image">
+                    <img src="<%= plan.formato_imagen %><%= plan.imagen %>" class="activator img-responsive">
+                  </div>
+
+                  <div class="card-content  pad5-hv left-align">
+                   <div class="row no-margin-v">
+                      <span class="card-title card-catalogo activator grey-text text-darken-4">
+                        <div class="col s10">
+                          <%= plan.nombre %>
+                        </div>
+                        <div class="col s2"> 
+                          <i class="material-icons right  mdi-navigation-more-vert waves-effect"></i>
+                        </div>
+                      </span>
+                    </div>
+                  </div>
+
+                  <% promedio = Interaccion.where("plan_id = ?  AND tipo_interaccion = ? ", plan.id , Interaccion.tipo_interaccions["puntuacion"]).average(:contenido) %>
+
+                  <div class="card-action pad5-15">
+                    <div class="row no-margin-v">
+                      <div class="col s6 no-padding">
+                        <input id="input_star_<%= plan.id %>" class="rating left" data-symbol="&#xf005; " value="<% if !promedio.nil? %> <%= promedio %> <% end %>">
+                      </div>
+                      <div class="col s6 no-padding">
+                        <span class = "blue-text right"> $<%= plan.costo %></span>
+                      </div>
+                    </div>
+                    <a href="/catalogo/<%= plan.id %>" class="waves-effect"> Ver </a>
+                  </div>
+
+                  <div class="card-reveal card-catalogo-detail left-align">
+                    <div class="row" style="    margin-bottom: 12px;">
+                      <span class="card-title card-catalogo grey-text text-darken-4">
+                        <div class="col s10">
+                          <%= plan.nombre %>
+                        </div>
+                        <div class="col s2"> 
+                          <i class="material-icons right mdi-navigation-close waves-effect"></i>
+                        </div>
+                      </span>
+                    </div>
+                    <div class="col s12">
+                      <p><%= plan.descripcion %></p>
+                      <span class="blue-text right">
+                        $<%= plan.costo %>
+                      </span>
+                    </div>
+                  </div>
+                  
+                </div>
+            
+              </div>
+
+               <script type="text/javascript">
+                $(document).ready(function(){
+                  var star_input = '#input_star_' + <%= producto.id %>;
+
+                  $(star_input).rating({
+                        size:"xs",
+                        glyphicon: false,
+                        disabled:true,
+                        hoverEnabled: false,
+                        showCaption: true,
+                        showClear:false,
+                        ratingClass: "rating-fa", // the rating class will ensure font awesome icon rendering
+                        clearButtonTitle: "Limpiar",
+                        clearButton:'<i class="mdi-content-remove"></i>',
+                        clearCaption: "",
+                        clearCaptionClass: "transparent",
+                        starCaptions: function(val) { return Math.round(val * 100) / 100;},
+                        starCaptionClasses: function(val) { return 'label transparent';},
+                   });
+
+                });
+              </script>
+
+            <% end %>
+          </div>
+
+      </div>
+
+      <div class="row valign-wrapper">
+        <%= paginate(@plans) %>
+      </div>
+    
+    </div>
+
+  </div>
+<% else %>
+
+  <div class="org-contenedor-banner banner-organizacion">
+    <div>
+      <div class="org-contenedor-banner org-contenedor-banner-img">
+        <img src="<%= asset_path( 'org-banner-construccion.png' ) %>" />
+      </div>
+       
+    </div>
+  </div>
+
+  <br/>
+
+<% end %>
+
+<% content_for :javascript_personalizado do %>
+  <%= javascript_include_tag "plugins/star-rating.min" %>    
+<% end -%>

@@ -151,6 +151,36 @@ class PlansController < ApplicationController
 		render :text => @tira
 	end
 
+	def catalogo
+       @plans = Plan.order('nombre ASC').page(params[:page]).per(9)
+       render "plans/catalogo"	
+	end
+
+	def puntuacion
+		id_plan = params[:idplan]
+		puntuacion = params[:plan]
+		usuario_id = current_usuario.id
+		@puntuacion = Interaccion.where( ["plan_id = ? AND usuario_id = ? AND tipo_interaccion = ?", id_plan, usuario_id, Interaccion.tipo_interaccions["puntuacion"]] ).first
+		 
+		if @puntuacion.nil?
+			@puntuacion = Interaccion.new
+			@puntuacion.plan_id = id_plan
+			@puntuacion.usuario_id = usuario_id
+			@puntuacion.contenido = puntuacion.to_s
+			@puntuacion.tipo_interaccion =  Interaccion.tipo_interaccions["puntuacion"]
+		else
+			@puntuacion.contenido = puntuacion.to_s
+		end
+		
+		
+		if @puntuacion.save
+			@promedio =  Interaccion.where("plan_id = ?  AND tipo_interaccion = ? ", id_plan, Interaccion.tipo_interaccions["puntuacion"]).average(:contenido)
+      		render :text =>'{ "success" : "true", "promedio" : ' + @promedio.to_s + '}'
+		else
+			render :text => '{ "success" : "false"}'
+		end
+	end
+
 
 	private
 		def plan_params

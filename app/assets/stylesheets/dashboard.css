@@ -1,0 +1,58 @@
+#dashboard-wrapper{
+	height: 600px;
+	display: flex;
+}
+.valign-wrapper .valign{
+	width: 100%;
+}
+
+h4 {
+    margin: 1.1rem 0 0.2rem 0;
+}
+.row-30, .row-10{
+	height: 100%;
+	box-sizing: border-box;
+	display: inline-block;
+}
+.row-30{
+	width: 27%;
+}
+
+.row-10{
+	width: 19%;
+}
+
+.height-1{
+	height: calc(100% / 3);
+}
+.height-2{
+	height: calc(100% * 2/3 + 5px);
+}
+
+.box{
+	margin: 5px 2.5px;
+	padding: 15px;
+	overflow: hidden;
+}
+
+.pink{
+	background: #ff4c9d !important;
+}
+
+.purple{
+	background: #8238e7 !important;
+}
+.dark-pink{
+	background: #ff338a !important;
+}
+
+.blue{
+	background: #49bafe !important;
+}
+.dark-blue{
+	background: #3c599f !important;
+}
+.details{
+	font-size: 13px;
+	float: right;
+}
