@@ -27,6 +27,7 @@ Rails.application.config.assets.precompile += %w( bootstrap-blue-theme.css )
 Rails.application.config.assets.precompile += %w( plugins/sweet-alert.css)
 Rails.application.config.assets.precompile += %w( frontend.css )
 Rails.application.config.assets.precompile += %w( nota.css )
+Rails.application.config.assets.precompile += %w( dashboard.css )
 
 Rails.application.config.assets.precompile += %w( menu.css)
 Rails.application.config.assets.precompile += %w( usuarios.css)

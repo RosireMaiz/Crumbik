@@ -1,6 +1,7 @@
 <% content_for :css_personalizado do %>
   <%= stylesheet_link_tag    "plugins/star-rating.min" %> 
-  <%= stylesheet_link_tag    "star-product" %> 
+  <%= stylesheet_link_tag    "star-product" %>
+  <%= stylesheet_link_tag    "dashboard.css" %>
 
   <style type="text/css">
   .texto {
@@ -42,15 +43,117 @@
     <p><%= @organizacion.descripcion %></p>
   </div>
   <!-- Dashboard -->
-  
+  <div class="row">
+    <div class="col s12" style="padding-top:2%">
+      <div id="dashboard-wrapper">
+        <div class="row-30">
+          <div class="box height-1" style="background:url('image.png');background-size: cover;">
+          </div>
+          <div class="box height-2 pink white-text">
+            <div class="details">2 perd.</div>
+              <h5><i class="fa fa-phone"></i> llamadas</h5>
+              <ul>
+                <li>
+                  <strong>Llamada realizada</strong> xxxxxxxx<br/>
+                  <strong>Jul 20 - 20:15 | Arnoldo's</strong>
+                </li>
+                <li>
+                  <strong>Llamada realizada</strong> xxxxxxxx<br/>
+                  <strong>Jul 20 - 20:15 | Arnoldo's</strong>
+                </li>
+                <li>
+                  <strong>Llamada realizada</strong> xxxxxxxx<br/>
+                  <strong>Jul 20 - 20:15 | Arnoldo's</strong>
+                </li>
+              </ul>
+            </div>
+          </div>
+
+          <div class="row-30">
+            <div class="box height-2 dark-pink white-text">
+              <div class="details">8 rec.</div>
+                <h5><i class="fa fa-envelope"></i> email</h5>
+                <ul>
+                  <li>
+                    <strong>Llamada realizada</strong> xxxxxxxx<br/>
+                    <strong>Jul 20 - 20:15 | Arnoldo's</strong>
+                  </li>
+                  <li>
+                    <strong>Llamada realizada</strong> xxxxxxxx<br/>
+                    <strong>Jul 20 - 20:15 | Arnoldo's</strong>
+                  </li>
+                  <li>
+                    <strong>Llamada realizada</strong> xxxxxxxx<br/>
+                    <strong>Jul 20 - 20:15 | Arnoldo's</strong>
+                  </li>
+                </ul>
+              </div>
+              <div class="box height-1 blue center-align white-text valign-wrapper">
+                <h5 class="valign"><i class="fa fa-flag"></i> campañas publicitarias</h5>
+              </div>
+            </div>
+
+            <div class="row-30">
+              <div class="box height-1 blue white-text center-align valign-wrapper">
+                <div class="valign">
+                  <h5  class="center-align"><i class="fa fa-briefcase"></i> nuevos contratos</h5>
+                  <h3><span class="number" style="float:left;">8</span><small style="float:right;">$120.000,00</small></h3>
+                </div>
+              </div>
+              <div class="box height-2 purple white-text">
+                <div class="details">8 pend.</div>
+                <h5><i class="fa fa-mobile-phone"></i> SMS</h5>
+                <ul>
+                  <li>
+                    <strong>Llamada realizada</strong> xxxxxxxx<br/>
+                    <strong>Jul 20 - 20:15 | Arnoldo's</strong>
+                  </li>
+                  <li>
+                    <strong>Llamada realizada</strong> xxxxxxxx<br/>
+                    <strong>Jul 20 - 20:15 | Arnoldo's</strong>
+                  </li>
+                  <li>
+                    <strong>Llamada realizada</strong> xxxxxxxx<br/>
+                    <strong>Jul 20 - 20:15 | Arnoldo's</strong>
+                  </li>
+                </ul>
+              </div>
+            </div>
+
+            <div class="row-10">
+              <div class="box height-1 dark-blue center-align white-text valign-wrapper">
+                <div class="valign">
+                  <h5><i class="fa fa-facebook-square"></i> facebook</h5>
+                  <h4>3000</h4>
+                  <span>likes</span>
+                </div>
+              </div>
+              <div class="box height-1 blue center-align white-text valign-wrapper">
+                <div class="valign">
+                  <h5><i class="fa fa-twitter"></i> twitter</h5>
+                  <h4>1523</h4>
+                  <span>followers</span>
+                </div>
+              </div>
+              <div class="box height-1 dark-pink center-align white-text valign-wrapper">
+                <div class="valign">
+                  <h5><i class="fa fa-user"></i> clientes</h5>
+                  <h4>16555</h4>
+                </div>
+              </div>
+            </div>
+
+          </div>
+        </div>
+      </div>
   <!-- Mision y Vision -->
   <div  style="float:middle; margin-top:4%">
-    <div class="col s6">
+    <div class="col s6" style="padding-top:2%">
       <p><b>Mision</b></p>
       <img style="float:left; margin-right:4%;" src="<%= asset_path 'org-mision.png' %>">
       <p class="texto"> <%= @organizacion.mision %></p>   
     </div>
-    <div class="col s6">
+    <div class="col s6" style="padding-top:2%">
       <p><b>Vision</b></p>
       <img style="float:left; margin-right:4%" src="<%= asset_path 'org-vision.png' %>">
       <p class="texto"><%= @organizacion.vision %></p>
@@ -58,7 +161,7 @@
   </div>
 
   <!-- separador -->
-  <img src="<%= asset_path 'separator.png' %>">
+  <img src="<%= asset_path 'separator.png' %>" style="padding-top:2%">
 
   <!-- texto -->
   <div style="text-align:center; padding-top:2%">
@@ -69,74 +172,83 @@
   <img src="<%= asset_path 'separator.png' %>">
 
   <!-- Productos Populares-->
-  <div style="margin-top:10px;">
+  <div style="padding-top:2%">
     <h5 class="text-uppercase col s6 offset-s3 text-uppercase">Top <%= @organizacion.tipo_organizacion.nombre %></h5>
   </div>
-      
 
-      <% @top_puntuacion.each do |producto| %>
-        <% @promedio =  Interaccion.where("producto_id = ?  AND tipo_interaccion = ? ", producto.id, Interaccion.tipo_interaccions["puntuacion"]).average(:contenido) %>
-        
-        <div class = "col s12 m4" >
-          <div class="card hoverable">
-
-            <div class="card-image">
-              <img src="<%= producto.formato_imagen %><%= producto.imagen %>" class="activator img-responsive">
-            </div>
-
-            <div class="card-content  pad5-hv left-align">
-              <div class="row no-margin-v">
-                <span class="card-title card-catalogo activator grey-text text-darken-4">
-                  <div class="col s10">
-                  <%= producto.nombre %>
-                  </div>
-                </span>
-              </div>
-            </div>
-            
-            <div class="card-action pad5-15">
-              <div class="row no-margin-v">
-                <div class="col s6 no-padding">
-                  <input id="input_star_<%= producto.id %>" class="rating left" data-symbol="&#xf005; " value="<% if !@promedio.nil? %> <%= @promedio %> <% end %>">
-                </div>
-                <div class="col s6 no-padding">
-                  <span class = "blue-text right"> $<%= producto.precio %></span>
-                </div>
-              </div>
-                <a href="/catalogo/<%= producto.id %>" class="waves-effect"> Ver </a>
-            </div>
-
-          </div>
+  <% @top_puntuacion.each do |producto| %>
+    <% @promedio =  Interaccion.where("producto_id = ?  AND tipo_interaccion = ? ", producto.id, Interaccion.tipo_interaccions["puntuacion"]).average(:contenido) %>
+    <div class = "col s12 m4" style="padding-top:2%">
+      <div class="card hoverable">
+        <div class="card-image">
+          <img src="<%= producto.formato_imagen %><%= producto.imagen %>" class="activator img-responsive">
         </div>
 
+        <div class="card-content  pad5-hv left-align">
+          <div class="row no-margin-v">
+            <span class="card-title card-catalogo activator grey-text text-darken-4">
+              <div class="col s10">
+                <%= producto.nombre %>
+              </div>
+            </span>
+          </div>
+        </div>
+            
+        <div class="card-action pad5-15">
+          <div class="row no-margin-v">
+            <div class="col s6 no-padding">
+              <input id="input_star_<%= producto.id %>" class="rating left" data-symbol="&#xf005; " value="<% if !@promedio.nil? %> <%= @promedio %> <% end %>">
+            </div>
+            <div class="col s6 no-padding">
+              <span class = "blue-text right"> $<%= producto.precio %></span>
+            </div>
+          </div>
+          <a href="/catalogo/<%= producto.id %>" class="waves-effect"> Ver </a>
+        </div>
 
-        <script type="text/javascript">
-                $(document).ready(function(){
-                var star_input = '#input_star_' + <%= producto.id %>;
+      </div>
+    </div>
 
-                  $(star_input).rating({
-                        size:"xs",
-                        glyphicon: false,
-                        disabled:true,
-                        hoverEnabled: false,
-                        showCaption: true,
-                        showClear:false,
-                        ratingClass: "rating-fa", // the rating class will ensure font awesome icon rendering
-                        clearButtonTitle: "Limpiar",
-                        clearButton:'<i class="mdi-content-remove"></i>',
-                        clearCaption: "",
-                        clearCaptionClass: "transparent",
-                        starCaptions: function(val) { return Math.round(val * 100) / 100;},
-                        starCaptionClasses: function(val) { return 'label transparent';},
-                   });
+    <script type="text/javascript">
+            $(document).ready(function(){
+            var star_input = '#input_star_' + <%= producto.id %>;
 
-                });
-        </script>
-      <%end%>
-      
-  <!-- Contacto -->
+              $(star_input).rating({
+                    size:"xs",
+                    glyphicon: false,
+                    disabled:true,
+                    hoverEnabled: false,
+                    showCaption: true,
+                    showClear:false,
+                    ratingClass: "rating-fa", // the rating class will ensure font awesicon rendering
+                    clearButtonTitle: "Limpiar",
+                    clearButton:'<i class="mdi-content-remove"></i>',
+                    clearCaption: "",
+                    clearCaptionClass: "transparent",
+                    starCaptions: function(val) { return Math.round(val * 100) / 100;},
+                    starCaptionClasses: function(val) { return 'label transparent';},
+               });
+
+            });
+    </script>
+  <%end%>
+  
+  <!-- separador -->
+  <img src="<%= asset_path 'separator.png' %>" style="padding-top:2%">
+
+  <!-- Redes -->
 </div> <!-- fin del contenedor -->
 
 <% content_for :javascript_personalizado do %>
   <%= javascript_include_tag "plugins/star-rating.min" %>    
 <% end -%>
+
+<script type="text/javascript">
+  var $dashboard = $("#dashboard-wrapper"),
+  w = $dashboard.width()*0.55;
+  $dashboard.css("height",w+"px");
+  $(window).resize(function(){
+  w = $dashboard.width()*0.55;
+  $dashboard.css("height",w+"px");
+  });
+</script>
