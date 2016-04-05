@@ -105,12 +105,12 @@
               <div class="row">
                 <div class="col s12 m6">
                   <label for="inicio<%= evento.id %>" >Fecha de Inicio:</label>
-                  <input id="inicio<%= evento.id %>" name="evento[inicio]" type="date" class="validate datepicker" value="<%= evento.inicio.strftime("%Y-%m-%d ") %>">
+                  <input id="inicio<%= evento.id %>" name="evento[inicio]" type="date" class="validate datepicker" value="<%= evento.inicio.strftime("%Y-%m-%d")%>">
                 </div>
                 <div class="col s12 m6">
                   <label for="fin<%= evento.id %>" >Fecha de Finalización:</label>
                   <input id="fin<%= evento.id %>" type="date" class="validate datepicker" 
-                  name="evento[fin]" value="<%= evento.fin.strftime("%Y-%m-%d ") %>"> 
+                  name="evento[fin]" value="<%= evento.fin.strftime("%Y-%m-%d")%>"> 
                 </div>
               </div>
               <!-- botones -->
@@ -136,10 +136,10 @@
             <p style="Word-wrap:break-word; padding-left:10px;"><%= evento.descripcion %></p>
             <br />
             <div class="col s12 m6">
-              <p><b>Fecha de Inicio:</b><%= evento.inicio.strftime("%Y-%m-%d ") %></p>
+              <p><b>Fecha de Inicio:</b><%= evento.inicio.strftime("%d/%m/%Y ") %></p>
             </div>
             <div class="col s12 m6">
-              <p><b>Fecha de Finalización:</b> <%= evento.fin.strftime("%Y-%m-%d ") %></p>
+              <p><b>Fecha de Finalización:</b> <%= evento.fin.strftime("%d/%m/%Y") %></p>
             </div>
 
             <div class="row" style="float: right; margin-top:10%; padding-right:16px;">
@@ -200,6 +200,7 @@
     selectable: true,
     select: function(start, end, allDay) {
     var date =  $.fullCalendar.formatDate(start,'d/MM/yyyy');
+                validar("#formNew");
                 $("#inicio").val(date);
                 $("#fin").val(date);
                 $("#modalNew").openModal();

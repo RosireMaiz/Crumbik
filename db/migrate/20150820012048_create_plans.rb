@@ -8,6 +8,7 @@ class CreatePlans < ActiveRecord::Migration
       t.string :formato_imagen
       t.string :estatus, default: "A", :limit => 1
       t.references :frecuencia_pago, index: true
+      t.references :categoria, index: true
 
       t.timestamps null: false
     end

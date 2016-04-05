@@ -63,6 +63,7 @@ class ApplicationController < ActionController::Base
     def load_db
       @style = "template/template-rosa.css"
       Apartment::Tenant.switch!()
+      @organizacion = Organizacion.find_by(id: 0)
       return unless request.subdomain.present?
       organizacion = Organizacion.where(["subdominio = ?", request.subdomain]).pluck(:subdominio)
       if organizacion.length > 0

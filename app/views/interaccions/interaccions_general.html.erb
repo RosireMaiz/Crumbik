@@ -48,18 +48,24 @@
   </div>
 
   <div class="row">
-    <div class="col s10 offset-s1">
+    <div class="col s12">
       <ul class="tabs">
-        <li class="tab col s12 m3">
-          <a class="grey-text text-darken-2 active" href="#comentarios">Comentarios</a>
+        <li class="tab col s12 m2">
+          <a class="grey-text text-darken-2 active" href="#todas">Todas</a>
         </li>
-        <li class="tab col s12 m3">
+        <li class="tab col s12 m2">
+          <a class="grey-text text-darken-2 " href="#difusiones">Dfusiones</a>
+        </li>
+        <li class="tab col s12 m2">
+          <a class="grey-text text-darken-2 " href="#comentarios">Comentarios</a>
+        </li>
+        <li class="tab col s12 m2">
           <a class="grey-text text-darken-2" href="#puntuaciones">Puntuaciones</a>
         </li>
-        <li class="tab col s12 m3">
+        <li class="tab col s12 m2">
           <a class="grey-text text-darken-2 " href="#me_gusta">Me Gusta</a>
         </li>
-        <li class="tab col s12 m3">
+        <li class="tab col s12 m2">
           <a class="grey-text text-darken-2 " href="#compartir">Compartir</a>
         </li>
       </ul>
@@ -67,8 +73,26 @@
   </div>
 
   <div class="col s10 offset-s1">
-  <span class="negrita"> <%if !@producto.nil? %>  <%= @producto.nombre %> <% end %> </span>
-  <span class="negrita"> <%if !@plan.nil? %>  <%= @plan.nombre %> <% end %> </span>
+    <span class="negrita"> <%if !@producto.nil? %>  <%= @producto.nombre %> <% end %> </span>
+    <span class="negrita"> <%if !@plan.nil? %>  <%= @plan.nombre %> <% end %> </span>
+    <div class="row" id="todas">
+
+      <div class="col s8 offset-s2 " id="todas">
+        <div>
+          <canvas id="canvas_todas" height="350" width="600"></canvas>
+        </div>
+      </div>
+      
+    </div>
+    <div class="row" id="difusiones">
+
+      <div class="col s8 offset-s2 ">
+        <div>
+          <canvas id="canvas_difusiones" height="350" width="600"></canvas>
+        </div>
+      </div>
+      
+    </div>
     <div class="row" id="comentarios">
 
       <div class="col s8 offset-s2 ">
@@ -120,6 +144,80 @@
                     window.location.href = "/interacciones/plan/"+id_plan;
                 });
 
+    var lineChartDataAll = {
+      labels : ["Enero","Febrero","Marzo","Abril","Mayo","Junio","Julio","Agosto", "Septiembre", "Octubre", "Noviembre", "Diciembre"],
+      datasets : [
+        {
+          label: "Comentarios",
+          fillColor : "rgba(151,187,205,0.2)",
+          strokeColor : "rgba(151,187,205,1)",
+          pointColor : "rgba(151,187,205,1)",
+          pointStrokeColor : "#fff",
+          pointHighlightFill : "#fff",
+          pointHighlightStroke : "rgba(220,220,220,1)",
+          data : <%= @comentarios_count %>
+        },
+        {
+          label: "Difusiones",
+          fillColor : "rgba(151,187,205,0.2)",
+          strokeColor : "rgba(151,187,205,1)",
+          pointColor : "rgba(151,187,205,1)",
+          pointStrokeColor : "#fff",
+          pointHighlightFill : "#fff",
+          pointHighlightStroke : "rgba(220,220,220,1)",
+          data : <%= @difusiones_count %>
+        },
+        {
+          label: "Me Gusta",
+          fillColor : "rgba(151,187,205,0.2)",
+          strokeColor : "rgba(151,187,205,1)",
+          pointColor : "rgba(151,187,205,1)",
+          pointStrokeColor : "#fff",
+          pointHighlightFill : "#fff",
+          pointHighlightStroke : "rgba(220,220,220,1)",
+          data : <%= @like_count %>
+        },
+        {
+          label: "Compartir",
+          fillColor : "rgba(151,187,205,0.2)",
+          strokeColor : "rgba(151,187,205,1)",
+          pointColor : "rgba(151,187,205,1)",
+          pointStrokeColor : "#fff",
+          pointHighlightFill : "#fff",
+          pointHighlightStroke : "rgba(220,220,220,1)",
+          data : <%= @share_count %>
+        },
+        {
+          label: "Promedio de Puntuación",
+          fillColor : "rgba(151,187,205,0.2)",
+          strokeColor : "rgba(151,187,205,1)",
+          pointColor : "rgba(151,187,205,1)",
+          pointStrokeColor : "#fff",
+          pointHighlightFill : "#fff",
+          pointHighlightStroke : "rgba(220,220,220,1)",
+          data : <%= @average_count %>
+        }
+      ]
+
+    };
+
+    var lineChartDataDifusion = {
+      labels : ["Enero","Febrero","Marzo","Abril","Mayo","Junio","Julio","Agosto", "Septiembre", "Octubre", "Noviembre", "Diciembre"],
+      datasets : [
+        {
+          label: "Difusiones",
+          fillColor : "rgba(151,187,205,0.2)",
+          strokeColor : "rgba(151,187,205,1)",
+          pointColor : "rgba(151,187,205,1)",
+          pointStrokeColor : "#fff",
+          pointHighlightFill : "#fff",
+          pointHighlightStroke : "rgba(220,220,220,1)",
+          data : <%= @difusiones_count %>
+        },
+      ]
+
+    };
+
 
     var lineChartDataComment = {
       labels : ["Enero","Febrero","Marzo","Abril","Mayo","Junio","Julio","Agosto", "Septiembre", "Octubre", "Noviembre", "Diciembre"],
@@ -137,6 +235,7 @@
       ]
 
     };
+
     var lineChartDataLike = {
       labels : ["Enero","Febrero","Marzo","Abril","Mayo","Junio","Julio","Agosto", "Septiembre", "Octubre", "Noviembre", "Diciembre"],
       datasets : [
@@ -203,6 +302,15 @@
       responsive: true
     });
 
+    var ctx5 = document.getElementById("canvas_todas").getContext("2d");
+    myLine = new Chart(ctx5).Line(lineChartDataAll, {
+      responsive: true
+    });
+
+    var ctx6 = document.getElementById("canvas_difusiones").getContext("2d");
+    myLine = new Chart(ctx6).Line(lineChartDataDifusion, {
+      responsive: true
+    });
 
 
   </script>

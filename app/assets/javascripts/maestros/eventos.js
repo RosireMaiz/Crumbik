@@ -1,4 +1,5 @@
 $('#btnGuardar').on('click', function(){
+    validar("#formNew");
     if ($("#formNew").valid()) {
       var request = $.ajax({
                   url: '/eventos/crear_evento',
@@ -21,7 +22,6 @@ $('#btnGuardar').on('click', function(){
 });
 
 function validar(evento){
-
       $(evento).validate({
                         doNotHideMessage: true, //this option enables to show the error/success messages on tab switch.
                         errorElement: 'span', //default input error message container
@@ -70,11 +70,12 @@ function validar(evento){
                           data: { idevento: idevento},
                           dataType: "JSON",
                           success: function( data ) {
-                                    var tituloval = data.titulo ;
-                                    var descripcionval = data.descripcion ;
+
+                                    var tituloval = data.title ;
+                                    var descripcionval = data.description ;
                                     var inicioval = data.inicio ;
                                     var finval = data.fin ;
-                                               
+
                                     $(titulo).val(tituloval);
                                     $(descripcion).val(descripcionval);
                                     $(inicio).val(inicioval); 
@@ -114,6 +115,7 @@ function eliminar(idevento){
   };
 
   function update(evento, idevento, titulo, descripcion, inicio, fin){
+    validar(evento);
     if ($(evento).valid()) {
           var tituloval = $(titulo).val();
           var descripcionval = $(descripcion).val();
@@ -145,4 +147,19 @@ function limpiar(){
   $('#descripcion').val("");
   $('#inicio').val("");
   $('#fin').val("");
+    $('.input-field > label').attr("class", 'active');
+
+  $('#titulo_evento').removeClass('msj-error');
+  $('#titulo_evento').removeClass('valid');  
+
+  $('#descripcion').removeClass('msj-error');
+  $('#descripcion').removeClass('valid');
+
+  $('#inicio').removeClass('msj-error');
+  $('#inicio').removeClass('valid');
+
+  $('#fin').removeClass('msj-error');
+  $('#fin').removeClass('valid');
+
+  $( "span.msj-error" ).remove();
 };

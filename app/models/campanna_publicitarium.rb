@@ -16,5 +16,31 @@ class CampannaPublicitarium < ActiveRecord::Base
   		end
   		cantidad
   	end
+
+    def cantidad_difusion_general
+      difusion ||= Array.new
+      (1..12).each do |i|
+        campannas_publicitaria = CampannaPublicitarium.where("extract(year  from fecha_inicio) = ? AND extract(month from fecha_inicio) = ?", i, "2016")
+        cantidad = 0
+        campannas_publicitaria.each do |campanna_publicitaria|
+          cantidad = cantidad + campannas_publicitaria.cantidad_difusion
+        end
+        difusion.push(cantidad)
+      end
+      difusion  
+    end
   	
+    def cantidad_difusion_producto(id_producto)
+      difusion ||= Array.new
+      (1..12).each do |i|
+        campannas_publicitaria = CampannaPublicitarium.where("producto_id =? AND extract(year  from fecha_inicio) = ? AND extract(month from fecha_inicio) = ?", id_producto, i, "2016")
+        cantidad = 0
+        campannas_publicitaria.each do |campanna_publicitaria|
+          cantidad = cantidad + campannas_publicitaria.cantidad_difusion
+        end
+        difusion.push(cantidad)
+      end
+      difusion  
+    end
+
  end

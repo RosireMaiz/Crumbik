@@ -273,6 +273,18 @@ Rails.application.routes.draw do
 	match "/interacciones/producto/:id_producto" => "interaccions#consultar_producto", via: :get
 	match "/interacciones/producto/:id_plan" => "interaccions#consultar_plan", via: :get
 	
+
+	match "/categorias/consultar" => "categorias#consultar", via: :get
+	match "/categorias/agregar" => "categorias#new", via: :get
+	match "/categoria/crear_categoria" => "categorias#create", via: :post
+	match "/categorias/update" => "categorias#update", via: :post
+	match "/productos/categorias/update_estatus" => "categorias#update_estatus", via: :post
+	match "/categorias/consultar_categoria" => "categorias#consultar_categoria", via: :post
+	match "/productos/categorias/eliminar" => "categorias#eliminar", via: :post
+	match "/categoria/editar/:id_categoria" => "categorias#edit", via: :get
+	match "/categoria/editar" => "categorias#save_edit", via: :post
+
+
 	devise_scope :usuario do
 	    post "/entrar" => "devise/sessions#create"
 	    get "/entrar" => "devise/sessions#new"
@@ -304,21 +316,10 @@ Rails.application.routes.draw do
 		match "/clientes/update_estatus" => "clientes#update_estatus", via: :post
 		match "/clientes/eliminar" => "clientes#eliminar", via: :post
 
-		match "/productos/categorias/consultar" => "categorias#consultar", via: :get
-    	match "/productos/categorias/agregar" => "categorias#new", via: :get
-    	match "/categoria/crear_categoria" => "categorias#create", via: :post
-		match "/categorias/update" => "categorias#update", via: :post
-		match "/productos/categorias/update_estatus" => "categorias#update_estatus", via: :post
-		match "/categorias/consultar_categoria" => "categorias#consultar_categoria", via: :post
-		match "/productos/categorias/eliminar" => "categorias#eliminar", via: :post
-		match "/categoria/editar/:id_categoria" => "categorias#edit", via: :get
-		match "/categoria/editar" => "categorias#save_edit", via: :post
-
 
 		match "/productos/puntuacion" => "productos#puntuacion", via: :post
 		match "/productos/share_twitter" => "productos#share", via: :post
 		match "/productos/like" => "productos#like", via: :post
-		
 		match "/catalogo" => "productos#catalogo", via: :get
 		match "/catalogo/:id_producto" => "productos#show", via: :get
 

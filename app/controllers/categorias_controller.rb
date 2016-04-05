@@ -20,12 +20,8 @@ class CategoriasController < ApplicationController
 			redirect_to root_path
 		else
 			@categoria = Categorium.new
-			if !request.subdomain.present?
-				redirect_to root_path
-			else
-				@categoria.variable_psicografica.build
-				render "categorias/new"
-			end
+			@categoria.variable_psicografica.build
+			render "categorias/new"
 		end
 	end
 
@@ -53,13 +49,9 @@ class CategoriasController < ApplicationController
 			redirect_to root_path
 		else
 			@categoria = Categorium.new
-			if !request.subdomain.present?
-				redirect_to root_path
-			else
-				id = params[:id_categoria]
-				@categoria = Categorium.where("id = ?", id).first
-				render "categorias/edit"
-			end
+			id = params[:id_categoria]
+			@categoria = Categorium.where("id = ?", id).first
+			render "categorias/edit"
 		end
 	end
 
@@ -98,9 +90,8 @@ class CategoriasController < ApplicationController
 		if !usuario_signed_in?
         	render "portal/index"
      	else
-
-	           @categorias = Categorium.order('id ASC')
-	           render "categorias/categorias"	
+           @categorias = Categorium.order('id ASC')
+           render "categorias/categorias"	
          
      	end
 	end

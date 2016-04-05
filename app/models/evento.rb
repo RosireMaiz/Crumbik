@@ -13,6 +13,8 @@ class Evento < ActiveRecord::Base
       :title => self.titulo,
       :start => self.inicio.strftime("%m/%d/%Y"),
       :end => self.fin.strftime("%m/%d/%Y"),
+      :inicio => self.inicio.strftime("%d/%m/%Y/"),
+      :fin => self.fin.strftime("%d/%m/%Y/"),
       #:start => self.inicio.rfc822,
       #:end => self.fin.rfc822,
       #:allDay =>  self.dia_completo,
