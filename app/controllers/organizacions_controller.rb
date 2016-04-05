@@ -249,6 +249,12 @@ class OrganizacionsController < ApplicationController
 		redirect_to :controller => 'organizacions', :action => 'edit'
 	end
 
+	def mostrar_informacion
+		@top_puntuacion = Producto.new.top_puntuacion
+	    render "organizacions/nosotros"
+	end
+
+
 
 	private
     	def organizacion_edit_params
