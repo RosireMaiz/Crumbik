@@ -105,3 +105,69 @@
       </div>
     </div>
 </div>
+
+<% content_for :javascript_personalizado do %>
+  <%= javascript_include_tag 'plugins/chart/Chart' %>
+  <script type="text/javascript">
+
+    var lineChartDataAll = {
+      labels : ["Enero","Febrero","Marzo","Abril"],
+      datasets : [
+        {
+          label: "Comentarios",
+          fillColor : "rgba(151,187,205,0.2)",
+          strokeColor : "rgba(151,187,205,1)",
+          pointColor : "rgba(151,187,205,1)",
+          pointStrokeColor : "#fff",
+          pointHighlightFill : "#fff",
+          pointHighlightStroke : "rgba(220,220,220,1)",
+          data : <%= @comentarios_count %>
+        },
+        {
+          label: "Difusiones",
+          fillColor : "rgba(151,187,205,0.2)",
+          strokeColor : "rgba(151,187,205,1)",
+          pointColor : "rgba(151,187,205,1)",
+          pointStrokeColor : "#fff",
+          pointHighlightFill : "#fff",
+          pointHighlightStroke : "rgba(220,220,220,1)",
+          data : <%= @difusiones_count %>
+        },
+        {
+          label: "Me Gusta",
+          fillColor : "rgba(151,187,205,0.2)",
+          strokeColor : "rgba(151,187,205,1)",
+          pointColor : "rgba(151,187,205,1)",
+          pointStrokeColor : "#fff",
+          pointHighlightFill : "#fff",
+          pointHighlightStroke : "rgba(220,220,220,1)",
+          data : <%= @like_count %>
+        },
+        {
+          label: "Compartir",
+          fillColor : "rgba(151,187,205,0.2)",
+          strokeColor : "rgba(151,187,205,1)",
+          pointColor : "rgba(151,187,205,1)",
+          pointStrokeColor : "#fff",
+          pointHighlightFill : "#fff",
+          pointHighlightStroke : "rgba(220,220,220,1)",
+          data : <%= @share_count %>
+        },
+        {
+          label: "Promedio de Puntuación",
+          fillColor : "rgba(151,187,205,0.2)",
+          strokeColor : "rgba(151,187,205,1)",
+          pointColor : "rgba(151,187,205,1)",
+          pointStrokeColor : "#fff",
+          pointHighlightFill : "#fff",
+          pointHighlightStroke : "rgba(220,220,220,1)",
+          data : <%= @average_count %>
+        }
+      ]
+
+    };
+
+
+
+  </script>
+<% end -%>

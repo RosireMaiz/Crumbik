@@ -302,7 +302,6 @@
         });
       if (usuarios_mensaje_ids.length == usuarios_mensaje_remove_ids.length) {
           $("#sms-error_local").removeClass("hidden");
-          return true;
       } else {
           $("#sms-error_local").addClass("hidden");
          
@@ -314,6 +313,7 @@
                   usuarios_mensaje_ids.splice(indexof, 1);
               }
             }
+            
             var html = "<div><div class='progress'><div class='indeterminate'></div></div>"+
                           "</div><h5>Espera mientras enviamos sus SMS.</h5>"
             $("#notificacion").html(html);
@@ -406,7 +406,7 @@
                $("#mensaje_email-error_local").addClass("hidden");
             }
 
-          if ($("#div-email").valid() && mensaje == null && mensaje == "") {
+          if ($("#div-email").valid() && mensaje != null && mensaje != "") {
 
             for (var i = usuarios_email_remove_ids.length - 1; i >= 0; i--) {
               var id_remove = usuarios_email_remove_ids[i];
@@ -420,7 +420,7 @@
             $("#notificacion").html(html);
             $('#notificacion').openModal();
             var asunto = $("#text-asunto").val();
-            
+            alert("HOLA");
             var request = $.ajax({
                               url: '/campanna_publicitarias/difusion_email',
                               method: "POST",

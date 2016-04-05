@@ -43,4 +43,143 @@ class CampannaPublicitarium < ActiveRecord::Base
       difusion  
     end
 
+    def count_sms
+      difusion ||= Array.new
+      (1..12).each do |i|
+        campannas_publicitaria = CampannaPublicitarium.where("extract(year  from fecha_inicio) = ? AND extract(month from fecha_inicio) = ?", "2016", i)
+        cantidad = 0
+        campannas_publicitaria.each do |campanna_publicitaria|
+          campanna_publicitaria.campanna_publicitaria_detalles.each do |campanna_publicitaria_detalle|
+            if CampannaPublicitariaDetalle.medio_difusions[campanna_publicitaria_detalle.medio_difusion]  == CampannaPublicitariaDetalle.medio_difusions["sms"]
+               cantidad = cantidad + campanna_publicitaria_detalle.cantidad_difusion_usuario
+            end
+          end
+        end
+        difusion.push(cantidad)
+      end
+      difusion  
+    end
+
+    def count_llamada
+      difusion ||= Array.new
+      (1..12).each do |i|
+        campannas_publicitaria = CampannaPublicitarium.where("extract(year  from fecha_inicio) = ? AND extract(month from fecha_inicio) = ?", "2016", i)
+        cantidad = 0
+        campannas_publicitaria.each do |campanna_publicitaria|
+          campanna_publicitaria.campanna_publicitaria_detalles.each do |campanna_publicitaria_detalle|
+            if CampannaPublicitariaDetalle.medio_difusions[campanna_publicitaria_detalle.medio_difusion]  == CampannaPublicitariaDetalle.medio_difusions["llamada"]
+               cantidad = cantidad + campanna_publicitaria_detalle.cantidad_difusion_usuario
+            end
+          end
+        end
+        difusion.push(cantidad)
+      end
+      difusion  
+    end
+
+    def count_email
+      difusion ||= Array.new
+      (1..12).each do |i|
+        campannas_publicitaria = CampannaPublicitarium.where("extract(year  from fecha_inicio) = ? AND extract(month from fecha_inicio) = ?", "2016", i)
+        cantidad = 0
+        campannas_publicitaria.each do |campanna_publicitaria|
+          campanna_publicitaria.campanna_publicitaria_detalles.each do |campanna_publicitaria_detalle|
+            if CampannaPublicitariaDetalle.medio_difusions[campanna_publicitaria_detalle.medio_difusion]  == CampannaPublicitariaDetalle.medio_difusions["email"]
+               cantidad = cantidad + campanna_publicitaria_detalle.cantidad_difusion_usuario
+            end
+          end
+        end
+        difusion.push(cantidad)
+      end
+      difusion  
+    end
+
+    def count_red_social
+      difusion ||= Array.new
+      (1..12).each do |i|
+        campannas_publicitaria = CampannaPublicitarium.where("extract(year  from fecha_inicio) = ? AND extract(month from fecha_inicio) = ?", "2016", i)
+        cantidad = 0
+        campannas_publicitaria.each do |campanna_publicitaria|
+          campanna_publicitaria.campanna_publicitaria_detalles.each do |campanna_publicitaria_detalle|
+            if CampannaPublicitariaDetalle.medio_difusions[campanna_publicitaria_detalle.medio_difusion] == CampannaPublicitariaDetalle.medio_difusions["red_social"]
+               cantidad = cantidad + campanna_publicitaria_detalle.cantidad_difusion_usuario
+            end
+          end
+        end
+        difusion.push(cantidad)
+      end
+      difusion  
+    end
+
+
+    def count_sms_producto(id_producto)
+      difusion ||= Array.new
+      (1..12).each do |i|
+        campannas_publicitaria = CampannaPublicitarium.where("producto_id = ? AND extract(year  from fecha_inicio) = ? AND extract(month from fecha_inicio) = ?", id_producto, "2016", i)
+        cantidad = 0
+        campannas_publicitaria.each do |campanna_publicitaria|
+          campanna_publicitaria.campanna_publicitaria_detalles.each do |campanna_publicitaria_detalle|
+            if CampannaPublicitariaDetalle.medio_difusions[campanna_publicitaria_detalle.medio_difusion]  == CampannaPublicitariaDetalle.medio_difusions["sms"]
+               cantidad = cantidad + campanna_publicitaria_detalle.cantidad_difusion_usuario
+            end
+          end
+        end
+        difusion.push(cantidad)
+      end
+      difusion  
+    end
+
+    def count_llamada_producto(id_producto)
+      difusion ||= Array.new
+      (1..12).each do |i|
+        campannas_publicitaria = CampannaPublicitarium.where("producto_id = ? AND extract(year  from fecha_inicio) = ? AND extract(month from fecha_inicio) = ?", id_producto, "2016", i)
+        cantidad = 0
+        campannas_publicitaria.each do |campanna_publicitaria|
+          campanna_publicitaria.campanna_publicitaria_detalles.each do |campanna_publicitaria_detalle|
+            if CampannaPublicitariaDetalle.medio_difusions[campanna_publicitaria_detalle.medio_difusion]  == CampannaPublicitariaDetalle.medio_difusions["llamada"]
+               cantidad = cantidad + campanna_publicitaria_detalle.cantidad_difusion_usuario
+            end
+          end
+        end
+        difusion.push(cantidad)
+      end
+      difusion  
+    end
+
+    def count_email_producto(id_producto)
+      difusion ||= Array.new
+      (1..12).each do |i|
+        campannas_publicitaria = CampannaPublicitarium.where("producto_id = ? AND extract(year  from fecha_inicio) = ? AND extract(month from fecha_inicio) = ?", id_producto, "2016", i)
+        cantidad = 0
+        campannas_publicitaria.each do |campanna_publicitaria|
+          campanna_publicitaria.campanna_publicitaria_detalles.each do |campanna_publicitaria_detalle|
+            if CampannaPublicitariaDetalle.medio_difusions[campanna_publicitaria_detalle.medio_difusion]  == CampannaPublicitariaDetalle.medio_difusions["email"]
+               cantidad = cantidad + campanna_publicitaria_detalle.cantidad_difusion_usuario
+            end
+          end
+        end
+        difusion.push(cantidad)
+      end
+      difusion  
+    end
+
+    def count_red_social_producto(id_producto)
+      difusion ||= Array.new
+      (1..12).each do |i|
+        campannas_publicitaria = CampannaPublicitarium.where("producto_id = ? AND extract(year  from fecha_inicio) = ? AND extract(month from fecha_inicio) = ?", id_producto, "2016", i)
+        cantidad = 0
+        campannas_publicitaria.each do |campanna_publicitaria|
+          campanna_publicitaria.campanna_publicitaria_detalles.each do |campanna_publicitaria_detalle|
+            if CampannaPublicitariaDetalle.medio_difusions[campanna_publicitaria_detalle.medio_difusion] == CampannaPublicitariaDetalle.medio_difusions["red_social"]
+               cantidad = cantidad + campanna_publicitaria_detalle.cantidad_difusion_usuario
+            end
+          end
+        end
+        difusion.push(cantidad)
+      end
+      difusion  
+    end
+
+
+
  end

@@ -52,7 +52,7 @@ class Plan < ActiveRecord::Base
 	def count_total_me_gusta_producto(producto_id)
 		me_gusta ||= Array.new
 		(1..12).each do |i|
-			puntuacion = Interaccion.where("producto_id = ?  AND tipo_interaccion = ? AND extract(year  from created_at) = ? AND extract(month from created_at) = ?", Interaccion.tipo_interaccions["me_gusta"], "2016", i).size
+			puntuacion = Interaccion.where("producto_id = ?  AND tipo_interaccion = ? AND extract(year  from created_at) = ? AND extract(month from created_at) = ?", producto_id, Interaccion.tipo_interaccions["me_gusta"], "2016", i).size
 			me_gusta.push(puntuacion)
 		end
 		me_gusta	

@@ -1,16 +1,16 @@
-<div class="row titulo-seccion no-margin-v banner banner-perfil">
+<div class="row titulo-seccion banner banner-perfil">
   <div class="contenedor">
     <div class="col s6">
       <h5 class="text-uppercase">
-       Interacciones 
+       Estadísticas Campañas Publicitarias
       </h5>
     </div>
     <div class="col s6 text-right ">
-      <ol class="breadcrumb" style="margin-bottom: 0px !important">
+      <ol class="breadcrumb">
         <li>
           <a href="/">Inicio</a>
         </li>
-        <li class="active">Interacciones</li>
+        <li class="active">Estadísticas</li>
       </ol>
     </div>
   </div>
@@ -23,50 +23,47 @@
        
       <div class="valign-wrapper">
 
-            <% if request.subdomain.present? %>
-              <div class="input-field col m5 s12">
-                <select id="select_producto" name="rol" >
-                  <option value="-1">Elija un Producto</option>
-                  <%= options_from_collection_for_select(Producto.all, :id, :nombre) %>
-                </select>
-                <label>Producto</label>
-              </div>
-              <a class="waves-effect waves-light btn z-depth-1" id="buscar_producto" style = "margin-left: 27px;">Buscar</a>
-            <% else %>
-              <div class="input-field col m5 s12">
-                <select id="select_plan" name="rol" >
-                  <option value="-1" selected>Elija un Plan</option>
-                  <%= options_from_collection_for_select(Plan.all, :id, :nombre) %>
-                </select>
-                <label>Plan</label>
-              </div>
-              <a class="waves-effect waves-light btn z-depth-1 " id="buscar_plan" style = "margin-left: 27px;">Buscar </a>
-            <% end %>
+          <% if request.subdomain.present? %>
+            <div class="input-field col m5 s12">
+              <select id="select_producto" name="rol" >
+                <option value="-1">Elija un Producto</option>
+                <%= options_from_collection_for_select(Producto.all, :id, :nombre) %>
+              </select>
+              <label>Producto</label>
+            </div>
+            <a class="waves-effect waves-light btn z-depth-1" id="buscar_producto" style = "margin-left: 27px;">Buscar</a>
+          <% else %>
+            <div class="input-field col m5 s12">
+              <select id="select_plan" name="rol" >
+                <option value="-1" selected>Elija un Plan</option>
+                <%= options_from_collection_for_select(Plan.all, :id, :nombre) %>
+              </select>
+              <label>Plan</label>
+            </div>
+            <a class="waves-effect waves-light btn z-depth-1 " id="buscar_plan" style = "margin-left: 27px;">Buscar </a>
+          <% end %>
       </div>
             
     </div>  
   </div>
 
   <div class="row">
-    <div class="col s12">
+    <div class="col s10 offset-s1">
       <ul class="tabs">
         <li class="tab col s12 m2">
           <a class="grey-text text-darken-2 active" href="#todas">Todas</a>
         </li>
         <li class="tab col s12 m2">
-          <a class="grey-text text-darken-2 " href="#difusiones">Dfusiones</a>
+          <a class="grey-text text-darken-2 " href="#sms">SMS</a>
         </li>
         <li class="tab col s12 m2">
-          <a class="grey-text text-darken-2 " href="#comentarios">Comentarios</a>
+          <a class="grey-text text-darken-2 " href="#email">Email</a>
         </li>
         <li class="tab col s12 m2">
-          <a class="grey-text text-darken-2" href="#puntuaciones">Puntuaciones</a>
+          <a class="grey-text text-darken-2" href="#llamadas">Llamadas</a>
         </li>
         <li class="tab col s12 m2">
-          <a class="grey-text text-darken-2 " href="#me_gusta">Me Gusta</a>
-        </li>
-        <li class="tab col s12 m2">
-          <a class="grey-text text-darken-2 " href="#compartir">Compartir</a>
+          <a class="grey-text text-darken-2 " href="#redes_sociales">Redes Sociales</a>
         </li>
       </ul>
     </div>
@@ -77,55 +74,46 @@
     <span class="negrita"> <%if !@plan.nil? %>  <%= @plan.nombre %> <% end %> </span>
     <div class="row" id="todas">
 
-      <div class="col s8 offset-s2 " id="todas">
+      <div class="col s8 offset-s2" id="todas">
         <div>
           <canvas id="canvas_todas" height="350" width="600"></canvas>
         </div>
       </div>
       
     </div>
-    <div class="row" id="difusiones">
+    <div class="row" id="sms">
 
       <div class="col s8 offset-s2 ">
         <div>
-          <canvas id="canvas_difusiones" height="350" width="600"></canvas>
+          <canvas id="canvas_sms" height="350" width="600"></canvas>
         </div>
       </div>
-      
     </div>
-    <div class="row" id="comentarios">
 
+    <div class="row" id="email">
       <div class="col s8 offset-s2 ">
         <div>
-          <canvas id="canvas" height="350" width="600"></canvas>
+          <canvas id="canvas_email" height="350" width="600"></canvas>
         </div>
       </div>
-      
     </div>
-    <div class="row" id="puntuaciones">
+
+    <div class="row" id="llamadas">
       <div class="col s8 offset-s2">
       <div>
-        <canvas id="canvas_bar" height="350" width="600"></canvas>
+        <canvas id="canvas_llamadas" height="350" width="600"></canvas>
         </div>
       </div>
-      
     </div>
-    <div class="row" id="me_gusta">
+
+    <div class="row" id="redes_sociales">
       <div class="col s8 offset-s2">
         <div>
-          <canvas id="canvas_megusta" height="350" width="600"></canvas>
+          <canvas id="canvas_social" height="350" width="600"></canvas>
         </div>
-      </div>
-      
+      </div>  
     </div>
-    <div class="row" id="compartir">
-      <div class="col s8 offset-s2">
-        <div>
-          <canvas id="canvas_compartir" height="350" width="600"></canvas>
-        </div>
-      </div>
-      
-    </div>
+
   </div>
 </div>
 
@@ -136,72 +124,61 @@
 
     $("#buscar_producto").click(function(evt){
        id_producto = $("#select_producto").val();
-       window.location.href = "/interacciones/producto/"+id_producto;
+       window.location.href = "/interacciones_actividades/producto/"+id_producto;
     });
 
     $("#buscar_plan").click(function(evt){
         id_plan = $("#select_plan").val();
-        window.location.href = "/interacciones/plan/"+id_plan;
+        window.location.href = "/interacciones_actividades/plan/"+id_plan;
     });
 
     var lineChartDataAll = {
       labels : ["Enero","Febrero","Marzo","Abril","Mayo","Junio","Julio","Agosto", "Septiembre", "Octubre", "Noviembre", "Diciembre"],
       datasets : [
         {
-          label: "Comentarios",
+          label: "Sms",
           fillColor : "rgba(151,187,205,0.2)",
           strokeColor : "rgba(151,187,205,1)",
           pointColor : "rgba(151,187,205,1)",
           pointStrokeColor : "#fff",
           pointHighlightFill : "#fff",
           pointHighlightStroke : "rgba(220,220,220,1)",
-          data : <%= @comentarios_count %>
+          data : <%= @sms_count %>
         },
         {
-          label: "Difusiones",
+          label: "Email",
           fillColor : "rgba(151,187,205,0.2)",
           strokeColor : "rgba(151,187,205,1)",
           pointColor : "rgba(151,187,205,1)",
           pointStrokeColor : "#fff",
           pointHighlightFill : "#fff",
           pointHighlightStroke : "rgba(220,220,220,1)",
-          data : <%= @difusiones_count %>
+          data : <%= @email_count %>
         },
         {
-          label: "Me Gusta",
+          label: "Llamada",
           fillColor : "rgba(151,187,205,0.2)",
           strokeColor : "rgba(151,187,205,1)",
           pointColor : "rgba(151,187,205,1)",
           pointStrokeColor : "#fff",
           pointHighlightFill : "#fff",
           pointHighlightStroke : "rgba(220,220,220,1)",
-          data : <%= @like_count %>
+          data : <%= @llamada_count %>
         },
         {
-          label: "Compartir",
+          label: "Redes Sociales",
           fillColor : "rgba(151,187,205,0.2)",
           strokeColor : "rgba(151,187,205,1)",
           pointColor : "rgba(151,187,205,1)",
           pointStrokeColor : "#fff",
           pointHighlightFill : "#fff",
           pointHighlightStroke : "rgba(220,220,220,1)",
-          data : <%= @share_count %>
-        },
-        {
-          label: "Promedio de Puntuación",
-          fillColor : "rgba(151,187,205,0.2)",
-          strokeColor : "rgba(151,187,205,1)",
-          pointColor : "rgba(151,187,205,1)",
-          pointStrokeColor : "#fff",
-          pointHighlightFill : "#fff",
-          pointHighlightStroke : "rgba(220,220,220,1)",
-          data : <%= @average_count %>
+          data : <%= @social_count %>
         }
       ]
-
     };
 
-    var lineChartDataDifusion = {
+    var lineChartDataEmail = {
       labels : ["Enero","Febrero","Marzo","Abril","Mayo","Junio","Julio","Agosto", "Septiembre", "Octubre", "Noviembre", "Diciembre"],
       datasets : [
         {
@@ -212,14 +189,14 @@
           pointStrokeColor : "#fff",
           pointHighlightFill : "#fff",
           pointHighlightStroke : "rgba(220,220,220,1)",
-          data : <%= @difusiones_count %>
+          data : <%= @email_count %>
         },
       ]
 
     };
 
 
-    var lineChartDataComment = {
+    var lineChartDataSms = {
       labels : ["Enero","Febrero","Marzo","Abril","Mayo","Junio","Julio","Agosto", "Septiembre", "Octubre", "Noviembre", "Diciembre"],
       datasets : [
         {
@@ -230,13 +207,13 @@
           pointStrokeColor : "#fff",
           pointHighlightFill : "#fff",
           pointHighlightStroke : "rgba(220,220,220,1)",
-          data : <%= @comentarios_count %>
+          data : <%= @sms_count %>
         },
       ]
 
     };
 
-    var lineChartDataLike = {
+    var lineChartDataLlamada = {
       labels : ["Enero","Febrero","Marzo","Abril","Mayo","Junio","Julio","Agosto", "Septiembre", "Octubre", "Noviembre", "Diciembre"],
       datasets : [
         {
@@ -247,12 +224,12 @@
           pointStrokeColor : "#fff",
           pointHighlightFill : "#fff",
           pointHighlightStroke : "rgba(220,220,220,1)",
-          data : <%= @like_count %>
+          data : <%= @llamada_count %>
         },
       ]
 
     };
-    var lineChartDataShare = {
+    var lineChartDataSocial = {
       labels : ["Enero","Febrero","Marzo","Abril","Mayo","Junio","Julio","Agosto", "Septiembre", "Octubre", "Noviembre", "Diciembre"],
       datasets : [
         {
@@ -263,55 +240,37 @@
           pointStrokeColor : "#fff",
           pointHighlightFill : "#fff",
           pointHighlightStroke : "rgba(220,220,220,1)",
-          data : <%= @share_count %>
+          data : <%= @social_count %>
         },
       ]
 
     };
-      var barChartData = {
-      labels : ["Enero","Febrero","Marzo","Abril","Mayo","Junio","Julio","Agosto", "Septiembre", "Octubre", "Noviembre", "Diciembre"],
-    datasets : [
-      {
-        fillColor : "rgba(151,187,205,0.2)",
-        strokeColor : "rgba(151,187,205,1)",
-        highlightFill: "rgba(220,220,220,0.75)",
-        highlightStroke: "rgba(151,187,205,1)",
-        data : <%= @average_count %>
-      },
-    ]
-
-  };
 
 
-    var ctx = document.getElementById("canvas").getContext("2d");
-    myLine = new Chart(ctx).Line(lineChartDataComment, {
+
+    var ctx = document.getElementById("canvas_sms").getContext("2d");
+    myLine = new Chart(ctx).Line(lineChartDataSms, {
       responsive: true
     });
-    var ctx2 = document.getElementById("canvas_bar").getContext("2d");
-    myBar = new Chart(ctx2).Bar(barChartData, {
+    var ctx2 = document.getElementById("canvas_llamadas").getContext("2d");
+    myBar = new Chart(ctx2).Line(lineChartDataLlamada, {
       responsive : true
     });
 
-    var ctx3 = document.getElementById("canvas_megusta").getContext("2d");
-    myLine = new Chart(ctx3).Line(lineChartDataLike, {
+    var ctx3 = document.getElementById("canvas_todas").getContext("2d");
+    myLine = new Chart(ctx3).Line(lineChartDataAll, {
       responsive: true
     });
 
-    var ctx4 = document.getElementById("canvas_compartir").getContext("2d");
-    myLine = new Chart(ctx4).Line(lineChartDataShare, {
+    var ctx4 = document.getElementById("canvas_social").getContext("2d");
+    myLine = new Chart(ctx4).Line(lineChartDataSocial, {
       responsive: true
     });
 
-    var ctx5 = document.getElementById("canvas_todas").getContext("2d");
-    myLine = new Chart(ctx5).Line(lineChartDataAll, {
+    var ctx5 = document.getElementById("canvas_email").getContext("2d");
+    myLine = new Chart(ctx5).Line(lineChartDataEmail, {
       responsive: true
     });
-
-    var ctx6 = document.getElementById("canvas_difusiones").getContext("2d");
-    myLine = new Chart(ctx6).Line(lineChartDataDifusion, {
-      responsive: true
-    });
-
 
   </script>
 <% end %>

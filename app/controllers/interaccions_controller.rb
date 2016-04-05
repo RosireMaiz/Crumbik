@@ -42,7 +42,7 @@ class InteraccionsController < ApplicationController
 			redirect_to root_path
 		else
 			id_plan = params[:idplan]
-			@producto = Plan.where(id: id_producto).first
+			@plan = Plan.where(id: id_plan).first
 			@comentarios_count = Plan.new.count_total_comentarios_producto(id_plan)
 			@like_count = Plan.new.count_total_me_gusta_producto(id_plan)
 			@average_count = Plan.new.average_puntuacion_producto(id_plan)
@@ -90,11 +90,47 @@ class InteraccionsController < ApplicationController
 				end
 
 			end
-		
-			
-
 			render "interaccions/interaccions_social"
+		end
+	end
 
+	def consultar_campanna_social
+		if !usuario_signed_in?
+			redirect_to root_path
+		else
+			@sms_count = CampannaPublicitarium.new.count_sms
+			@llamada_count = CampannaPublicitarium.new.count_llamada
+			@email_count = CampannaPublicitarium.new.count_email
+			@social_count = CampannaPublicitarium.new.count_red_social				
+			render "interaccions/interaccions_campannas"
+		end
+	end
+
+	def consultar_campanna_social_producto
+		if !usuario_signed_in?
+			redirect_to root_path
+		else
+			id_producto = params[:id_producto]
+			@producto = Producto.where(id: id_producto).first
+			@sms_count = CampannaPublicitarium.new.count_sms_producto(id_producto)
+			@llamada_count = CampannaPublicitarium.new.count_llamada_producto(id_producto)
+			@email_count = CampannaPublicitarium.new.count_email_producto(id_producto)
+			@social_count = CampannaPublicitarium.new.count_red_social_producto(id_producto)			
+			render "interaccions/interaccions_campannas"
+		end
+	end
+
+	def consultar_campanna_social_plan
+		if !usuario_signed_in?
+			redirect_to root_path
+		else
+			id_plan = params[:idplan]
+			@plan = Plan.where(id: id_plan).first
+			@sms_count = CampannaPublicitarium.new.count_sms_producto(id_plan)
+			@llamada_count = CampannaPublicitarium.new.count_llamada_producto(id_plan)
+			@email_count = CampannaPublicitarium.new.count_email_producto(id_plan)
+			@social_count = CampannaPublicitarium.new.count_red_social_producto(id_plan)				
+			render "interaccions/interaccions_campannas"
 		end
 	end
 end
