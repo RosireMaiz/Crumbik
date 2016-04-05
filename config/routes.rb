@@ -338,4 +338,7 @@ Rails.application.routes.draw do
 	match "/eventos/update" => "eventos#update", via: :post
 	match "/eventos" => "eventos#eventos", via: :get
 
+	match "/organizacions/nosotros" => "organizacions#mostrar_informacion", via: :get
+
+
 end
