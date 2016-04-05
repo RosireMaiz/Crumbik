@@ -1,0 +1,142 @@
+<% content_for :css_personalizado do %>
+  <%= stylesheet_link_tag    "plugins/star-rating.min" %> 
+  <%= stylesheet_link_tag    "star-product" %> 
+
+  <style type="text/css">
+  .texto {
+    -webkit-box-sizing: border-box;
+    -moz-box-sizing: border-box;
+    box-sizing: border-box;
+    width: 90%;
+    text-align: justify;
+    }
+  </style>
+<% end %>
+
+<script type="text/javascript" src="http://lvh.me:3000/jquery/jquery-1.10.2.min.js"></script>
+
+<div class="row titulo-seccion banner banner-perfil">
+    <div class="contenedor">
+      <div class="col s6">
+        <h5 class="text-uppercase">Nuestro Trabajo</h5>
+      </div>
+      <!-- Banner -->
+      <div class="col s6 text-right ">
+        <ol class="breadcrumb">
+          <li>
+            <a href="/">Nosotros</a>
+          </li>
+        </ol>
+      </div>
+    </div>
+</div>
+
+<!-- Contenedor -->
+<div class="row pad30-h container" style="text-align:center">
+  <!-- Titulo-->
+  <div class= "col s12">
+    <h5 class="text-uppercase"><%= @organizacion.slogan %></h5>
+  </div>
+  <!-- descripcion-->
+  <div class="col s6 offset-s3" style="padding-top:2%">
+    <p><%= @organizacion.descripcion %></p>
+  </div>
+  <!-- Dashboard -->
+  
+  <!-- Mision y Vision -->
+  <div  style="float:middle; margin-top:4%">
+    <div class="col s6">
+      <p><b>Mision</b></p>
+      <img style="float:left; margin-right:4%;" src="<%= asset_path 'org-mision.png' %>">
+      <p class="texto"> <%= @organizacion.mision %></p>   
+    </div>
+    <div class="col s6">
+      <p><b>Vision</b></p>
+      <img style="float:left; margin-right:4%" src="<%= asset_path 'org-vision.png' %>">
+      <p class="texto"><%= @organizacion.vision %></p>
+    </div>
+  </div>
+
+  <!-- separador -->
+  <img src="<%= asset_path 'separator.png' %>">
+
+  <!-- texto -->
+  <div style="text-align:center; padding-top:2%">
+    <p class="text-uppercase col s6 offset-s3"><%= @organizacion.subtitulo_banner %></p>
+  </div>
+
+  <!-- separador -->
+  <img src="<%= asset_path 'separator.png' %>">
+
+  <!-- Productos Populares-->
+  <div style="margin-top:10px;">
+    <h5 class="text-uppercase col s6 offset-s3 text-uppercase">Top <%= @organizacion.tipo_organizacion.nombre %></h5>
+  </div>
+      
+
+      <% @top_puntuacion.each do |producto| %>
+        <% @promedio =  Interaccion.where("producto_id = ?  AND tipo_interaccion = ? ", producto.id, Interaccion.tipo_interaccions["puntuacion"]).average(:contenido) %>
+        
+        <div class = "col s12 m4" >
+          <div class="card hoverable">
+
+            <div class="card-image">
+              <img src="<%= producto.formato_imagen %><%= producto.imagen %>" class="activator img-responsive">
+            </div>
+
+            <div class="card-content  pad5-hv left-align">
+              <div class="row no-margin-v">
+                <span class="card-title card-catalogo activator grey-text text-darken-4">
+                  <div class="col s10">
+                  <%= producto.nombre %>
+                  </div>
+                </span>
+              </div>
+            </div>
+            
+            <div class="card-action pad5-15">
+              <div class="row no-margin-v">
+                <div class="col s6 no-padding">
+                  <input id="input_star_<%= producto.id %>" class="rating left" data-symbol="&#xf005; " value="<% if !@promedio.nil? %> <%= @promedio %> <% end %>">
+                </div>
+                <div class="col s6 no-padding">
+                  <span class = "blue-text right"> $<%= producto.precio %></span>
+                </div>
+              </div>
+                <a href="/catalogo/<%= producto.id %>" class="waves-effect"> Ver </a>
+            </div>
+
+          </div>
+        </div>
+
+
+        <script type="text/javascript">
+                $(document).ready(function(){
+                var star_input = '#input_star_' + <%= producto.id %>;
+
+                  $(star_input).rating({
+                        size:"xs",
+                        glyphicon: false,
+                        disabled:true,
+                        hoverEnabled: false,
+                        showCaption: true,
+                        showClear:false,
+                        ratingClass: "rating-fa", // the rating class will ensure font awesome icon rendering
+                        clearButtonTitle: "Limpiar",
+                        clearButton:'<i class="mdi-content-remove"></i>',
+                        clearCaption: "",
+                        clearCaptionClass: "transparent",
+                        starCaptions: function(val) { return Math.round(val * 100) / 100;},
+                        starCaptionClasses: function(val) { return 'label transparent';},
+                   });
+
+                });
+        </script>
+      <%end%>
+      
+  <!-- Contacto -->
+</div> <!-- fin del contenedor -->
+
+<% content_for :javascript_personalizado do %>
+  <%= javascript_include_tag "plugins/star-rating.min" %>    
+<% end -%>
