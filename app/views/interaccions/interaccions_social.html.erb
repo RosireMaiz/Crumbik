@@ -1,0 +1,66 @@
+<div class="row titulo-seccion no-margin-v banner banner-perfil">
+  <div class="contenedor">
+    <div class="col s6">
+      <h5 class="text-uppercase">
+       Interacciones Redes Sociales
+      </h5>
+    </div>
+    <div class="col s6 text-right ">
+      <ol class="breadcrumb" style="margin-bottom: 0px !important">
+        <li>
+          <a href="/">Inicio</a>
+        </li>
+        <li class="active">Interacciones Redes Sociales</li>
+      </ol>
+    </div>
+  </div>
+</div>
+
+<div class="row pad30-h white no-margin-v">
+
+  <div class="col s12 m3" style="border-right: solid 1px #D0D0D0;">
+    <div>
+       <% if !@red_socials.blank? %>
+           <div class="row no-margin-v" style="border-bottom: solid 1px #E05996;">
+              <div class="col s12 m8  no-padding">
+                <h6 > Cuentas </h6>
+              </div>
+           </div>
+           <div class="row">
+              <table class="highlight bordered">
+                <tbody>
+                  <% @red_socials.each do |red_social| %>
+
+                    <% if ! red_social.nil? %>
+                      <tr>
+                        <td><a href="#<%= red_social.red_social.nombre %>" class="text-pink lighten-2" onclick="show_social('<%= red_social.red_social.nombre %>')"> <i class="<%= red_social.red_social.icono %>"></i>  <%= red_social.red_social.nombre %> </a></td>
+                      </tr>
+                    <% end -%>
+                  <% end -%>
+                </tbody>
+              </table>
+          </div>
+       <% end -%>
+    </div>
+  </div>
+
+   <div class="col s12 m9">
+      <%= render "interacciones/twitter_timeline" %>
+      <%= render "interacciones/facebook_timeline" %>       
+    </div>
+
+</div>
+
+<% content_for :javascript_personalizado do %>
+  <script type="text/javascript">
+    function show_social(red_social){
+      if (red_social == "Facebook") {
+          $("#Facebook").fadeIn(600);
+          $("#Twitter").fadeOut(600);
+      } else {
+          $("#Facebook").fadeOut(600);
+          $("#Twitter").fadeIn(600);
+      }
+    };
+  </script>
+<% end -%>

@@ -16,7 +16,7 @@ Apartment.configure do |config|
   #
   # config.excluded_models = %w{ Tenant }
 
-  config.excluded_models = %w{ Organizacion Rol OpcionMenu Menu ModoPago  TipoOrganizacion
+  config.excluded_models = %w{ Organizacion Rol OpcionMenu Menu ModoPago  TipoOrganizacion CriterioDifusion
                                RedSocial  FrecuenciaPago Plan Contrato Dispositivo Pais Servicio OrganizacionRedSocial}
 
   # In order to migrate all of your Tenants you need to provide a list of Tenant names to Apartment.

@@ -50,6 +50,51 @@ class InteraccionsController < ApplicationController
 			@difusiones_count = CampannaPublicitarium.new.cantidad_difusion_producto(id_plan)
 			render "interaccions/interaccions_general"
 		end
+	end
+
+	def consuta_interaccion_socials
+		if !usuario_signed_in?
+			redirect_to root_path
+		else
+			
+			if !@organizacion.blank?
+				
+				autenticacion_twitter = OrganizacionRedSocial.where("organizacion_id = ? AND provider = ?",@organizacion.id, "twitter").first
+				@red_socials =  OrganizacionRedSocial.includes(:red_social).where("organizacion_id = ? AND red_social_id IN (SELECT id FROM red_socials WHERE difusion = ?)", @organizacion.id, true)
+			end
+
+			@red_socials.each do |red_social_organizacion|
+				if red_social_organizacion.red_social.nombre == "Twitter"
+					if red_social_organizacion.blank?
+						token = '72471749-c1rontqDpqjg5Xho2ZvQH4GWQOQNFMNOmqbjzYMEV'
+						secret = 'El3vJnqM2fwb2GXQYgcGYbwq04ooJ4wAiIJAg514dGYrO'
+					else
+						token =  red_social_organizacion.oauth_token
+						secret = red_social_organizacion.oauth_secret
+					end
+
+					@cliente_twitter = Twitter::REST::Client.new do |config|
+					  config.consumer_key        = $consumer_key_twitter
+					  config.consumer_secret     = $consumer_secret_twitter
+					  config.access_token        = token
+					  config.access_token_secret = secret
+					end
+
+					@interaccion_socials = @cliente_twitter.user_timeline(@cliente_twitter.user.screen_name)
+
+				elsif red_social_organizacion.red_social.nombre == "Facebook"
+					@facebook_cliente = FbGraph::User.me(red_social_organizacion.oauth_token).fetch
+					@interaccion_socials_facebook = @facebook_cliente.posts
+					@friends= @facebook_cliente.friend_lists
+					@likes = @facebook_cliente.likes
+				end
+
+			end
 		
+			
+
+			render "interaccions/interaccions_social"
+
+		end
 	end
 end

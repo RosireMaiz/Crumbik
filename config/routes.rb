@@ -272,7 +272,7 @@ Rails.application.routes.draw do
 	match "/interacciones" => "interaccions#consultar", via: :get
 	match "/interacciones/producto/:id_producto" => "interaccions#consultar_producto", via: :get
 	match "/interacciones/producto/:id_plan" => "interaccions#consultar_plan", via: :get
-	
+	match "/interacciones/redes_sociales" => "interaccions#consuta_interaccion_socials", via: :get
 
 	match "/categorias/consultar" => "categorias#consultar", via: :get
 	match "/categorias/agregar" => "categorias#new", via: :get

@@ -1,0 +1,65 @@
+      <div id="Twitter">
+        <% if !@interaccion_socials.blank? %>
+          <div class="row center valign-wrapper text-pink lighten-2">
+            <div class="col s6 left">
+              <h5 class="left">@<%= @cliente_twitter.user.screen_name %></h5>
+            </div>
+            <div class="col s2">
+               <h5><%= @cliente_twitter.user.statuses_count %></h5>
+               Tweets
+            </div>
+            <div class="col s2">
+              <h5><%= @cliente_twitter.user.favorites_count %></h5>
+              Favoritos
+            </div>
+            <div class="col s2">
+              <h5><%= @cliente_twitter.user.followers_count %></h5>
+               Seguidores
+            </div>
+          </div>
+          <div class="row">
+            <table class="striped">
+              <thead>
+                <tr>
+                    <th class="center">Fecha</th>
+                    <th class="center">Tweet</th>
+                    <th class="center">Tipo</th>
+                    <th class="center">Retweets</th>
+                    <th class="center">Likes</th>
+                </tr>
+              </thead>
+
+              <tbody>
+                <% @interaccion_socials.each do |interaccion_social| %>
+
+                  <% if ! interaccion_social.nil? %>
+                    <tr>
+
+                      <td> 
+                        <%= interaccion_social.created_at.strftime("%d/%m/%Y") %>
+                      </td>
+
+                      <td> 
+                        <%= interaccion_social.text %>
+                      </td>
+
+                       <td class="center"> 
+                          <i class="fa fa-comment"></i>
+                      </td>
+
+                      <td class="center"> 
+                        <%= interaccion_social.retweet_count %>
+                      </td>
+
+                      <td class="center"> 
+                        <%= interaccion_social.favorites_count %>
+                      </td>
+                     
+                    </tr>
+                  <% end -%>
+                <% end -%>
+              </tbody>
+            </table>
+          </div>
+        <% end -%>
+      </div>

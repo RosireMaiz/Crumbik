@@ -1,0 +1,53 @@
+    <div id="Facebook">
+        <% if !@interaccion_socials_facebook.blank? %>
+          <div class="row center valign-wrapper text-pink lighten-2">
+            <div class="col s8 left">
+              <h5 class="left"><%= @facebook_cliente.first_name %> <%= @facebook_cliente.last_name %></h5>
+            </div>
+          </div>
+          <div class="row">
+            <table class="striped">
+              <thead>
+                <tr>
+                    <th class="center">Fecha</th>
+                    <th class="center">Post</th>
+                    <th class="center">Tipo</th>
+                    <th class="center">Comentarios</th>
+                    <th class="center">Likes</th>
+                </tr>
+              </thead>
+
+              <tbody>
+                <% @interaccion_socials_facebook.each do |interaccion_social| %>
+
+                  <% if ! interaccion_social.nil? %>
+                    <tr>
+
+                      <td> 
+                        <%= interaccion_social.updated_time.strftime("%d/%m/%Y") %>
+                      </td>
+
+                      <td> 
+                        <%= interaccion_social.description %>
+                      </td>
+
+                       <td class="center"> 
+                          <i class="fa fa-comment"></i>
+                      </td>
+
+                      <td class="center"> 
+                        <%= interaccion_social.comments.size %>
+                      </td>
+
+                      <td class="center"> 
+                        <%= interaccion_social.likes.size %>
+                      </td>
+                     
+                    </tr>
+                  <% end -%>
+                <% end -%>
+              </tbody>
+            </table>
+          </div>
+        <% end -%>
+      </div>
