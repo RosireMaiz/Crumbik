@@ -11,13 +11,23 @@ class OmniauthCallbacksController < Devise::OmniauthCallbacksController
       subdominio = cookies[:subdominio]
       
       if action == "editOrganization"
+      
         @organizacionRedSocial = OrganizacionRedSocial.find_for_oauth(env["omniauth.auth"], id_red_social, subdominio)
         redirect_to "/organizacion/editar/"+ subdominio.to_s
+      
+      elsif action == "campanaPublicitaria"
+      
+        id_campanna = cookies[:id_campanna_publicitaria]
+        @organizacionRedSocial = OrganizacionRedSocial.find_for_oauth(env["omniauth.auth"], id_red_social, subdominio)
+        redirect_to "/campanas_publicitaria/difusion/"+ id_campanna.to_s
+      
       else
+      
         @usuarioRedSocial = UsuarioRedSocial.find_for_oauth(env["omniauth.auth"], id_red_social, current_usuario)
         redirect_to "/usuarios/editar/"
+      
       end
-
+      
     else
 
       @usuario = Usuario.find_for_oauth(env["omniauth.auth"], current_usuario)

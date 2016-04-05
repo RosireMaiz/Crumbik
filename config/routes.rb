@@ -236,9 +236,9 @@ Rails.application.routes.draw do
 	match "/campanna_publicitarias/difusion_social" => "interaccion_campanna_pubs#red_social", via: :post
 	match "/campanna_publicitarias/difusion_sms" => "interaccion_campanna_pubs#sms", via: :post
 	match "/campanna_publicitarias/difusion_email" => "interaccion_campanna_pubs#email", via: :post
+	match "/campanna_publicitarias/llamada" => "interaccion_campanna_pubs#llamada", via: :post
 
-	match "/graficas/interaccion_social" => "interaccion_socials#consuta_interaccion_socials", via: :get
-	match "/graficas/interaccion_productos"  => "productos#consulta_interaccion_productos", via: :get
+	match "/link_social_organizacion_campanna/:id_red_social/:id_campanna_publicitaria" => "interaccion_campanna_pubs#organizacion_social_link", via: :get
 
 	match "/dessarroladores" => "portal#desarrolladores", via: :get
 
@@ -287,6 +287,7 @@ Rails.application.routes.draw do
 	match "/categoria/editar/:id_categoria" => "categorias#edit", via: :get
 	match "/categoria/editar" => "categorias#save_edit", via: :post
 
+	match "/clienterestfull/verificar_tarjeta_saldo" => "clienterestful#verificarTarjetaSaldo", via: :post
 
 	devise_scope :usuario do
 	    post "/entrar" => "devise/sessions#create"

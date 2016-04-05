@@ -1,4 +1,5 @@
 class InteraccionsController < ApplicationController
+	
 	def consultar
 		if !usuario_signed_in?
 			redirect_to root_path

@@ -522,6 +522,21 @@ $(document).ready(function(){
                     }
                 });
 
+                var simulationPago = function(){
+                  alert("hola");
+                   var request = $.ajax({
+                        url: '/clienterestfull/verificar_tarjeta_saldo',
+                        method: "POST",
+                        data: { tarjeta: '1010', seguridad: '123', 
+                                montoplan: '23', fechaexp: '2016-04-20'},
+                        dataType: "JSON",
+                        success: function( data ) {
+                                  alert(data.codigo);
+                                  }
+                      });  
+                      return false;
+                }
+
                 $(".button-submit").click(function(evt){
                     evt.preventDefault();
                     success.show();
@@ -531,39 +546,39 @@ $(document).ready(function(){
                     var action = $(form).attr("action");
                     console.log(data);
                     //procesar pago
-                    data[12]["tarjeta[nombre]"] = "";
-                    data[14]["tarjeta[cvc]"] = "";
-                    data[15]["tarjeta[fecha_expiracion]"]  = "";
-                    var html = "<div><div class='progress'><div class='indeterminate'></div></div>"+
-                                "</div><h5>Espera mientras creamos y configuramos tu cuenta.</h5>"
-                    $("#notificacion").html(html);
-                    $('#notificacion').openModal();
+                    if(simulationPago()){
+                   
+                          var html = "<div><div class='progress'><div class='indeterminate'></div></div>"+
+                                      "</div><h5>Espera mientras creamos y configuramos tu cuenta.</h5>"
+                          $("#notificacion").html(html);
+                          $('#notificacion').openModal();
 
-                    $.post(action, 
-                        data,
-                        function(response){
-                            if(response["codigo"] == 200){
-                                var html = "<div><i class='large mdi-action-done  "+
-                                "light-blue-text darken-2'></i></div><h5>Tu cuenta y "+
-                                "subdominio han sido creados</h5><p class='lead'>Gracias"+
-                                " por elegirnos, serás redirigido a tu subdominio en unos segundos.</p>"
-                                $("#notificacion").html(html);
-                                $('#notificacion').openModal();
-                                setTimeout(function(){
-                                        window.location.href=response["url"]
-                                    }, 8000);
-                            }else{
-                                var html = "<div><i class='large mdi-content-clear  "+
-                                "red-text darken-2'></i></div><h5>Ha ocurrido un error al momento "+
-                                "de procesar tu suscripción</h5><p class='lead'>"+
-                                response["errores"]+"</p>"
-                                $("#notificacion").html(html);
-                                //$('#notificacion').openModal();
-                            }
-                            
-                        },
-                        "json"
-                    );
+                          $.post(action, 
+                              data,
+                              function(response){
+                                  if(response["codigo"] == 200){
+                                      var html = "<div><i class='large mdi-action-done  "+
+                                      "light-blue-text darken-2'></i></div><h5>Tu cuenta y "+
+                                      "subdominio han sido creados</h5><p class='lead'>Gracias"+
+                                      " por elegirnos, serás redirigido a tu subdominio en unos segundos.</p>"
+                                      $("#notificacion").html(html);
+                                      $('#notificacion').openModal();
+                                      setTimeout(function(){
+                                              window.location.href=response["url"]
+                                          }, 8000);
+                                  }else{
+                                      var html = "<div><i class='large mdi-content-clear  "+
+                                      "red-text darken-2'></i></div><h5>Ha ocurrido un error al momento "+
+                                      "de procesar tu suscripción</h5><p class='lead'>"+
+                                      response["errores"]+"</p>"
+                                      $("#notificacion").html(html);
+                                      //$('#notificacion').openModal();
+                                  }
+                                  
+                              },
+                              "json"
+                          );
+                      }
                     return false;
                 });
 
@@ -576,39 +591,40 @@ $(document).ready(function(){
                     var action = $(form).attr("action");
                     console.log(data);
                     //procesar pago
-                   //data[12]["tarjeta[nombre]"] = "";
-                    //data[14]["tarjeta[cvc]"] = "";
-   //                 data[15]["tarjeta[fecha_expiracion]"]  = "";
-                    var html = "<div><div class='progress'><div class='indeterminate'></div></div>"+
-                                "</div><h5>Espera mientras validamos tu pago.</h5>"
-                    $("#notificacion").html(html);
-                    $('#notificacion').openModal();
+                    if(simulationPago()){
 
-                    $.post(action, 
-                        data,
-                        function(response){
-                            if(response["codigo"] == 200){
-                                var html = "<div><i class='large mdi-action-done  "+
-                                "light-blue-text darken-2'></i></div><h5>Tu pago "+
-                                "se ha realizado exitosamente</h5><p class='lead'>Gracias"+
-                                " por elegirnos.</p>"
-                                $("#notificacion").html(html);
-                                $('#notificacion').openModal();
-                               setTimeout(function(){
-                                        window.location.href=response["url"]
-                                    }, 8000);
-                            }else{
-                                var html = "<div><i class='large mdi-content-clear  "+
-                                "red-text darken-2'></i></div><h5>Ha ocurrido un error al momento "+
-                                "de procesar tu suscripción</h5><p class='lead'>"+
-                                response["errores"]+"</p>"
-                                $("#notificacion").html(html);
-                                //$('#notificacion').openModal();
-                            }
-                            
-                        },
-                        "json"
-                    );
+                            var html = "<div><div class='progress'><div class='indeterminate'></div></div>"+
+                                        "</div><h5>Espera mientras validamos tu pago.</h5>"
+                            $("#notificacion").html(html);
+                            $('#notificacion').openModal();
+
+                            $.post(action, 
+                                data,
+                                function(response){
+                                    if(response["codigo"] == 200){
+                                        var html = "<div><i class='large mdi-action-done  "+
+                                        "light-blue-text darken-2'></i></div><h5>Tu pago "+
+                                        "se ha realizado exitosamente</h5><p class='lead'>Gracias"+
+                                        " por elegirnos.</p>"
+                                        $("#notificacion").html(html);
+                                        $('#notificacion').openModal();
+                                       setTimeout(function(){
+                                                window.location.href=response["url"]
+                                            }, 8000);
+                                    }else{
+                                        var html = "<div><i class='large mdi-content-clear  "+
+                                        "red-text darken-2'></i></div><h5>Ha ocurrido un error al momento "+
+                                        "de procesar tu suscripción</h5><p class='lead'>"+
+                                        response["errores"]+"</p>"
+                                        $("#notificacion").html(html);
+                                        //$('#notificacion').openModal();
+                                    }
+                                    
+                                },
+                                "json"
+                            );
+                    }
+
                     return false;
                 });
                 //apply validation on select2 dropdown value change, this only needed for chosen dropdown integration.

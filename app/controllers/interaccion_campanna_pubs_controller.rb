@@ -12,7 +12,7 @@ class InteraccionCampannaPubsController < ApplicationController
 			@campanna_publicitaria = CampannaPublicitarium.where("id = ?", id).first	
 			@medio_difusions = @campanna_publicitaria.campanna_publicitaria_detalles.pluck(:medio_difusion)
 			id_usuarios = Usuario.order('id ASC').pluck(:id)
-			id_filtrado ||= Array.new
+			id_filtrado = Usuario.order('id ASC').pluck(:id)
 			
 			@campanna_publicitaria.criterio_campanna_pubs.each do |criterio|
 				operador_parametro = criterio.operador
@@ -39,14 +39,9 @@ class InteraccionCampannaPubsController < ApplicationController
 
 				id_filtrado = id_usuarios & id_criterio
 				id_usuarios = id_filtrado
-			end
-
-			#criterio = @campanna_publicitaria.criterio_campanna_pubs.first
-
+			end	
 			
-
-			@usuarios = Usuario.where(:id => id_filtrado)
-				
+			@usuarios = Usuario.where(:id => id_filtrado)						
 
 			if !request.subdomain.present?
 				organizacion = Organizacion.find_by(id: 0)
@@ -156,7 +151,7 @@ class InteraccionCampannaPubsController < ApplicationController
 		usuarios_mensaje_ids.each do |usuario_id|
 			id = usuario_id
 			usuario = Usuario.find_by(id: id)
-			phone_number = '+'+usuario.pais.codigo_telefono.to_s+usuario.perfil.telefono_movil.to_s
+			phone_number = '+' + usuario.pais.codigo_telefono.to_s + usuario.perfil.telefono_movil.to_s
 			#phone_number = '+584245922845'
 
 
@@ -198,7 +193,7 @@ class InteraccionCampannaPubsController < ApplicationController
 		else
 			organizacion = Organizacion.find_by(subdominio: request.subdomain)
 		end
-		campanna_publicitaria_detalle = CampannaPublicitariaDetalle.where("campanna_publicitaria_id = ? AND medio_difusion = ?", id_campanna_publicitaria, CampannaPublicitariaDetalle.medio_difusions["sms"] ).first
+		campanna_publicitaria_detalle = CampannaPublicitariaDetalle.where("campanna_publicitaria_id = ? AND medio_difusion = ?", id_campanna_publicitaria, CampannaPublicitariaDetalle.medio_difusions["email"] ).first
 		
 		interacion_campanna_publicitaria = InteraccionCampannaPub.new
 		interacion_campanna_publicitaria.contenido = mensaje
@@ -222,4 +217,73 @@ class InteraccionCampannaPubsController < ApplicationController
 
 		render :text =>'{ "success" : "true"}'
 	end
+
+
+    def llamada
+		usuario_id = params[:usuario_id]
+		id_campanna_publicitaria = params[:id_campanna_publicitaria]
+		
+
+		if !request.subdomain.present?
+			organizacion = Organizacion.find_by(id: 0)
+		else
+			organizacion = Organizacion.find_by(subdominio: request.subdomain)
+		end
+
+		usuario = Usuario.find_by(id: usuario_id)
+
+		campanna_publicitaria_detalle = CampannaPublicitariaDetalle.where("campanna_publicitaria_id = ? AND medio_difusion = ?", id_campanna_publicitaria, CampannaPublicitariaDetalle.medio_difusions["llamada"] ).first
+		
+		interacion_campanna_publicitaria = InteraccionCampannaPub.new
+		interacion_campanna_publicitaria.campanna_detalle_id = campanna_publicitaria_detalle.id
+		interacion_campanna_publicitaria.usuario_ejercutivo_id = current_usuario.id
+		interacion_campanna_publicitaria.save
+
+		phone_number = '+' + usuario.pais.codigo_telefono.to_s + usuario.perfil.telefono_movil.to_s
+
+		interacion_campanna_usuario = InteraccionCampannaUsuario.new
+	    interacion_campanna_usuario.usuario_id = usuario_id
+	    interacion_campanna_usuario.telefono_movil = phone_number
+	    interacion_campanna_usuario.interaccion_campanna_id = interacion_campanna_publicitaria.id
+	    interacion_campanna_usuario.save
+
+		render :text =>'{ "success" : "true"}'
+	end
+
+
+	def organizacion_social_link
+
+		cookies[:id_red_social]  = params[:id_red_social]
+		cookies[:action] = "campanaPublicitaria" 
+		cookies[:id_campanna_publicitaria] = params[:id_campanna_publicitaria]
+		cookies[:subdominio] = @organizacion.subdominio
+
+		red_social = RedSocial.find_by(id: params[:id_red_social])
+
+		if red_social.nombre == "Twitter"
+			redirect_to "/usuarios/auth/twitter"
+		end
+
+    	if red_social.nombre == "Facebook"
+			redirect_to "/usuarios/auth/facebook"
+		end
+
+		if red_social.nombre == "Google+"
+			redirect_to "/usuarios/auth/google_oauth2"
+		end
+
+		if red_social.nombre == "Linkedin"
+			redirect_to "/usuarios/auth/linkedin"
+		end
+
+		if red_social.nombre == "Instagram"
+			redirect_to "/usuarios/auth/instagram"
+		end
+
+		if red_social.nombre == "Github"
+			redirect_to "/usuarios/auth/github"
+		end
+		
+	end
+	
 end

@@ -85,3 +85,5 @@ gem 'authy'
 gem 'fb_graph'
 
 gem 'tinymce-rails'
+
+gem 'curl'

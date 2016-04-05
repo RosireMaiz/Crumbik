@@ -99,6 +99,14 @@
                 </div>
               </div>
             </div>
+
+            <div class="row">
+              <div class="col s8 offset-s2" id="todas">
+                <div>
+                  <canvas id="canvas_todas" height="350" width="600"></canvas>
+                </div>
+              </div>
+            </div>
            
           </div>
         </div>
@@ -110,64 +118,93 @@
   <%= javascript_include_tag 'plugins/chart/Chart' %>
   <script type="text/javascript">
 
-    var lineChartDataAll = {
-      labels : ["Enero","Febrero","Marzo","Abril"],
+
+  var lineChartDataAll = {
+      labels : <%= raw @months %>,
       datasets : [
         {
-          label: "Comentarios",
+          label: "Sms",
           fillColor : "rgba(151,187,205,0.2)",
           strokeColor : "rgba(151,187,205,1)",
           pointColor : "rgba(151,187,205,1)",
           pointStrokeColor : "#fff",
           pointHighlightFill : "#fff",
           pointHighlightStroke : "rgba(220,220,220,1)",
-          data : <%= @comentarios_count %>
+          data : <%= @sms_count %>
         },
         {
-          label: "Difusiones",
+          label: "Email",
           fillColor : "rgba(151,187,205,0.2)",
           strokeColor : "rgba(151,187,205,1)",
           pointColor : "rgba(151,187,205,1)",
           pointStrokeColor : "#fff",
           pointHighlightFill : "#fff",
           pointHighlightStroke : "rgba(220,220,220,1)",
-          data : <%= @difusiones_count %>
+          data : <%= @email_count %>
         },
         {
-          label: "Me Gusta",
+          label: "Llamada",
           fillColor : "rgba(151,187,205,0.2)",
           strokeColor : "rgba(151,187,205,1)",
           pointColor : "rgba(151,187,205,1)",
           pointStrokeColor : "#fff",
           pointHighlightFill : "#fff",
           pointHighlightStroke : "rgba(220,220,220,1)",
-          data : <%= @like_count %>
+          data : <%= @llamada_count %>
         },
         {
-          label: "Compartir",
+          label: "Redes Sociales",
           fillColor : "rgba(151,187,205,0.2)",
           strokeColor : "rgba(151,187,205,1)",
           pointColor : "rgba(151,187,205,1)",
           pointStrokeColor : "#fff",
           pointHighlightFill : "#fff",
           pointHighlightStroke : "rgba(220,220,220,1)",
-          data : <%= @share_count %>
-        },
-        {
-          label: "Promedio de Puntuación",
-          fillColor : "rgba(151,187,205,0.2)",
-          strokeColor : "rgba(151,187,205,1)",
-          pointColor : "rgba(151,187,205,1)",
-          pointStrokeColor : "#fff",
-          pointHighlightFill : "#fff",
-          pointHighlightStroke : "rgba(220,220,220,1)",
-          data : <%= @average_count %>
+          data : <%= @social_count %>
         }
       ]
-
     };
 
+    var data = [
+    {
+        value:  <%= @social_count.first %>,
+        color:"#F7464A",
+        highlight: "#FF5A5E",
+        label: "Redes Sociales"
+    },
+    {
+        value: <%= @email_count.first %>,
+        color: "#46BFBD",
+        highlight: "#5AD3D1",
+        label: "Email"
+    },
+    {
+        value: <%= @sms_count.first %>,
+        color: "#FDB45C",
+        highlight: "#FFC870",
+        label: "SMS"
+    },
+    {
+        value: <%= @llamada_count.first %>,
+        color: "#949FB1",
+        highlight: "#A8B3C5",
+        label: "Llamadas"
+    }
 
+];
 
+    var ctx3 = document.getElementById("canvas_todas").getContext("2d");
+    cantidad = <%= @cantidad %>
+    if (cantidad == 1) {
+     myLine = new Chart(ctx3).PolarArea(data, {
+      responsive: true
+    });
+    } else {
+         myLine = new Chart(ctx3).Line(lineChartDataAll, {
+      responsive: true
+    });
+
+    }
+  
   </script>
 <% end -%>

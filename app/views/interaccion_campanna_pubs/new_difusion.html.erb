@@ -119,7 +119,7 @@
                                         </td> 
                                         <td class="text-center"> 
                                          
-                                          <a  href="#card-container" class="red-social-add light-blue tooltipped modal-trigger call" data-tooltip="Llamar"><i class="mdi-notification-phone-in-talk"></i></a>
+                                          <a  href="#card-container" class="red-social-add light-blue tooltipped modal-trigger call" data-tooltip="Llamar" onclick="llamada(<%= usuario.id %>)"><i class="mdi-notification-phone-in-talk"></i></a>
                                         </td>
 
                                     </tr>
@@ -178,6 +178,41 @@
     var social_remove_ids = new Array();
     var usuarios_mensaje_remove_ids = new Array();
     var usuarios_email_remove_ids = new Array();
+
+    function llamada(usuario_id){
+      $(".audio-play")[0].currentTime = 0;
+      $(".audio-play")[0].play();
+      $(".audio-play")[0].addEventListener('ended', function() {
+
+        var html = "<div><i class='large  mdi-content-block "+
+                    "light-red-text darken-2'></i></div><h5>No se pudo establecer la conexión para la llamada </h5>"
+        $('#card-container').closeModal();
+        $("#notificacion").html(html);
+        $('#notificacion').slideDown(250);
+        $('#notificacion').openModal();
+
+        setTimeout(function(){
+           $('#notificacion').closeModal();
+           }, 3000);
+
+      }, false);
+
+      var request = $.ajax({
+                                  url: '/campanna_publicitarias/llamada',
+                                  method: "POST",
+                                  data: { usuario_id: usuario_id,
+                                          id_campanna_publicitaria: id_campanna_publicitaria
+                                        },
+                                  dataType: "JSON",
+                                  success: function( data ) {
+                                    
+                                  }
+
+                                });   
+              request.fail(function( jqXHR, textStatus ) {
+                                                          alert( "Request failed: " + textStatus );
+                                                         });
+    };
 
 
     function share_red_social(){

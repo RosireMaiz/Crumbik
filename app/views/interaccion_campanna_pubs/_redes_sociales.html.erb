@@ -34,7 +34,7 @@
         <% @red_socials.each do |red_social| %>
 
           <% if ! red_social.nil? %>
-             <li> <a  href="/link_social_organizacion/<%= red_social.id %>"  id="<%= red_social.id %>" class="r btn-floating " style="background: <%= red_social.color %>;"><i class="<%= red_social.icono %>"></i></a> </li>
+             <li> <a  href="/link_social_organizacion_campanna/<%= red_social.id %>/<%= @campanna_publicitaria.id %>"  id="<%= red_social.id %>" class="r btn-floating " style="background: <%= red_social.color %>;"><i class="<%= red_social.icono %>"></i></a> </li>
           <% end %>
         <% end %>
 

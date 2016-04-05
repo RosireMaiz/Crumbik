@@ -12,8 +12,8 @@ class ClienterestfulController < ApplicationController
            $fechatarjeta =params[:fechaexp]
 
            
-         contenido = curl.get("http://172.19.25.29:81/html/servidor-banco/Despachador.php?servicio=1&tarjeta=#{$numerotarjeta}&seguridad=#{$codigotarjeta}&fechavenc=#{$fechatarjeta}")
-
+         contenido = curl.get("http://192.168.1.100/servidor-banco/Despachador.php?servicio=1&tarjeta=#{$numerotarjeta}&seguridad=#{$codigotarjeta}&fechavenc=#{$fechatarjeta}")
+          @respuesta = Hash.new
            j=ActiveSupport::JSON
            #convertir como arreglo si hubo exito, j.decode(contenido).to_a[0] trae ["exito", "1"]
            exito = j.decode(contenido).to_a[0] # exito
@@ -30,13 +30,19 @@ class ClienterestfulController < ApplicationController
               fecha = j.decode(contenido).to_a[3]
 
                   if(monto.to_a[1].to_i<$montoplan.to_i)
-                     @tirajson = '{ "success": "true", "exito": "false", "msg": "El saldo de su tarjeta no es suficiente para el pago del plan" }'
+                    @respuesta["codigo"] = 500
+                    @respuesta["respuesta"] = "El saldo de su tarjeta no es suficiente para el pago del plan"
+                    @tirajson = '{ "success": "true", "codigo": "500", "exito": "false", "msg":  }'
                   else
-                    @tirajson = '{ "success": "true", "exito": "true", "msg": "Los datos ingresados son correctos"}'
+                    @respuesta["codigo"] = 200
+                    @respuesta["respuesta"] = "Los datos ingresados son correctos"
+                    @tirajson = '{ "success": "true", "codigo": "200",  "exito": "true", "msg": "Los datos ingresados son correctos"}'
                    end
             #  @saludo = "El tarjeta es: "+tarjeta.to_a[1].to_s+", la seguridad es: "+seguridad.to_a[1].to_s+", el monto es: "+monto.to_a[1].to_s
            else
-             @tirajson = '{ "success": "true", "exito": "false", "msg": "Verifique los datos de la tarjeta." }'
+              @respuesta["codigo"] = 400
+              @respuesta["respuesta"] = "Verifique los datos de la tarjeta."
+             @tirajson = '{ "success": "true", "codigo": "400",  "exito": "false", "msg": "Verifique los datos de la tarjeta." }'
            end
            render :text => @tirajson
   end

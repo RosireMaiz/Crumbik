@@ -34,6 +34,18 @@ class CampannaPublicitariasController < ApplicationController
 		else
 			id = params[:id_campanna_publicitaria]
 			@campanna_publicitaria = CampannaPublicitarium.where("id = ?", id).first	
+			require 'date'
+			date_range = @campanna_publicitaria.fecha_inicio..@campanna_publicitaria.fecha_fin
+
+			date_months = date_range.map {|d| Date.new(d.year, d.month, 1) }.uniq
+			@months = date_months.map {|d| d.strftime "%B-%Y" }
+
+			@sms_count = @campanna_publicitaria.count_sms_unique
+			@llamada_count = @campanna_publicitaria.count_llamada_unique
+			@email_count = @campanna_publicitaria.count_email_unique
+			@social_count = @campanna_publicitaria.count_red_social_unique
+
+			@cantidad = @months.size
 			render "campanna_publicitarias/show"
 		end
 	end
