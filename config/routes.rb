@@ -351,5 +351,7 @@ Rails.application.routes.draw do
 
 	match "/organizacions/nosotros" => "organizacions#mostrar_informacion", via: :get
 
+	match "/portal/pregunta_frecuentes" => "pregunta_frecuentes#preguntas", via: :get
+
 
 end

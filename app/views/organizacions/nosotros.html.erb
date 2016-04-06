@@ -11,6 +11,12 @@
     width: 90%;
     text-align: justify;
     }
+  
+  aside{
+    padding-left: 30px;
+    display: block;
+    padding-top: 50px;  
+  }
   </style>
 <% end %>
 
@@ -161,7 +167,8 @@
   </div>
 
   <!-- separador -->
-  <img src="<%= asset_path 'separator.png' %>" style="padding-top:2%">
+  <img src="<%= asset_path 'separator.png' %>">
+  <br />
 
   <!-- texto -->
   <div style="text-align:center; padding-top:2%">
@@ -236,7 +243,43 @@
   <!-- separador -->
   <img src="<%= asset_path 'separator.png' %>" style="padding-top:2%">
 
-  <!-- Redes -->
+  <!-- Preguntas Frecuentes -->
+  <div class="row">
+  <aside>
+   
+      <h6 class="grey-text text-darken-1 text-center "> PLANES, FUNCIONAMIENTO Y SEGURIDAD</h6>
+        <% if ! @pregunta_frecuentes.blank? %>
+          <ul class=" collapsible popout" data-collapsible="accordion">
+            
+            <% @pregunta_frecuentes.each do |pregunta_frecuente| %>
+              <% if ! pregunta_frecuente.nil?  %>
+                <li>
+                  <div class="collapsible-header pink-text active">
+                    <i class="fa fa-question-circle  text-accent-4 collapsible-header-org"></i>
+                    <b class=" text-darken-1"><%= pregunta_frecuente.pregunta %></b>
+                  </div>
+
+                  <div class="collapsible-body white">
+                    <div class="pad30-hv">
+                      <div class="row" style="margin-bottom: 0px;">
+                        <div class="col s12 m12">
+                          <%= pregunta_frecuente.respuesta %>
+                        </div>
+                      </div>                
+                    </div>
+                  </div>
+                </li>
+              <% end %>
+            <% end %>
+          </ul>
+        <% else %>
+           <h6 class="grey-text text-darken-1 text-center " align="center"> En estos momentos no hay preguntas frecuentes </h>
+        <% end %>
+   
+  </aside>
+</div>
+
+
 </div> <!-- fin del contenedor -->
 
 <% content_for :javascript_personalizado do %>
