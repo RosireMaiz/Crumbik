@@ -193,6 +193,7 @@ class OrganizacionsController < ApplicationController
 		if  !usuario_signed_in?
 			redirect_to root_path
 		else
+			@contrato_actual = @organizacion.contratos.last
 			@contrato = Contrato.new
 			@contrato.pagos.build
 			@planes = Plan.where(estatus: "A")
@@ -253,8 +254,6 @@ class OrganizacionsController < ApplicationController
 		@top_puntuacion = Producto.new.top_puntuacion
 	    render "organizacions/nosotros"
 	end
-
-
 
 	private
     	def organizacion_edit_params

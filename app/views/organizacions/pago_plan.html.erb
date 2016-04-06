@@ -1,3 +1,12 @@
+<% content_for :css_personalizado do %>
+   <%= stylesheet_link_tag    "usuarios" %>
+      <%= stylesheet_link_tag    "organizacion" %>
+   <style type="text/css">
+     .dropdown-content {
+        max-height: 200px; 
+    }
+  </style>
+<% end %>
 <div class="row titulo-seccion banner banner-perfil">
     <div class="contenedor">
       <div class="col s6">
@@ -17,239 +26,241 @@
 </div>
 
 <div id="form_wizard_1" class="center-block">
-  <%= form_for @contrato, :url => organizacion_procesar_pago_path, html:{id: "submit_form", class: "form-horizontal"} do |c| %>
-    <div class="form-wizard">
-      <div class="form-body">
-        <div class="pad150-h">
-          <ul class="nav nav-pills nav-justified steps ">
+  <% if @contrato_actual.fecha_vencimiento <= Date.today %>
+    <%= form_for @contrato, :url => organizacion_procesar_pago_path, html:{id: "submit_form", class: "form-horizontal"} do |c| %>
+      <div class="form-wizard">
+        <div class="form-body">
+          <div class="pad150-h">
+            <ul class="nav nav-pills nav-justified steps ">
 
-            <li class="active">
-              <a href="#tab3" data-toggle="tab" class="step ">
-              <span class="number">
-              1</span>
-              <span class="desc">
-              <i class="fa fa-check"></i> Pago </span>
-              </a>
-            </li>
-            <li>
-              <a href="#tab4" data-toggle="tab" class="step">
-              <span class="number">
-              2 </span>
-              <span class="desc">
-              <i class="fa fa-check"></i> Confirmación </span>
-              </a>
-            </li>
-          </ul>
-          <div id="bar" class="progress progress-striped" role="progressbar">
-            <div id="progress-bar-wizard" class="progress-bar progress-bar-success" >
+              <li class="active">
+                <a href="#tab3" data-toggle="tab" class="step ">
+                <span class="number">
+                1</span>
+                <span class="desc">
+                <i class="fa fa-check"></i> Pago </span>
+                </a>
+              </li>
+              <li>
+                <a href="#tab4" data-toggle="tab" class="step">
+                <span class="number">
+                2 </span>
+                <span class="desc">
+                <i class="fa fa-check"></i> Confirmación </span>
+                </a>
+              </li>
+            </ul>
+            <div id="bar" class="progress progress-striped" role="progressbar">
+              <div id="progress-bar-wizard" class="progress-bar progress-bar-success" >
+              </div>
             </div>
           </div>
-        </div>
-        
-        
-        <div class="tab-content">
-          <div class="feedback alert alert-danger display-none">
-            <button class="close" data-dismiss="alert"></button>
-            Algunos campos tienen errores. Por favor revisa abajo.
-          </div>
-          <div class="feedback alert-success display-none">
-            <button class="close" data-dismiss="alert"></button>
-            La validación fue exitosa.
-          </div>
-          <div class="tab-pane active" id="tab3">
-            <div class="row">
-              <div class="col s8 offset-s2">
-                <h5 class="block">Información del Plan</h5>
-                 
-                    <div class="row input-group">
-                      <input type="date" name="contrato[fecha_vencimiento]" id="contrato_fecha_vencimiento" class="hidden">
-                      
-                      <label>Plan <span class="required">*</span></label>
-                      <%= c.fields_for :pagos do |pa| %>
-                        <%= pa.number_field :monto, :class => "hidden"  %>
-                        <%= pa.number_field :modo_pago_id, :class => "hidden"  %>
-                      <% end %>
-                      <%= c.collection_select(:plan_id, Plan.where(estatus: "A"), :id, :nombre) %>
-                      <a href="#detalle_plan_<%= @contrato.plan_id %>" class="modal-trigger input-group-addon" id="basic_addo_plan">
-                        <i class="mdi-action-help"></i>
-                        <abbr>Detalles</abbr>
-                      </a>
-                    </div>
-                    <div class="row">
-                      <div class="form-group">
-                        <div class="col-md-6">
-                          Monto del Plan:  <b><span id="monto_plan" class="form-control-static"></span></b>
-                        </div>
-                        <div class="col-md-6">
-                          <div id="msj-frecuencia"></div>
+          
+          
+          <div class="tab-content">
+            <div class="feedback alert alert-danger display-none">
+              <button class="close" data-dismiss="alert">&times;</button>
+              Algunos campos tienen errores. Por favor revisa abajo.
+            </div>
+            <div class="feedback alert alert-success display-none">
+              <button class="close" data-dismiss="alert">&times;</button>
+              La validación fue exitosa.
+            </div>
+            <div class="tab-pane active" id="tab3">
+              <div class="row">
+                <div class="col s8 offset-s2">
+                  <h5 class="block">Información del Plan</h5>
+                   
+                      <div class="row input-group">
+                        <input type="date" name="contrato[fecha_vencimiento]" id="contrato_fecha_vencimiento" class="hidden">
+                        
+                        <label>Plan <span class="required">*</span></label>
+                        <%= c.fields_for :pagos do |pa| %>
+                          <%= pa.number_field :monto, :class => "hidden"  %>
+                          <%= pa.number_field :modo_pago_id, :class => "hidden"  %>
+                        <% end %>
+                        <%= c.collection_select(:plan_id, Plan.where(estatus: "A"), :id, :nombre) %>
+                        <a href="#detalle_plan_<%= @contrato.plan_id %>" class="modal-trigger input-group-addon" id="basic_addo_plan">
+                          <i class="mdi-action-help"></i>
+                          <abbr>Detalles</abbr>
+                        </a>
+                      </div>
+                      <div class="row">
+                        <div class="form-group">
+                          <div class="col-md-6">
+                            Monto del Plan:  <b><span id="monto_plan" class="form-control-static"></span></b>
+                          </div>
+                          <div class="col-md-6">
+                            <div id="msj-frecuencia"></div>
+                          </div>
                         </div>
                       </div>
-                    </div>
 
-                <input type="hidden" value="" id="monto" name="pago[monto]"/>
+                  <input type="hidden" value="" id="monto" name="pago[monto]"/>
 
-                <h5 class="block">Métodos de Pago</h5>
-                <div>
-                  Pagar con <br/>
-                  <input name="modo_pago" type="radio" id="usar_tarjeta" value="1" checked/>
-                  <label for="usar_tarjeta">Tarjeta de crédito</label>
-                  <input name="modo_pago" type="radio" id="usar_paypal" value="2"/>
-                  <label for="usar_paypal">PayPal</label>
+                  <h5 class="block">Métodos de Pago</h5>
+                  <div>
+                    Pagar con <br/>
+                    <input name="modo_pago" type="radio" id="usar_tarjeta" value="1" checked/>
+                    <label for="usar_tarjeta">Tarjeta de crédito</label>
+                    <input name="modo_pago" type="radio" id="usar_paypal" value="2"/>
+                    <label for="usar_paypal">PayPal</label>
+                  </div>
+                  <div id="campos-tarjeta-credito" class="campos">
+                      <div class="input-field">
+                        <label for="tarjeta_numero">Número de tarjeta <span class="required">
+                        * </span>
+                        </label>
+                        <input type="text" id="tarjeta_numero" name="tarjeta[numero]" required/>
+                      </div>
+                      <div class="input-field input-group">
+                        <input type="text" id="tarjeta_cvc" maxlegth="4" name="tarjeta[cvc]" required/>
+
+                        <a href="javascript:void(0)" class="input-group-addon" id="basic-addon2"  role="button" data-toggle="popover" data-trigger="hover" data-title="¿Qué es CVC?" data-content="Son los ultimos 3 numeros de la parte reversa de la tarjeta." placement="right" data-container="body">
+                          <i class="mdi-action-help"></i>
+                          <abbr>¿Qué es esto?</abbr>
+                        </a>
+
+                        <label id="tarjeta_cvc">CVC <span class="required">
+                        * </span>
+                        </label>
+                      </div>
+
+                      <div class="input-group">
+                          <label>Fecha de Finalización <span class="required">*</span></label>
+                          <input type="date" id="tarjeta_fecha_expiracion" name="tarjeta[fecha_expiracion]">
+                      </div>
+                  </div>
+                  <div id="campos-paypal" class="campos">
+                    Formulario para pagar con paypal
+                    <div class="form-group">
+                      <label class="control-label col-md-3">Payment Options <span class="required">
+                      * </span>
+                      </label>
+                      <div class="col-md-4">
+                        <div class="checkbox-list">
+                          <label>
+                          <input type="checkbox" name="payment[]" value="1" data-title="Auto-Pay with this Credit Card."/> Auto-Pay with this Credit Card </label>
+                          <label>
+                          <input type="checkbox" name="payment[]" value="2" data-title="Email me monthly billing."/> Email me monthly billing </label>
+                        </div>
+                        <div id="form_payment_error">
+                        </div>
+                      </div>
+                    </div> 
+                  </div>
                 </div>
-                <div id="campos-tarjeta-credito" class="campos">
-                  <div class="input-field">
-                    <label for="tarjeta_nombre">Nombre en la tarjeta<span class="required">
-                    * </span>
-                    </label>
-                    <input type="text"id="tarjeta_nombre" name="tarjeta[nombre]" required/>
+              </div>
+            </div>
+            <div class="tab-pane" id="tab4">
+              <div class="row">
+                <div class="col s8 offset-s2 ">
+                  <h5 class="block">Confirma tu Pago</h5>
+                  
+                  <h6 class="form-section">Datos Plan</h6>
+                  <div class="form-group">
+                    <div class="col-md-3 right-align">
+                      <label>Plan:</label>
+                    </div>
+                    <div class="col-md-4">
+                      <span class="form-control-static" data-display="contrato[plan_id]">
+                      </span>
+                    </div>
                   </div>
-                  <div class="input-field">
-                    <label for="tarjeta_numero">Número de tarjeta <span class="required">
-                    * </span>
-                    </label>
-                    <input type="text" id="tarjeta_numero" name="tarjeta[numero]" required/>
+                  <div class="form-group">
+                    <div class="col-md-3 right-align">
+                      <label>Costo del Plan:</label>
+                    </div>
+                    <div class="col-md-4">
+                      $<span class="form-control-static" id="monto_display" data-display="contrato[pagos][0][monto]">
+                      </span>
+                    </div>
                   </div>
-                  <div class="input-field input-group">
-                    <input type="text" id="tarjeta_cvc" maxlegth="4" name="tarjeta[cvc]" required/>
-
-                    <a href="javascript:void(0)" class="input-group-addon" id="basic-addon2"  role="button" data-toggle="popover" data-trigger="hover" data-title="¿Qué es CVC?" data-content="Son los ultimos 3 numeros de la parte reversa de la tarjeta." placement="right" data-container="body">
-                      <i class="mdi-action-help"></i>
-                      <abbr>¿Qué es esto?</abbr>
-                    </a>
-
-                    <label id="tarjeta_cvc">CVC <span class="required">
-                    * </span>
-                    </label>
+                  <div class="form-group">
+                    <div class="col-md-3 right-align">
+                      <label>Renovación del Plan:</label>
+                    </div>
+                    <div class="col-md-4">
+                      <span class="form-control-static" id="fecha_display" data-display="contrato[fecha_vencimiento]">
+                      </span>
+                    </div>
                   </div>
                   
-                </div>
-                <div id="campos-paypal" class="campos">
-                  Formulario para pagar con paypal
-                  <div class="form-group">
-                    <label class="control-label col-md-3">Payment Options <span class="required">
-                    * </span>
-                    </label>
-                    <div class="col-md-4">
-                      <div class="checkbox-list">
-                        <label>
-                        <input type="checkbox" name="payment[]" value="1" data-title="Auto-Pay with this Credit Card."/> Auto-Pay with this Credit Card </label>
-                        <label>
-                        <input type="checkbox" name="payment[]" value="2" data-title="Email me monthly billing."/> Email me monthly billing </label>
+                  
+                  <h6 class="form-section">Pago</h6>
+                  <div id="form-tarjeta">
+                    <div class="form-group">
+                      <div class="col-md-3 right-align">
+                        <label>Nombre del Tarjeta Habiente:</label>
                       </div>
-                      <div id="form_payment_error">
+                      <div class="col-md-4">
+                        <span class="form-control-static" data-display="tarjeta[nombre]">
+                        </span>
                       </div>
                     </div>
-                  </div> 
-                </div>
-              </div>
-            </div>
-          </div>
-          <div class="tab-pane" id="tab4">
-            <div class="row">
-              <div class="col s8 offset-s2 ">
-                <h5 class="block">Confirma tu Pago</h5>
-                
-                <h6 class="form-section">Datos Plan</h6>
-                <div class="form-group">
-                  <div class="col-md-3 right-align">
-                    <label>Plan:</label>
-                  </div>
-                  <div class="col-md-4">
-                    <span class="form-control-static" data-display="contrato[plan_id]">
-                    </span>
-                  </div>
-                </div>
-                <div class="form-group">
-                  <div class="col-md-3 right-align">
-                    <label>Costo del Plan:</label>
-                  </div>
-                  <div class="col-md-4">
-                    $<span class="form-control-static" id="monto_display" data-display="contrato[pagos][0][monto]">
-                    </span>
-                  </div>
-                </div>
-                <div class="form-group">
-                  <div class="col-md-3 right-align">
-                    <label>Renovación del Plan:</label>
-                  </div>
-                  <div class="col-md-4">
-                    <span class="form-control-static" id="fecha_display" data-display="contrato[fecha_vencimiento]">
-                    </span>
-                  </div>
-                </div>
-                
-                
-                <h6 class="form-section">Pago</h6>
-                <div id="form-tarjeta">
-                  <div class="form-group">
-                    <div class="col-md-3 right-align">
-                      <label>Nombre del Tarjeta Habiente:</label>
+                    <div class="form-group">
+                      <div class="col-md-3 right-align">
+                        <label>Número de Tarjeta de Crédito:</label>
+                      </div>
+                      <div class="col-md-4">
+                        <span class="form-control-static" data-display="tarjeta[numero]">
+                        </span>
+                      </div>
                     </div>
-                    <div class="col-md-4">
-                      <span class="form-control-static" data-display="tarjeta[nombre]">
-                      </span>
+                    <div class="form-group">
+                      <div class="col-md-3 right-align">
+                        <label>CVC:</label>
+                      </div>
+                      <div class="col-md-4">
+                        <span class="form-control-static" data-display="tarjeta[cvc]">
+                        </span>
+                      </div>
+                    </div>
+                    <div class="form-group">
+                      <label class="control-label col-md-3">Fecha de expiración</label>
+                      <div class="col-md-4">
+                        <span class="form-control-static" data-display="tarjeta[fecha_expiracion]">
+                        </span>
+                      </div>
                     </div>
                   </div>
-                  <div class="form-group">
-                    <div class="col-md-3 right-align">
-                      <label>Número de Tarjeta de Crédito:</label>
+                  <div id="form-payment">
+                    <div class="form-group">
+                      <label class="control-label col-md-3">Payment Options:</label>
+                      <div class="col-md-4">
+                        <span class="form-control-static" data-display="payment">
+                        </span>
+                      </div>  
                     </div>
-                    <div class="col-md-4">
-                      <span class="form-control-static" data-display="tarjeta[numero]">
-                      </span>
-                    </div>
-                  </div>
-                  <div class="form-group">
-                    <div class="col-md-3 right-align">
-                      <label>CVC:</label>
-                    </div>
-                    <div class="col-md-4">
-                      <span class="form-control-static" data-display="tarjeta[cvc]">
-                      </span>
-                    </div>
-                  </div>
-                  <div class="input-field">
-                    <label for="tarjeta_fecha_expiracion">Fecha de expiración (MM/AAAA) <span class="required">
-                    * </span>
-                    </label>
-                    <input type="text" maxlength="7" id="tarjeta_fecha_expiracion" name="tarjeta[fecha_expiracion]" required/>
-                  </div>
-                  <!--<div class="form-group">
-                    <label class="control-label col-md-3">Fecha de expiración</label>
-                    <div class="col-md-4">
-                      <span class="form-control-static" data-display="tarjeta[fecha_expiracion]">
-                      </span>
-                    </div>
-                  </div>-->
-                </div>
-                <div id="form-payment">
-                  <div class="form-group">
-                    <label class="control-label col-md-3">Payment Options:</label>
-                    <div class="col-md-4">
-                      <span class="form-control-static" data-display="payment">
-                      </span>
-                    </div>  
                   </div>
                 </div>
               </div>
+               
             </div>
-             
+          </div>
+        </div>
+        <div class="form-actions">
+          <div class="row">
+            <div class="col s12 text-center">
+              <a href="javascript:;" class="btn  button-previous waves-effect">
+              <i class="mdi-navigation-arrow-back"></i> Atrás </a>
+              <a href="javascript:;" class="btn pink button-next waves-effect">
+              Continuar <i class="mdi-navigation-arrow-forward"></i>
+              </a>
+              <input type="submit" class="btn blue confirmacion" value="Confirmar">
+            </div>
           </div>
         </div>
       </div>
-      <div class="form-actions">
-        <div class="row">
-          <div class="col s12 text-center">
-            <a href="javascript:;" class="btn  button-previous waves-effect">
-            <i class="mdi-navigation-arrow-back"></i> Atrás </a>
-            <a href="javascript:;" class="btn pink button-next waves-effect">
-            Continuar <i class="mdi-navigation-arrow-forward"></i>
-            </a>
-            <input type="submit" class="btn blue confirmacion" value="Confirmar">
-          </div>
-        </div>
+    <% end %>
+  <% else %>
+      <div class="row text-center">
+        <i class='large mdi-action-done light-blue-text darken-2'>
+        
+        </i>
+        <h5>Tus pagos se encuentran al dia</h5>
       </div>
-    </div>
+
   <% end %>
 </div>
 <div id="notificacion" class="modal text-center">
@@ -308,8 +319,8 @@
                </div>
             </div>
           </div>
-           </div>                
-        </div>
+        </div>                
+    </div>
   <% end %>
 <% end %>
 
@@ -320,10 +331,10 @@
 
   <script type="text/javascript">
   $(document).ready(function(){
-    $('.datepicker').pickadate({
+    $('#tarjeta_fecha_expiracion').pickadate({
         selectMonths: true, // Creates a dropdown to control month
         selectYears: true, // Creates a dropdown of 15 years to control year
-        format: 'mm/yyyy',
+        format: 'yyyy-mm-dd',
         closeOnSelect: true,
         closeOnClear: false,
 
