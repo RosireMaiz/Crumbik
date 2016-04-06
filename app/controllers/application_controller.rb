@@ -61,7 +61,6 @@ class ApplicationController < ActionController::Base
   
   private
     def load_db
-      @style = "template/template-rosa.css"
       Apartment::Tenant.switch!()
       @organizacion = Organizacion.find_by(id: 0)
       return unless request.subdomain.present?
@@ -81,5 +80,11 @@ class ApplicationController < ActionController::Base
       end
     end
 
+    def load_template
+      @style = "template/template-rosa.css"
+      if !@organizacion.tema.blank?
+        @style = "template/template-"+@organizacion.tema.to_s + ".css"
+      end
+    end
   	
 end
