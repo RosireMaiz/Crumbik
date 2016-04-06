@@ -83,6 +83,13 @@ class PreguntaFrecuentesController < ApplicationController
 		render :json => @pregunta_frecuente
 	end
 
+
+	def preguntas
+		@pregunta_frecuentes = PreguntaFrecuente.where(:estatus => 'A')
+		render "pregunta_frecuentes/list"
+	end	
+
+
 	private
 		def pregunta_frecuente_params
 	      accessible = [ :pregunta, :respuesta ] # extend with your own params

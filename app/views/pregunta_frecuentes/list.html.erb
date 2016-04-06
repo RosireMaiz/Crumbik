@@ -1,0 +1,61 @@
+<style type="text/css">
+  aside{
+    padding-left: 30px;
+    display: block;
+    padding-top: 50px;  
+}
+
+.negrita{
+  font-style: bold;
+}
+</style>
+
+<div class="row titulo-seccion banner banner-perfil">
+  <div class="contenedor">
+    <div class="col s6">
+      <h5 class="text-uppercase ">
+       Preguntas Frecuentes
+      </h5>
+    </div>
+  </div>
+</div>
+
+<div class="row">
+  <aside>
+    <div class="col-sm-3">
+      <p class="negrita" align="justify">Aqu&iacute;, una lista de nuestras preguntas m&aacute;s frecuentadas de las personas investigando nuestro CRM. Si no puedes encontrar lo que necesitas, cont&aacute;ctate con nosotros para obtener ayuda. Los clientes que ya usan CRUMBIK CRM encontrar&aacute;n ayuda en nuestro sistema de soporte especializado.</p> <br>
+      <p class="negrita" align="justify">Si no est&aacute;s usando a&uacute;n nuestro sistema de CRM, te invitamos a que formes parte de nuestra comunidad para que puedas ver lo que tenemos para ofrecerte.</p>
+    </div>
+
+    <div class="col s7 m7" align="left">
+      <h6 class="grey-text text-darken-1 text-center " align="left"> -Planes, funcionamiento y seguridad</h6>
+        <% if ! @pregunta_frecuentes.blank? %>
+          <ul class=" collapsible popout" data-collapsible="accordion">
+            
+            <% @pregunta_frecuentes.each do |pregunta_frecuente| %>
+              <% if ! pregunta_frecuente.nil?  %>
+                <li>
+                  <div class="collapsible-header pink-text active">
+                    <i class="fa fa-question-circle  text-accent-4 collapsible-header-org"></i>
+                    <b class=" text-darken-1"><%= pregunta_frecuente.pregunta %></b>
+                  </div>
+
+                  <div class="collapsible-body white">
+                    <div class="pad30-hv">
+                      <div class="row" style="margin-bottom: 0px;">
+                        <div class="col s12 m12">
+                          <%= pregunta_frecuente.respuesta %>
+                        </div>
+                      </div>                
+                    </div>
+                  </div>
+                </li>
+              <% end %>
+            <% end %>
+          </ul>
+        <% else %>
+           <h6 class="grey-text text-darken-1 text-center " align="center"> En estos momentos no hay preguntas frecuentes </h>
+        <% end %>
+    </div>
+  </aside>
+</div>
