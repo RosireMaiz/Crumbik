@@ -547,46 +547,9 @@ $(document).ready(function(){
                     var action = $(form).attr("action");
                     console.log(data);
                     //procesar pago
-                    if(simulationPago()){
-
-                            var html = "<div><div class='progress'><div class='indeterminate'></div></div>"+
-                                        "</div><h5>Espera mientras validamos tu pago.</h5>"
-                            $("#notificacion").html(html);
-                            $('#notificacion').openModal();
-
-                            $.post(action, 
-                                data,
-                                function(response){
-                                    if(response["codigo"] == 200){
-                                        var html = "<div><i class='large mdi-action-done  "+
-                                        "light-blue-text darken-2'></i></div><h5>Tu pago "+
-                                        "se ha realizado exitosamente</h5><p class='lead'>Gracias"+
-                                        " por elegirnos.</p>"
-                                        $("#notificacion").html(html);
-                                        $('#notificacion').openModal();
-                                       setTimeout(function(){
-                                                window.location.href=response["url"]
-                                            }, 8000);
-                                    }else{
-                                        var html = "<div><i class='large mdi-content-clear  "+
-                                        "red-text darken-2'></i></div><h5>Ha ocurrido un error al momento "+
-                                        "de procesar tu suscripción</h5><p class='lead'>"+
-                                        response["errores"]+"</p>"
-                                        $("#notificacion").html(html);
-                                        //$('#notificacion').openModal();
-                                    }
-                                    
-                                },
-                                "json"
-                            );
-                    }
-
+                    procesar_pago(action, data)
                     return false;
                 });
-                //apply validation on select2 dropdown value change, this only needed for chosen dropdown integration.
-                // $('#country_list', form).change(function () {
-                //     form.validate().element($(this)); //revalidate the chosen dropdown value and show error or success message for the input
-                // });
             }
 
         };
@@ -608,9 +571,10 @@ $(document).ready(function(){
             $.post('/clienterestfull/verificar_tarjeta_saldo', { tarjeta: tarjeta, seguridad: seguridad, 
                   montoplan: montoplan, fechaexp: fechaexp}, function(response){
 
-
-                                        alert(response["codigo"]);
+                        
                     if (response["codigo"] == 500) {
+                      success.hide();
+                        error.show();
                               var html = "<div><i class='large  mdi-content-block "+
       "red-text darken-2'></i></div><h5>ERROR. Su saldo es insuficiente para Realizar la compra de nuestro producto</h5>";
                       
@@ -620,6 +584,8 @@ $(document).ready(function(){
                                           }, 4000);
 
                     } else if (response["codigo"] == 400) {
+                      success.hide();
+                        error.show();
                       var html = "<div><i class='large  mdi-content-block "+
                         "red-text darken-2'></i></div><h5>ERROR. Verifique las datos de su Pago</h5>";
                       
@@ -629,9 +595,9 @@ $(document).ready(function(){
                                           }, 4000);
                       
                     } else{
-
-
-
+                      success.show();
+                        error.hide();
+                        
                          var html = "<div><div class='progress'><div class='indeterminate'></div></div>"+
                                       "</div><h5>Tu pago se ha realizado exitosamente. Espera mientras creamos y configuramos tu cuenta.</h5>"
                           $("#notificacion").html(html);
@@ -668,3 +634,4 @@ $(document).ready(function(){
     
 
   };
+
