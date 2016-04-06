@@ -27,6 +27,8 @@ Date.prototype.addMonths = function (value) {
     return this;
 };
 
+    var montoplan = 0;
+
 $(document).ready(function(){
     $('#form .alert-danger').hide();
     $('#form .alert-success').hide();
@@ -46,7 +48,7 @@ $(document).ready(function(){
     var idtipo = $("#usuario_organizacion_attributes_tipo_organizacion_id").val();
     var href_tipo_organizacion = "#detalle_tipo_organizacion_" + idtipo;
     $('#basic_addo_tipo_organizacion').attr("href", href_tipo_organizacion);
-
+    montoplan = 0;
     var idplan = $("#usuario_organizacion_attributes_contratos_attributes_0_plan_id").val();
     if(idplan != null){
       var href_plan = "#detalle_plan_" + idplan;
@@ -60,6 +62,7 @@ $(document).ready(function(){
 
                                             var mes = data.meses;
                                             var monto = data.monto; 
+                                            montoplan = data.monto;
                                             var f = new Date().addMonths(parseInt(mes));
                                             var date = f.getFullYear()+"-"+("0"+f.getMonth()+1).slice(-2)
                                                  +"-" + ("0"+f.getDate()).slice(-2);
@@ -184,6 +187,7 @@ $(document).ready(function(){
                                   success: function( data ) {
                                             var monto = data.monto;
                                             var meses = data.meses;
+                                            montoplan = data.monto;
                                             var f = new Date().addMonths(parseInt(meses));
                                              var date = f.getFullYear()+"-"+("0"+(f.getMonth()+1)).slice(-2)
                                                  +"-" + ("0"+f.getDate()).slice(-2);
@@ -317,7 +321,6 @@ $(document).ready(function(){
                         },
                         "tarjeta[numero]": {
                           required: true,
-                          creditcard: true
                         },
                         "tarjeta[cvc]": {
                             digits: true,
@@ -373,7 +376,6 @@ $(document).ready(function(){
                             minlength: "El número de la tarjeta de crédito debe ser de 16.",
                             maxlength: "El número de la tarjeta de crédito debe ser de 16.",
                             required: "Debes indicar el número de la tarjeta de crédito.",
-                            creditcard: "Debe ingresar el número de tarjeta de crédito válida. "
                         },
                         "tarjeta[cvc]": {
                             digits: "Solo se permiten números.",
@@ -522,20 +524,6 @@ $(document).ready(function(){
                     }
                 });
 
-                var simulationPago = function(){
-                  alert("hola");
-                   var request = $.ajax({
-                        url: '/clienterestfull/verificar_tarjeta_saldo',
-                        method: "POST",
-                        data: { tarjeta: '1010', seguridad: '123', 
-                                montoplan: '23', fechaexp: '2016-04-20'},
-                        dataType: "JSON",
-                        success: function( data ) {
-                                  alert(data.codigo);
-                                  }
-                      });  
-                      return false;
-                }
 
                 $(".button-submit").click(function(evt){
                     evt.preventDefault();
@@ -545,40 +533,8 @@ $(document).ready(function(){
 
                     var action = $(form).attr("action");
                     console.log(data);
+                    procesar_pago(action, data);
                     //procesar pago
-                    if(simulationPago()){
-                   
-                          var html = "<div><div class='progress'><div class='indeterminate'></div></div>"+
-                                      "</div><h5>Espera mientras creamos y configuramos tu cuenta.</h5>"
-                          $("#notificacion").html(html);
-                          $('#notificacion').openModal();
-
-                          $.post(action, 
-                              data,
-                              function(response){
-                                  if(response["codigo"] == 200){
-                                      var html = "<div><i class='large mdi-action-done  "+
-                                      "light-blue-text darken-2'></i></div><h5>Tu cuenta y "+
-                                      "subdominio han sido creados</h5><p class='lead'>Gracias"+
-                                      " por elegirnos, serás redirigido a tu subdominio en unos segundos.</p>"
-                                      $("#notificacion").html(html);
-                                      $('#notificacion').openModal();
-                                      setTimeout(function(){
-                                              window.location.href=response["url"]
-                                          }, 8000);
-                                  }else{
-                                      var html = "<div><i class='large mdi-content-clear  "+
-                                      "red-text darken-2'></i></div><h5>Ha ocurrido un error al momento "+
-                                      "de procesar tu suscripción</h5><p class='lead'>"+
-                                      response["errores"]+"</p>"
-                                      $("#notificacion").html(html);
-                                      //$('#notificacion').openModal();
-                                  }
-                                  
-                              },
-                              "json"
-                          );
-                      }
                     return false;
                 });
 
@@ -638,3 +594,77 @@ $(document).ready(function(){
     }();
     FormWizard.init();
 });
+
+ function procesar_pago(action, data){
+    var tarjeta = $("#tarjeta_numero").val();
+    var seguridad = $("#tarjeta_cvc").val();
+    var fechaexp = $("#tarjeta_fecha_expiracion").val();
+            var html = "<div><div class='progress'><div class='indeterminate'></div></div>"+
+                        "</div><h5>Espera mientras validamos su pago.</h5>";
+            $("#notificacion").html(html);
+            $('#notificacion').openModal();
+            alert(montoplan);
+
+            $.post('/clienterestfull/verificar_tarjeta_saldo', { tarjeta: tarjeta, seguridad: seguridad, 
+                  montoplan: montoplan, fechaexp: fechaexp}, function(response){
+
+
+                                        alert(response["codigo"]);
+                    if (response["codigo"] == 500) {
+                              var html = "<div><i class='large  mdi-content-block "+
+      "red-text darken-2'></i></div><h5>ERROR. Su saldo es insuficiente para Realizar la compra de nuestro producto</h5>";
+                      
+                      $("#notificacion").html(html);
+                       setTimeout(function(){
+                                              $('#notificacion').closeModal();
+                                          }, 4000);
+
+                    } else if (response["codigo"] == 400) {
+                      var html = "<div><i class='large  mdi-content-block "+
+                        "red-text darken-2'></i></div><h5>ERROR. Verifique las datos de su Pago</h5>";
+                      
+                      $("#notificacion").html(html);
+                      setTimeout(function(){
+                                              $('#notificacion').closeModal();
+                                          }, 4000);
+                      
+                    } else{
+
+
+
+                         var html = "<div><div class='progress'><div class='indeterminate'></div></div>"+
+                                      "</div><h5>Tu pago se ha realizado exitosamente. Espera mientras creamos y configuramos tu cuenta.</h5>"
+                          $("#notificacion").html(html);
+                          $('#notificacion').openModal();
+
+                          $.post(action, 
+                              data,
+                              function(response){
+                                  if(response["codigo"] == 200){
+                                      var html = "<div><i class='large mdi-action-done  "+
+                                      "light-blue-text darken-2'></i></div><h5>Tu cuenta y "+
+                                      "subdominio han sido creados</h5><p class='lead'>Gracias"+
+                                      " por elegirnos, serás redirigido a tu subdominio en unos segundos.</p>"
+                                      $("#notificacion").html(html);
+                                      $('#notificacion').openModal();
+                                      setTimeout(function(){
+                                              window.location.href=response["url"]
+                                          }, 4000);
+                                  }else{
+                                      var html = "<div><i class='large mdi-content-clear  "+
+                                      "red-text darken-2'></i></div><h5>Ha ocurrido un error al momento "+
+                                      "de procesar tu suscripción</h5><p class='lead'>"+
+                                      response["errores"]+"</p>"
+                                      $("#notificacion").html(html);
+                                      //$('#notificacion').openModal();
+                                  }
+                                  
+                              },
+                              "json"
+                          );
+                    }
+
+       });
+    
+
+  };

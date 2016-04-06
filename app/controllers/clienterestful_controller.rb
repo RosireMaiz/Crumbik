@@ -1,18 +1,18 @@
-require 'curl'
+
 class ClienterestfulController < ApplicationController
    def index   
       end
   
   def verificarTarjetaSaldo
-
+           require 'curl'
            curl = CURL.new 
            $numerotarjeta =params[:tarjeta]
            $codigotarjeta =params[:seguridad]
-           $montoplan =params[:montoplan]
+           $montoplan =params[:montoplan].to_i
            $fechatarjeta =params[:fechaexp]
 
            
-         contenido = curl.get("http://192.168.1.100/servidor-banco/Despachador.php?servicio=1&tarjeta=#{$numerotarjeta}&seguridad=#{$codigotarjeta}&fechavenc=#{$fechatarjeta}")
+         contenido = curl.get("http://192.168.1.103:81/html/servidor-banco/Despachador.php?servicio=1&tarjeta=#{$numerotarjeta}&seguridad=#{$codigotarjeta}&fechavenc=#{$fechatarjeta}")
           @respuesta = Hash.new
            j=ActiveSupport::JSON
            #convertir como arreglo si hubo exito, j.decode(contenido).to_a[0] trae ["exito", "1"]
@@ -44,6 +44,7 @@ class ClienterestfulController < ApplicationController
               @respuesta["respuesta"] = "Verifique los datos de la tarjeta."
              @tirajson = '{ "success": "true", "codigo": "400",  "exito": "false", "msg": "Verifique los datos de la tarjeta." }'
            end
-           render :text => @tirajson
+           #render :text => @tirajson
+           render json: @respuesta
   end
 end
