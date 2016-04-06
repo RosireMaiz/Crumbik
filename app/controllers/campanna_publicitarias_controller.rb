@@ -89,6 +89,92 @@ class CampannaPublicitariasController < ApplicationController
 		redirect_to :controller => 'campanna_publicitarias', :action => 'dashboard_campanna'
 	end
 
+	def show_email
+		if !usuario_signed_in?
+			redirect_to root_path
+		else
+			id = params[:id_campanna_publicitaria]
+			@campanna_publicitaria_detalle = CampannaPublicitariaDetalle.where("campanna_publicitaria_id = ? AND medio_difusion = ?", id, CampannaPublicitariaDetalle.medio_difusions["email"]).first	
+			render "campanna_publicitarias/show_email"
+		end
+	end
+
+	def show_sms
+		if !usuario_signed_in?
+			redirect_to root_path
+		else
+			id = params[:id_campanna_publicitaria]
+			@campanna_publicitaria_detalle = CampannaPublicitariaDetalle.where("campanna_publicitaria_id = ? AND medio_difusion = ?", id, CampannaPublicitariaDetalle.medio_difusions["sms"]).first	
+			render "campanna_publicitarias/show_sms"
+		end
+	end
+
+
+	def show_red_social
+		if !usuario_signed_in?
+			redirect_to root_path
+		else
+			id = params[:id_campanna_publicitaria]
+			@campanna_publicitaria_detalle = CampannaPublicitariaDetalle.where("campanna_publicitaria_id = ? AND medio_difusion = ?", id, CampannaPublicitariaDetalle.medio_difusions["red_social"]).first	
+
+			if !@organizacion.blank?
+				@red_socials =  OrganizacionRedSocial.includes(:red_social).where("organizacion_id = ? AND red_social_id IN (SELECT id FROM red_socials WHERE difusion = ?)", @organizacion.id, true)
+			end
+
+			@red_socials.each do |red_social_organizacion|
+				if red_social_organizacion.red_social.nombre == "Twitter"
+					if red_social_organizacion.blank?
+						token = '72471749-c1rontqDpqjg5Xho2ZvQH4GWQOQNFMNOmqbjzYMEV'
+						secret = 'El3vJnqM2fwb2GXQYgcGYbwq04ooJ4wAiIJAg514dGYrO'
+					else
+						token =  red_social_organizacion.oauth_token
+						secret = red_social_organizacion.oauth_secret
+					end
+
+					@cliente_twitter = Twitter::REST::Client.new do |config|
+					  config.consumer_key        = $consumer_key_twitter
+					  config.consumer_secret     = $consumer_secret_twitter
+					  config.access_token        = token
+					  config.access_token_secret = secret
+					end
+
+					
+					@interaccion_socials ||= Array.new
+
+					@campanna_publicitaria_detalle.interaccion_campanna_pub.each do |interaccion|
+						interaccion.interaccion_campanna_social.each do |intteraccion_social|
+							if intteraccion_social.organizacion_red_socials_id	== red_social_organizacion.id
+								interaccion_tw = @cliente_twitter.status(intteraccion_social.social_id.to_i)
+								@interaccion_socials.push(interaccion_tw)
+							end
+						end
+					end
+
+				elsif red_social_organizacion.red_social.nombre == "Facebook"
+					@facebook_cliente = FbGraph::User.me(red_social_organizacion.oauth_token).fetch
+					@facebook_cliente = FbGraph::User.me(red_social_organizacion.oauth_token).fetch
+					@interaccion_socials_facebook = @facebook_cliente.posts
+					
+				end
+
+			end
+
+
+			render "campanna_publicitarias/show_red_social"
+		end
+	end
+
+
+	def show_llamada
+		if !usuario_signed_in?
+			redirect_to root_path
+		else
+			id = params[:id_campanna_publicitaria]
+			@campanna_publicitaria_detalle = CampannaPublicitariaDetalle.where("campanna_publicitaria_id = ? AND medio_difusion = ?", id, CampannaPublicitariaDetalle.medio_difusions["llamada"]).first	
+			render "campanna_publicitarias/show_llamada"
+		end
+	end
+
 	private
 	   	def campanna_params
 	    accessible = [ :titulo, :descripcion, :fecha_inicio, :fecha_fin, :producto_id, 	:campanna_publicitaria_detalles_attributes =>[[ :medio_difusion]], :criterio_campanna_pubs_attributes =>[ [ :criterio_difusion_id, :operador, :valor ] ] ] # extend with your own params

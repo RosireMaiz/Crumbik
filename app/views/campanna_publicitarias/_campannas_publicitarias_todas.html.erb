@@ -17,7 +17,7 @@
                     <% if ! campanna_publicitaria.campanna_publicitaria_detalles.nil?  %>
                       <ul  class='list-inline'> 
                         <% campanna_publicitaria.campanna_publicitaria_detalles.each do |campanna_publicitaria_detalle| %>
-                             <li style="padding-bottom: 5px;"> <span ><a href="#!" class="red-social-add light-blue tooltipped" data-tooltip="<%= campanna_publicitaria_detalle.medio_difusion.humanize %>">
+                             <li style="padding-bottom: 5px;"> <span><a href="/actividad_publicitaria/<%= campanna_publicitaria.id %>/<%= campanna_publicitaria_detalle.medio_difusion %>" class="red-social-add light-blue tooltipped" data-tooltip="<%= campanna_publicitaria_detalle.medio_difusion.humanize %>">
                              <i class="<%= $ICONOS_DIFUSION[CampannaPublicitariaDetalle.medio_difusions[campanna_publicitaria_detalle.medio_difusion]] %>"></i></a></span> 
 
                              </li>

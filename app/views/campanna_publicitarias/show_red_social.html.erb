@@ -1,16 +1,16 @@
-<div class="row titulo-seccion no-margin-v banner banner-perfil">
+<div class="row titulo-seccion banner banner-perfil">
   <div class="contenedor">
     <div class="col s6">
       <h5 class="text-uppercase">
-       Interacciones Redes Sociales
+       Campaña Publicitaria en Redes Sociales  
       </h5>
     </div>
     <div class="col s6 text-right ">
-      <ol class="breadcrumb" style="margin-bottom: 0px !important">
+      <ol class="breadcrumb">
         <li>
           <a href="/">Inicio</a>
         </li>
-        <li class="active">Interacciones Redes Sociales</li>
+        <li class="active">Redes Sociales</li>
       </ol>
     </div>
   </div>
@@ -33,7 +33,7 @@
 
                     <% if ! red_social.nil? %>
                       <tr>
-                        <td><a href="#<%= red_social.red_social.nombre %>" class="text-pink lighten-2" onclick="show_social('<%= red_social.red_social.nombre %>')"> <i class="<%= red_social.red_social.icono %>"></i>  <%= red_social.red_social.nombre %> </a></td>
+                        <td><a href="#!" class="text-pink lighten-2" onclick="show_social('<%= red_social.red_social.nombre %>')"> <i class="<%= red_social.red_social.icono %>"></i>  <%= red_social.red_social.nombre %> </a></td>
                       </tr>
                     <% end -%>
                   <% end -%>
@@ -45,7 +45,7 @@
   </div>
 
    <div class="col s12 m9">
-      <%= render "interaccions/twitter_timeline" %>
+    <%= render "interaccions/twitter_timeline" %>
       <%= render "interaccions/facebook_timeline" %>       
     </div>
 
@@ -53,8 +53,6 @@
 
 <% content_for :javascript_personalizado do %>
   <script type="text/javascript">
-    $("#Facebook").fadeOut(600);
-    $("#Twitter").fadeIn(600);
     function show_social(red_social){
       if (red_social == "Facebook") {
           $("#Facebook").fadeIn(600);

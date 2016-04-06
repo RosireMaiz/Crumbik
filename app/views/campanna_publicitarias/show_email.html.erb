@@ -1,0 +1,81 @@
+<div class="row titulo-seccion banner banner-perfil">
+  <div class="contenedor">
+    <div class="col s6">
+      <h5 class="text-uppercase">
+       SMS Campaña Publicitaria  
+      </h5>
+    </div>
+    <div class="col s6 text-right ">
+      <ol class="breadcrumb">
+        <li>
+          <a href="/">Inicio</a>
+        </li>
+        <li class="active">SMS</li>
+      </ol>
+    </div>
+  </div>
+</div>
+
+<div class="row pad30-h">
+  <table id="email" class="display" cellspacing="0" width="100%" >
+    <thead>
+      <tr>
+          <th>Fecha</th>
+          <th>Asunto</th>
+          <th>Contenido</th>
+          <th>
+            Clientes
+          </th>
+      </tr>
+    </thead>
+    <tbody>
+      <% @campanna_publicitaria_detalle.interaccion_campanna_pub.each do |interaccion| %>
+
+         <% if ! interaccion.nil? %>
+            <tr>
+                <td> 
+                    <%= interaccion.created_at.strftime("%d/%m/%Y")   %>
+                </td>
+                <td> 
+                    <%= interaccion.asunto  %>
+                </td>               
+                <td> 
+                    <%= interaccion.contenido.html_safe  %>
+                </td> 
+                <td> 
+                <% if ! interaccion.interaccion_campanna_usuario.nil?  %>
+                      <% interaccion.interaccion_campanna_usuario.each do |interaccion_campanna_usuario| %>
+                            <div class="chip">
+                             <img src="<% if !interaccion_campanna_usuario.usuario.perfil.foto.nil? %><%= interaccion_campanna_usuario.usuario.perfil.formato_foto %><%= interaccion_campanna_usuario.usuario.perfil.foto %><% else %>/assets/avatar/sinfoto.jpg<% end %>" alt="Contact Person">
+                              <%= interaccion_campanna_usuario.email %>
+                            </div>
+                      <% end %>
+                  <% end %>
+                </td>
+
+            </tr>
+          <% end %>
+        <% end %>
+            
+     </tbody>
+  </table>
+
+</div>
+
+<% content_for :javascript_personalizado do %>
+  <%= javascript_include_tag 'validaciones/categorium' %>
+  <%= javascript_include_tag 'jquery.dataTables.min' %>
+  <script type="text/javascript">
+    $(document).ready(function(){
+      $('#email').dataTable({
+        "select": false, 
+        "pageLength": 4,
+        "lengthChange": false,
+        "language": {
+                "zeroRecords": "No hay datos disponibles en la tabla",
+        }
+      });
+    });
+
+  </script>
+<% end %>

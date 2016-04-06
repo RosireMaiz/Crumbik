@@ -292,7 +292,11 @@ Rails.application.routes.draw do
 	match "/plans/puntuacion" => "plans#puntuacion", via: :post
 	match "/plans/share_twitter" => "plans#share", via: :post
 	match "/plans/like" => "plans#like", via: :post
-
+	
+	match "/actividad_publicitaria/:id_campanna_publicitaria/sms" => "campanna_publicitarias#show_sms", via: :get
+	match "/actividad_publicitaria/:id_campanna_publicitaria/email" => "campanna_publicitarias#show_email", via: :get
+	match "/actividad_publicitaria/:id_campanna_publicitaria/red_social" => "campanna_publicitarias#show_red_social", via: :get
+	match "/actividad_publicitaria/:id_campanna_publicitaria/llamada" => "campanna_publicitarias#show_llamada", via: :get
 
 	match "/clienterestfull/verificar_tarjeta_saldo" => "clienterestful#verificarTarjetaSaldo", via: :post
 

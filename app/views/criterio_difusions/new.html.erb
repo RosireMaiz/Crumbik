@@ -121,7 +121,7 @@
                 <h5 class="block">Detalles del Criterio</h5>
                 <div class="row input-group">
                     <label>Tabla Referencia<span class="required">*</span></label>
-                    <select id="select_tabla" class="text-capitalize" value="<%= @criterio_difusion.campo_tabla %>"  name="criterio_difusion[tabla]">
+                    <select id="select_tabla" class="text-capitalize" name="criterio_difusion[tabla]">
                      <%= options_for_select(@tables_filter, class: "text-capitalize") %>
                           </select>
                     <a href="javascript:void(0)" class="input-group-addon" id="basic-addon2"  role="button" data-toggle="popover" data-trigger="hover" data-title="¿Qué es Tabla Referencia?" data-content="Tabla que contiene un campo asociado a Usuario y el campo para la definición del criterio" placement="right" data-container="body">

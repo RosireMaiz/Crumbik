@@ -31,7 +31,6 @@ class CriterioDifusionsController < ApplicationController
 					@tables_filter.push(table)
 				end 
 			end 
-
 			render "criterio_difusions/new"
 		end
 	end
