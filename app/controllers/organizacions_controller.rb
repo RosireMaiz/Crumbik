@@ -252,8 +252,16 @@ class OrganizacionsController < ApplicationController
 
 	def mostrar_informacion
 		@top_puntuacion = Producto.new.top_puntuacion
+		@pregunta_frecuentes = PreguntaFrecuente.where(:estatus => 'A')
 	    render "organizacions/nosotros"
 	end
+
+
+	def contactar
+		@organizacion_red_social = OrganizacionRedSocial.where("organizacion_id = ? ", @organizacion.id)
+	    render "organizacions/contact"
+	end
+
 
 	private
     	def organizacion_edit_params

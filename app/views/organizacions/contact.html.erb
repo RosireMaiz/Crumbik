@@ -1,0 +1,74 @@
+<style type="text/css">
+	.contact-map{
+		max-width: 100%;
+		width: 1680px;
+		height: 400px;
+		padding-top: 0px;
+	}
+
+	.banner-organizacion {
+    height: 200px;
+    width: 100%;
+    position: relative !important;
+}
+</style>
+
+<!-- Banner -->
+<div class="row titulo-seccion banner banner-perfil">
+    <div class="contenedor">
+      <div class="col s6">
+        <h5 class="text-uppercase">Contáctanos</h5>
+      </div>
+    </div>
+</div>
+
+<div class="org-contenedor-banner banner-organizacion">
+	<div>
+		<div class="org-contenedor-banner org-contenedor-banner-img">
+			<iframe class="contact-map" src="<%= @organizacion.iframe %>" frameborder="0" allowfullscreen></iframe>
+		</div>		
+	</div>
+</div>
+
+<div class="text-center container org-contenedor-contenido no-padding row col 12">
+
+	<div class="row col s6">
+  		<form class="col s8 offset-s2">
+      		<div class="row">
+		        <div class="input-field">
+		          <input id="nombre" type="text" class="validate">
+		          <label for="nombre">Nombre</label>
+		       </div>
+		    </div>
+
+      		<div class="row">
+		        <div class="input-field">
+		          <input id="email" type="email" class="validate">
+		          <label for="email">e-Mail</label>
+		        </div>
+		    </div>
+
+		    <div class="row">
+		        <div class="input-field">
+		          <input id="asunto" type="text" class="validate">
+		          <label for="asunto">Asunto</label>
+		        </div>
+		    </div>
+
+		    <div class="row">
+		        <div class="input-field">
+		           <textarea id="mensaje" type="text" class="validate materialize-textarea" length="120"></textarea>
+		          <label for="mensaje">Mensaje</label>
+		        </div>
+		    </div>
+
+		    <div class="text-center row">
+		        <button class="btn waves-effect pink accent-4 lighten-2" type="submit" name="action">ENVIAR 
+		          <i class="fa fa-paper-plane"></i>
+		        </button>
+		    </div>
+		</form>
+	</div>
+
+</div>
+
