@@ -156,11 +156,41 @@ class PlansController < ApplicationController
        render "plans/catalogo"	
 	end
 
+	def show
+		id_plan = params[:id_plan]
+		$administrable = false
+		if usuario_signed_in?
+			usuario = current_usuario
+		    usuario.current_administrable = false
+		    usuario.save
+		end
+		
+		if usuario_signed_in?
+			usuario_id = current_usuario.id
+			@puntuacion =  Interaccion.where("producto_id = ?  AND tipo_interaccion = ? AND usuario_id = ? ", id_plan, Interaccion.tipo_interaccions["puntuacion"], usuario_id).first
+		end
+
+		if @puntuacion.nil?
+			@puntuacion =  Interaccion.new
+			@puntuacion.contenido = 0
+		end
+
+		@top_puntuacion = Plan.new.top_puntuacion
+		@top_popular = Plan.new.top_popular
+		@promedio =  Interaccion.where("producto_id = ?  AND tipo_interaccion = ? ", id_plan, Interaccion.tipo_interaccions["puntuacion"]).average(:contenido)
+		@like = Interaccion.where( ["producto_id = ? AND usuario_id = ? AND tipo_interaccion = ?", id_plan, usuario_id, Interaccion.tipo_interaccions["me_gusta"]] ).first
+		@plan = Plan.where("id = ?", id_plan).first	
+		@comentarios = Interaccion.includes(:usuario).where("producto_id = ? and tipo_interaccion = ?", id_plan, Interaccion.tipo_interaccions["comentario"]).order("created_at ASC")
+		@comentario = Interaccion.new()
+		
+		render "plans/show"
+	end
+
 	def puntuacion
 		id_plan = params[:idplan]
 		puntuacion = params[:plan]
 		usuario_id = current_usuario.id
-		@puntuacion = Interaccion.where( ["plan_id = ? AND usuario_id = ? AND tipo_interaccion = ?", id_plan, usuario_id, Interaccion.tipo_interaccions["puntuacion"]] ).first
+		@puntuacion = Interaccion.where( ["producto_id = ? AND usuario_id = ? AND tipo_interaccion = ?", id_plan, usuario_id, Interaccion.tipo_interaccions["puntuacion"]] ).first
 		 
 		if @puntuacion.nil?
 			@puntuacion = Interaccion.new
@@ -179,6 +209,52 @@ class PlansController < ApplicationController
 		else
 			render :text => '{ "success" : "false"}'
 		end
+	end
+
+	def share
+		id_plan = params[:idplan]
+		
+		@share = Interaccion.new
+		@share.producto_id = id_plan
+		@share.usuario_id =  current_usuario.id
+		@share.tipo_interaccion =  Interaccion.tipo_interaccions["compartir"]
+		@share.save
+		
+		if @share.save
+      		render :text =>'{ "success" : "true" }'
+		else
+			render :text => '{ "success" : "false"}'
+		end
+		
+	end
+
+	def like
+		id_plan = params[:idplan]
+		puntuacion = params[:puntuacion]
+		usuario_id = current_usuario.id
+		@like = Interaccion.where( ["producto_id = ? AND usuario_id = ? AND tipo_interaccion = ?", id_plan, usuario_id, Interaccion.tipo_interaccions["me_gusta"]] ).first
+		 
+		if @like.nil?
+			@like = Interaccion.new
+			@like.producto_id = id_plan
+			@like.usuario_id = usuario_id
+			@like.tipo_interaccion =  Interaccion.tipo_interaccions["me_gusta"]
+			if @like.save
+				icon =  "fa fa-thumbs-up"
+	      		render :text =>'{ "success" : "true", "icon" : "fa fa-thumbs-up" }'
+			else
+				render :text => '{ "success" : "false"}'
+			end
+		else
+			@like.destroy
+			if @like.destroyed?
+				icon =  "fa fa-thumbs-o-up "
+				render :text =>'{ "success" : "true", "icon" : "fa fa-thumbs-o-up " }'
+			else
+			render :text => '{ "success" : "false"}'
+			end
+		end
+
 	end
 
 

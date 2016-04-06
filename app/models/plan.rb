@@ -3,6 +3,48 @@ class Plan < ActiveRecord::Base
 	has_many :plan_servicio, class_name: "PlanServicio"
 	has_many :servicio, :through => :plan_servicio
 
+	def top_puntuacion 
+		@productos = Plan.all
+		averages ||= Array.new
+		@top_productos ||= Array.new
+		@productos.each do |producto|
+			puntuacion = Interaccion.where("producto_id = ?  AND tipo_interaccion = ? ", producto.id, Interaccion.tipo_interaccions["puntuacion"]).average(:contenido)
+			averages.push(puntuacion)
+		end
+
+		max = averages.compact.max
+		index = 0
+		@productos.each do |producto|
+			puntuacion = Interaccion.where("producto_id = ?  AND tipo_interaccion = ? ", producto.id, Interaccion.tipo_interaccions["puntuacion"]).average(:contenido)
+			if puntuacion == max && index < 3
+				@top_productos.push(producto)
+			end
+		end
+		@top_productos
+	end
+
+	def top_popular 
+		@productos = Plan.all
+		averages ||= Array.new
+		@top_productos ||= Array.new
+		@productos.each do |producto|
+			puntuacion = Interaccion.where("producto_id = ?  AND (tipo_interaccion = ? OR tipo_interaccion = ? OR tipo_interaccion = ?)", producto.id, Interaccion.tipo_interaccions["comentario"], Interaccion.tipo_interaccions["puntuacion"], Interaccion.tipo_interaccions["me_gusta"]).length
+			averages.push(puntuacion)
+		end
+		max = averages.compact.max
+		index = 0
+		@productos.each do |producto|
+			puntuacion = Interaccion.where("producto_id = ?  AND (tipo_interaccion = ? OR tipo_interaccion = ? OR tipo_interaccion = ?)", producto.id, Interaccion.tipo_interaccions["comentario"], Interaccion.tipo_interaccions["puntuacion"], Interaccion.tipo_interaccions["me_gusta"]).length
+			if puntuacion == max && index < 3
+				@top_productos.push(producto)
+				index = index + 1
+			end
+		end
+		@top_productos
+	end
+
+
+
 	def count_total_comentarios
 		comentarios ||= Array.new
 		date = Date.today.strftime("%Y")

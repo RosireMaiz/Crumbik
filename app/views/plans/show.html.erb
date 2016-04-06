@@ -1,8 +1,8 @@
 <% content_for :css_personalizado do %>
-   <%= stylesheet_link_tag    "plugins/star-rating.min" %> 
-   <%= stylesheet_link_tag    "plugins/jquery-ui" %> 
-   <%= stylesheet_link_tag    "star-product" %> 
-   <meta property="og:url"           content="http://www.your-domain.com/your-page.html" />
+    <%= stylesheet_link_tag    "plugins/star-rating.min" %> 
+    <%= stylesheet_link_tag    "plugins/jquery-ui" %> 
+    <%= stylesheet_link_tag    "star-product" %> 
+    <meta property="og:url"           content="http://www.your-domain.com/your-page.html" />
 	<meta property="og:type"          content="website" />
 	<meta property="og:title"         content="Crumbik" />
 	<meta property="og:description"   content="Your description" />
@@ -19,22 +19,24 @@
 <div class="row titulo-seccion banner banner-perfil">
     <div class="contenedor">
       <div class="col s6">
-        <h5 class="text-uppercase">Detalle</h5>
+        <h5 class="text-uppercase">Detalle de Plan</h5>
       </div>
       <!-- Banner -->
       <div class="col s6 text-right ">
         <ol class="breadcrumb">
           <li>
-            <a href="/catalogo">Catalogo</a>
+            Planes
           </li>
           <li>
-            <%= @producto.nombre %>
+            <a href="/plans/catalogo">Catalogo</a>
+          </li>
+          <li>
+            <%= @plan.nombre %>
           </li>
         </ol>
       </div>
     </div>
 </div>
-
 <div class="container">
 <div  class="pad15"></div>
 
@@ -43,17 +45,17 @@
 	<div class="col s12">
     	<div class="row " style="padding: 0px 10px;"> 
     		<div class="col s4 align-center " align="center">
-    			<img src="<%= @producto.formato_imagen %><%= @producto.imagen %>" class="img-responsive" style="  max-height: 250px; vertical-align: middle;">
+    			<img src="<%= @plan.formato_imagen %><%= @plan.imagen %>" class="img-responsive" style="  max-height: 250px; vertical-align: middle;">
     		</div>
     		<div class="col s8">
 				<div class="row">
-	    			<span class="font-span-title" ><%= @producto.nombre %> </span>
+	    			<span class="font-span-title" ><%= @plan.nombre %> </span>
 	    			<input id="input-id"class="rating" data-symbol="&#xf005; " data-glyphicon="false" 
 	    				value="<% if !@puntuacion.nil? %> <%= @puntuacion.contenido %> <% end %>" 
 						data-rating-class="rating-fa" <% if !usuario_signed_in? %> disabled <%  end %> >
 				</div>
-    			<p class="row"> <%= @producto.descripcion %> </p>
-    			<h6> Precio: <b>$<%= @producto.precio %></b> </h6>
+    			<p class="row"> <%= @plan.descripcion %> </p>
+    			<h6> Precio: <b>$<%= @plan.costo %></b> </h6>
     			<a id="btn-megusta"  href="#!" class="grey btn-sm white-text"><i id="icon-like" class=" <% if @like.nil? %>fa fa-thumbs-o-up <% else %> fa fa-thumbs-up  <% end %>"></i>  Me Gusta</a>
 				<div class="fb-share-button"  data-id="share-facebook" data-href="https://lvh.me:3000" data-layout="button" onclick="alert('hola')"></div>
 				<a href="https://twitter.com/share"  data-id="share-twitter" class="twitter-share-button" data-url="http://lvh.me:3000" onclick="alert('hola')">Tweet</a>	
@@ -79,7 +81,7 @@
 							class="img-responsive circle z-depth-1" style=" max-width: 100px; max-height: 100px;">
 					</div>
 					
-					<div class="col s10">
+					<div class="col s10"style="padding-left: 8%;">
 						<div class="row">
 							<% if comentario.usuario.perfil.nombres.nil? %>
 								<b> <%= comentario.usuario.username %> </b>    
@@ -100,7 +102,7 @@
 			<%= form_for @comentario, :url => comentarios_crear_comentario_path, html:{id: "add_comentario", class: "form-horizontal", :method => :post } do |f| %>
 				<div class="row "style="padding: 0px 10px;">
 					<div class="row">
-						<input id="comentario_producto_id" name="comentario[producto_id]" value="<%= @producto.id %>" hidden>
+						<input id="comentario_producto_id" name="comentario[producto_id]" value="<%= @plan.id %>" hidden>
 						<div class="col s12 white">
 
 							<textarea id="comentario_contenido" name="comentario[contenido]" placeholder=" <% if !usuario_signed_in? %> Inicia Sesión para ingresar tu comentario <% else %> Tu Comentario* <%  end %> " id="first_name" type="text" length="255" class="materialize-textarea"  <% if !usuario_signed_in? %> disabled <%  end %> ></textarea>
@@ -126,23 +128,23 @@
 				<input id="puntuacion"class="rating" data-symbol="&#xf005; " data-glyphicon="false" value="<% if !@promedio.nil? %> <%= @promedio %> <% end %>" data-rating-class="rating-fa" data-disables=true>
 			</div>
 		</div>
-		<span><strong> Top Productos </strong></span>
+		<span><strong> Top Planes </strong></span>
 			<div id="accordion">
 
 				<h3><i class=" fa fa-thumbs-up "></i> Top Populares</h3>
 				<div>
-					<% @top_popular.each do |producto| %>
+					<% @top_popular.each do |plan| %>
 						<div class="row">
 							<div class="col s2 " style="margin:15px; " align="center">
-								<img src="<%= producto.formato_imagen %><%= producto.imagen %>" 
+								<img src="<%= plan.formato_imagen %><%= plan.imagen %>" 
 									class="img-responsive circle z-depth-1" style=" max-width: 80px; max-height: 80px;">
 							</div>
 							<div class="col s8">
 								<div class="row">
-									<b> <%= producto.nombre %> </b>  
+									<b> <%= plan.nombre %> </b>  
 								</div>
-								<p><%= producto.descripcion.truncate(80) %> </p>
-								<div class="row right"><a href="/catalogo/<%= producto.id %>" class="waves-effect"> Ver </a></div>
+								<p><%= plan.descripcion.truncate(80) %> </p>
+								<div class="row right"><a href="/plans/catalogo/<%= plan.id %>" class="waves-effect"> Ver </a></div>
 							</div> 
 						</div>
 			      		
@@ -151,18 +153,18 @@
 
 				<h3> <i class="fa fa-star"></i> Top Favoritos</h3>
 				<div>
-					<% @top_puntuacion.each do |producto| %>
+					<% @top_puntuacion.each do |plan| %>
 			      		<div class="row">
 							<div class="col s2 " style="margin:15px; " align="center">
-								<img src="<%= producto.formato_imagen %><%= producto.imagen %>" 
+								<img src="<%= plan.formato_imagen %><%= plan.imagen %>" 
 									class="img-responsive circle z-depth-1" style=" max-width: 80px; max-height: 80px;">
 							</div>
 							<div class="col s8">
 								<div class="row">
-									<b> <%= producto.nombre %> </b>  
+									<b> <%= plan.nombre %> </b>  
 								</div>
-								<p><%= producto.descripcion.truncate(80) %> </p>
-								<div class="row right"><a href="/catalogo/<%= producto.id %>" class="waves-effect"> Ver </a></div>
+								<p><%= plan.descripcion.truncate(80) %> </p>
+								<div class="row right"><a href="/plans/catalogo/<%= plan.id %>" class="waves-effect"> Ver </a></div>
 							</div> 
 						</div>
 		      	 	<% end -%>
@@ -210,11 +212,11 @@ window.FB = (function(d, s, id) {
         }(document, "script", "twitter-wjs"));
 
     twttr.events.bind('click', function(event) {
-		var id_producto = <%= @producto.id %>;
+		var id_plan = <%= @plan.id %>;
   		var request = $.ajax({
-                            url: '/productos/share_twitter',
+                            url: '/plans/share_twitter',
                             method: "POST",
-                            data: { idproducto: id_producto},
+                            data: { idplan: id_plan},
                             dataType: "JSON",
                             success: function( data ) {
                                    	}
@@ -264,12 +266,12 @@ window.FB = (function(d, s, id) {
   	});
 
   	$("#input-id").on("rating.change", function(event, value, caption) {
-  		var id_producto = <%= @producto.id %>;
+  		var id_plan = <%= @plan.id %>;
   		var puntuacion = value;
   		var request = $.ajax({
-                            url: '/productos/puntuacion',
+                            url: '/plans/puntuacion',
                             method: "POST",
-                            data: { idproducto: id_producto, puntuacion: puntuacion},
+                            data: { idplan: id_plan, puntuacion: puntuacion},
                             dataType: "JSON",
                             success: function( data ) {
 	                                    var promedio = data.promedio ;          
@@ -284,11 +286,11 @@ window.FB = (function(d, s, id) {
 	});
 
 	$("#btn-megusta").click(function() {
-		var id_producto = <%= @producto.id %>;
+		var id_plan = <%= @plan.id %>;
   		var request = $.ajax({
-                            url: '/productos/like',
+                            url: '/plans/like',
                             method: "POST",
-                            data: { idproducto: id_producto},
+                            data: { idplan: id_plan},
                             dataType: "JSON",
                             success: function( data ) {         
                             	var icon = data.icon 

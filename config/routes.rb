@@ -287,6 +287,13 @@ Rails.application.routes.draw do
 	match "/categoria/editar/:id_categoria" => "categorias#edit", via: :get
 	match "/categoria/editar" => "categorias#save_edit", via: :post
 
+	match "/plans/catalogo" => "plans#catalogo", via: :get
+	match "/plans/catalogo/:id_plan" => "plans#show", via: :get
+	match "/plans/puntuacion" => "plans#puntuacion", via: :post
+	match "/plans/share_twitter" => "plans#share", via: :post
+	match "/plans/like" => "plans#like", via: :post
+
+
 	match "/clienterestfull/verificar_tarjeta_saldo" => "clienterestful#verificarTarjetaSaldo", via: :post
 
 	devise_scope :usuario do
