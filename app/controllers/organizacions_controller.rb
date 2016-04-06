@@ -251,8 +251,54 @@ class OrganizacionsController < ApplicationController
 	end
 
 	def mostrar_informacion
-		@top_puntuacion = Producto.new.top_puntuacion
+		if request.subdomain.present?
+			@comentarios_count = Producto.new.count_total_comentarios
+			@like_count = Producto.new.count_total_me_gusta
+			@average_count = Producto.new.average_puntuacion
+			@share_count = Producto.new.count_total_compartir
+		else
+			@top_puntuacion = Plan.new.top_puntuacion
+			@top_popular = Plan.new.top_popular.first
+
+			@comentarios_count = Plan.new.count_total_comentarios
+			@like_count = Plan.new.count_total_me_gusta
+			@average_count = Plan.new.average_puntuacion
+			@share_count = Plan.new.count_total_compartir
+			
+		end
+		@difusiones_count = CampannaPublicitarium.new.cantidad_difusion_general
+		
 		@pregunta_frecuentes = PreguntaFrecuente.where(:estatus => 'A')
+
+		if !@organizacion.blank?
+				
+			autenticacion = OrganizacionRedSocial.where("organizacion_id = ? AND provider = ?",@organizacion.id, "twitter").first
+			@red_socials =  OrganizacionRedSocial.includes(:red_social).where("organizacion_id = ? ", @organizacion.id)
+		end
+			
+		if autenticacion.blank?
+			token = '72471749-c1rontqDpqjg5Xho2ZvQH4GWQOQNFMNOmqbjzYMEV'
+			secret = 'El3vJnqM2fwb2GXQYgcGYbwq04ooJ4wAiIJAg514dGYrO'
+		else
+			token =  autenticacion.oauth_token
+			secret = autenticacion.oauth_secret
+		end
+		
+		@cliente_twitter = Twitter::REST::Client.new do |config|
+		  config.consumer_key        = $consumer_key_twitter
+		  config.consumer_secret     = $consumer_secret_twitter
+		  config.access_token        = token
+		  config.access_token_secret = secret
+		end
+			
+
+		@interaccion_socials = @cliente_twitter.user_timeline(@cliente_twitter.user.screen_name)
+		
+
+		@comentarios = Interaccion.where("tipo_interaccion = ?", Interaccion.tipo_interaccions["comentario"]).order('created_at DESC').limit(4)
+		
+
+		@clientes = Usuario.all
 	    render "organizacions/nosotros"
 	end
 

@@ -17,6 +17,11 @@
     display: block;
     padding-top: 50px;  
   }
+  .image-producto{
+    background-image: url(<%= asset_path 'trofeo.png' %>) !important;
+    background-size: cover;
+
+  }
   </style>
 <% end %>
 
@@ -53,45 +58,45 @@
     <div class="col s12" style="padding-top:2%">
       <div id="dashboard-wrapper">
         <div class="row-30">
-          <div class="box height-1" style="background:url('image.png');background-size: cover;">
+          <div class="box height-1 image-producto" >
           </div>
           <div class="box height-2 pink white-text">
-            <div class="details">2 perd.</div>
-              <h5><i class="fa fa-phone"></i> llamadas</h5>
+              <h5><i class="fa fa-phone"></i> <%= @organizacion.nombre %></h5>
               <ul>
                 <li>
-                  <strong>Llamada realizada</strong> xxxxxxxx<br/>
-                  <strong>Jul 20 - 20:15 | Arnoldo's</strong>
+                  <span> <strong><%= @organizacion.direccion %></strong> </span>
                 </li>
                 <li>
-                  <strong>Llamada realizada</strong> xxxxxxxx<br/>
-                  <strong>Jul 20 - 20:15 | Arnoldo's</strong>
+                   <span> <strong><%= @organizacion.telefono %></strong> </span>
                 </li>
                 <li>
-                  <strong>Llamada realizada</strong> xxxxxxxx<br/>
-                  <strong>Jul 20 - 20:15 | Arnoldo's</strong>
+                     <span> <strong><%= @organizacion.email %></strong> </span>
                 </li>
               </ul>
             </div>
           </div>
 
           <div class="row-30">
-            <div class="box height-2 dark-pink white-text">
-              <div class="details">8 rec.</div>
-                <h5><i class="fa fa-envelope"></i> email</h5>
+            <div class="box height-2 dark-pink white-text" align="left">
+                <h5><i class=" fa fa-share-alt-square "></i> Interacciones</h5>
                 <ul>
                   <li>
-                    <strong>Llamada realizada</strong> xxxxxxxx<br/>
-                    <strong>Jul 20 - 20:15 | Arnoldo's</strong>
+                    <strong><%= @comentarios_count[3]  %></strong> 
+                    <strong>Comentarios</strong>
                   </li>
                   <li>
-                    <strong>Llamada realizada</strong> xxxxxxxx<br/>
-                    <strong>Jul 20 - 20:15 | Arnoldo's</strong>
+                    <strong><%= @like_count[3]  %></strong> 
+                    <strong>Me Gusta</strong>
                   </li>
-                  <li>
-                    <strong>Llamada realizada</strong> xxxxxxxx<br/>
-                    <strong>Jul 20 - 20:15 | Arnoldo's</strong>
+                   <li>
+                    <strong><%= @share_count[3] %></strong> 
+                    <strong>Compartir</strong>
                   </li>
+                   <li>
+                    <strong><%= @difusiones_count[3]  %></strong>
+                    <strong>Difusiones</strong>
+                  </li>
+                  
                 </ul>
               </div>
               <div class="box height-1 blue center-align white-text valign-wrapper">
@@ -102,26 +107,20 @@
             <div class="row-30">
               <div class="box height-1 blue white-text center-align valign-wrapper">
                 <div class="valign">
-                  <h5  class="center-align"><i class="fa fa-briefcase"></i> nuevos contratos</h5>
-                  <h3><span class="number" style="float:left;">8</span><small style="float:right;">$120.000,00</small></h3>
+                  <h5  class="left-align"><i class="fa fa-briefcase"></i> Nuevos contratos</h5>
+                  <h3><small style="float:right;">$120.000,00</small></h3>
                 </div>
               </div>
-              <div class="box height-2 purple white-text">
-                <div class="details">8 pend.</div>
-                <h5><i class="fa fa-mobile-phone"></i> SMS</h5>
+              <div class="box height-2 purple white-text left-align">
+                <h5><i class="fa fa-envelope"></i> Comentarios</h5>
                 <ul>
-                  <li>
-                    <strong>Llamada realizada</strong> xxxxxxxx<br/>
-                    <strong>Jul 20 - 20:15 | Arnoldo's</strong>
-                  </li>
-                  <li>
-                    <strong>Llamada realizada</strong> xxxxxxxx<br/>
-                    <strong>Jul 20 - 20:15 | Arnoldo's</strong>
-                  </li>
-                  <li>
-                    <strong>Llamada realizada</strong> xxxxxxxx<br/>
-                    <strong>Jul 20 - 20:15 | Arnoldo's</strong>
-                  </li>
+                  <% @comentarios.each do |comentario| %>
+                    <li>
+                      <strong><%= comentario.usuario.username %></strong> <%= comentario.created_at.strftime("%d/%m/%Y ") %><br/>
+                      <strong> <%= comentario.contenido %></strong>
+                    </li>
+                   <% end -%>
+                  
                 </ul>
               </div>
             </div>
@@ -129,22 +128,22 @@
             <div class="row-10">
               <div class="box height-1 dark-blue center-align white-text valign-wrapper">
                 <div class="valign">
-                  <h5><i class="fa fa-facebook-square"></i> facebook</h5>
-                  <h4>3000</h4>
-                  <span>likes</span>
+                  <h5><i class="fa fa-twitter"></i> Twitter</h5>
+                  <h5><%= @cliente_twitter.user.favorites_count %></h5>
+                  <span>Favoritos</span>
                 </div>
               </div>
               <div class="box height-1 blue center-align white-text valign-wrapper">
                 <div class="valign">
-                  <h5><i class="fa fa-twitter"></i> twitter</h5>
-                  <h4>1523</h4>
+                  <h5><i class="fa fa-twitter"></i> Twitter</h5>
+                  <h4 class="white-text"><%= @cliente_twitter.user.followers_count %></h4>
                   <span>followers</span>
                 </div>
               </div>
               <div class="box height-1 dark-pink center-align white-text valign-wrapper">
                 <div class="valign">
-                  <h5><i class="fa fa-user"></i> clientes</h5>
-                  <h4>16555</h4>
+                  <h5><i class="fa fa-user"></i>Clientes</h5>
+                  <h4 class="write-text"><%= @clientes.length %></h4>
                 </div>
               </div>
             </div>
@@ -207,7 +206,7 @@
               <input id="input_star_<%= producto.id %>" class="rating left" data-symbol="&#xf005; " value="<% if !@promedio.nil? %> <%= @promedio %> <% end %>">
             </div>
             <div class="col s6 no-padding">
-              <span class = "blue-text right"> $<%= producto.precio %></span>
+              <span class = "blue-text right"> $ <% if request.subdomain.present? %><%= producto.precio %><% else %> <%= producto.costo %><% end -%></span>
             </div>
           </div>
           <a href="/catalogo/<%= producto.id %>" class="waves-effect"> Ver </a>
@@ -244,7 +243,7 @@
   <img src="<%= asset_path 'separator.png' %>" style="padding-top:2%">
 
   <!-- Preguntas Frecuentes -->
-  <div class="row">
+  <div class="row " align="left">
   <aside>
       <h6 class="grey-text text-darken-1 text-center "> PLANES, FUNCIONAMIENTO Y SEGURIDAD</h6>
         <% if ! @pregunta_frecuentes.blank? %>

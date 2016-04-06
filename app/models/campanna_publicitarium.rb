@@ -40,7 +40,9 @@ class CampannaPublicitarium < ActiveRecord::Base
         campannas_publicitaria = CampannaPublicitarium.where("producto_id =? AND extract(year  from fecha_inicio) = ? AND extract(month from fecha_inicio) = ?", id_producto, date, i)
         cantidad = 0
         campannas_publicitaria.each do |campanna_publicitaria|
-          cantidad = cantidad + campannas_publicitaria.cantidad_difusion
+          self.campanna_publicitaria_detalles.each do |campanna_publicitaria_detalle|
+            cantidad = cantidad + campanna_publicitaria_detalle.cantidad_difusion_detalle
+          end
         end
         difusion.push(cantidad)
       end

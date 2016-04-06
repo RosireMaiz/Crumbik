@@ -29,7 +29,7 @@ class ApplicationController < ActionController::Base
   before_filter :configure_permitted_parameters, if: :devise_controller?
 
   before_filter :set_mailer_url_options
-  before_filter :load_db, :load_menu
+  before_filter :load_db, :load_menu, :load_template
 
  	def ensure_signup_complete
  		# Ensure we don't go into an infinite loop
