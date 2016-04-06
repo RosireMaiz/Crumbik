@@ -354,6 +354,7 @@ Rails.application.routes.draw do
 	match "/eventos" => "eventos#eventos", via: :get
 
 	match "/organizacions/nosotros" => "organizacions#mostrar_informacion", via: :get
+	match "/organizacions/contact" => "organizacions#contactar", via: :get
 
 	match "/portal/pregunta_frecuentes" => "pregunta_frecuentes#preguntas", via: :get
 
