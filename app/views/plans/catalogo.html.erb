@@ -1,6 +1,30 @@
+<% content_for :css_personalizado do %>
+  <%= stylesheet_link_tag    "plugins/star-rating.min" %> 
+  <%= stylesheet_link_tag    "star-product" %> 
+<% end %>
+
+<script type="text/javascript" src="http://lvh.me:3000/jquery/jquery-1.10.2.min.js"></script>
+
+
+<div class="row titulo-seccion banner banner-perfil">
+    <div class="contenedor">
+      <div class="col s6">
+        <h5 class="text-uppercase">Planes</h5>
+      </div>
+      <!-- Banner -->
+      <div class="col s6 text-right ">
+        <ol class="breadcrumb">
+          <li>
+            <a href="/">Planes</a>
+          </li>
+        </ol>
+      </div>
+    </div>
+</div>
+
 <% if !@plans.blank? %>
   <div  class="pad15"></div>
-    <div class="row pad30-h">
+    <div class="row pad30-h" style="padding-left: 20%">
       <div class="col s12 m9">
         <div class="row valign-wrapper">
           <div id="todos">
@@ -27,7 +51,7 @@
                     </div>
                   </div>
 
-                  <% promedio = Interaccion.where("plan_id = ?  AND tipo_interaccion = ? ", plan.id , Interaccion.tipo_interaccions["puntuacion"]).average(:contenido) %>
+                  <% promedio = Interaccion.where("producto_id = ?  AND tipo_interaccion = ? ", plan.id , Interaccion.tipo_interaccions["puntuacion"]).average(:contenido) %>
 
                   <div class="card-action pad5-15">
                     <div class="row no-margin-v">
@@ -38,7 +62,7 @@
                         <span class = "blue-text right"> $<%= plan.costo %></span>
                       </div>
                     </div>
-                    <a href="/catalogo/<%= plan.id %>" class="waves-effect"> Ver </a>
+                    <a href="/plans/catalogo/<%= plan.id %>" class="waves-effect"> Ver </a>
                   </div>
 
                   <div class="card-reveal card-catalogo-detail left-align">
@@ -66,7 +90,7 @@
 
                <script type="text/javascript">
                 $(document).ready(function(){
-                  var star_input = '#input_star_' + <%= producto.id %>;
+                  var star_input = '#input_star_' + <%= plan.id %>;
 
                   $(star_input).rating({
                         size:"xs",
