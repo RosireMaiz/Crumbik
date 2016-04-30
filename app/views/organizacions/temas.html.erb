@@ -132,27 +132,30 @@
 	</div>
 
 </div>
+<div id="notificacion" class="modal text-center">
+</div>
 
 <% content_for :javascript_personalizado do %>
 <script type="text/javascript">
 
   $('#guardar_tema').on('click', function() {
+  	var tema = $("#select_tema").val();
     var request = $.ajax({
-                            url: '/campanas_publicitaria/enviar_correo/',
+                            url: '/organizacions/update_tema/',
                             method: "POST",
-                            data: {},
+                            data: {tema: tema},
                             dataType: "JSON"
                           });
 
         request.done(function( data ) {
                                       var html = "<div><i class='large mdi-action-done  "+
-                                "light-blue-text darken-2'></i></div><h5>Su Email "+
-                                "se ha enviado exitosamente</h5><p class='lead'>Gracias"+
+                                "light-blue-text darken-2'></i></div><h5>Su Tema ha sido "+
+                                "actualizado exitosamente</h5><p class='lead'>Gracias"+
                                 " por elegirnos.</p>"
                                 $("#notificacion").html(html);
                                 $('#notificacion').openModal();
                                setTimeout(function(){
-                                        window.location.href= "/campanas_publicitaria/emails"
+                                        window.location.reload();
                                     }, 1000);
                                       });
                      

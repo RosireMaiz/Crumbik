@@ -573,8 +573,6 @@ $(document).ready(function(){
 
                         
                     if (response["codigo"] == 500) {
-                      success.hide();
-                        error.show();
                               var html = "<div><i class='large  mdi-content-block "+
       "red-text darken-2'></i></div><h5>ERROR. Su saldo es insuficiente para Realizar la compra de nuestro producto</h5>";
                       
@@ -584,8 +582,6 @@ $(document).ready(function(){
                                           }, 4000);
 
                     } else if (response["codigo"] == 400) {
-                      success.hide();
-                        error.show();
                       var html = "<div><i class='large  mdi-content-block "+
                         "red-text darken-2'></i></div><h5>ERROR. Verifique las datos de su Pago</h5>";
                       
@@ -595,8 +591,6 @@ $(document).ready(function(){
                                           }, 4000);
                       
                     } else{
-                      success.show();
-                        error.hide();
                         
                          var html = "<div><div class='progress'><div class='indeterminate'></div></div>"+
                                       "</div><h5>Tu pago se ha realizado exitosamente. Espera mientras creamos y configuramos tu cuenta.</h5>"

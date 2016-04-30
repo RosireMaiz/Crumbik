@@ -74,6 +74,9 @@ Rails.application.config.assets.precompile += %w( validaciones/difusion.js)
 Rails.application.config.assets.precompile += %w( validaciones/publicidad.js)
 Rails.application.config.assets.precompile += %w( maestros/criterio_difusions_wizard.js)
 
+Rails.application.config.assets.precompile += %w( template/template-azul.css )
+Rails.application.config.assets.precompile += %w( template/template-magenta.css )
+Rails.application.config.assets.precompile += %w( template/template-menta.css )
 Rails.application.config.assets.precompile += %w( template/template-rosa.css )
 
 Rails.application.config.assets.precompile += %w( plugins/jquery-ui.css )

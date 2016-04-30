@@ -300,6 +300,7 @@ Rails.application.routes.draw do
 
 	match "/clienterestfull/verificar_tarjeta_saldo" => "clienterestful#verificarTarjetaSaldo", via: :post
 
+	match "/organizacions/update_tema" => "organizacions#update_tema", via: :post
 	devise_scope :usuario do
 	    post "/entrar" => "devise/sessions#create"
 	    get "/entrar" => "devise/sessions#new"

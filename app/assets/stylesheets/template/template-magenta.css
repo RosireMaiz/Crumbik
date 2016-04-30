@@ -1,5 +1,5 @@
 .banner-perfil {
-  background-image: url("/assets/templare/banners/general-magenta.png") !important; 
+  background-image: url("/assets/template/banners/general-magenta.png") !important; 
 }
 .banner-sidebar {
   background-image: url("/assets/template/banners/administrable-magenta.png") !important; 
@@ -11,7 +11,7 @@
   }
 /**** Header ***/
 .nav-wrapper {
-    background-color: white !important;
+    background-color: #E3223B !important;
     padding: 0px 0px 0px 0px;
 }
 
@@ -20,6 +20,14 @@ body{
   background-size: cover;*/
   background-color: #e8e7ed;
   height: 100%;
+}
+
+nav span#logo-text, nav ul a {
+    color: white;
+}
+
+.media-body {
+    color: white;
 }
 
 /*** Menu **/
@@ -40,7 +48,7 @@ body{
      text-transform: capitalize;
 }
 .x-tree-node-text > i{
-  color: #713ce2 !important;
+  color: #9E0038 !important;
 }
 .x-grid-item-focused .x-grid-cell-inner:before{
   content:"";
