@@ -71,7 +71,7 @@ class UsuariosController < ApplicationController
 		id_pais = @usuario.organizacion.pais_id
 
 		@usuario.perfil.attributes  = {:foto => foto_perfil, :formato_foto => formato}
-		@usuario.organizacion.attributes  = {:logo => logo_organizacion, :formato_logo => formato_logo, :formato_banner => formato_banner, :banner => banner_organizacion}
+		@usuario.organizacion.attributes  = {:logo => logo_organizacion, :formato_logo => formato_logo, :formato_banner => formato_banner, :banner => banner_organizacion, :tema => "rosa"}
 		@usuario.attributes = {:pais_id => id_pais}
 
 		@respuesta = Hash.new

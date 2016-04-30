@@ -11,7 +11,7 @@
 
 /**** Header ***/
 .nav-wrapper {
-    background-color: white !important;
+    background-color: #003F77 !important;
     padding: 0px 0px 0px 0px;
 }
 
@@ -25,7 +25,7 @@ body{
 
 /*** Menu **/
 .side-nav a {
-    color: #444;
+    color:  #003F77  !important;
     display: initial !important;
     font-size: 1rem;
     height: 20px;
@@ -35,13 +35,21 @@ body{
 
 .x-tree-node-text{
     font-size: 1rem;
-    color: #BB5A78 !important;
+    color: #003F77 !important;
     font-family: Roboto;
     height: 40px;
      text-transform: capitalize;
 }
 .x-tree-node-text > i{
-  color: #713ce2 !important;
+  color: #5340B2 !important;
+}
+
+nav span#logo-text, nav ul a {
+    color: white;
+}
+
+.media-body {
+    color: white;
 }
 .x-grid-item-focused .x-grid-cell-inner:before{
   content:"";
@@ -55,18 +63,18 @@ body{
 }
 
 .x-grid-item-selected {
-    color: #BB5A78 !important;
+    color: #003F77 !important;
     background-color: #EBECE8 !important;
 }
 
 .x-grid-item-over{
   background-color: #EBECE8 !important;
-  color:#BB5A78;
+  color:#003F77;
 }
 
 .x-grid-item-focused{
 	outline:0;
-  color:#BB5A78;
+  color:#003F77;
 }
 
 .x-grid-item-selected{

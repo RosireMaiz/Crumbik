@@ -167,8 +167,11 @@ class OrganizacionsController < ApplicationController
 		render "organizacions/temas"
 	end
 	
-	def editar_tema
-		redirect_to :controller => 'organizacions', :action => 'apariencia_tema'
+	def update_tema
+		tema = params[:tema]
+		@organizacion.tema = tema
+		@organizacion.save
+		render :text =>'{ "success" : "true"}'
 	end
 
 	def contrato_show

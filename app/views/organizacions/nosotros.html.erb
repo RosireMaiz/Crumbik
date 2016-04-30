@@ -174,6 +174,7 @@
     <p class="text-uppercase col s6 offset-s3"><%= @organizacion.subtitulo_banner %></p>
   </div>
 
+<% if ! @top_puntuacion.blank? %>
   <!-- separador -->
   <img src="<%= asset_path 'separator.png' %>">
 
@@ -214,6 +215,7 @@
 
       </div>
     </div>
+<% end %>
 
     <script type="text/javascript">
             $(document).ready(function(){
@@ -245,7 +247,7 @@
   <!-- Preguntas Frecuentes -->
   <div class="row " align="left">
   <aside>
-      <h6 class="grey-text text-darken-1 text-center "> PLANES, FUNCIONAMIENTO Y SEGURIDAD</h6>
+      <h6 class="text-center"><b>PREGUNTAS FRECUENTES</b></h6>
         <% if ! @pregunta_frecuentes.blank? %>
           <ul class=" collapsible popout" data-collapsible="accordion">
             

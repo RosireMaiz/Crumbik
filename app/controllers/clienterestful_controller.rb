@@ -12,7 +12,7 @@ class ClienterestfulController < ApplicationController
            $fechatarjeta =params[:fechaexp]
 
            
-         contenido = curl.get("http://192.168.1.103:81/html/servidor-banco/Despachador.php?servicio=1&tarjeta=#{$numerotarjeta}&seguridad=#{$codigotarjeta}&fechavenc=#{$fechatarjeta}")
+         contenido = curl.get("http://192.168.42.206:81/html/servidor-banco/Despachador.php?servicio=1&tarjeta=#{$numerotarjeta}&seguridad=#{$codigotarjeta}&fechavenc=#{$fechatarjeta}")
           @respuesta = Hash.new
            j=ActiveSupport::JSON
            #convertir como arreglo si hubo exito, j.decode(contenido).to_a[0] trae ["exito", "1"]
