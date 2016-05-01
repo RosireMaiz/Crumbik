@@ -174,7 +174,7 @@
     <p class="text-uppercase col s6 offset-s3"><%= @organizacion.subtitulo_banner %></p>
   </div>
 
-<% if ! @top_puntuacion.blank? %>
+<% if !@top_puntuacion.blank? %>
   <!-- separador -->
   <img src="<%= asset_path 'separator.png' %>">
 
@@ -182,6 +182,7 @@
   <div style="padding-top:2%">
     <h5 class="text-uppercase col s6 offset-s3 text-uppercase">Top <%= @organizacion.tipo_organizacion.nombre %></h5>
   </div>
+
 
   <% @top_puntuacion.each do |producto| %>
     <% @promedio =  Interaccion.where("producto_id = ?  AND tipo_interaccion = ? ", producto.id, Interaccion.tipo_interaccions["puntuacion"]).average(:contenido) %>
@@ -215,9 +216,7 @@
 
       </div>
     </div>
-<% end %>
-
-    <script type="text/javascript">
+     <script type="text/javascript">
             $(document).ready(function(){
             var star_input = '#input_star_' + <%= producto.id %>;
 
@@ -239,7 +238,10 @@
 
             });
     </script>
-  <%end%>
+  <% end %>
+
+   
+<%end%>
   
   <!-- separador -->
   <img src="<%= asset_path 'separator.png' %>" style="padding-top:2%">
